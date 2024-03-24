@@ -1,0 +1,29 @@
+@import "./colors.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-default-0 text-default-1000;
+  }
+}
+
+@layer components {
+}
+
+@layer utilities {
+  .step {
+    counter-increment: step;
+  }
+
+  .step:before {
+    @apply absolute right-full grid h-7 w-7 -translate-x-3.5 place-items-center rounded-full bg-default-100 text-base font-medium;
+    content: counter(step);
+  }
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}

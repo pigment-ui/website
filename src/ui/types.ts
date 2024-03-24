@@ -1,0 +1,26 @@
+import { CSSProperties, ReactElement, ReactNode, Ref, RefAttributes } from "react";
+
+export type AsChildProps = { asChild?: boolean };
+export type ChildrenProps = { children?: ReactNode };
+
+export type StyleProps = { className?: string; style?: CSSProperties };
+export type StylesSlotsToStyleProps<T> = { classNames?: { [key in keyof T]?: string }; styles?: { [key in keyof T]?: CSSProperties } };
+export type StylesSlotsToSlots<T> = { stylesSlots: T } & StylesSlotsToStyleProps<T>;
+
+export type Variants = "solid" | "soft" | "light" | "bordered" | "faded";
+export type VariantProps = { variant?: Variants };
+
+export type Colors = "default" | "info" | "success" | "warning" | "error";
+export type ColorProps = { color?: Colors };
+
+export type Sizes = "sm" | "md" | "lg";
+export type SizeProps = { size?: Sizes };
+export type RadiusProps = { radius?: Sizes | "full" | "none" };
+
+export type ContentProps = { startContent?: ReactNode; endContent?: ReactNode };
+
+export type FilterProps<T> = Omit<T, "children" | "className" | "style"> & ChildrenProps & StyleProps;
+
+// Override forwardRef types so generics work.
+declare function forwardRef<T, P = {}>(render: (props: P, ref: Ref<T>) => ReactElement | null): (props: P & RefAttributes<T>) => ReactElement | null;
+export type ForwardRefType = typeof forwardRef;

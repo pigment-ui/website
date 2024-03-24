@@ -1,0 +1,319 @@
+---
+title: "Installation"
+description: "Learn how to install and use Pigment UI components."
+---
+
+## Initial requirements
+
+- Create your Next.js application with Tailwind CSS.
+- Install needed packages which will be used for creating components.
+
+```
+npm i react-aria react-aria-components tailwind-variants tailwind-merge @radix-ui/react-slot @radix-ui/react-icons
+```
+
+## Tailwind configuration
+
+### Colors
+
+Create color variables in CSS for both light and dark mode. See more on [colors](/docs/introduction/colors) page.
+
+`colors.css`
+
+```
+:root {
+  --default-0: 255 255 255;
+  --default-50: 250 250 250;
+  // ...
+
+  --info-50: 239 246 255;
+  --info-100: 219 234 254;
+  // ...
+
+  --success-50: 240 253 244;
+  --success-100: 220 252 231;
+  // ...
+
+  --warning-50: 254 252 232;
+  --warning-100: 254 249 195;
+  // ...
+
+  --error-50: 254 242 242;
+  --error-100: 254 226 226;
+  // ...
+}
+
+:root[class="dark"] {
+  --default-0: 0 0 0;
+  --default-50: 10 10 10;
+  // ...
+
+  --info-50: 23 37 84;
+  --info-100: 30 58 138;
+  // ...
+
+  --success-50: 5 46 22;
+  --success-100: 20 83 45;
+  // ...
+
+  --warning-50: 66 32 6;
+  --warning-100: 113 63 18;
+  // ...
+
+  --error-50: 69 10 10;
+  --error-100: 127 29 29;
+  // ...
+}
+```
+
+### Global CSS
+
+Import `colors.css` to your global CSS file.
+
+`globals.css`
+
+```
+@import "./colors.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// ...
+```
+
+### Tailwind config
+
+`tailwind.config.ts`
+
+```
+theme: {
+  // ...
+  extend: {
+    // ...
+    colors: {
+      default: {
+        0: "rgb(var(--default-0) / <alpha-value>)",
+        50: "rgb(var(--default-50) / <alpha-value>)",
+        // ...
+      },
+      info: {
+        50: "rgb(var(--info-50) / <alpha-value>)",
+        100: "rgb(var(--info-100) / <alpha-value>)",
+        // ...
+      },
+      success: {
+        50: "rgb(var(--success-50) / <alpha-value>)",
+        100: "rgb(var(--success-100) / <alpha-value>)",
+        // ...
+      },
+      warning: {
+        50: "rgb(var(--warning-50) / <alpha-value>)",
+        100: "rgb(var(--warning-100) / <alpha-value>)",
+        // ...
+      },
+      error: {
+        50: "rgb(var(--error-50) / <alpha-value>)",
+        100: "rgb(var(--error-100) / <alpha-value>)",
+        // ...
+      },
+    },
+  },
+}
+```
+
+## Project configuration
+
+Add the following files to your project in the same directory with your components.
+
+### Types
+
+`types.ts`
+
+```
+import { CSSProperties, ReactElement, ReactNode, Ref, RefAttributes } from "react";
+
+export type AsChildProps = { asChild?: boolean };
+export type ChildrenProps = { children?: ReactNode };
+
+export type StyleProps = { className?: string; style?: CSSProperties };
+export type StylesSlotsToStyleProps<T> = { classNames?: { [key in keyof T]?: string }; styles?: { [key in keyof T]?: CSSProperties } };
+export type StylesSlotsToSlots<T> = { stylesSlots: T } & StylesSlotsToStyleProps<T>;
+
+export type Variants = "solid" | "soft" | "light" | "bordered" | "faded";
+export type VariantProps = { variant?: Variants };
+
+export type Colors = "default" | "info" | "success" | "warning" | "error";
+export type ColorProps = { color?: Colors };
+
+export type Sizes = "sm" | "md" | "lg";
+export type SizeProps = { size?: Sizes };
+export type RadiusProps = { radius?: Sizes | "full" | "none" };
+
+export type ContentProps = { startContent?: ReactNode; endContent?: ReactNode };
+
+export type FilterProps<T> = Omit<T, "children" | "className" | "style"> & ChildrenProps & StyleProps;
+
+// Override forwardRef types so generics work.
+declare function forwardRef<T, P = {}>(render: (props: P, ref: Ref<T>) => ReactElement | null): (props: P & RefAttributes<T>) => ReactElement | null;
+export type ForwardRefType = typeof forwardRef;
+```
+
+### Styles
+
+`styles.ts`
+
+```
+import { Colors, Variants } from "./types";
+
+export const isPressedVariants = {
+  isPressed: {
+    true: "scale-95",
+  },
+};
+
+export const isDisabledVariants = {
+  isDisabled: {
+    true: "opacity-50 cursor-not-allowed",
+  },
+};
+
+export const isFocusVisibleVariants = {
+  isFocusVisible: {
+    true: "outline outline-2 outline-offset-2 outline-default-1000 z-10",
+    false: "outline-none",
+  },
+};
+
+export const variantAndColorVariants: { variant: Record<Variants, string>; color: Record<Colors, string> } = {
+  variant: {
+    solid: "text-default-0",
+    soft: "bg-opacity-20",
+    light: "bg-opacity-0",
+    bordered: "bg-opacity-0 border border-opacity-50",
+    faded: "bg-default-100 border border-default-300",
+  },
+  color: {
+    default: "",
+    info: "",
+    success: "",
+    warning: "",
+    error: "",
+  },
+};
+
+export const radiusVariants = {
+  radius: {
+    sm: "rounded-lg",
+    md: "rounded-xl",
+    lg: "rounded-2xl",
+    full: "rounded-full",
+    none: "rounded-none",
+  },
+};
+
+export const variantAndColorCompoundVariants: {
+  variant: Variants | Variants[];
+  color: Colors | Colors[];
+  className: string;
+}[] = [
+  // solid & soft & light & bordered
+  {
+    variant: ["solid", "soft", "light", "bordered"],
+    color: "default",
+    className: "bg-default-1000",
+  },
+  {
+    variant: ["solid", "soft", "light", "bordered"],
+    color: "info",
+    className: "bg-info-500",
+  },
+  {
+    variant: ["solid", "soft", "light", "bordered"],
+    color: "success",
+    className: "bg-success-500",
+  },
+  {
+    variant: ["solid", "soft", "light", "bordered"],
+    color: "warning",
+    className: "bg-warning-500",
+  },
+  {
+    variant: ["solid", "soft", "light", "bordered"],
+    color: "error",
+    className: "bg-error-500",
+  },
+  // soft & light & bordered & faded
+  {
+    variant: ["soft", "light", "bordered", "faded"],
+    color: "default",
+    className: "text-default-1000",
+  },
+  {
+    variant: ["soft", "light", "bordered", "faded"],
+    color: "info",
+    className: "text-info-500",
+  },
+  {
+    variant: ["soft", "light", "bordered", "faded"],
+    color: "success",
+    className: "text-success-500",
+  },
+  {
+    variant: ["soft", "light", "bordered", "faded"],
+    color: "warning",
+    className: "text-warning-500",
+  },
+  {
+    variant: ["soft", "light", "bordered", "faded"],
+    color: "error",
+    className: "text-error-500",
+  },
+  // bordered
+  {
+    variant: ["bordered"],
+    color: "default",
+    className: "border-default-1000",
+  },
+  {
+    variant: ["bordered"],
+    color: "info",
+    className: "border-info-500",
+  },
+  {
+    variant: ["bordered"],
+    color: "success",
+    className: "border-success-500",
+  },
+  {
+    variant: ["bordered"],
+    color: "warning",
+    className: "border-warning-500",
+  },
+  {
+    variant: ["bordered"],
+    color: "error",
+    className: "border-error-500",
+  },
+];
+```
+
+### Utils
+
+`utils.ts`
+
+```
+import { Context, createContext, Provider, useContext } from "react";
+import { mergeProps } from "react-aria";
+
+type CreateSlotsReturn<T> = [Provider<T>, <K extends object>(props?: K) => T & K];
+
+export function createSlots<SlotsType extends object>(): CreateSlotsReturn<SlotsType> {
+  const Slots = createContext<SlotsType | undefined>(undefined) as Context<SlotsType>;
+
+  function useSlots<T extends object>(props?: T) {
+    return mergeProps(useContext(Slots), props) as SlotsType & T;
+  }
+
+  return [Slots.Provider, useSlots];
+}
+```
