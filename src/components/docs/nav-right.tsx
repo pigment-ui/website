@@ -5,6 +5,7 @@ import { slug } from "github-slugger";
 import { marked } from "marked";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { Button } from "#/ui/button";
 
 export function NavRight({ doc }: { doc: Doc }) {
   const docHeadings = marked
@@ -35,20 +36,17 @@ export function NavRight({ doc }: { doc: Doc }) {
   return docHeadings.length > 0 ? (
     <nav className="sticky top-16 col-span-2 h-[calc(100vh-64px)] overflow-y-auto py-16 max-xl:hidden">
       <h3 className="text-sm font-medium uppercase">On this page</h3>
-
-      <ul className="mt-2 flex flex-col gap-y-1">
+      <ul className="mt-2 space-y-1">
         {docHeadings.map((heading) => (
-          <li key={heading.id} className={twMerge("flex flex-col", heading.level === 3 && "pl-4")}>
-            <a
-              href={`#${heading.id}`}
-              className={twMerge([
-                "rounded-xl p-2 text-sm outline-none",
-                "focus-visible:outline-1 focus-visible:-outline-offset-1 focus-visible:outline-default-1000",
-                heading.id === activeSlug ? "bg-default-100 text-default-1000" : "text-default-500 hover:bg-default-100",
-              ])}
+          <li key={heading.id} className={twMerge(heading.level === 3 && "pl-4")}>
+            <Button
+              asChild
+              isIconOnly
+              variant={heading.id === activeSlug ? "soft" : "light"}
+              className={twMerge(heading.id !== activeSlug && "text-default-500", "justify-start")}
             >
-              {heading.text}
-            </a>
+              <a href={`#${heading.id}`}>{heading.text}</a>
+            </Button>
           </li>
         ))}
       </ul>

@@ -1,3 +1,5 @@
+"use client";
+
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
 import { mergeProps, useId } from "react-aria";

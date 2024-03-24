@@ -1,3 +1,5 @@
+"use client";
+
 import { CheckIcon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";

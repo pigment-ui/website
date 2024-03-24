@@ -1,3 +1,5 @@
+"use client";
+
 import { ForwardedRef, forwardRef } from "react";
 import { Separator as AriaSeparator, SeparatorProps } from "react-aria-components";
 import { tv } from "tailwind-variants";

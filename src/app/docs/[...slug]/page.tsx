@@ -1,7 +1,7 @@
 import { allDocs } from "contentlayer/generated";
 import { notFound } from "next/navigation";
 
-import { Content, NavLeft, NavRight } from "../_components";
+import { Content, NavLeft, NavRight } from "#/components/docs";
 
 const partFilter = (str: string) =>
   str
@@ -18,7 +18,8 @@ export default function Page({ params: { slug } }: { params: { slug: string[] } 
   if (!doc) notFound();
 
   return (
-    <main className="container relative lg:grid lg:grid-cols-12">
+    <main className="container relative max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-12">
+      {/*<div className="sticky top-16 z-20 -ml-4 w-screen bg-red-500 p-8">Menu</div>*/}
       <NavLeft doc={doc} allDocs={allDocsSorted} />
       <Content doc={doc} allDocs={allDocsSorted} />
       <NavRight doc={doc} />

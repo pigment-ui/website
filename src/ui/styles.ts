@@ -22,7 +22,7 @@ export const isFocusVisibleVariants = {
 export const variantAndColorVariants: { variant: Record<Variants, string>; color: Record<Colors, string> } = {
   variant: {
     solid: "text-default-0",
-    soft: "bg-opacity-20",
+    soft: "bg-opacity-10",
     light: "bg-opacity-0",
     bordered: "bg-opacity-0 border border-opacity-50",
     faded: "bg-default-100 border border-default-300",

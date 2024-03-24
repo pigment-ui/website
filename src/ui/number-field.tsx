@@ -1,3 +1,5 @@
+"use client";
+
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
 import { Button, Input, InputProps, NumberField as AriaNumberField, NumberFieldProps } from "react-aria-components";

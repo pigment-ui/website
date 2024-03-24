@@ -1,3 +1,5 @@
+"use client";
+
 import { Cross2Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
 import { Button, Input, InputProps, SearchField as AriaSearchField, SearchFieldProps } from "react-aria-components";

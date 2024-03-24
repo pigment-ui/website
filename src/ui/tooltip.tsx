@@ -1,3 +1,5 @@
+"use client";
+
 import { ForwardedRef, forwardRef } from "react";
 import { Tooltip as AriaTooltip, TooltipProps } from "react-aria-components";
 import { tv } from "tailwind-variants";

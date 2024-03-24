@@ -1,3 +1,5 @@
+"use client";
+
 import { ForwardedRef, forwardRef } from "react";
 import { Dialog as AriaDialog, DialogProps } from "react-aria-components";
 import { tv } from "tailwind-variants";

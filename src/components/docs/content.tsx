@@ -1,12 +1,9 @@
-"use client";
-
 import { Doc } from "contentlayer/generated";
 import NextLink from "next/link";
-import { ArrowLeftIcon, ArrowRightIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Button } from "#/ui/button";
 import { Separator } from "#/ui/separator";
 import { MDXContent } from "#/components";
-import * as components from "./mdx-components";
 
 export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
   const docIndex = allDocs.findIndex((d) => d.slug === doc.slug);
@@ -18,14 +15,33 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
       <div className="space-y-4">
         <h1 className="text-5xl font-bold">{doc.title}</h1>
         <p className="text-default-700">{doc.description}</p>
+
+        {(doc.hasSource || doc.referenceUrl) && (
+          <div className="flex gap-4">
+            {doc.hasSource && (
+              <Button asChild size="sm" variant="soft" startContent={<GitHubLogoIcon />}>
+                <NextLink href={`https://github.com/pigment-ui/pui-web/blob/main/src/ui/${doc.slug.split("/")[1]}.tsx`} target="_blank">
+                  Source
+                </NextLink>
+              </Button>
+            )}
+            {doc.referenceUrl && (
+              <Button asChild size="sm" variant="soft" startContent={<ExternalLinkIcon />}>
+                <NextLink href={doc.referenceUrl} target="_blank">
+                  Reference
+                </NextLink>
+              </Button>
+            )}
+          </div>
+        )}
       </div>
 
       <Separator />
 
-      <MDXContent code={doc.body.code} components={components} />
+      <MDXContent code={doc.body.code} />
 
       <Button asChild startContent={<GitHubLogoIcon />} variant="faded" className="w-fit">
-        <a href="https://github.com/pigment-ui" target="_blank">
+        <a href={`https://github.com/pigment-ui/pui-web/edit/main/src/content/${doc._raw.flattenedPath}.mdx`} target="_blank">
           Edit this page
         </a>
       </Button>

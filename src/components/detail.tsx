@@ -47,9 +47,6 @@ export function Detail() {
           )}
         />
       </div>
-
-      {/*<div className="absolute -right-[450px] top-0 h-[450px] w-[1200px] rotate-45 rounded-full bg-gradient-to-r from-secondary-500 via-secondary-500 via-30% to-primary-500 opacity-[.15] blur-[150px] max-lg:-right-[150px] max-lg:-top-[300px] max-lg:w-[750px] max-lg:to-secondary-500" />*/}
-      {/*<div className="absolute -bottom-[150px] -left-[150px] h-[600px] w-[600px] rotate-[135deg] rounded-full bg-gradient-to-r from-primary-500 via-primary-500 via-15% to-secondary-500 opacity-[.15] blur-[100px] max-lg:-bottom-[450px] max-lg:-left-[300px] max-lg:to-primary-500" />*/}
     </div>
   );
 }

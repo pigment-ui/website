@@ -1,3 +1,5 @@
+"use client";
+
 import { ForwardedRef, forwardRef } from "react";
 import { Input, InputProps, TextField as AriaTextField, TextFieldProps } from "react-aria-components";
 

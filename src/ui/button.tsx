@@ -44,9 +44,9 @@ const buttonStyles = tv({
     { size: "md", isIconOnly: true, className: "px-2.5" },
     { size: "lg", isIconOnly: true, className: "px-3" },
     { variant: "solid", isHovered: true, className: "bg-opacity-90" },
-    { variant: "soft", isHovered: true, className: "bg-opacity-30" },
-    { variant: "light", isHovered: true, className: "bg-opacity-20" },
-    { variant: "bordered", isHovered: true, className: "bg-opacity-20" },
+    { variant: "soft", isHovered: true, className: "bg-opacity-20" },
+    { variant: "light", isHovered: true, className: "bg-opacity-10" },
+    { variant: "bordered", isHovered: true, className: "bg-opacity-10" },
     { variant: "faded", isHovered: true, className: "bg-default-200" },
   ],
 });
