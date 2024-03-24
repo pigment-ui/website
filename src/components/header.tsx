@@ -24,9 +24,8 @@ export function Header() {
       asChild
       variant={href.split("/")[1] === segment ? "soft" : "light"}
       className={twMerge(href.split("/")[1] !== segment && "text-default-500", "justify-start")}
-      onPress={() => setIsOpened(false)}
     >
-      <NextLink href={href} prefetch>
+      <NextLink href={href} prefetch onClick={() => setIsOpened(false)}>
         {title}
       </NextLink>
     </Button>
