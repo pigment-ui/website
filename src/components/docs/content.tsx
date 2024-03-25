@@ -16,7 +16,7 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
         <h1 className="text-5xl font-bold">{doc.title}</h1>
         <p className="text-default-700">{doc.description}</p>
 
-        {(doc.hasSource || doc.referenceUrl) && (
+        {(doc.hasSource || doc.referenceUrl || doc.hasApiReference) && (
           <div className="flex gap-4">
             {doc.hasSource && (
               <Button asChild size="sm" variant="soft" startContent={<GitHubLogoIcon />}>
@@ -29,6 +29,13 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
               <Button asChild size="sm" variant="soft" startContent={<ExternalLinkIcon />}>
                 <NextLink href={doc.referenceUrl} target="_blank">
                   Reference
+                </NextLink>
+              </Button>
+            )}
+            {doc.hasApiReference && doc.referenceUrl && (
+              <Button asChild size="sm" variant="soft" startContent={<ExternalLinkIcon />}>
+                <NextLink href={doc.referenceUrl + "#props"} target="_blank">
+                  API Reference
                 </NextLink>
               </Button>
             )}
