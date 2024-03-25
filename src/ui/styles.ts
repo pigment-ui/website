@@ -36,7 +36,7 @@ export const radiusVariants = {
 };
 
 export const variantColorRadiusStyles = tv({
-  base: "backdrop-blur-lg",
+  base: "",
   variants: {
     variant: {
       solid: "text-default-0",

@@ -12,7 +12,7 @@ export function MDXContent({ code }: { code: string }) {
   const Component = useMDXComponent(code);
 
   return (
-    <div className="space-y-4 [&_h2]:!mt-16 [&_h3]:!mt-8">
+    <div className="space-y-4 [&>h2]:!mt-16 [&>h3]:!mt-8">
       <Component components={mdxComponents} />
     </div>
   );
@@ -35,6 +35,8 @@ const mdxComponents = {
       className="text-default-700 underline underline-offset-4 hover:text-default-500"
     />
   ),
-  Steps: ({ ...props }) => <div className="[&>h3]:step relative ml-3.5 space-y-4 border-l border-default-200 pl-7 [counter-reset:step]" {...props} />,
+  Steps: ({ ...props }) => (
+    <div className="[&>h3]:step relative ml-3.5 space-y-4 border-l border-default-200 pl-7 [counter-reset:step] [&>h3]:!mt-8" {...props} />
+  ),
   ...docsComponents,
 };

@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { CodeBlock } from "../shared";
 
 import * as button from "#/preview/button";
+import * as card from "#/preview/card";
 
 export function ComponentPreview({ slug }: { slug: string }) {
   const name = slug.split("/")[0];
@@ -21,4 +22,5 @@ export function ComponentPreview({ slug }: { slug: string }) {
 
 const previews: Record<string, Record<string, { code: string; preview: ReactNode }>> = {
   button,
+  card,
 };

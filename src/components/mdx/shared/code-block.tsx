@@ -37,7 +37,7 @@ export function CodeBlock({ code: codeProps, language }: { code: string; languag
         isIconOnly
         variant="light"
         size="sm"
-        className="absolute right-2.5 top-2.5"
+        className="absolute right-2.5 top-2.5 backdrop-blur-lg"
         onPress={() =>
           navigator.clipboard
             .writeText(code)
