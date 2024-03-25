@@ -8,7 +8,7 @@ description: "Learn how to install and use Pigment UI components."
 - Create your Next.js application with Tailwind CSS.
 - Install needed packages which will be used for creating components.
 
-```
+```bash
 npm i react-aria react-aria-components tailwind-variant tailwind-merge @radix-ui/react-slot @radix-ui/react-icons
 ```
 
@@ -22,7 +22,7 @@ Create color variables in CSS for both light and dark mode. See more on [colors]
 
 `color.css`
 
-```
+```css
 :root {
   --default-0: 255 255 255;
   --default-50: 250 250 250;
@@ -74,7 +74,7 @@ Import `color.css` to your global CSS file.
 
 `globals.css`
 
-```
+```css
 @import "./color.css";
 @tailwind base;
 @tailwind components;
@@ -87,7 +87,7 @@ Import `color.css` to your global CSS file.
 
 `tailwind.config.ts`
 
-```
+```ts
 theme: {
   // ...
   extend: {

@@ -46,6 +46,6 @@ export default makeSource({
   documentTypes: [Doc, Blog, Example],
   mdx: {
     remarkPlugins: [],
-    rehypePlugins: [],
+    rehypePlugins: [require("./src/components/mdx/plugins/rehype-code-language")],
   },
 });
