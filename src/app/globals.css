@@ -18,7 +18,7 @@
   }
 
   .step:before {
-    @apply absolute right-full grid h-7 w-7 -translate-x-3.5 place-items-center rounded-full bg-default-1000/10 text-base font-medium;
+    @apply absolute right-full grid h-7 w-7 -translate-x-3.5 place-items-center rounded-full bg-default-200 text-base font-medium;
     content: counter(step);
   }
 }

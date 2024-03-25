@@ -9,7 +9,7 @@ import { SizeProps } from "./types";
 // styles
 
 const separatorStyles = tv({
-  base: "bg-default-200 border-none rounded-full",
+  base: "bg-default-1000/10 border-none rounded-full",
   variants: {
     orientation: {
       horizontal: "w-full",

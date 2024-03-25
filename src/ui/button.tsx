@@ -7,14 +7,7 @@ import { AriaButtonProps, mergeProps, useButton, useFocusRing, useHover } from "
 import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
 
-import {
-  isDisabledVariants,
-  isFocusVisibleVariants,
-  isPressedVariants,
-  radiusVariants,
-  variantAndColorCompoundVariants,
-  variantAndColorVariants,
-} from "./styles";
+import { variantColorRadiusStyles } from "./styles";
 import { AsChildProps, ChildrenProps, ColorProps, ContentProps, RadiusProps, SizeProps, StyleProps, VariantProps } from "./types";
 
 import { Spinner } from "./spinner";
@@ -22,13 +15,9 @@ import { Spinner } from "./spinner";
 // styles
 
 const buttonStyles = tv({
+  extend: variantColorRadiusStyles,
   base: "relative flex items-center justify-center min-w-max whitespace-nowrap overflow-hidden",
   variants: {
-    ...variantAndColorVariants,
-    ...radiusVariants,
-    ...isPressedVariants,
-    ...isDisabledVariants,
-    ...isFocusVisibleVariants,
     size: {
       sm: "h-8 gap-x-2 px-4 text-xs [&_svg]:h-4 [&_svg]:w-4",
       md: "h-10 gap-x-2.5 px-5 text-sm [&_svg]:h-5 [&_svg]:w-5",
@@ -36,18 +25,11 @@ const buttonStyles = tv({
     },
     isIconOnly: { true: "" },
     isLoading: { true: "!text-transparent" },
-    isHovered: { true: "" },
   },
   compoundVariants: [
-    ...variantAndColorCompoundVariants,
     { size: "sm", isIconOnly: true, className: "px-2" },
     { size: "md", isIconOnly: true, className: "px-2.5" },
     { size: "lg", isIconOnly: true, className: "px-3" },
-    { variant: "solid", isHovered: true, className: "bg-opacity-90" },
-    { variant: "soft", isHovered: true, className: "bg-opacity-20" },
-    { variant: "light", isHovered: true, className: "bg-opacity-10" },
-    { variant: "bordered", isHovered: true, className: "bg-opacity-10" },
-    { variant: "faded", isHovered: true, className: "bg-default-200" },
   ],
 });
 
