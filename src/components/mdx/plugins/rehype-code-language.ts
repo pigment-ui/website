@@ -24,7 +24,7 @@ function determineLanguage(node: any) {
   const code = node.children.find((child: any) => child.type === "element" && child.tagName === "code");
 
   if (code && code.children && code.children.length > 0) {
-    return code.properties.className ? code.properties.className[0].split("-")[1] : "plaintext";
+    return code.properties.className ? code.properties.className[0].split("-")[1] : undefined;
   }
 }
 

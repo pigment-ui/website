@@ -14,7 +14,7 @@ export function ComponentPreview({ slug }: { slug: string }) {
       <div className="grid min-h-64 place-items-center rounded-t-xl border border-b-0 border-default-200 bg-default-0/50 p-8 backdrop-blur-xl">
         {preview}
       </div>
-      <CodeBlock code={code} />
+      <CodeBlock code={code} language="tsx" />
     </div>
   );
 }
