@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Button } from "#/ui/button";
 import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
@@ -17,9 +19,19 @@ export function CodeBlock({ code: codeProps, language }: { code: string; languag
 
   const { resolvedTheme } = useTheme();
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="relative">
-      <Highlight theme={resolvedTheme === "light" ? themes.oneLight : themes.oneDark} code={code} language={language ?? ""}>
+      <Highlight
+        code={code}
+        language={language ?? ""}
+        theme={mounted ? (resolvedTheme === "light" ? themes.oneLight : themes.oneDark) : { plain: { color: "transparent" }, styles: [] }}
+      >
         {({ tokens, getLineProps, getTokenProps }) => (
           <pre data-language={language} className="max-h-96 overflow-auto rounded-xl border border-default-200 bg-default-0 p-4 font-mono text-sm">
             {tokens.map((line, i) => (

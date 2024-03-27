@@ -21,7 +21,7 @@ const listBoxStyles = tv({
 
 const listBoxItemStyles = tv({
   slots: {
-    base: "flex items-center gap-x-2 p-2 text-sm [&_svg]:h-4 [&_svg]:w-4 cursor-pointer rounded-lg",
+    base: "flex items-center gap-x-2 p-2 text-sm [&_svg]:h-4 [&_svg]:w-4 rounded-lg",
     content: "flex-1",
   },
   variants: {
@@ -34,13 +34,9 @@ const listBoxItemStyles = tv({
       warning: "text-warning-500",
       error: "bg-error-500 text-error-500",
     },
-    isHovered: {
-      true: "bg-opacity-20",
-      false: "bg-opacity-0",
-    },
-    isPressed: {
-      true: "bg-opacity-40",
-    },
+    isSelectable: { true: "cursor-pointer" },
+    isHovered: { true: "bg-opacity-10", false: "bg-opacity-0" },
+    isPressed: { true: "bg-opacity-20" },
   },
 });
 
@@ -105,9 +101,11 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
       // @ts-ignore
       shouldSelectOnPressUp
       ref={ref}
+      textValue={typeof children === "string" ? children : undefined}
       {...restProps}
-      className={({ isHovered, isPressed, isDisabled, isFocusVisible }) =>
+      className={({ isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         stylesSlots.base({
+          isSelectable: selectionMode !== "none",
           isHovered,
           isPressed,
           isDisabled,

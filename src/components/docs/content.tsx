@@ -20,23 +20,23 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
           <div className="flex gap-4">
             {doc.hasSource && (
               <Button asChild size="sm" variant="soft" startContent={<GitHubLogoIcon />}>
-                <NextLink href={`https://github.com/pigment-ui/pui-web/blob/main/src/ui/${doc.slug.split("/")[1]}.tsx`} target="_blank">
+                <a href={`https://github.com/pigment-ui/pui-web/blob/main/src/ui/${doc.slug.split("/")[1]}.tsx`} target="_blank">
                   Source
-                </NextLink>
+                </a>
               </Button>
             )}
             {doc.referenceUrl && (
               <Button asChild size="sm" variant="soft" startContent={<ExternalLinkIcon />}>
-                <NextLink href={doc.referenceUrl} target="_blank">
+                <a href={doc.referenceUrl} target="_blank">
                   Reference
-                </NextLink>
+                </a>
               </Button>
             )}
             {doc.hasApiReference && doc.referenceUrl && (
               <Button asChild size="sm" variant="soft" startContent={<ExternalLinkIcon />}>
-                <NextLink href={doc.referenceUrl + "#props"} target="_blank">
+                <a href={doc.referenceUrl + "#props"} target="_blank">
                   API Reference
-                </NextLink>
+                </a>
               </Button>
             )}
           </div>
@@ -58,12 +58,16 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
       <div className="flex">
         {previousDoc && (
           <Button asChild variant="light" startContent={<ArrowLeftIcon />}>
-            <NextLink href={previousDoc.url}>{previousDoc.title}</NextLink>
+            <NextLink href={previousDoc.url} prefetch>
+              {previousDoc.title}
+            </NextLink>
           </Button>
         )}
         {nextDoc && (
           <Button asChild variant="light" endContent={<ArrowRightIcon />} className="ml-auto">
-            <NextLink href={nextDoc.url}>{nextDoc.title}</NextLink>
+            <NextLink href={nextDoc.url} prefetch>
+              {nextDoc.title}
+            </NextLink>
           </Button>
         )}
       </div>

@@ -1,5 +1,3 @@
-"use client";
-
 import NextLink from "next/link";
 import Image from "next/image";
 import { useMDXComponent } from "next-contentlayer/hooks";
@@ -27,14 +25,20 @@ const mdxComponents = {
   NextImage: ({ ...props }) => (
     <Image src="" alt="" priority {...props} className={twMerge("rounded-xl border border-default-200", props.className)} />
   ),
-  a: ({ ...props }) => (
-    <NextLink
-      href="#"
-      target={props.href.startsWith("http") ? "_blank" : undefined}
-      {...props}
-      className="text-default-700 underline underline-offset-4 hover:text-default-500"
-    />
-  ),
+  a: ({ ...props }) => {
+    const isExternal = props.href.startsWith("http");
+    const Component = isExternal ? "a" : NextLink;
+
+    return (
+      <Component
+        href="#"
+        prefetch={!isExternal ? true : undefined}
+        target={isExternal ? "_blank" : undefined}
+        {...props}
+        className="text-default-700 underline underline-offset-4 hover:text-default-500"
+      />
+    );
+  },
   Steps: ({ ...props }) => (
     <div className="[&>h3]:step relative ml-3.5 space-y-4 border-l border-default-200 pl-7 [counter-reset:step] [&>h3]:!mt-8" {...props} />
   ),

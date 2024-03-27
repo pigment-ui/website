@@ -27,14 +27,12 @@ export const fieldStyles = tv({
 
 export const fieldInputStyles = tv({
   slots: {
-    base: "flex items-center bg-default-100 overflow-hidden outline-none",
+    base: "flex items-center bg-default-1000 bg-opacity-10 overflow-hidden outline-none",
     self: "flex-1 h-full bg-transparent outline-none placeholder:text-default-500",
     content: "text-default-700",
     button: "grid place-items-center bg-default-1000 bg-opacity-10 data-[hovered]:bg-opacity-20 data-[pressed]:scale-95",
   },
   variants: {
-    ...isDisabledVariants,
-    ...isFocusVisibleVariants,
     size: {
       sm: { base: "h-8 gap-x-2 text-xs", content: "[&>svg]:h-4 [&>svg]:w-4", button: "h-6 w-6 [&>svg]:h-3 [&>svg]:w-3" },
       md: { base: "h-10 gap-x-3 text-sm", content: "[&>svg]:h-5 [&>svg]:w-5", button: "h-7 w-7 [&>svg]:h-4 [&>svg]:w-4" },
@@ -47,15 +45,15 @@ export const fieldInputStyles = tv({
       full: { base: radiusVariants.radius.full, button: radiusVariants.radius.full },
       none: { base: radiusVariants.radius.none, button: radiusVariants.radius.none },
     },
-    isInvalid: { true: "bg-error-100" },
-    isHovered: { true: "bg-default-200" },
-    isFocusWithin: { true: "bg-default-300" },
     hasStartButton: { true: "" },
     hasEndButton: { true: "" },
+    isInvalid: { true: "bg-error-500" },
+    isHovered: { true: "bg-opacity-20" },
+    isFocusWithin: { true: "bg-opacity-30" },
+    ...isDisabledVariants,
+    ...isFocusVisibleVariants,
   },
   compoundVariants: [
-    { isInvalid: true, isHovered: true, className: { base: "bg-error-200" } },
-    { isInvalid: true, isFocusWithin: true, className: { base: "bg-error-300" } },
     { size: "sm", hasStartButton: true, className: { base: "pl-1" } },
     { size: "md", hasStartButton: true, className: { base: "pl-1.5" } },
     { size: "lg", hasStartButton: true, className: { base: "pl-2" } },
@@ -68,6 +66,8 @@ export const fieldInputStyles = tv({
     { size: "sm", hasEndButton: false, className: { base: "pr-2" } },
     { size: "md", hasEndButton: false, className: { base: "pr-3" } },
     { size: "lg", hasEndButton: false, className: { base: "pr-4" } },
+    { isInvalid: true, isHovered: true, className: { base: "bg-error-200" } },
+    { isInvalid: true, isFocusWithin: true, className: { base: "bg-error-300" } },
   ],
 });
 
