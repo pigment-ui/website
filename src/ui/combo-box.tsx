@@ -2,7 +2,7 @@
 
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
-import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, InputProps, Popover } from "react-aria-components";
+import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, InputProps, Popover, PopoverProps } from "react-aria-components";
 
 import { FilterProps, ForwardRefType } from "./types";
 
@@ -13,6 +13,7 @@ import { ListBox, ListBoxItem, PigmentListBoxItemProps, PigmentListBoxProps } fr
 
 interface PigmentComboBoxProps<T extends object>
   extends FilterProps<ComboBoxProps<T> & Omit<InputProps, "size" | "color">>,
+    Pick<PopoverProps, "placement" | "offset" | "crossOffset" | "shouldFlip">,
     PigmentFieldBaseProps,
     PigmentFieldInputBaseProps,
     Pick<PigmentListBoxProps<T>, "color" | "itemClassNames" | "itemStyles"> {}
@@ -22,7 +23,7 @@ interface PigmentComboBoxProps<T extends object>
 function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: ForwardedRef<HTMLInputElement>) {
   return (
     <AriaComboBox {...props}>
-      <Field {...props}>
+      <Field {...props} className="" style={{}}>
         <FieldInput
           endButton={
             <Button>
@@ -35,7 +36,13 @@ function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: Forwar
         </FieldInput>
       </Field>
 
-      <Popover style={{ width: "var(--trigger-width)" }}>
+      <Popover
+        placement={props.placement}
+        offset={props.offset}
+        crossOffset={props.crossOffset}
+        shouldFlip={props.shouldFlip}
+        style={{ width: "var(--trigger-width)" }}
+      >
         <ListBox color={props.color} itemClassNames={props.itemClassNames} itemStyles={props.itemStyles}>
           {props.children}
         </ListBox>

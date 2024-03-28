@@ -6,10 +6,11 @@ import { Button } from "#/ui/button";
 import { useEffect, useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { GitHubLogoIcon, Half2Icon, HamburgerMenuIcon, MagnifyingGlassIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
-import { DialogTrigger } from "react-aria-components";
+import { DialogTrigger, MenuTrigger } from "react-aria-components";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "#/ui/modal";
 import { Popover } from "#/ui/popover";
 import { twMerge } from "tailwind-merge";
+import { Menu, MenuItem } from "#/ui/menu";
 
 export function Header() {
   const segment = useSelectedLayoutSegment();
@@ -57,9 +58,16 @@ export function Header() {
             </a>
           </Button>
 
-          <Button isIconOnly variant="faded" onPress={() => setTheme(theme === "light" ? "dark" : "light")}>
-            {mounted ? theme === "light" ? <SunIcon /> : theme === "dark" ? <MoonIcon /> : <Half2Icon /> : <Half2Icon />}
-          </Button>
+          <MenuTrigger>
+            <Button isIconOnly variant="faded">
+              {mounted ? theme === "light" ? <SunIcon /> : theme === "dark" ? <MoonIcon /> : <Half2Icon /> : <Half2Icon />}
+            </Button>
+            <Menu onAction={(key) => setTheme((key as string).toLowerCase())} placement="bottom end" className="w-32">
+              <MenuItem>Light</MenuItem>
+              <MenuItem>Dark</MenuItem>
+              <MenuItem>System</MenuItem>
+            </Menu>
+          </MenuTrigger>
 
           <DialogTrigger isOpen={isOpened} onOpenChange={setIsOpened}>
             <Button isIconOnly variant="faded" className="sm:hidden">

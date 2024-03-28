@@ -20,7 +20,7 @@ interface PigmentNumberFieldProps
 function _NumberField(props: PigmentNumberFieldProps, ref: ForwardedRef<HTMLInputElement>) {
   return (
     <AriaNumberField {...props}>
-      <Field {...props}>
+      <Field {...props} className="" style={{}}>
         <FieldInput
           startButton={
             <Button slot="decrement">

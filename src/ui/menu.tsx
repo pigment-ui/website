@@ -3,7 +3,7 @@
 import { CheckIcon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
-import { ListBox as AriaListBox, ListBoxItem as AriaListBoxItem, ListBoxItemProps, ListBoxProps } from "react-aria-components";
+import { Menu as AriaMenu, MenuItem as AriaMenuItem, MenuItemProps, MenuProps, Popover, PopoverProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
@@ -12,15 +12,14 @@ import { ColorProps, ContentProps, FilterProps, ForwardRefType, StylesSlotsToSty
 import { createSlots } from "./utils";
 
 import { Card } from "./card";
-import { Field, PigmentFieldBaseProps } from "./field";
 
 // styles
 
-const listBoxStyles = tv({
+const menuStyles = tv({
   base: "p-2 outline-none",
 });
 
-const listBoxItemStyles = tv({
+const menuItemStyles = tv({
   slots: {
     base: "flex items-center gap-x-2 p-2 text-sm [&_svg]:h-4 [&_svg]:w-4 rounded-lg",
     content: "flex-1",
@@ -41,48 +40,47 @@ const listBoxItemStyles = tv({
   },
 });
 
-type ListBoxItemStylesReturnType = ReturnType<typeof listBoxItemStyles>;
+type MenuItemStylesReturnType = ReturnType<typeof menuItemStyles>;
 
 // props
 
-interface PigmentListBoxProps<T extends object> extends FilterProps<ListBoxProps<T>>, PigmentFieldBaseProps, ColorProps {
-  itemClassNames?: PigmentListBoxItemProps["classNames"];
-  itemStyles?: PigmentListBoxItemProps["styles"];
+interface PigmentMenuProps<T extends object>
+  extends FilterProps<MenuProps<T>>,
+    Pick<PopoverProps, "placement" | "offset" | "crossOffset" | "shouldFlip">,
+    ColorProps {
+  itemClassNames?: PigmentMenuItemProps["classNames"];
+  itemStyles?: PigmentMenuItemProps["styles"];
 }
 
-interface PigmentListBoxItemProps
-  extends FilterProps<ListBoxItemProps>,
-    ColorProps,
-    ContentProps,
-    StylesSlotsToStyleProps<ListBoxItemStylesReturnType> {}
+interface PigmentMenuItemProps extends FilterProps<MenuItemProps>, ColorProps, ContentProps, StylesSlotsToStyleProps<MenuItemStylesReturnType> {}
 
 // slots
 
-interface ListBoxSlotsType extends Pick<PigmentListBoxProps<any>, "color" | "itemClassNames" | "itemStyles"> {}
+interface MenuSlotsType extends Pick<PigmentMenuProps<any>, "color" | "itemClassNames" | "itemStyles"> {}
 
-const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType>();
+const [MenuSlotsProvider, useMenuSlots] = createSlots<MenuSlotsType>();
 
 // component
 
-function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, itemClassNames, itemStyles } = props;
+function _Menu<T extends object>(props: PigmentMenuProps<T>, ref: ForwardedRef<HTMLDivElement>) {
+  const { color, className, itemClassNames, style, itemStyles } = props;
 
   return (
-    <ListBoxSlotsProvider value={{ color, itemClassNames, itemStyles }}>
-      <Field {...props}>
-        <Card asChild className={listBoxStyles()}>
-          <AriaListBox ref={ref} {...props} className="" style={{}}>
+    <MenuSlotsProvider value={{ color, itemClassNames, itemStyles }}>
+      <Popover placement={props.placement} offset={props.offset} crossOffset={props.crossOffset} shouldFlip={props.shouldFlip}>
+        <Card asChild className={menuStyles({ className })} style={style}>
+          <AriaMenu ref={ref} {...props} className="" style={{}}>
             {props.children}
-          </AriaListBox>
+          </AriaMenu>
         </Card>
-      </Field>
-    </ListBoxSlotsProvider>
+      </Popover>
+    </MenuSlotsProvider>
   );
 }
 
-const ListBox = (forwardRef as ForwardRefType)(_ListBox);
+const Menu = (forwardRef as ForwardRefType)(_Menu);
 
-function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivElement>) {
+function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
   const {
     color = "default",
     startContent,
@@ -95,16 +93,16 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
     styles,
     itemStyles,
     ...restProps
-  } = useListBoxSlots(props);
+  } = useMenuSlots(props);
 
-  const stylesSlots = listBoxItemStyles({ color });
+  const stylesSlots = menuItemStyles({ color });
 
   return (
-    <AriaListBoxItem
+    <AriaMenuItem
       // @ts-ignore
       shouldSelectOnPressUp
       ref={ref}
-      textValue={typeof children === "string" ? children : undefined}
+      id={typeof children === "string" ? children : undefined}
       {...restProps}
       className={({ isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         stylesSlots.base({
@@ -131,13 +129,13 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
           {endContent}
         </>
       )}
-    </AriaListBoxItem>
+    </AriaMenuItem>
   );
 }
 
-const ListBoxItem = forwardRef(_ListBoxItem);
+const MenuItem = forwardRef(_MenuItem);
 
 // exports
 
-export { ListBox, ListBoxItem };
-export type { PigmentListBoxProps, PigmentListBoxItemProps };
+export { Menu, MenuItem };
+export type { PigmentMenuProps, PigmentMenuItemProps };

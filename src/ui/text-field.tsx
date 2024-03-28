@@ -16,7 +16,7 @@ interface PigmentTextFieldProps extends FilterProps<TextFieldProps & Omit<InputP
 function _TextField(props: PigmentTextFieldProps, ref: ForwardedRef<HTMLInputElement>) {
   return (
     <AriaTextField {...props}>
-      <Field {...props}>
+      <Field {...props} className="" style={{}}>
         <FieldInput {...props}>
           <Input ref={ref} />
         </FieldInput>

@@ -5,7 +5,7 @@ import { FieldError, Group, Label, Text } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
-import { ContentProps, RadiusProps, SizeProps } from "./types";
+import { ContentProps, RadiusProps, SizeProps, StyleProps } from "./types";
 
 // styles
 
@@ -69,7 +69,7 @@ interface PigmentFieldBaseProps extends SizeProps {
   labelNecessityIndicator?: "symbol" | "text";
 }
 
-interface PigmentFieldProps extends PigmentFieldBaseProps {
+interface PigmentFieldProps extends PigmentFieldBaseProps, StyleProps {
   children?: ReactElement;
 }
 
@@ -86,12 +86,12 @@ interface PigmentFieldInputProps extends PigmentFieldInputBaseProps {
 // component
 
 function _Field(props: PigmentFieldProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { label, description, errorMessage, size = "md", isRequired, labelNecessityIndicator = "symbol", children } = props;
+  const { label, description, errorMessage, size = "md", isRequired, labelNecessityIndicator = "symbol", children, className, style } = props;
 
   const stylesSlots = fieldStyles({ size });
 
   return (
-    <div ref={ref} className={stylesSlots.base()}>
+    <div ref={ref} className={stylesSlots.base({ className })} style={style}>
       {label && (
         <Label className={stylesSlots.labelStyles()}>
           {label}

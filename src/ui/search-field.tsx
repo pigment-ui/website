@@ -21,7 +21,7 @@ function _SearchField(props: PigmentSearchFieldProps, ref: ForwardedRef<HTMLInpu
   return (
     <AriaSearchField {...props}>
       {({ isEmpty }) => (
-        <Field {...props}>
+        <Field {...props} className="" style={{}}>
           <FieldInput
             startContent={<MagnifyingGlassIcon />}
             endButton={
