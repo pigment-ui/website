@@ -122,31 +122,25 @@ function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivEle
   const hasEndButton = !!endButton;
   const stylesSlots = fieldInputStyles({ size, radius, hasStartButton, hasEndButton });
 
+  const spacingSize = { sm: 8, md: 10, lg: 12 }[size];
+  const [mounted, setMounted] = useState<boolean>(false);
+  const [paddingLeft, setPaddingLeft] = useState<number>(spacingSize);
+  const [paddingRight, setPaddingRight] = useState<number>(spacingSize);
+
   const startButtonRef = useRef<HTMLButtonElement>(null);
   const startContentRef = useRef<HTMLDivElement>(null);
   const endButtonRef = useRef<HTMLButtonElement>(null);
   const endContentRef = useRef<HTMLDivElement>(null);
-
-  const spacingSize = { sm: 8, md: 10, lg: 12 }[size];
-  const [paddingLeft, setPaddingLeft] = useState<number>(spacingSize);
-  const [paddingRight, setPaddingRight] = useState<number>(spacingSize);
-  const [mounted, setMounted] = useState<boolean>(false);
+  const startButtonWidth = startButtonRef.current?.offsetWidth ?? 0;
+  const startContentWidth = startContentRef.current?.offsetWidth ?? 0;
+  const endButtonWidth = endButtonRef.current?.offsetWidth ?? 0;
+  const endContentWidth = endContentRef.current?.offsetWidth ?? 0;
 
   useEffect(() => {
-    const startButtonWidth = startButtonRef.current?.offsetWidth ?? 0;
-    const startContentWidth = startContentRef.current?.offsetWidth ?? 0;
-    const endButtonWidth = endButtonRef.current?.offsetWidth ?? 0;
-    const endContentWidth = endContentRef.current?.offsetWidth ?? 0;
     setPaddingLeft((startButtonWidth ? startButtonWidth + spacingSize : 0) + (startContentWidth ? startContentWidth + spacingSize : 0) + spacingSize);
     setPaddingRight((endButtonWidth ? endButtonWidth + spacingSize : 0) + (endContentWidth ? endContentWidth + spacingSize : 0) + spacingSize);
     setMounted(true);
-  }, [
-    startButtonRef.current?.offsetWidth,
-    startContentRef.current?.offsetWidth,
-    endButtonRef.current?.offsetWidth,
-    endContentRef.current?.offsetWidth,
-    spacingSize,
-  ]);
+  }, [startButtonWidth, startContentWidth, endButtonWidth, endContentWidth, spacingSize]);
 
   return (
     <Group
