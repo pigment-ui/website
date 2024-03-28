@@ -1,13 +1,13 @@
 "use client";
 
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
 import { Button, InputProps, Popover, Select as AriaSelect, SelectProps, SelectValue } from "react-aria-components";
 
 import { FilterProps, ForwardRefType } from "./types";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
-import { ListBox, PigmentListBoxProps } from "#/ui/list-box";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
+import { ListBox, ListBoxItem, PigmentListBoxItemProps, PigmentListBoxProps } from "./list-box";
 
 // props
 
@@ -48,7 +48,13 @@ function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedR
 
 const Select = (forwardRef as ForwardRefType)(_Select);
 
+function _SelectItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivElement>) {
+  return <ListBoxItem ref={ref} {...props} />;
+}
+
+const SelectItem = forwardRef(_SelectItem);
+
 // exports
 
-export { Select };
+export { Select, SelectItem };
 export type { PigmentSelectProps };

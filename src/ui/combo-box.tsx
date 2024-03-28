@@ -7,7 +7,7 @@ import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, InputProps, Pop
 import { FilterProps, ForwardRefType } from "./types";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
-import { ListBox, PigmentListBoxProps } from "#/ui/list-box";
+import { ListBox, ListBoxItem, PigmentListBoxItemProps, PigmentListBoxProps } from "./list-box";
 
 // props
 
@@ -46,7 +46,13 @@ function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: Forwar
 
 const ComboBox = (forwardRef as ForwardRefType)(_ComboBox);
 
+function _ComboBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivElement>) {
+  return <ListBoxItem ref={ref} {...props} />;
+}
+
+const ComboBoxItem = forwardRef(_ComboBoxItem);
+
 // exports
 
-export { ComboBox };
+export { ComboBox, ComboBoxItem };
 export type { PigmentComboBoxProps };
