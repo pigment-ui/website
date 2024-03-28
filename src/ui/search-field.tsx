@@ -25,11 +25,11 @@ function _SearchField(props: PigmentSearchFieldProps, ref: ForwardedRef<HTMLInpu
           <FieldInput
             startContent={<MagnifyingGlassIcon />}
             endButton={
-              !isEmpty && (
+              !isEmpty ? (
                 <Button>
                   <Cross2Icon />
                 </Button>
-              )
+              ) : undefined
             }
             {...props}
           >
