@@ -49,7 +49,6 @@ function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: Forwar
           <Input ref={ref} />
         </FieldInput>
       </Field>
-
       <Popover
         isNonModal={false}
         placement={placement}
