@@ -7,20 +7,34 @@ import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, InputProps, Pop
 import { FilterProps, ForwardRefType } from "./types";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
-import { ListBox, ListBoxItem, PigmentListBoxItemProps, PigmentListBoxProps } from "./list-box";
+import { ListBox, ListBoxItem, ListBoxSection, PigmentListBoxItemProps, PigmentListBoxProps, PigmentListBoxSectionProps } from "./list-box";
 
 // props
 
 interface PigmentComboBoxProps<T extends object>
   extends FilterProps<ComboBoxProps<T> & Omit<InputProps, "size" | "color">>,
-    Pick<PopoverProps, "placement" | "offset" | "crossOffset" | "shouldFlip">,
+    Pick<PopoverProps, "placement" | "offset" | "crossOffset" | "shouldFlip" | "maxHeight">,
     PigmentFieldBaseProps,
     PigmentFieldInputBaseProps,
-    Pick<PigmentListBoxProps<T>, "color" | "itemClassNames" | "itemStyles"> {}
+    Pick<PigmentListBoxProps<T>, "color" | "itemClassNames" | "sectionClassNames" | "itemStyles" | "sectionStyles"> {}
 
 // component
 
 function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: ForwardedRef<HTMLInputElement>) {
+  const {
+    color,
+    placement,
+    offset,
+    crossOffset,
+    shouldFlip,
+    maxHeight = 300,
+    children,
+    itemClassNames,
+    sectionClassNames,
+    itemStyles,
+    sectionStyles,
+  } = props;
+
   return (
     <AriaComboBox {...props}>
       <Field {...props} className="" style={{}}>
@@ -37,14 +51,22 @@ function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: Forwar
       </Field>
 
       <Popover
-        placement={props.placement}
-        offset={props.offset}
-        crossOffset={props.crossOffset}
-        shouldFlip={props.shouldFlip}
+        isNonModal={false}
+        placement={placement}
+        offset={offset}
+        crossOffset={crossOffset}
+        shouldFlip={shouldFlip}
         style={{ width: "var(--trigger-width)" }}
       >
-        <ListBox color={props.color} itemClassNames={props.itemClassNames} itemStyles={props.itemStyles}>
-          {props.children}
+        <ListBox
+          color={color}
+          itemClassNames={itemClassNames}
+          sectionClassNames={sectionClassNames}
+          itemStyles={itemStyles}
+          sectionStyles={sectionStyles}
+          listBoxStyle={{ maxHeight, overflowY: "auto" }}
+        >
+          {children}
         </ListBox>
       </Popover>
     </AriaComboBox>
@@ -59,7 +81,13 @@ function _ComboBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDiv
 
 const ComboBoxItem = forwardRef(_ComboBoxItem);
 
+function _ComboBoxSection<T extends object>(props: PigmentListBoxSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
+  return <ListBoxSection ref={ref} {...props} />;
+}
+
+const ComboBoxSection = (forwardRef as ForwardRefType)(_ComboBoxSection);
+
 // exports
 
-export { ComboBox, ComboBoxItem };
+export { ComboBox, ComboBoxItem, ComboBoxSection };
 export type { PigmentComboBoxProps };

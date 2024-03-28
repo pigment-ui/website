@@ -1,9 +1,18 @@
 "use client";
 
 import { CheckIcon } from "@radix-ui/react-icons";
-import { ForwardedRef, forwardRef } from "react";
+import { CSSProperties, ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
-import { ListBox as AriaListBox, ListBoxItem as AriaListBoxItem, ListBoxItemProps, ListBoxProps } from "react-aria-components";
+import {
+  Collection,
+  Header,
+  ListBox as AriaListBox,
+  ListBoxItem as AriaListBoxItem,
+  ListBoxItemProps,
+  ListBoxProps,
+  Section,
+  SectionProps,
+} from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
@@ -43,11 +52,24 @@ const listBoxItemStyles = tv({
 
 type ListBoxItemStylesReturnType = ReturnType<typeof listBoxItemStyles>;
 
+const listBoxSectionStyles = tv({
+  slots: {
+    base: "py-2 first:pt-0 last:pb-0",
+    title: "p-2 mb-2 text-sm text-default-500 font-bold border-b border-b-default-1000/20",
+  },
+});
+
+type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
+
 // props
 
 interface PigmentListBoxProps<T extends object> extends FilterProps<ListBoxProps<T>>, PigmentFieldBaseProps, ColorProps {
+  listBoxClassName?: string;
+  listBoxStyle?: CSSProperties;
   itemClassNames?: PigmentListBoxItemProps["classNames"];
+  sectionClassNames?: PigmentListBoxSectionProps<T>["classNames"];
   itemStyles?: PigmentListBoxItemProps["styles"];
+  sectionStyles?: PigmentListBoxSectionProps<T>["styles"];
 }
 
 interface PigmentListBoxItemProps
@@ -56,23 +78,28 @@ interface PigmentListBoxItemProps
     ContentProps,
     StylesSlotsToStyleProps<ListBoxItemStylesReturnType> {}
 
+interface PigmentListBoxSectionProps<T extends object> extends SectionProps<T>, StylesSlotsToStyleProps<ListBoxSectionStylesReturnType> {
+  title: string;
+}
+
 // slots
 
-interface ListBoxSlotsType extends Pick<PigmentListBoxProps<any>, "color" | "itemClassNames" | "itemStyles"> {}
+interface ListBoxSlotsType
+  extends Pick<PigmentListBoxProps<any>, "color" | "itemClassNames" | "sectionClassNames" | "itemStyles" | "sectionStyles"> {}
 
 const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType>();
 
 // component
 
 function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, itemClassNames, itemStyles } = props;
+  const { color, children, listBoxClassName, itemClassNames, sectionClassNames, listBoxStyle, itemStyles, sectionStyles } = props;
 
   return (
-    <ListBoxSlotsProvider value={{ color, itemClassNames, itemStyles }}>
+    <ListBoxSlotsProvider value={{ color, itemClassNames, sectionClassNames, itemStyles, sectionStyles }}>
       <Field {...props}>
-        <Card asChild className={listBoxStyles()}>
+        <Card asChild className={listBoxStyles({ className: listBoxClassName })} style={listBoxStyle}>
           <AriaListBox ref={ref} {...props} className="" style={{}}>
-            {props.children}
+            {children}
           </AriaListBox>
         </Card>
       </Field>
@@ -137,7 +164,30 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
 
 const ListBoxItem = forwardRef(_ListBoxItem);
 
+function _ListBoxSection<T extends object>(props: PigmentListBoxSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
+  const { title, items, children, className, classNames, sectionClassNames, style, styles, sectionStyles } = useListBoxSlots(props);
+
+  const stylesSlots = listBoxSectionStyles();
+
+  return (
+    <Section
+      className={stylesSlots.base({ className: twMerge(sectionClassNames?.base, classNames?.base, className) })}
+      style={mergeProps(sectionStyles?.base, styles?.base, style)}
+    >
+      <Header
+        className={stylesSlots.title({ className: twMerge(sectionClassNames?.title, classNames?.title) })}
+        style={mergeProps(sectionStyles?.title, styles?.title)}
+      >
+        {title}
+      </Header>
+      <Collection items={items}>{children}</Collection>
+    </Section>
+  );
+}
+
+const ListBoxSection = (forwardRef as ForwardRefType)(_ListBoxSection);
+
 // exports
 
-export { ListBox, ListBoxItem };
-export type { PigmentListBoxProps, PigmentListBoxItemProps };
+export { ListBox, ListBoxItem, ListBoxSection };
+export type { PigmentListBoxProps, PigmentListBoxItemProps, PigmentListBoxSectionProps };

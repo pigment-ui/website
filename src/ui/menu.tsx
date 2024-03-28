@@ -46,7 +46,7 @@ type MenuItemStylesReturnType = ReturnType<typeof menuItemStyles>;
 
 interface PigmentMenuProps<T extends object>
   extends FilterProps<MenuProps<T>>,
-    Pick<PopoverProps, "placement" | "offset" | "crossOffset" | "shouldFlip">,
+    Pick<PopoverProps, "placement" | "offset" | "crossOffset" | "shouldFlip" | "maxHeight">,
     ColorProps {
   itemClassNames?: PigmentMenuItemProps["classNames"];
   itemStyles?: PigmentMenuItemProps["styles"];
@@ -63,14 +63,14 @@ const [MenuSlotsProvider, useMenuSlots] = createSlots<MenuSlotsType>();
 // component
 
 function _Menu<T extends object>(props: PigmentMenuProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, className, itemClassNames, style, itemStyles } = props;
+  const { color, placement, offset, crossOffset, shouldFlip, maxHeight = 300, children, className, itemClassNames, style, itemStyles } = props;
 
   return (
     <MenuSlotsProvider value={{ color, itemClassNames, itemStyles }}>
-      <Popover placement={props.placement} offset={props.offset} crossOffset={props.crossOffset} shouldFlip={props.shouldFlip}>
-        <Card asChild className={menuStyles({ className })} style={style}>
+      <Popover placement={placement} offset={offset} crossOffset={crossOffset} shouldFlip={shouldFlip}>
+        <Card asChild className={menuStyles({ className })} style={{ maxHeight, overflowY: "auto", ...style }}>
           <AriaMenu ref={ref} {...props} className="" style={{}}>
-            {props.children}
+            {children}
           </AriaMenu>
         </Card>
       </Popover>

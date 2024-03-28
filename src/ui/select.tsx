@@ -7,20 +7,33 @@ import { Button, InputProps, Popover, PopoverProps, Select as AriaSelect, Select
 import { FilterProps, ForwardRefType } from "./types";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
-import { ListBox, ListBoxItem, PigmentListBoxItemProps, PigmentListBoxProps } from "./list-box";
+import { ListBox, ListBoxItem, ListBoxSection, PigmentListBoxItemProps, PigmentListBoxProps, PigmentListBoxSectionProps } from "./list-box";
 
 // props
 
 interface PigmentSelectProps<T extends object>
   extends FilterProps<SelectProps<T> & Omit<InputProps, "size" | "color">>,
-    Pick<PopoverProps, "placement" | "offset" | "crossOffset" | "shouldFlip">,
+    Pick<PopoverProps, "placement" | "offset" | "crossOffset" | "shouldFlip" | "maxHeight">,
     PigmentFieldBaseProps,
     PigmentFieldInputBaseProps,
-    Pick<PigmentListBoxProps<T>, "color" | "itemClassNames" | "itemStyles"> {}
+    Pick<PigmentListBoxProps<T>, "color" | "itemClassNames" | "sectionClassNames" | "itemStyles" | "sectionStyles"> {}
 
 // component
 
 function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedRef<HTMLButtonElement>) {
+  const {
+    color,
+    placement,
+    offset,
+    crossOffset,
+    shouldFlip,
+    maxHeight = 300,
+    children,
+    itemClassNames,
+    sectionClassNames,
+    itemStyles,
+    sectionStyles,
+  } = props;
   return (
     <AriaSelect {...props}>
       <Field {...props} className="" style={{}}>
@@ -39,14 +52,21 @@ function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedR
       </Field>
 
       <Popover
-        placement={props.placement}
-        offset={props.offset}
-        crossOffset={props.crossOffset}
-        shouldFlip={props.shouldFlip}
-        style={{ width: "var(--trigger-width)" }}
+        placement={placement}
+        offset={offset}
+        crossOffset={crossOffset}
+        shouldFlip={shouldFlip}
+        style={{ width: "var(--trigger-width)", padding: 0 }}
       >
-        <ListBox color={props.color} itemClassNames={props.itemClassNames} itemStyles={props.itemStyles}>
-          {props.children}
+        <ListBox
+          color={color}
+          itemClassNames={itemClassNames}
+          sectionClassNames={sectionClassNames}
+          itemStyles={itemStyles}
+          sectionStyles={sectionStyles}
+          listBoxStyle={{ maxHeight, overflowY: "auto" }}
+        >
+          {children}
         </ListBox>
       </Popover>
     </AriaSelect>
@@ -61,7 +81,13 @@ function _SelectItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivEl
 
 const SelectItem = forwardRef(_SelectItem);
 
+function _SelectSection<T extends object>(props: PigmentListBoxSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
+  return <ListBoxSection ref={ref} {...props} />;
+}
+
+const SelectSection = (forwardRef as ForwardRefType)(_SelectSection);
+
 // exports
 
-export { Select, SelectItem };
+export { Select, SelectItem, SelectSection };
 export type { PigmentSelectProps };
