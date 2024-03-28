@@ -1,37 +1,39 @@
 "use client";
 
-import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
-import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, InputProps, Popover } from "react-aria-components";
+import { Button, InputProps, Popover, Select as AriaSelect, SelectProps, SelectValue } from "react-aria-components";
 
 import { FilterProps, ForwardRefType } from "./types";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
 import { ListBox, PigmentListBoxProps } from "#/ui/list-box";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 
 // props
 
-interface PigmentComboBoxProps<T extends object>
-  extends FilterProps<ComboBoxProps<T> & Omit<InputProps, "size" | "color">>,
+interface PigmentSelectProps<T extends object>
+  extends FilterProps<SelectProps<T> & Omit<InputProps, "size" | "color">>,
     PigmentFieldBaseProps,
     PigmentFieldInputBaseProps,
     Pick<PigmentListBoxProps<T>, "color" | "itemClassNames" | "itemStyles"> {}
 
 // component
 
-function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: ForwardedRef<HTMLInputElement>) {
+function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedRef<HTMLButtonElement>) {
   return (
-    <AriaComboBox {...props}>
+    <AriaSelect {...props}>
       <Field {...props}>
         <FieldInput
-          endButton={
-            <Button>
-              <ChevronDownIcon />
-            </Button>
-          }
           {...props}
+          endButton={
+            <div className="pointer-events-none">
+              <ChevronDownIcon />
+            </div>
+          }
         >
-          <Input ref={ref} />
+          <Button ref={ref} className="flex items-center">
+            <SelectValue />
+          </Button>
         </FieldInput>
       </Field>
 
@@ -40,13 +42,13 @@ function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: Forwar
           {props.children}
         </ListBox>
       </Popover>
-    </AriaComboBox>
+    </AriaSelect>
   );
 }
 
-const ComboBox = (forwardRef as ForwardRefType)(_ComboBox);
+const Select = (forwardRef as ForwardRefType)(_Select);
 
 // exports
 
-export { ComboBox };
-export type { PigmentComboBoxProps };
+export { Select };
+export type { PigmentSelectProps };

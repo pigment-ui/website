@@ -1,11 +1,11 @@
 "use client";
 
-import { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
+import { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode, useEffect, useRef, useState } from "react";
 import { FieldError, Group, Label, Text } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
-import { ChildrenProps, ContentProps, RadiusProps, SizeProps } from "./types";
+import { ContentProps, RadiusProps, SizeProps } from "./types";
 
 // styles
 
@@ -27,16 +27,16 @@ export const fieldStyles = tv({
 
 export const fieldInputStyles = tv({
   slots: {
-    base: "flex items-center bg-default-1000 bg-opacity-10 overflow-hidden outline-none",
+    base: "relative flex items-center bg-default-1000 bg-opacity-10 overflow-hidden outline-none",
     self: "flex-1 h-full bg-transparent outline-none placeholder:text-default-500",
-    content: "text-default-700",
+    content: "text-default-700 pointer-events-none",
     button: "grid place-items-center bg-default-1000 bg-opacity-10 data-[hovered]:bg-opacity-20 data-[pressed]:scale-95",
   },
   variants: {
     size: {
-      sm: { base: "h-8 gap-x-2 text-xs", content: "[&>svg]:h-4 [&>svg]:w-4", button: "h-6 w-6 [&>svg]:h-3 [&>svg]:w-3" },
-      md: { base: "h-10 gap-x-3 text-sm", content: "[&>svg]:h-5 [&>svg]:w-5", button: "h-7 w-7 [&>svg]:h-4 [&>svg]:w-4" },
-      lg: { base: "h-12 gap-x-4 text-base", content: "[&>svg]:h-6 [&>svg]:w-6", button: "h-8 w-8 [&>svg]:h-5 [&>svg]:w-5" },
+      sm: { base: "h-8 text-xs", content: "[&>svg]:h-4 [&>svg]:w-4", button: "h-6 w-6 [&>svg]:h-3 [&>svg]:w-3" },
+      md: { base: "h-10 text-sm", content: "[&>svg]:h-5 [&>svg]:w-5", button: "h-7 w-7 [&>svg]:h-4 [&>svg]:w-4" },
+      lg: { base: "h-12 text-base", content: "[&>svg]:h-6 [&>svg]:w-6", button: "h-8 w-8 [&>svg]:h-5 [&>svg]:w-5" },
     },
     radius: {
       sm: { base: radiusVariants.radius.sm, button: radiusVariants.radius.sm },
@@ -50,22 +50,10 @@ export const fieldInputStyles = tv({
     isInvalid: { true: "bg-error-500" },
     isHovered: { true: "bg-opacity-20" },
     isFocusWithin: { true: "bg-opacity-30" },
-    ...isDisabledVariants,
     ...isFocusVisibleVariants,
+    ...isDisabledVariants,
   },
   compoundVariants: [
-    { size: "sm", hasStartButton: true, className: { base: "pl-1" } },
-    { size: "md", hasStartButton: true, className: { base: "pl-1.5" } },
-    { size: "lg", hasStartButton: true, className: { base: "pl-2" } },
-    { size: "sm", hasEndButton: true, className: { base: "pr-1" } },
-    { size: "md", hasEndButton: true, className: { base: "pr-1.5" } },
-    { size: "lg", hasEndButton: true, className: { base: "pr-2" } },
-    { size: "sm", hasStartButton: false, className: { base: "pl-2" } },
-    { size: "md", hasStartButton: false, className: { base: "pl-3" } },
-    { size: "lg", hasStartButton: false, className: { base: "pl-4" } },
-    { size: "sm", hasEndButton: false, className: { base: "pr-2" } },
-    { size: "md", hasEndButton: false, className: { base: "pr-3" } },
-    { size: "lg", hasEndButton: false, className: { base: "pr-4" } },
     { isInvalid: true, isHovered: true, className: { base: "bg-error-200" } },
     { isInvalid: true, isFocusWithin: true, className: { base: "bg-error-300" } },
   ],
@@ -81,15 +69,18 @@ interface PigmentFieldBaseProps extends SizeProps {
   labelNecessityIndicator?: "symbol" | "text";
 }
 
-interface PigmentFieldProps extends PigmentFieldBaseProps, ChildrenProps {}
+interface PigmentFieldProps extends PigmentFieldBaseProps {
+  children?: ReactElement;
+}
 
 interface PigmentFieldInputBaseProps extends SizeProps, RadiusProps, ContentProps {}
 
-interface PigmentFieldInputProps extends PigmentFieldInputBaseProps, ChildrenProps {
+interface PigmentFieldInputProps extends PigmentFieldInputBaseProps {
+  children?: ReactElement;
   isInvalid?: boolean;
   isDisabled?: boolean;
-  startButton?: ReactNode;
-  endButton?: ReactNode;
+  startButton?: ReactElement;
+  endButton?: ReactElement;
 }
 
 // component
@@ -127,7 +118,35 @@ const Field = forwardRef(_Field);
 function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivElement>) {
   const { size = "md", radius = "md", isInvalid, isDisabled, startContent, endContent, startButton, endButton, children } = props;
 
-  const stylesSlots = fieldInputStyles({ size, radius, hasStartButton: !!startButton, hasEndButton: !!endButton });
+  const hasStartButton = !!startButton;
+  const hasEndButton = !!endButton;
+  const stylesSlots = fieldInputStyles({ size, radius, hasStartButton, hasEndButton });
+
+  const startButtonRef = useRef<HTMLButtonElement>(null);
+  const startContentRef = useRef<HTMLDivElement>(null);
+  const endButtonRef = useRef<HTMLButtonElement>(null);
+  const endContentRef = useRef<HTMLDivElement>(null);
+
+  const spacingSize = { sm: 8, md: 10, lg: 12 }[size];
+  const [paddingLeft, setPaddingLeft] = useState<number>(spacingSize);
+  const [paddingRight, setPaddingRight] = useState<number>(spacingSize);
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    const startButtonWidth = startButtonRef.current?.offsetWidth ?? 0;
+    const startContentWidth = startContentRef.current?.offsetWidth ?? 0;
+    const endButtonWidth = endButtonRef.current?.offsetWidth ?? 0;
+    const endContentWidth = endContentRef.current?.offsetWidth ?? 0;
+    setPaddingLeft((startButtonWidth ? startButtonWidth + spacingSize : 0) + (startContentWidth ? startContentWidth + spacingSize : 0) + spacingSize);
+    setPaddingRight((endButtonWidth ? endButtonWidth + spacingSize : 0) + (endContentWidth ? endContentWidth + spacingSize : 0) + spacingSize);
+    setMounted(true);
+  }, [
+    startButtonRef.current?.offsetWidth,
+    startContentRef.current?.offsetWidth,
+    endButtonRef.current?.offsetWidth,
+    endContentRef.current?.offsetWidth,
+    spacingSize,
+  ]);
 
   return (
     <Group
@@ -136,11 +155,45 @@ function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivEle
         stylesSlots.base({ isInvalid, isHovered, isDisabled, isFocusVisible, isFocusWithin })
       }
     >
-      {startButton && cloneElement(startButton as ReactElement, { className: stylesSlots.button() })}
-      {startContent && <div className={stylesSlots.content()}>{startContent}</div>}
-      {children && cloneElement(children as ReactElement, { className: stylesSlots.self() })}
-      {endContent && <div className={stylesSlots.content()}>{endContent}</div>}
-      {endButton && cloneElement(endButton as ReactElement, { className: stylesSlots.button() })}
+      {startButton &&
+        cloneElement(startButton, {
+          ref: startButtonRef,
+          style: mounted ? { position: "absolute", left: spacingSize } : { marginLeft: spacingSize },
+          className: stylesSlots.button({ className: startButton.props?.className }),
+        })}
+
+      {startContent && (
+        <div
+          ref={startContentRef}
+          style={mounted ? { position: "absolute", left: hasStartButton ? spacingSize * 5 : spacingSize } : { marginLeft: spacingSize }}
+          className={stylesSlots.content()}
+        >
+          {startContent}
+        </div>
+      )}
+
+      {children &&
+        cloneElement(children, {
+          style: { paddingLeft, paddingRight },
+          className: stylesSlots.self({ className: children.props?.className }),
+        })}
+
+      {endContent && (
+        <div
+          ref={endContentRef}
+          style={mounted ? { position: "absolute", right: hasEndButton ? spacingSize * 5 : spacingSize } : { marginRight: spacingSize }}
+          className={stylesSlots.content()}
+        >
+          {endContent}
+        </div>
+      )}
+
+      {endButton &&
+        cloneElement(endButton, {
+          ref: endButtonRef,
+          style: mounted ? { position: "absolute", right: spacingSize } : { marginRight: spacingSize },
+          className: stylesSlots.button({ className: endButton.props?.className }),
+        })}
     </Group>
   );
 }

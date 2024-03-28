@@ -12,11 +12,12 @@ import { ColorProps, ContentProps, FilterProps, ForwardRefType, StylesSlotsToSty
 import { createSlots } from "./utils";
 
 import { Card } from "./card";
+import { Field, PigmentFieldBaseProps } from "#/ui/field";
 
 // styles
 
 const listBoxStyles = tv({
-  base: "p-2",
+  base: "p-2 outline-none",
 });
 
 const listBoxItemStyles = tv({
@@ -44,7 +45,7 @@ type ListBoxItemStylesReturnType = ReturnType<typeof listBoxItemStyles>;
 
 // props
 
-interface PigmentListBoxProps<T extends object> extends FilterProps<ListBoxProps<T>>, ColorProps {
+interface PigmentListBoxProps<T extends object> extends FilterProps<ListBoxProps<T>>, PigmentFieldBaseProps, ColorProps {
   itemClassNames?: PigmentListBoxItemProps["classNames"];
   itemStyles?: PigmentListBoxItemProps["styles"];
 }
@@ -68,11 +69,13 @@ function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: Forwarde
 
   return (
     <ListBoxSlotsProvider value={{ color, itemClassNames, itemStyles }}>
-      <Card asChild className={listBoxStyles({ className })} style={style}>
-        <AriaListBox ref={ref} {...restProps}>
-          {children}
-        </AriaListBox>
-      </Card>
+      <Field {...props}>
+        <Card asChild className={listBoxStyles({ className })} style={style}>
+          <AriaListBox ref={ref} {...restProps}>
+            {children}
+          </AriaListBox>
+        </Card>
+      </Field>
     </ListBoxSlotsProvider>
   );
 }
