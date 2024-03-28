@@ -171,6 +171,7 @@ function _ListBoxSection<T extends object>(props: PigmentListBoxSectionProps<T>,
 
   return (
     <Section
+      ref={ref}
       className={stylesSlots.base({ className: twMerge(sectionClassNames?.base, classNames?.base, className) })}
       style={mergeProps(sectionStyles?.base, styles?.base, style)}
     >
