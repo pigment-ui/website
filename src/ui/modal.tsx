@@ -1,17 +1,17 @@
 "use client";
 
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { ForwardedRef, forwardRef } from "react";
+import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps, useId } from "react-aria";
 import { Modal as AriaModal, ModalOverlay, ModalOverlayProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { ChildrenProps, FilterProps, SizeProps, StyleProps, StylesSlotsToSlots, StylesSlotsToStyleProps } from "./types";
+import { ChildrenProps, FilterProps, SizeProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { Button } from "./button";
-import { Card, CardBody, CardFooter, CardHeader } from "./card";
+import { Card, CardBody, CardButtons, CardFooter, CardHeader, CardHeading } from "./card";
 import { Dialog, PigmentDialogProps } from "./dialog";
 
 // styles
@@ -42,13 +42,13 @@ interface PigmentModalProps
   extends Omit<FilterProps<ModalOverlayProps>, "children">,
     Pick<PigmentDialogProps, "children">,
     SizeProps,
-    StylesSlotsToStyleProps<ModalStylesReturnType> {}
+    StyleSlotsToStyleProps<ModalStylesReturnType> {}
 
 interface PigmentModalItemProps extends ChildrenProps, StyleProps {}
 
 // slots
 
-interface ModalSlotsType extends StylesSlotsToSlots<ModalStylesReturnType> {}
+interface ModalSlotsType extends StyleSlotsToSlots<ModalStylesReturnType> {}
 
 const [ModalSlotsProvider, useModalSlots] = createSlots<Record<"headerId" | "bodyId", string> & ModalSlotsType>();
 
@@ -60,13 +60,13 @@ function _Modal(props: PigmentModalProps, ref: ForwardedRef<HTMLDivElement>) {
   const headerId = useId();
   const bodyId = useId();
 
-  const stylesSlots = modalStyles({ size });
+  const styleSlots = modalStyles({ size });
 
   return (
-    <ModalSlotsProvider value={{ headerId, bodyId, stylesSlots, classNames, styles }}>
-      <ModalOverlay {...restProps} className={stylesSlots.backdrop({ className: classNames?.backdrop })} style={styles?.backdrop}>
+    <ModalSlotsProvider value={{ headerId, bodyId, styleSlots, classNames, styles }}>
+      <ModalOverlay {...restProps} className={styleSlots.backdrop({ className: classNames?.backdrop })} style={styles?.backdrop}>
         {({ state }) => (
-          <Card asChild className={stylesSlots.base({ className: twMerge(classNames?.base, className) })} style={mergeProps(styles?.base, style)}>
+          <Card asChild className={styleSlots.base({ className: twMerge(classNames?.base, className) })} style={mergeProps(styles?.base, style)}>
             <AriaModal ref={ref} {...restProps}>
               <Dialog aria-labelledby={headerId} aria-describedby={bodyId}>
                 {children}
@@ -77,7 +77,7 @@ function _Modal(props: PigmentModalProps, ref: ForwardedRef<HTMLDivElement>) {
                 variant="light"
                 size="sm"
                 onPress={() => state.close()}
-                className={stylesSlots.closeButton({ className: classNames?.closeButton })}
+                className={styleSlots.closeButton({ className: classNames?.closeButton })}
                 style={styles?.closeButton}
               >
                 <Cross2Icon />
@@ -93,13 +93,13 @@ function _Modal(props: PigmentModalProps, ref: ForwardedRef<HTMLDivElement>) {
 const Modal = forwardRef(_Modal);
 
 function _ModalHeader(props: PigmentModalItemProps, ref: ForwardedRef<HTMLElement>) {
-  const { headerId, children, stylesSlots, className, classNames, style, styles } = useModalSlots(props);
+  const { headerId, children, styleSlots, className, classNames, style, styles } = useModalSlots(props);
 
   return (
     <CardHeader
       ref={ref}
       id={headerId}
-      className={stylesSlots.header({ className: twMerge(classNames?.header, className) })}
+      className={styleSlots.header({ className: twMerge(classNames?.header, className) })}
       style={mergeProps(styles?.header, style)}
     >
       {children}
@@ -110,13 +110,13 @@ function _ModalHeader(props: PigmentModalItemProps, ref: ForwardedRef<HTMLElemen
 const ModalHeader = forwardRef(_ModalHeader);
 
 function _ModalBody(props: PigmentModalItemProps, ref: ForwardedRef<HTMLElement>) {
-  const { bodyId, children, stylesSlots, className, classNames, style, styles } = useModalSlots(props);
+  const { bodyId, children, styleSlots, className, classNames, style, styles } = useModalSlots(props);
 
   return (
     <CardBody
       ref={ref}
       id={bodyId}
-      className={stylesSlots.body({ className: twMerge(classNames?.body, className) })}
+      className={styleSlots.body({ className: twMerge(classNames?.body, className) })}
       style={mergeProps(styles?.body, style)}
     >
       {children}
@@ -127,12 +127,12 @@ function _ModalBody(props: PigmentModalItemProps, ref: ForwardedRef<HTMLElement>
 const ModalBody = forwardRef(_ModalBody);
 
 function _ModalFooter(props: PigmentModalItemProps, ref: ForwardedRef<HTMLElement>) {
-  const { children, stylesSlots, className, classNames, style, styles } = useModalSlots(props);
+  const { children, styleSlots, className, classNames, style, styles } = useModalSlots(props);
 
   return (
     <CardFooter
       ref={ref}
-      className={stylesSlots.footer({ className: twMerge(classNames?.footer, className) })}
+      className={styleSlots.footer({ className: twMerge(classNames?.footer, className) })}
       style={mergeProps(styles?.footer, style)}
     >
       {children}
@@ -142,7 +142,19 @@ function _ModalFooter(props: PigmentModalItemProps, ref: ForwardedRef<HTMLElemen
 
 const ModalFooter = forwardRef(_ModalFooter);
 
+function _ModalHeading<T extends object>(props: HTMLAttributes<HTMLHeadingElement>, ref: ForwardedRef<HTMLHeadingElement>) {
+  return <CardHeading ref={ref} {...props} />;
+}
+
+const ModalHeading = forwardRef(_ModalHeading);
+
+function _ModalButtons<T extends object>(props: HTMLAttributes<HTMLDivElement>, ref: ForwardedRef<HTMLDivElement>) {
+  return <CardButtons ref={ref} {...props} />;
+}
+
+const ModalButtons = forwardRef(_ModalButtons);
+
 // exports
 
-export { Modal, ModalHeader, ModalBody, ModalFooter };
+export { Modal, ModalHeader, ModalBody, ModalFooter, ModalHeading, ModalButtons };
 export type { PigmentModalProps };

@@ -26,7 +26,7 @@ export function CodeBlock({ code: codeProps, language }: { code: string; languag
   }, []);
 
   return (
-    <div className="relative">
+    <div className="group relative">
       <Highlight
         code={code}
         language={language ?? ""}
@@ -49,7 +49,7 @@ export function CodeBlock({ code: codeProps, language }: { code: string; languag
         isIconOnly
         variant="light"
         size="sm"
-        className="absolute right-2.5 top-2.5 backdrop-blur-lg"
+        className="absolute right-2.5 top-2.5 hidden backdrop-blur-lg group-hover:block"
         onPress={() =>
           navigator.clipboard
             .writeText(code)

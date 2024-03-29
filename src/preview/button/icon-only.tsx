@@ -3,9 +3,23 @@ import { DrawingPinFilledIcon } from "@radix-ui/react-icons";
 
 function ButtonIconOnly() {
   return (
-    <Button isIconOnly>
-      <DrawingPinFilledIcon />
-    </Button>
+    <div className="flex flex-wrap gap-4">
+      <Button isIconOnly variant="solid">
+        <DrawingPinFilledIcon />
+      </Button>
+      <Button isIconOnly variant="soft">
+        <DrawingPinFilledIcon />
+      </Button>
+      <Button isIconOnly variant="light">
+        <DrawingPinFilledIcon />
+      </Button>
+      <Button isIconOnly variant="bordered">
+        <DrawingPinFilledIcon />
+      </Button>
+      <Button isIconOnly variant="faded">
+        <DrawingPinFilledIcon />
+      </Button>
+    </div>
   );
 }
 
@@ -15,9 +29,23 @@ import { DrawingPinFilledIcon } from "@radix-ui/react-icons";
 
 function ButtonIconOnly() {
   return (
-    <Button isIconOnly>
-      <DrawingPinFilledIcon />
-    </Button>
+    <div className="flex flex-wrap gap-4">
+      <Button isIconOnly variant="solid">
+        <DrawingPinFilledIcon />
+      </Button>
+      <Button isIconOnly variant="soft">
+        <DrawingPinFilledIcon />
+      </Button>
+      <Button isIconOnly variant="light">
+        <DrawingPinFilledIcon />
+      </Button>
+      <Button isIconOnly variant="bordered">
+        <DrawingPinFilledIcon />
+      </Button>
+      <Button isIconOnly variant="faded">
+        <DrawingPinFilledIcon />
+      </Button>
+    </div>
   );
 }
 `;

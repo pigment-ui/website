@@ -3,8 +3,10 @@ import NextLink from "next/link";
 
 function CardAsChild() {
   return (
-    <Card asChild className="px-8 py-4 shadow-xl shadow-default-1000/10">
-      <NextLink href="#">Click me</NextLink>
+    <Card asChild className="border border-red-500 px-8 py-4">
+      <NextLink href="#" className="text-yellow-500">
+        Click me
+      </NextLink>
     </Card>
   );
 }
@@ -15,8 +17,10 @@ import NextLink from "next/link";
 
 function CardAsChild() {
   return (
-    <Card asChild className="px-8 py-4 shadow-xl shadow-default-1000/10">
-      <NextLink href="#">Click me</NextLink>
+    <Card asChild className="border border-red-500 px-8 py-4">
+      <NextLink href="#" className="text-yellow-500">
+        Click me
+      </NextLink>
     </Card>
   );
 }

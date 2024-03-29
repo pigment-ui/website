@@ -30,7 +30,7 @@ export const fieldInputStyles = tv({
     base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden",
     self: "flex-1 h-full bg-transparent outline-none placeholder:text-default-500",
     content: "text-default-700 pointer-events-none",
-    button: "grid place-items-center bg-default-1000 bg-opacity-20 data-[hovered]:bg-opacity-30 data-[pressed]:scale-95 outline-none",
+    button: "grid place-items-center bg-default-1000 bg-opacity-10 data-[hovered]:bg-opacity-20 data-[pressed]:scale-95 outline-none",
   },
   variants: {
     size: {
@@ -48,7 +48,7 @@ export const fieldInputStyles = tv({
     hasStartButton: { true: "" },
     hasEndButton: { true: "" },
     isInvalid: { true: "border-error-500 border-opacity-50" },
-    isHovered: { true: "bg-default-1000/5" },
+    isHovered: { true: "bg-default-50" },
     isFocusWithin: { true: "border-opacity-100" },
     ...isFocusVisibleVariants,
     ...isDisabledVariants,
@@ -84,12 +84,12 @@ interface PigmentFieldInputProps extends PigmentFieldInputBaseProps {
 function _Field(props: PigmentFieldProps, ref: ForwardedRef<HTMLDivElement>) {
   const { label, description, errorMessage, size = "md", isRequired, labelNecessityIndicator = "symbol", children, className, style } = props;
 
-  const stylesSlots = fieldStyles({ size });
+  const styleSlots = fieldStyles({ size });
 
   return (
-    <div ref={ref} className={stylesSlots.base({ className })} style={style}>
+    <div ref={ref} className={styleSlots.base({ className })} style={style}>
       {label && (
-        <Label className={stylesSlots.labelStyles()}>
+        <Label className={styleSlots.labelStyles()}>
           {label}
           {labelNecessityIndicator === "symbol" && isRequired && <span> *</span>}
           {labelNecessityIndicator === "text" && <span> {isRequired ? "(required)" : "(optional)"}</span>}
@@ -99,9 +99,9 @@ function _Field(props: PigmentFieldProps, ref: ForwardedRef<HTMLDivElement>) {
       {children}
 
       {errorMessage ? (
-        <FieldError className={stylesSlots.errorMessageStyles()}>{errorMessage}</FieldError>
+        <FieldError className={styleSlots.errorMessageStyles()}>{errorMessage}</FieldError>
       ) : description ? (
-        <Text slot="description" className={stylesSlots.descriptionStyles()}>
+        <Text slot="description" className={styleSlots.descriptionStyles()}>
           {description}
         </Text>
       ) : null}
@@ -116,7 +116,7 @@ function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivEle
 
   const hasStartButton = !!startButton;
   const hasEndButton = !!endButton;
-  const stylesSlots = fieldInputStyles({ size, radius, hasStartButton, hasEndButton });
+  const styleSlots = fieldInputStyles({ size, radius, hasStartButton, hasEndButton });
 
   const spacingSize = { sm: 8, md: 10, lg: 12 }[size];
   const [mounted, setMounted] = useState<boolean>(false);
@@ -142,21 +142,21 @@ function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivEle
     <Group
       ref={ref}
       className={({ isHovered, isFocusVisible, isFocusWithin }) =>
-        stylesSlots.base({ isInvalid, isHovered, isDisabled, isFocusVisible, isFocusWithin })
+        styleSlots.base({ isInvalid, isHovered, isDisabled, isFocusVisible, isFocusWithin })
       }
     >
       {startButton &&
         cloneElement(startButton, {
           ref: startButtonRef,
           style: mounted ? { position: "absolute", left: spacingSize } : { marginLeft: spacingSize },
-          className: stylesSlots.button({ className: startButton.props?.className }),
+          className: styleSlots.button({ className: startButton.props?.className }),
         })}
 
       {startContent && (
         <div
           ref={startContentRef}
           style={mounted ? { position: "absolute", left: hasStartButton ? spacingSize * 5 : spacingSize } : { marginLeft: spacingSize }}
-          className={stylesSlots.content()}
+          className={styleSlots.content()}
         >
           {startContent}
         </div>
@@ -165,14 +165,14 @@ function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivEle
       {children &&
         cloneElement(children, {
           style: { paddingLeft, paddingRight },
-          className: stylesSlots.self({ className: children.props?.className }),
+          className: styleSlots.self({ className: children.props?.className }),
         })}
 
       {endContent && (
         <div
           ref={endContentRef}
           style={mounted ? { position: "absolute", right: hasEndButton ? spacingSize * 5 : spacingSize } : { marginRight: spacingSize }}
-          className={stylesSlots.content()}
+          className={styleSlots.content()}
         >
           {endContent}
         </div>
@@ -182,7 +182,7 @@ function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivEle
         cloneElement(endButton, {
           ref: endButtonRef,
           style: mounted ? { position: "absolute", right: spacingSize } : { marginRight: spacingSize },
-          className: stylesSlots.button({ className: endButton.props?.className }),
+          className: styleSlots.button({ className: endButton.props?.className }),
         })}
     </Group>
   );

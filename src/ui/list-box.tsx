@@ -18,7 +18,7 @@ import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
 import { isDisabledVariants, isFocusVisibleVariants } from "./styles";
-import { ChildrenProps, ColorProps, ContentProps, FilterProps, ForwardRefType, StylesSlotsToStyleProps } from "./types";
+import { ChildrenProps, ColorProps, ContentProps, FilterProps, ForwardRefType, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { Card } from "./card";
@@ -79,9 +79,9 @@ interface PigmentListBoxItemProps
   extends FilterProps<ListBoxItemProps>,
     ColorProps,
     ContentProps,
-    StylesSlotsToStyleProps<ListBoxItemStylesReturnType> {}
+    StyleSlotsToStyleProps<ListBoxItemStylesReturnType> {}
 
-interface PigmentListBoxSectionProps<T extends object> extends SectionProps<T>, StylesSlotsToStyleProps<ListBoxSectionStylesReturnType> {
+interface PigmentListBoxSectionProps<T extends object> extends SectionProps<T>, StyleSlotsToStyleProps<ListBoxSectionStylesReturnType> {
   title: string;
 }
 
@@ -129,7 +129,7 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
     itemStyles,
   } = useListBoxSlots(props);
 
-  const stylesSlots = listBoxItemStyles({ color });
+  const styleSlots = listBoxItemStyles({ color });
 
   return (
     <AriaListBoxItem
@@ -137,7 +137,7 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
       textValue={typeof children === "string" ? children : undefined}
       {...props}
       className={({ isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
-        stylesSlots.base({
+        styleSlots.base({
           isHovered,
           isPressed,
           isDisabled,
@@ -152,7 +152,7 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
         <>
           {startContent}
           <div
-            className={stylesSlots.content({ className: twMerge(itemClassNames?.content, classNames?.content) })}
+            className={styleSlots.content({ className: twMerge(itemClassNames?.content, classNames?.content) })}
             style={mergeProps(itemStyles?.content, styles?.content)}
           >
             {children}
@@ -170,16 +170,16 @@ const ListBoxItem = forwardRef(_ListBoxItem);
 function _ListBoxSection<T extends object>(props: PigmentListBoxSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
   const { title, items, children, className, classNames, sectionClassNames, style, styles, sectionStyles } = useListBoxSlots(props);
 
-  const stylesSlots = listBoxSectionStyles();
+  const styleSlots = listBoxSectionStyles();
 
   return (
     <Section
       ref={ref}
-      className={stylesSlots.base({ className: twMerge(sectionClassNames?.base, classNames?.base, className) })}
+      className={styleSlots.base({ className: twMerge(sectionClassNames?.base, classNames?.base, className) })}
       style={mergeProps(sectionStyles?.base, styles?.base, style)}
     >
       <Header
-        className={stylesSlots.title({ className: twMerge(sectionClassNames?.title, classNames?.title) })}
+        className={styleSlots.title({ className: twMerge(sectionClassNames?.title, classNames?.title) })}
         style={mergeProps(sectionStyles?.title, styles?.title)}
       >
         {title}

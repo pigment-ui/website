@@ -12,7 +12,8 @@ hasApiReference: true
 
 ### Initial setup
 
-Follow instruction on [installation](/docs/overview/installation) page.
+- Follow instructions on the [installation](/docs/overview/installation) page.
+- See installation guides for the [`<Button />`](/docs/components/button), [`<Card />`](/docs/components/card) and [`<Dialog />`](/docs/components/dialog) components.
 
 ### Create a component
 
@@ -23,3 +24,31 @@ Create `modal.tsx` file.
 Copy and paste the source code into your project.
 
 </Steps>
+
+## Usage
+
+<ComponentPreview slug="modal/usage" />
+
+## Properties
+
+### With separator
+
+<ComponentPreview slug="modal/withSeparator" />
+
+### Size
+
+<ComponentPreview slug="modal/size" />
+
+### Close button
+
+<ComponentPreview slug="modal/closeButton" />
+
+### Style slots
+
+```ts
+type ModalStyleSlots = "base" | "header" | "body" | "footer" | "backdrop" | "closeButton";
+type ModalStyleProps = {
+  classNames?: { [key in keyof ModalStyleSlots]?: string };
+  styles?: { [key in keyof ModalStyleSlots]?: CSSProperties };
+};
+```

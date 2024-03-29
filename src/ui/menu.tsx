@@ -8,7 +8,7 @@ import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
 import { isDisabledVariants, isFocusVisibleVariants } from "./styles";
-import { ColorProps, ContentProps, FilterProps, ForwardRefType, StylesSlotsToStyleProps } from "./types";
+import { ColorProps, ContentProps, FilterProps, ForwardRefType, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { Card } from "./card";
@@ -53,7 +53,7 @@ interface PigmentMenuProps<T extends object>
   itemStyles?: PigmentMenuItemProps["styles"];
 }
 
-interface PigmentMenuItemProps extends FilterProps<MenuItemProps>, ColorProps, ContentProps, StylesSlotsToStyleProps<MenuItemStylesReturnType> {}
+interface PigmentMenuItemProps extends FilterProps<MenuItemProps>, ColorProps, ContentProps, StyleSlotsToStyleProps<MenuItemStylesReturnType> {}
 
 // slots
 
@@ -95,7 +95,7 @@ function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement
     itemStyles,
   } = useMenuSlots(props);
 
-  const stylesSlots = menuItemStyles({ color });
+  const styleSlots = menuItemStyles({ color });
 
   return (
     <AriaMenuItem
@@ -103,7 +103,7 @@ function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement
       id={typeof children === "string" ? children : undefined}
       {...props}
       className={({ isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
-        stylesSlots.base({
+        styleSlots.base({
           isSelectable: selectionMode !== "none",
           isHovered,
           isPressed,
@@ -118,7 +118,7 @@ function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement
         <>
           {startContent}
           <div
-            className={stylesSlots.content({ className: twMerge(itemClassNames?.content, classNames?.content) })}
+            className={styleSlots.content({ className: twMerge(itemClassNames?.content, classNames?.content) })}
             style={mergeProps(itemStyles?.content, styles?.content)}
           >
             {children}

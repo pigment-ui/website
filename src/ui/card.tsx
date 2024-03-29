@@ -6,7 +6,7 @@ import { mergeProps } from "react-aria";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { AsChildProps, ChildrenProps, StyleProps, StylesSlotsToSlots, StylesSlotsToStyleProps } from "./types";
+import { AsChildProps, ChildrenProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
 // styles
@@ -31,13 +31,13 @@ type CardStylesReturnType = ReturnType<typeof cardStyles>;
 
 // props
 
-interface PigmentCardProps extends AsChildProps, ChildrenProps, StyleProps, StylesSlotsToStyleProps<CardStylesReturnType> {
+interface PigmentCardProps extends AsChildProps, ChildrenProps, StyleProps, StyleSlotsToStyleProps<CardStylesReturnType> {
   hasShadow?: boolean;
 }
 
 // slots
 
-interface CardSlotsType extends StylesSlotsToSlots<CardStylesReturnType> {}
+interface CardSlotsType extends StyleSlotsToSlots<CardStylesReturnType> {}
 
 const [CardSlotsProvider, useCardSlots] = createSlots<CardSlotsType>();
 
@@ -46,13 +46,13 @@ const [CardSlotsProvider, useCardSlots] = createSlots<CardSlotsType>();
 function _Card(props: PigmentCardProps, ref: ForwardedRef<HTMLDivElement>) {
   const { hasShadow = true, asChild, children, className, classNames, style, styles } = props;
 
-  const stylesSlots = cardStyles({ hasShadow });
+  const styleSlots = cardStyles({ hasShadow });
 
   const Component = asChild ? Slot : "div";
 
   return (
-    <CardSlotsProvider value={{ stylesSlots, classNames, styles }}>
-      <Component ref={ref} className={stylesSlots.base({ className: twMerge(classNames?.base, className) })} style={mergeProps(styles?.base, style)}>
+    <CardSlotsProvider value={{ styleSlots, classNames, styles }}>
+      <Component ref={ref} className={styleSlots.base({ className: twMerge(classNames?.base, className) })} style={mergeProps(styles?.base, style)}>
         {children}
       </Component>
     </CardSlotsProvider>
@@ -62,12 +62,12 @@ function _Card(props: PigmentCardProps, ref: ForwardedRef<HTMLDivElement>) {
 const Card = forwardRef(_Card);
 
 function _CardHeader(props: HTMLAttributes<HTMLElement>, ref: ForwardedRef<HTMLElement>) {
-  const { stylesSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
+  const { styleSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
 
   return (
     <header
       ref={ref}
-      className={stylesSlots.header({ className: twMerge(classNames?.header, className) })}
+      className={styleSlots.header({ className: twMerge(classNames?.header, className) })}
       style={mergeProps(styles?.header, style)}
       {...restProps}
     />
@@ -77,12 +77,12 @@ function _CardHeader(props: HTMLAttributes<HTMLElement>, ref: ForwardedRef<HTMLE
 const CardHeader = forwardRef(_CardHeader);
 
 function _CardBody(props: HTMLAttributes<HTMLElement>, ref: ForwardedRef<HTMLElement>) {
-  const { stylesSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
+  const { styleSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
 
   return (
     <section
       ref={ref}
-      className={stylesSlots.body({ className: twMerge(classNames?.body, className) })}
+      className={styleSlots.body({ className: twMerge(classNames?.body, className) })}
       style={mergeProps(styles?.body, style)}
       {...restProps}
     />
@@ -92,12 +92,12 @@ function _CardBody(props: HTMLAttributes<HTMLElement>, ref: ForwardedRef<HTMLEle
 const CardBody = forwardRef(_CardBody);
 
 function _CardFooter(props: HTMLAttributes<HTMLElement>, ref: ForwardedRef<HTMLElement>) {
-  const { stylesSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
+  const { styleSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
 
   return (
     <footer
       ref={ref}
-      className={stylesSlots.footer({ className: twMerge(classNames?.footer, className) })}
+      className={styleSlots.footer({ className: twMerge(classNames?.footer, className) })}
       style={mergeProps(styles?.footer, style)}
       {...restProps}
     />
@@ -107,12 +107,12 @@ function _CardFooter(props: HTMLAttributes<HTMLElement>, ref: ForwardedRef<HTMLE
 const CardFooter = forwardRef(_CardFooter);
 
 function _CardHeading(props: HTMLAttributes<HTMLHeadingElement>, ref: ForwardedRef<HTMLHeadingElement>) {
-  const { stylesSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
+  const { styleSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
 
   return (
     <h3
       ref={ref}
-      className={stylesSlots.heading({ className: twMerge(classNames?.heading, className) })}
+      className={styleSlots.heading({ className: twMerge(classNames?.heading, className) })}
       style={mergeProps(styles?.heading, style)}
       {...restProps}
     />
@@ -122,12 +122,12 @@ function _CardHeading(props: HTMLAttributes<HTMLHeadingElement>, ref: ForwardedR
 const CardHeading = forwardRef(_CardHeading);
 
 function _CardButtons(props: HTMLAttributes<HTMLDivElement>, ref: ForwardedRef<HTMLDivElement>) {
-  const { stylesSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
+  const { styleSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
 
   return (
     <div
       ref={ref}
-      className={stylesSlots.buttons({ className: twMerge(classNames?.buttons, className) })}
+      className={styleSlots.buttons({ className: twMerge(classNames?.buttons, className) })}
       style={mergeProps(styles?.buttons, style)}
       {...restProps}
     />

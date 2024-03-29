@@ -10,7 +10,7 @@ hasSource: true
 
 ### Initial setup
 
-Follow instruction on [installation](/docs/overview/installation) page.
+Follow instructions on the [installation](/docs/overview/installation) page.
 
 ### Create a component
 
@@ -26,10 +26,26 @@ Copy and paste the source code into your project.
 
 <ComponentPreview slug="card/usage" />
 
-## With separator
+## Properties
+
+### With separator
 
 <ComponentPreview slug="card/withSeparator" />
 
-## As child
+### Has shadow
+
+<ComponentPreview slug="card/hasShadow" />
+
+### As child
 
 <ComponentPreview slug="card/asChild" />
+
+### Style slots
+
+```ts
+type CardStyleSlots = "base" | "header" | "body" | "footer" | "heading" | "buttons";
+type CardStyleProps = {
+  classNames?: { [key in keyof CardStyleSlots]?: string };
+  styles?: { [key in keyof CardStyleSlots]?: CSSProperties };
+};
+```

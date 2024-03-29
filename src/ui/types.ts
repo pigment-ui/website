@@ -4,8 +4,8 @@ export type AsChildProps = { asChild?: boolean };
 export type ChildrenProps = { children?: ReactNode };
 
 export type StyleProps = { className?: string; style?: CSSProperties };
-export type StylesSlotsToStyleProps<T> = { classNames?: { [key in keyof T]?: string }; styles?: { [key in keyof T]?: CSSProperties } };
-export type StylesSlotsToSlots<T> = { stylesSlots: T } & StylesSlotsToStyleProps<T>;
+export type StyleSlotsToStyleProps<T> = { classNames?: { [key in keyof T]?: string }; styles?: { [key in keyof T]?: CSSProperties } };
+export type StyleSlotsToSlots<T> = { styleSlots: T } & StyleSlotsToStyleProps<T>;
 
 export type Variants = "solid" | "soft" | "light" | "bordered" | "faded";
 export type VariantProps = { variant?: Variants };

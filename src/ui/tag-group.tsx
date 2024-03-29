@@ -4,7 +4,7 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
 import { Button, Tag as AriaTag, TagGroup as AriaTagGroup, TagGroupProps, TagList, TagListProps, TagProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ColorProps, ContentProps, FilterProps, ForwardRefType, RadiusProps, SizeProps, StylesSlotsToStyleProps } from "./types";
+import { ColorProps, ContentProps, FilterProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import { Field, PigmentFieldBaseProps } from "./field";
 import { createSlots } from "#/ui/utils";
 import { isDisabledVariants, isFocusVisibleVariants, isPressedVariants, radiusVariants } from "#/ui/styles";
@@ -72,7 +72,7 @@ interface PigmentTagGroupProps<T extends object>
     RadiusProps,
     PigmentFieldBaseProps {}
 
-interface PigmentTagProps extends FilterProps<TagProps>, ColorProps, ContentProps, StylesSlotsToStyleProps<TagStylesReturnType> {}
+interface PigmentTagProps extends FilterProps<TagProps>, ColorProps, ContentProps, StyleSlotsToStyleProps<TagStylesReturnType> {}
 
 // slots
 
@@ -103,14 +103,14 @@ const TagGroup = (forwardRef as ForwardRefType)(_TagGroup);
 function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
   const { color, size, radius, startContent, endContent, children, className, classNames, style, styles } = useTagGroupSlots(props);
 
-  const stylesSlots = tagStyles({ color, size, radius });
+  const styleSlots = tagStyles({ color, size, radius });
 
   return (
     <AriaTag
       ref={ref}
       {...props}
       className={({ isSelected, isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
-        stylesSlots.base({
+        styleSlots.base({
           isSelected,
           isHovered,
           isPressed,
@@ -130,7 +130,7 @@ function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
           {allowsRemoving && (
             <Button
               slot="remove"
-              className={stylesSlots.removeButton({ isSelected, className: classNames?.removeButton })}
+              className={styleSlots.removeButton({ isSelected, className: classNames?.removeButton })}
               style={styles?.removeButton}
             >
               <Cross2Icon />
