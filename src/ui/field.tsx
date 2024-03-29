@@ -30,7 +30,7 @@ export const fieldInputStyles = tv({
     base: "relative flex items-center bg-default-1000 bg-opacity-10 overflow-hidden",
     self: "flex-1 h-full bg-transparent outline-none placeholder:text-default-500",
     content: "text-default-700 pointer-events-none",
-    button: "grid place-items-center bg-default-1000 bg-opacity-10 data-[hovered]:bg-opacity-20 data-[pressed]:scale-95 outline-none",
+    button: "grid place-items-center bg-default-1000 bg-opacity-20 data-[hovered]:bg-opacity-30 data-[pressed]:scale-95 outline-none",
   },
   variants: {
     size: {

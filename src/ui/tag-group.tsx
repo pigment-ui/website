@@ -4,7 +4,7 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
 import { Button, Tag as AriaTag, TagGroup as AriaTagGroup, TagGroupProps, TagList, TagListProps, TagProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ContentProps, FilterProps, ForwardRefType, RadiusProps, SizeProps, StylesSlotsToStyleProps } from "./types";
+import { ColorProps, ContentProps, FilterProps, ForwardRefType, RadiusProps, SizeProps, StylesSlotsToStyleProps } from "./types";
 import { Field, PigmentFieldBaseProps } from "./field";
 import { createSlots } from "#/ui/utils";
 import { isDisabledVariants, isFocusVisibleVariants, isPressedVariants, radiusVariants } from "#/ui/styles";
@@ -26,14 +26,21 @@ const tagGroupStyles = tv({
 
 const tagStyles = tv({
   slots: {
-    base: "flex items-center bg-default-1000 bg-opacity-10 overflow-hidden",
-    removeButton: "grid place-items-center bg-default-1000 bg-opacity-10 data-[hovered]:bg-opacity-20 data-[pressed]:scale-95 outline-none",
+    base: "flex items-center bg-opacity-10 overflow-hidden",
+    removeButton: "grid place-items-center bg-opacity-20 data-[hovered]:bg-opacity-30 data-[pressed]:scale-95 outline-none",
   },
   variants: {
+    color: {
+      default: { base: "bg-default-1000", removeButton: "bg-default-1000" },
+      info: { base: "bg-info-500", removeButton: "bg-info-500" },
+      success: { base: "bg-success-500", removeButton: "bg-success-500" },
+      warning: { base: "bg-warning-500", removeButton: "bg-warning-500" },
+      error: { base: "bg-error-500", removeButton: "bg-error-500" },
+    },
     size: {
       sm: { base: "h-6 px-2 gap-x-2 text-xs", removeButton: "h-4 w-4 [&>svg]:h-3 [&>svg]:w-3" },
-      md: { base: "h-8 px-2.5 gap-x-2.5 text-sm", removeButton: "h-5 w-5 [&>svg]:h-4 [&>svg]:w-4" },
-      lg: { base: "h-10 px-3 gap-x-3 text-base", removeButton: "h-6 w-6 [&>svg]:h-5 [&>svg]:w-5" },
+      md: { base: "h-8 px-2.5 gap-x-2.5 text-sm", removeButton: "h-5 w-5 [&>svg]:h-3.5 [&>svg]:w-3.5" },
+      lg: { base: "h-10 px-3 gap-x-3 text-base", removeButton: "h-6 w-6 [&>svg]:h-4 [&>svg]:w-4" },
     },
     radius: {
       sm: { base: radiusVariants.radius.sm, removeButton: radiusVariants.radius.sm },
@@ -60,25 +67,26 @@ type TagStylesReturnType = ReturnType<typeof tagStyles>;
 interface PigmentTagGroupProps<T extends object>
   extends Omit<FilterProps<TagGroupProps>, "children">,
     Pick<TagListProps<T>, "children" | "items" | "renderEmptyState">,
+    ColorProps,
     SizeProps,
     RadiusProps,
     PigmentFieldBaseProps {}
 
-interface PigmentTagProps extends FilterProps<TagProps>, ContentProps, StylesSlotsToStyleProps<TagStylesReturnType> {}
+interface PigmentTagProps extends FilterProps<TagProps>, ColorProps, ContentProps, StylesSlotsToStyleProps<TagStylesReturnType> {}
 
 // slots
 
-interface TagGroupSlotsType extends Pick<PigmentTagGroupProps<any>, "size" | "radius"> {}
+interface TagGroupSlotsType extends Pick<PigmentTagGroupProps<any>, "color" | "size" | "radius"> {}
 
 const [TagGroupSlotsProvider, useTagGroupSlots] = createSlots<TagGroupSlotsType>();
 
 // component
 
 function _TagGroup<T extends object>(props: PigmentTagGroupProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { size = "md", radius = "md", items, renderEmptyState, children } = props;
+  const { color = "default", size = "md", radius = "md", items, renderEmptyState, children } = props;
 
   return (
-    <TagGroupSlotsProvider value={{ size, radius }}>
+    <TagGroupSlotsProvider value={{ color, size, radius }}>
       <AriaTagGroup ref={ref} {...props}>
         <Field {...props} className="" style={{}}>
           <TagList items={items} renderEmptyState={renderEmptyState} className={tagGroupStyles({ size })}>
@@ -93,16 +101,13 @@ function _TagGroup<T extends object>(props: PigmentTagGroupProps<T>, ref: Forwar
 const TagGroup = (forwardRef as ForwardRefType)(_TagGroup);
 
 function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { size, radius, startContent, endContent, children, className, classNames, style, styles } = useTagGroupSlots(props);
+  const { color, size, radius, startContent, endContent, children, className, classNames, style, styles } = useTagGroupSlots(props);
 
-  const stylesSlots = tagStyles({ size, radius });
+  const stylesSlots = tagStyles({ color, size, radius });
 
   return (
     <AriaTag
-      // @ts-ignore
-      shouldSelectOnPressUp
       ref={ref}
-      id={typeof children === "string" ? children : undefined}
       {...props}
       className={({ isSelected, isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         stylesSlots.base({
@@ -120,7 +125,7 @@ function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
       {({ allowsRemoving, isSelected }) => (
         <>
           {startContent}
-          {children}
+          <span>{children}</span>
           {endContent}
           {allowsRemoving && (
             <Button

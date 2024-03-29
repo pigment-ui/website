@@ -99,8 +99,6 @@ function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement
 
   return (
     <AriaMenuItem
-      // @ts-ignore
-      shouldSelectOnPressUp
       ref={ref}
       id={typeof children === "string" ? children : undefined}
       {...props}

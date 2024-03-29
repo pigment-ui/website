@@ -133,8 +133,6 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
 
   return (
     <AriaListBoxItem
-      // @ts-ignore
-      shouldSelectOnPressUp
       ref={ref}
       textValue={typeof children === "string" ? children : undefined}
       {...props}
