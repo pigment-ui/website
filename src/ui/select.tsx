@@ -6,6 +6,7 @@ import { Button, InputProps, Popover, PopoverProps, Select as AriaSelect, Select
 
 import { FilterProps, ForwardRefType } from "./types";
 
+import { Card } from "./card";
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
 import { ListBox, ListBoxItem, ListBoxSection, PigmentListBoxItemProps, PigmentListBoxProps, PigmentListBoxSectionProps } from "./list-box";
 
@@ -51,24 +52,20 @@ function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedR
         </FieldInput>
       </Field>
 
-      <Popover
-        placement={placement}
-        offset={offset}
-        crossOffset={crossOffset}
-        shouldFlip={shouldFlip}
-        style={{ width: "var(--trigger-width)", padding: 0 }}
-      >
-        <ListBox
-          color={color}
-          itemClassNames={itemClassNames}
-          sectionClassNames={sectionClassNames}
-          itemStyles={itemStyles}
-          sectionStyles={sectionStyles}
-          listBoxStyle={{ maxHeight, overflowY: "auto" }}
-        >
-          {children}
-        </ListBox>
-      </Popover>
+      <Card asChild className="w-[var(--trigger-width)] overflow-auto p-2">
+        <Popover placement={placement} offset={offset} crossOffset={crossOffset} shouldFlip={shouldFlip} maxHeight={maxHeight}>
+          <ListBox
+            isCard={false}
+            color={color}
+            itemClassNames={itemClassNames}
+            sectionClassNames={sectionClassNames}
+            itemStyles={itemStyles}
+            sectionStyles={sectionStyles}
+          >
+            {children}
+          </ListBox>
+        </Popover>
+      </Card>
     </AriaSelect>
   );
 }

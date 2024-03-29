@@ -6,6 +6,7 @@ import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, InputProps, Pop
 
 import { FilterProps, ForwardRefType } from "./types";
 
+import { Card } from "./card";
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
 import { ListBox, ListBoxItem, ListBoxSection, PigmentListBoxItemProps, PigmentListBoxProps, PigmentListBoxSectionProps } from "./list-box";
 
@@ -50,25 +51,20 @@ function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: Forwar
         </FieldInput>
       </Field>
 
-      <Popover
-        isNonModal={false}
-        placement={placement}
-        offset={offset}
-        crossOffset={crossOffset}
-        shouldFlip={shouldFlip}
-        style={{ width: "var(--trigger-width)" }}
-      >
-        <ListBox
-          color={color}
-          itemClassNames={itemClassNames}
-          sectionClassNames={sectionClassNames}
-          itemStyles={itemStyles}
-          sectionStyles={sectionStyles}
-          listBoxStyle={{ maxHeight, overflowY: "auto" }}
-        >
-          {children}
-        </ListBox>
-      </Popover>
+      <Card asChild className="w-[var(--trigger-width)] overflow-auto p-2">
+        <Popover isNonModal={false} placement={placement} offset={offset} crossOffset={crossOffset} shouldFlip={shouldFlip} maxHeight={maxHeight}>
+          <ListBox
+            isCard={false}
+            color={color}
+            itemClassNames={itemClassNames}
+            sectionClassNames={sectionClassNames}
+            itemStyles={itemStyles}
+            sectionStyles={sectionStyles}
+          >
+            {children}
+          </ListBox>
+        </Popover>
+      </Card>
     </AriaComboBox>
   );
 }

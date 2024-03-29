@@ -1,7 +1,8 @@
 "use client";
 
+import { Slot } from "@radix-ui/react-slot";
 import { CheckIcon } from "@radix-ui/react-icons";
-import { CSSProperties, ForwardedRef, forwardRef } from "react";
+import { cloneElement, ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import {
   Collection,
@@ -17,7 +18,7 @@ import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
 import { isDisabledVariants, isFocusVisibleVariants } from "./styles";
-import { ColorProps, ContentProps, FilterProps, ForwardRefType, StylesSlotsToStyleProps } from "./types";
+import { ChildrenProps, ColorProps, ContentProps, FilterProps, ForwardRefType, StylesSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { Card } from "./card";
@@ -26,7 +27,10 @@ import { Field, PigmentFieldBaseProps } from "./field";
 // styles
 
 const listBoxStyles = tv({
-  base: "p-2 outline-none",
+  base: "outline-none",
+  variants: {
+    isCard: { true: "p-2" },
+  },
 });
 
 const listBoxItemStyles = tv({
@@ -64,8 +68,7 @@ type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
 // props
 
 interface PigmentListBoxProps<T extends object> extends FilterProps<ListBoxProps<T>>, PigmentFieldBaseProps, ColorProps {
-  listBoxClassName?: string;
-  listBoxStyle?: CSSProperties;
+  isCard?: boolean;
   itemClassNames?: PigmentListBoxItemProps["classNames"];
   sectionClassNames?: PigmentListBoxSectionProps<T>["classNames"];
   itemStyles?: PigmentListBoxItemProps["styles"];
@@ -92,16 +95,19 @@ const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType>();
 // component
 
 function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, children, listBoxClassName, itemClassNames, sectionClassNames, listBoxStyle, itemStyles, sectionStyles } = props;
+  const { isCard = true, color, children, itemClassNames, sectionClassNames, itemStyles, sectionStyles } = props;
+
+  const Component = ({ children }: ChildrenProps) =>
+    cloneElement(isCard ? <Card asChild hasShadow={false} /> : <Slot />, { children, className: listBoxStyles({ isCard }) });
 
   return (
     <ListBoxSlotsProvider value={{ color, itemClassNames, sectionClassNames, itemStyles, sectionStyles }}>
       <Field {...props}>
-        <Card asChild className={listBoxStyles({ className: listBoxClassName })} style={listBoxStyle}>
+        <Component>
           <AriaListBox ref={ref} {...props} className="" style={{}}>
             {children}
           </AriaListBox>
-        </Card>
+        </Component>
       </Field>
     </ListBoxSlotsProvider>
   );
@@ -121,7 +127,6 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
     style,
     styles,
     itemStyles,
-    ...restProps
   } = useListBoxSlots(props);
 
   const stylesSlots = listBoxItemStyles({ color });
@@ -132,14 +137,14 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
       shouldSelectOnPressUp
       ref={ref}
       textValue={typeof children === "string" ? children : undefined}
-      {...restProps}
+      {...props}
       className={({ isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         stylesSlots.base({
-          isSelectable: selectionMode !== "none",
           isHovered,
           isPressed,
           isDisabled,
           isFocusVisible,
+          isSelectable: selectionMode !== "none",
           className: twMerge(itemClassNames?.base, classNames?.base, className),
         })
       }

@@ -13,12 +13,17 @@ import { createSlots } from "./utils";
 
 const cardStyles = tv({
   slots: {
-    base: "bg-default-0 text-default-1000 border border-default-1000/20 bg-clip-padding backdrop-blur-xl bg-opacity-75 overflow-hidden rounded-xl",
+    base: "bg-default-0 text-default-1000 border border-default-1000/20 bg-clip-padding backdrop-blur-xl bg-opacity-75 overflow-hidden rounded-xl outline-none",
     header: "p-4",
     body: "p-4",
     footer: "p-4",
     heading: "text-xl font-bold",
     buttons: "flex justify-end gap-x-4",
+  },
+  variants: {
+    hasShadow: {
+      true: "[box-shadow:0_5px_20px_rgba(0,0,0,.1)] dark:[box-shadow:0_5px_20px_rgba(255,255,255,.1)]",
+    },
   },
 });
 
@@ -26,7 +31,9 @@ type CardStylesReturnType = ReturnType<typeof cardStyles>;
 
 // props
 
-interface PigmentCardProps extends AsChildProps, ChildrenProps, StyleProps, StylesSlotsToStyleProps<CardStylesReturnType> {}
+interface PigmentCardProps extends AsChildProps, ChildrenProps, StyleProps, StylesSlotsToStyleProps<CardStylesReturnType> {
+  hasShadow?: boolean;
+}
 
 // slots
 
@@ -37,9 +44,9 @@ const [CardSlotsProvider, useCardSlots] = createSlots<CardSlotsType>();
 // component
 
 function _Card(props: PigmentCardProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { asChild, children, className, classNames, style, styles } = props;
+  const { hasShadow = true, asChild, children, className, classNames, style, styles } = props;
 
-  const stylesSlots = cardStyles();
+  const stylesSlots = cardStyles({ hasShadow });
 
   const Component = asChild ? Slot : "div";
 

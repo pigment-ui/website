@@ -12,11 +12,12 @@ import { ColorProps, ContentProps, FilterProps, ForwardRefType, StylesSlotsToSty
 import { createSlots } from "./utils";
 
 import { Card } from "./card";
+import { ListBoxSection, PigmentListBoxSectionProps } from "#/ui/list-box";
 
 // styles
 
 const menuStyles = tv({
-  base: "p-2 outline-none",
+  base: "p-2 overflow-auto",
 });
 
 const menuItemStyles = tv({
@@ -67,13 +68,13 @@ function _Menu<T extends object>(props: PigmentMenuProps<T>, ref: ForwardedRef<H
 
   return (
     <MenuSlotsProvider value={{ color, itemClassNames, itemStyles }}>
-      <Popover placement={placement} offset={offset} crossOffset={crossOffset} shouldFlip={shouldFlip}>
-        <Card asChild className={menuStyles({ className })} style={{ maxHeight, overflowY: "auto", ...style }}>
-          <AriaMenu ref={ref} {...props} className="" style={{}}>
+      <Card asChild className={menuStyles({ className })} style={style}>
+        <Popover placement={placement} offset={offset} crossOffset={crossOffset} shouldFlip={shouldFlip} maxHeight={maxHeight}>
+          <AriaMenu ref={ref} {...props} className="outline-none" style={{}}>
             {children}
           </AriaMenu>
-        </Card>
-      </Popover>
+        </Popover>
+      </Card>
     </MenuSlotsProvider>
   );
 }
@@ -92,7 +93,6 @@ function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement
     style,
     styles,
     itemStyles,
-    ...restProps
   } = useMenuSlots(props);
 
   const stylesSlots = menuItemStyles({ color });
@@ -103,7 +103,7 @@ function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement
       shouldSelectOnPressUp
       ref={ref}
       id={typeof children === "string" ? children : undefined}
-      {...restProps}
+      {...props}
       className={({ isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         stylesSlots.base({
           isSelectable: selectionMode !== "none",
@@ -135,7 +135,13 @@ function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement
 
 const MenuItem = forwardRef(_MenuItem);
 
+function _MenuSection<T extends object>(props: PigmentListBoxSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
+  return <ListBoxSection ref={ref} {...props} />;
+}
+
+const MenuSection = (forwardRef as ForwardRefType)(_MenuSection);
+
 // exports
 
-export { Menu, MenuItem };
+export { Menu, MenuItem, MenuSection };
 export type { PigmentMenuProps, PigmentMenuItemProps };
