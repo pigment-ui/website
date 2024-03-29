@@ -1,9 +1,10 @@
+import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Doc } from "contentlayer/generated";
 import NextLink from "next/link";
-import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+
 import { Button } from "#/ui/button";
-import { Separator } from "#/ui/separator";
 import { MDXContent } from "#/components";
+import { Separator } from "#/ui/separator";
 
 export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
   const docIndex = allDocs.findIndex((d) => d.slug === doc.slug);

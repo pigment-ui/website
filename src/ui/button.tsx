@@ -19,9 +19,9 @@ const buttonStyles = tv({
   base: "relative flex items-center justify-center min-w-max whitespace-nowrap overflow-hidden",
   variants: {
     size: {
-      sm: "h-8 gap-x-2 px-4 text-xs [&_svg]:h-4 [&_svg]:w-4",
-      md: "h-10 gap-x-2.5 px-5 text-sm [&_svg]:h-5 [&_svg]:w-5",
-      lg: "h-12 gap-x-3 px-6 text-base [&_svg]:h-6 [&_svg]:w-6",
+      sm: "h-8 gap-x-2 px-4 text-xs [&_svg]:size-4",
+      md: "h-10 gap-x-2.5 px-5 text-sm [&_svg]:size-5",
+      lg: "h-12 gap-x-3 px-6 text-base [&_svg]:size-6",
     },
     isIconOnly: { true: "" },
     isLoading: { true: "!text-transparent" },

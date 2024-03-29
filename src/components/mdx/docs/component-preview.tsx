@@ -15,7 +15,7 @@ export function ComponentPreview({ slug }: { slug: string }) {
 
   return (
     <div className="[&>div>pre]:rounded-t-none">
-      <div className="grid min-h-64 place-items-center rounded-t-xl border border-b-0 border-default-200 bg-default-0/50 p-8 backdrop-blur-xl">
+      <div className="grid min-h-64 place-items-center rounded-t-xl border border-b-0 border-default-1000/20 bg-default-0/50 p-8 backdrop-blur-xl">
         {preview}
       </div>
       <CodeBlock code={code} language="tsx" />

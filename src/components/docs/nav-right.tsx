@@ -5,6 +5,7 @@ import { slug } from "github-slugger";
 import { marked } from "marked";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
+
 import { Button } from "#/ui/button";
 
 export function NavRight({ doc }: { doc: Doc }) {

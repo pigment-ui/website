@@ -33,7 +33,10 @@ export function CodeBlock({ code: codeProps, language }: { code: string; languag
         theme={mounted ? (resolvedTheme === "light" ? themes.oneLight : themes.oneDark) : { plain: { color: "transparent" }, styles: [] }}
       >
         {({ tokens, getLineProps, getTokenProps }) => (
-          <pre data-language={language} className="max-h-96 overflow-auto rounded-xl border border-default-200 bg-default-0 p-4 font-mono text-sm">
+          <pre
+            data-language={language}
+            className="max-h-96 overflow-auto rounded-xl border border-default-1000/20 bg-default-0 p-4 font-mono text-sm"
+          >
             {tokens.map((line, i) => (
               <div key={i} {...getLineProps({ line })}>
                 {line.map((token, key) => (

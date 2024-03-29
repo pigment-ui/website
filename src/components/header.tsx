@@ -43,7 +43,7 @@ export function Header() {
   const [isOpened, setIsOpened] = useState<boolean>(false);
 
   return (
-    <header className="sticky top-0 z-50 h-16 w-full border-b border-default-200 bg-default-0/75 backdrop-blur-lg">
+    <header className="sticky top-0 z-50 h-16 w-full border-b border-default-1000/20 bg-default-0/75 backdrop-blur-lg">
       <div className="container flex h-full items-center gap-x-8">
         <NextLink href="/" prefetch className="text-xl font-bold focus-visible:outline-default-1000">
           Pigment UI

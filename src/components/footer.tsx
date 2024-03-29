@@ -2,7 +2,7 @@ import { LinkedInLogoIcon } from "@radix-ui/react-icons";
 
 export function Footer() {
   return (
-    <footer className="w-full border-t border-t-default-200 py-8">
+    <footer className="w-full border-t border-t-default-1000/20 py-8">
       <div className="container flex justify-between">
         <p className="text-sm text-default-500">&copy; 2024 Pigment UI</p>
 

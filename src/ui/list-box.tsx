@@ -35,7 +35,7 @@ const listBoxStyles = tv({
 
 const listBoxItemStyles = tv({
   slots: {
-    base: "flex items-center gap-x-2 p-2 text-sm [&_svg]:h-4 [&_svg]:w-4 rounded-lg",
+    base: "flex items-center gap-x-2 p-2 text-sm [&_svg]:size-4 rounded-lg",
     content: "flex-1",
   },
   variants: {
