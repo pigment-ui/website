@@ -27,7 +27,7 @@ export const fieldStyles = tv({
 
 export const fieldInputStyles = tv({
   slots: {
-    base: "relative flex items-center bg-default-1000 bg-opacity-10 overflow-hidden",
+    base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden",
     self: "flex-1 h-full bg-transparent outline-none placeholder:text-default-500",
     content: "text-default-700 pointer-events-none",
     button: "grid place-items-center bg-default-1000 bg-opacity-20 data-[hovered]:bg-opacity-30 data-[pressed]:scale-95 outline-none",
@@ -47,16 +47,12 @@ export const fieldInputStyles = tv({
     },
     hasStartButton: { true: "" },
     hasEndButton: { true: "" },
-    isInvalid: { true: "bg-error-500" },
-    isHovered: { true: "bg-opacity-20" },
-    isFocusWithin: { true: "bg-opacity-30" },
+    isInvalid: { true: "border-error-500 border-opacity-50" },
+    isHovered: { true: "bg-default-1000/5" },
+    isFocusWithin: { true: "border-opacity-100" },
     ...isFocusVisibleVariants,
     ...isDisabledVariants,
   },
-  compoundVariants: [
-    { isInvalid: true, isHovered: true, className: { base: "bg-error-200" } },
-    { isInvalid: true, isFocusWithin: true, className: { base: "bg-error-300" } },
-  ],
 });
 
 // props
