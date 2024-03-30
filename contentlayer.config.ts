@@ -19,32 +19,9 @@ export const Doc = defineDocumentType(() => ({
   computedFields,
 }));
 
-export const Blog = defineDocumentType(() => ({
-  name: "Blog",
-  filePathPattern: `blogs/**/*.mdx`,
-  contentType: "mdx",
-  fields: {
-    title: { type: "string", required: true },
-    description: { type: "string", required: true },
-    date: { type: "date", required: true },
-  },
-  computedFields,
-}));
-
-export const Example = defineDocumentType(() => ({
-  name: "Example",
-  filePathPattern: `examples/**/*.mdx`,
-  contentType: "mdx",
-  fields: {
-    title: { type: "string", required: true },
-    description: { type: "string", required: true },
-  },
-  computedFields,
-}));
-
 export default makeSource({
   contentDirPath: "./src/content",
-  documentTypes: [Doc, Blog, Example],
+  documentTypes: [Doc],
   mdx: {
     remarkPlugins: [],
     rehypePlugins: [require("./src/components/mdx/plugins/rehype-code-language")],

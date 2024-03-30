@@ -12,7 +12,7 @@ import { ColorProps, ContentProps, FilterProps, ForwardRefType, StyleSlotsToStyl
 import { createSlots } from "./utils";
 
 import { Card } from "./card";
-import { ListBoxSection, PigmentListBoxSectionProps } from "#/ui/list-box";
+import { ListBoxSection, PigmentListBoxSectionProps } from "./list-box";
 
 // styles
 

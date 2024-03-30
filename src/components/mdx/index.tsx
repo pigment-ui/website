@@ -20,7 +20,7 @@ const mdxComponents = {
   h2: ({ ...props }) => <Heading as="h2" {...props} />,
   h3: ({ ...props }) => <Heading as="h3" {...props} />,
   pre: ({ ...props }) => <CodeBlock code={props.children.props.children} language={props["data-language"]} />,
-  code: ({ ...props }) => <code {...props} className="rounded-lg bg-default-1000/10 p-1 text-sm" />,
+  code: ({ ...props }) => <code {...props} className="whitespace-nowrap rounded-lg bg-default-1000/10 p-1 text-sm" />,
   ul: ({ ...props }) => <ul {...props} className="list-disc space-y-2 px-4" />,
   NextImage: ({ ...props }) => (
     <Image src="" alt="" priority {...props} className={twMerge("rounded-xl border border-default-1000/20", props.className)} />
