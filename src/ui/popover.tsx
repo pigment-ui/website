@@ -7,7 +7,6 @@ import { tv } from "tailwind-variants";
 import { FilterProps } from "./types";
 
 import { Card } from "./card";
-import { Dialog, PigmentDialogProps } from "./dialog";
 
 // styles
 
@@ -17,17 +16,17 @@ const popoverStyles = tv({
 
 // props
 
-interface PigmentPopoverProps extends Omit<FilterProps<PopoverProps>, "children">, Pick<PigmentDialogProps, "children"> {}
+interface PigmentPopoverProps extends FilterProps<PopoverProps> {}
 
 // component
 
 function _Popover(props: PigmentPopoverProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { children, className, style, ...restProps } = props;
+  const { children, className, style } = props;
 
   return (
     <Card asChild className={popoverStyles({ className })} style={style}>
-      <AriaPopover ref={ref} offset={8} {...restProps}>
-        <Dialog>{children}</Dialog>
+      <AriaPopover ref={ref} offset={8} {...props} className="" style={{}}>
+        {children}
       </AriaPopover>
     </Card>
   );

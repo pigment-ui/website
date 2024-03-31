@@ -39,6 +39,7 @@ const code = `
 import { DialogTrigger } from "react-aria-components";
 import { Modal, ModalBody, ModalButtons, ModalFooter, ModalHeader, ModalHeading } from "#/ui/modal";
 import { Button } from "#/ui/button";
+import { Separator } from "#/ui/separator";
 
 function ModalWithSeparator() {
   return (
@@ -48,9 +49,9 @@ function ModalWithSeparator() {
         <ModalHeader>
           <ModalHeading>Lorem ipsum dolor sit amet.</ModalHeading>
         </ModalHeader>
-        
+
         <Separator />
-        
+
         <ModalBody>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aperiam architecto blanditiis commodi culpa dicta distinctio dolor
@@ -58,9 +59,9 @@ function ModalWithSeparator() {
             perspiciatis quae quisquam quod repellat rerum sed suscipit ut, velit veniam vero voluptatibus voluptatum?
           </p>
         </ModalBody>
-        
+
         <Separator />
-        
+
         <ModalFooter>
           <ModalButtons>
             <Button variant="light">Cancel</Button>

@@ -2,21 +2,21 @@
 
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
-import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, InputProps, Popover, PopoverProps } from "react-aria-components";
+import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, InputProps } from "react-aria-components";
 
 import { FilterProps, ForwardRefType } from "./types";
 
-import { Card } from "./card";
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
 import { ListBox, ListBoxItem, ListBoxSection, PigmentListBoxItemProps, PigmentListBoxProps, PigmentListBoxSectionProps } from "./list-box";
+import { PigmentPopoverProps, Popover } from "./popover";
 
 // props
 
 interface PigmentComboBoxProps<T extends object>
   extends FilterProps<ComboBoxProps<T> & Omit<InputProps, "size" | "color">>,
-    Pick<PopoverProps, "placement" | "offset" | "crossOffset" | "shouldFlip" | "maxHeight">,
     PigmentFieldBaseProps,
     PigmentFieldInputBaseProps,
+    Pick<PigmentPopoverProps, "placement" | "offset" | "crossOffset" | "shouldFlip" | "maxHeight">,
     Pick<PigmentListBoxProps<T>, "color" | "itemClassNames" | "sectionClassNames" | "itemStyles" | "sectionStyles"> {}
 
 // component
@@ -24,6 +24,7 @@ interface PigmentComboBoxProps<T extends object>
 function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: ForwardedRef<HTMLInputElement>) {
   const {
     color,
+    size,
     placement,
     offset,
     crossOffset,
@@ -40,31 +41,38 @@ function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: Forwar
     <AriaComboBox {...props}>
       <Field {...props} className="" style={{}}>
         <FieldInput
+          {...props}
           endButton={
             <Button>
               <ChevronDownIcon />
             </Button>
           }
-          {...props}
         >
           <Input ref={ref} />
         </FieldInput>
       </Field>
 
-      <Card asChild className="w-[var(--trigger-width)] overflow-auto p-2">
-        <Popover isNonModal={false} placement={placement} offset={offset} crossOffset={crossOffset} shouldFlip={shouldFlip} maxHeight={maxHeight}>
-          <ListBox
-            isCard={false}
-            color={color}
-            itemClassNames={itemClassNames}
-            sectionClassNames={sectionClassNames}
-            itemStyles={itemStyles}
-            sectionStyles={sectionStyles}
-          >
-            {children}
-          </ListBox>
-        </Popover>
-      </Card>
+      <Popover
+        isNonModal={false}
+        placement={placement}
+        offset={offset}
+        crossOffset={crossOffset}
+        shouldFlip={shouldFlip}
+        maxHeight={maxHeight}
+        className="w-[var(--trigger-width)] overflow-auto p-2"
+      >
+        <ListBox
+          isCard={false}
+          color={color}
+          size={size}
+          itemClassNames={itemClassNames}
+          sectionClassNames={sectionClassNames}
+          itemStyles={itemStyles}
+          sectionStyles={sectionStyles}
+        >
+          {children}
+        </ListBox>
+      </Popover>
     </AriaComboBox>
   );
 }

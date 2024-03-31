@@ -31,7 +31,12 @@ type CardStylesReturnType = ReturnType<typeof cardStyles>;
 
 // props
 
-interface PigmentCardProps extends AsChildProps, ChildrenProps, StyleProps, StyleSlotsToStyleProps<CardStylesReturnType> {
+interface PigmentCardProps
+  extends HTMLAttributes<HTMLDivElement>,
+    AsChildProps,
+    ChildrenProps,
+    StyleProps,
+    StyleSlotsToStyleProps<CardStylesReturnType> {
   hasShadow?: boolean;
 }
 

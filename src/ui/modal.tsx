@@ -44,7 +44,7 @@ interface PigmentModalProps
     SizeProps,
     StyleSlotsToStyleProps<ModalStylesReturnType> {}
 
-interface PigmentModalItemProps extends ChildrenProps, StyleProps {}
+interface PigmentModalSectionProps extends ChildrenProps, StyleProps {}
 
 // slots
 
@@ -92,7 +92,7 @@ function _Modal(props: PigmentModalProps, ref: ForwardedRef<HTMLDivElement>) {
 
 const Modal = forwardRef(_Modal);
 
-function _ModalHeader(props: PigmentModalItemProps, ref: ForwardedRef<HTMLElement>) {
+function _ModalHeader(props: PigmentModalSectionProps, ref: ForwardedRef<HTMLElement>) {
   const { headerId, children, styleSlots, className, classNames, style, styles } = useModalSlots(props);
 
   return (
@@ -109,7 +109,7 @@ function _ModalHeader(props: PigmentModalItemProps, ref: ForwardedRef<HTMLElemen
 
 const ModalHeader = forwardRef(_ModalHeader);
 
-function _ModalBody(props: PigmentModalItemProps, ref: ForwardedRef<HTMLElement>) {
+function _ModalBody(props: PigmentModalSectionProps, ref: ForwardedRef<HTMLElement>) {
   const { bodyId, children, styleSlots, className, classNames, style, styles } = useModalSlots(props);
 
   return (
@@ -126,7 +126,7 @@ function _ModalBody(props: PigmentModalItemProps, ref: ForwardedRef<HTMLElement>
 
 const ModalBody = forwardRef(_ModalBody);
 
-function _ModalFooter(props: PigmentModalItemProps, ref: ForwardedRef<HTMLElement>) {
+function _ModalFooter(props: PigmentModalSectionProps, ref: ForwardedRef<HTMLElement>) {
   const { children, styleSlots, className, classNames, style, styles } = useModalSlots(props);
 
   return (

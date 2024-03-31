@@ -21,7 +21,7 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
           <div className="flex gap-4">
             {doc.hasSource && (
               <Button asChild size="sm" variant="soft" startContent={<GitHubLogoIcon />}>
-                <a href={`https://github.com/pigment-ui/pui-web/blob/main/src/ui/${doc.slug.split("/")[1]}.tsx`} target="_blank">
+                <a href={`https://github.com/pigment-ui/website/blob/main/src/ui/${doc.slug.split("/")[1]}.tsx`} target="_blank">
                   Source
                 </a>
               </Button>
@@ -49,7 +49,7 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
       <MDXContent code={doc.body.code} />
 
       <Button asChild startContent={<GitHubLogoIcon />} variant="faded" className="w-fit">
-        <a href={`https://github.com/pigment-ui/pui-web/edit/main/src/content/${doc._raw.flattenedPath}.mdx`} target="_blank">
+        <a href={`https://github.com/pigment-ui/website/edit/main/src/content/${doc._raw.flattenedPath}.mdx`} target="_blank">
           Edit this page
         </a>
       </Button>

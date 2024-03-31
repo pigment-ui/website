@@ -17,8 +17,8 @@ export function Header() {
 
   const routes = [
     ["/docs/overview/introduction", "Docs"],
-    // ["/blogs", "Blogs"],
-    // ["/examples", "Examples"],
+    ["/examples", "Examples"],
+    ["/themes", "Themes"],
   ].map(([href, title]) => (
     <Button
       key={title}
@@ -73,7 +73,7 @@ export function Header() {
             <Button isIconOnly variant="faded" className="sm:hidden">
               <HamburgerMenuIcon />
             </Button>
-            <Popover className="flex w-48 flex-col sm:hidden">{routes}</Popover>
+            <Popover className="flex w-48 flex-col gap-y-2 sm:hidden">{routes}</Popover>
           </DialogTrigger>
         </div>
       </div>

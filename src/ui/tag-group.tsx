@@ -40,9 +40,9 @@ const tagStyles = tv({
       error: { base: "bg-error-500", removeButton: "bg-error-500" },
     },
     size: {
-      sm: { base: "h-6 px-2 gap-x-2 text-xs", removeButton: "h-4 w-4 [&>svg]:size-3" },
-      md: { base: "h-8 px-2.5 gap-x-2.5 text-sm", removeButton: "h-5 w-5 [&>svg]:size-3.5" },
-      lg: { base: "h-10 px-3 gap-x-3 text-base", removeButton: "h-6 w-6 [&>svg]:size-4" },
+      sm: { base: "h-6 px-2 gap-x-2 text-xs", removeButton: "h-4 w-4 [&_svg]:size-3" },
+      md: { base: "h-8 px-2.5 gap-x-2.5 text-sm", removeButton: "h-5 w-5 [&_svg]:size-3.5" },
+      lg: { base: "h-10 px-3 gap-x-3 text-base", removeButton: "h-6 w-6 [&_svg]:size-4" },
     },
     radius: {
       sm: { base: radiusVariants.radius.sm, removeButton: radiusVariants.radius.sm },

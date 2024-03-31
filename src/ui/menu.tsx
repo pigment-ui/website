@@ -8,7 +8,7 @@ import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
 import { isDisabledVariants, isFocusVisibleVariants } from "./styles";
-import { ColorProps, ContentProps, FilterProps, ForwardRefType, StyleSlotsToStyleProps } from "./types";
+import { ColorProps, ContentProps, FilterProps, ForwardRefType, SizeProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { Card } from "./card";
@@ -22,12 +22,10 @@ const menuStyles = tv({
 
 const menuItemStyles = tv({
   slots: {
-    base: "flex items-center gap-x-2 p-2 text-sm [&_svg]:size-4 rounded-lg",
+    base: "flex items-center rounded-lg",
     content: "flex-1",
   },
   variants: {
-    ...isDisabledVariants,
-    ...isFocusVisibleVariants,
     color: {
       default: "bg-default-1000 text-default-1000",
       info: "bg-info-500 text-info-500",
@@ -35,9 +33,16 @@ const menuItemStyles = tv({
       warning: "text-warning-500",
       error: "bg-error-500 text-error-500",
     },
+    size: {
+      sm: "text-xs p-1 gap-x-1 [&_svg]:size-3",
+      md: "text-sm p-2 gap-x-2 [&_svg]:size-4",
+      lg: "text-base p-3 gap-x-3 [&_svg]:size-5",
+    },
     isSelectable: { true: "cursor-pointer", false: "cursor-default" },
     isHovered: { true: "bg-opacity-10", false: "bg-opacity-0" },
     isPressed: { true: "bg-opacity-20" },
+    ...isDisabledVariants,
+    ...isFocusVisibleVariants,
   },
 });
 
@@ -48,7 +53,8 @@ type MenuItemStylesReturnType = ReturnType<typeof menuItemStyles>;
 interface PigmentMenuProps<T extends object>
   extends FilterProps<MenuProps<T>>,
     Pick<PopoverProps, "placement" | "offset" | "crossOffset" | "shouldFlip" | "maxHeight">,
-    ColorProps {
+    ColorProps,
+    SizeProps {
   itemClassNames?: PigmentMenuItemProps["classNames"];
   itemStyles?: PigmentMenuItemProps["styles"];
 }
@@ -57,17 +63,30 @@ interface PigmentMenuItemProps extends FilterProps<MenuItemProps>, ColorProps, C
 
 // slots
 
-interface MenuSlotsType extends Pick<PigmentMenuProps<any>, "color" | "itemClassNames" | "itemStyles"> {}
+interface MenuSlotsType extends Pick<PigmentMenuProps<any>, "color" | "size" | "itemClassNames" | "itemStyles"> {}
 
 const [MenuSlotsProvider, useMenuSlots] = createSlots<MenuSlotsType>();
 
 // component
 
 function _Menu<T extends object>(props: PigmentMenuProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, placement, offset, crossOffset, shouldFlip, maxHeight = 300, children, className, itemClassNames, style, itemStyles } = props;
+  const {
+    color,
+    size = "md",
+    placement,
+    offset,
+    crossOffset,
+    shouldFlip,
+    maxHeight = 300,
+    children,
+    className,
+    itemClassNames,
+    style,
+    itemStyles,
+  } = props;
 
   return (
-    <MenuSlotsProvider value={{ color, itemClassNames, itemStyles }}>
+    <MenuSlotsProvider value={{ color, size, itemClassNames, itemStyles }}>
       <Card asChild className={menuStyles({ className })} style={style}>
         <Popover placement={placement} offset={offset} crossOffset={crossOffset} shouldFlip={shouldFlip} maxHeight={maxHeight}>
           <AriaMenu ref={ref} {...props} className="outline-none" style={{}}>
@@ -84,6 +103,7 @@ const Menu = (forwardRef as ForwardRefType)(_Menu);
 function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
   const {
     color = "default",
+    size,
     startContent,
     endContent,
     children,
@@ -95,7 +115,7 @@ function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement
     itemStyles,
   } = useMenuSlots(props);
 
-  const styleSlots = menuItemStyles({ color });
+  const styleSlots = menuItemStyles({ color, size });
 
   return (
     <AriaMenuItem

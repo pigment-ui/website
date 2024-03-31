@@ -35,12 +35,10 @@ const listBoxStyles = tv({
 
 const listBoxItemStyles = tv({
   slots: {
-    base: "flex items-center gap-x-2 p-2 text-sm [&_svg]:size-4 rounded-lg",
+    base: "flex items-center rounded-lg",
     content: "flex-1",
   },
   variants: {
-    ...isDisabledVariants,
-    ...isFocusVisibleVariants,
     color: {
       default: "bg-default-1000 text-default-1000",
       info: "bg-info-500 text-info-500",
@@ -48,9 +46,16 @@ const listBoxItemStyles = tv({
       warning: "text-warning-500",
       error: "bg-error-500 text-error-500",
     },
+    size: {
+      sm: "text-xs p-1 gap-x-1 [&_svg]:size-3",
+      md: "text-sm p-2 gap-x-2 [&_svg]:size-4",
+      lg: "text-base p-3 gap-x-3 [&_svg]:size-5",
+    },
     isSelectable: { true: "cursor-pointer", false: "cursor-default" },
     isHovered: { true: "bg-opacity-10", false: "bg-opacity-0" },
     isPressed: { true: "bg-opacity-20" },
+    ...isDisabledVariants,
+    ...isFocusVisibleVariants,
   },
 });
 
@@ -58,8 +63,15 @@ type ListBoxItemStylesReturnType = ReturnType<typeof listBoxItemStyles>;
 
 const listBoxSectionStyles = tv({
   slots: {
-    base: "py-2 first:pt-0 last:pb-0",
-    title: "p-2 mb-2 text-sm text-default-500 font-bold border-b border-b-default-1000/20",
+    base: "first:pt-0 last:pb-0",
+    title: "text-default-500 font-bold border-b border-b-default-1000/20",
+  },
+  variants: {
+    size: {
+      sm: { base: "py-1", title: "p-1 mb-1 text-xs" },
+      md: { base: "py-2", title: "p-2 mb-2 text-sm" },
+      lg: { base: "py-3", title: "p-3 mb-3 text-base" },
+    },
   },
 });
 
@@ -88,20 +100,20 @@ interface PigmentListBoxSectionProps<T extends object> extends SectionProps<T>, 
 // slots
 
 interface ListBoxSlotsType
-  extends Pick<PigmentListBoxProps<any>, "color" | "itemClassNames" | "sectionClassNames" | "itemStyles" | "sectionStyles"> {}
+  extends Pick<PigmentListBoxProps<any>, "color" | "size" | "itemClassNames" | "sectionClassNames" | "itemStyles" | "sectionStyles"> {}
 
 const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType>();
 
 // component
 
 function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { isCard = true, color, children, itemClassNames, sectionClassNames, itemStyles, sectionStyles } = props;
+  const { isCard = true, color, size = "md", children, itemClassNames, sectionClassNames, itemStyles, sectionStyles } = props;
 
   const Component = ({ children }: ChildrenProps) =>
     cloneElement(isCard ? <Card asChild hasShadow={false} /> : <Slot />, { children, className: listBoxStyles({ isCard }) });
 
   return (
-    <ListBoxSlotsProvider value={{ color, itemClassNames, sectionClassNames, itemStyles, sectionStyles }}>
+    <ListBoxSlotsProvider value={{ color, size, itemClassNames, sectionClassNames, itemStyles, sectionStyles }}>
       <Field {...props}>
         <Component>
           <AriaListBox ref={ref} {...props} className="" style={{}}>
@@ -118,6 +130,7 @@ const ListBox = (forwardRef as ForwardRefType)(_ListBox);
 function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivElement>) {
   const {
     color = "default",
+    size,
     startContent,
     endContent,
     children,
@@ -129,7 +142,7 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
     itemStyles,
   } = useListBoxSlots(props);
 
-  const styleSlots = listBoxItemStyles({ color });
+  const styleSlots = listBoxItemStyles({ color, size });
 
   return (
     <AriaListBoxItem
@@ -168,9 +181,9 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
 const ListBoxItem = forwardRef(_ListBoxItem);
 
 function _ListBoxSection<T extends object>(props: PigmentListBoxSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { title, items, children, className, classNames, sectionClassNames, style, styles, sectionStyles } = useListBoxSlots(props);
+  const { title, items, size, children, className, classNames, sectionClassNames, style, styles, sectionStyles } = useListBoxSlots(props);
 
-  const styleSlots = listBoxSectionStyles();
+  const styleSlots = listBoxSectionStyles({ size });
 
   return (
     <Section

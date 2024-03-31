@@ -34,9 +34,9 @@ export const fieldInputStyles = tv({
   },
   variants: {
     size: {
-      sm: { base: "h-8 text-xs", content: "[&>svg]:size-4", button: "h-6 w-6 [&>svg]:size-3" },
-      md: { base: "h-10 text-sm", content: "[&>svg]:size-5", button: "h-7 w-7 [&>svg]:size-4" },
-      lg: { base: "h-12 text-base", content: "[&>svg]:size-6", button: "h-8 w-8 [&>svg]:size-5" },
+      sm: { base: "h-8 text-xs", content: "[&_svg]:size-4", button: "h-6 w-6 [&_svg]:size-3" },
+      md: { base: "h-10 text-sm", content: "[&_svg]:size-5", button: "h-7 w-7 [&_svg]:size-4" },
+      lg: { base: "h-12 text-base", content: "[&_svg]:size-6", button: "h-8 w-8 [&_svg]:size-5" },
     },
     radius: {
       sm: { base: radiusVariants.radius.sm, button: radiusVariants.radius.sm },
