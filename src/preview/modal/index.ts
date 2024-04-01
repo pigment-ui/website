@@ -1,4 +1,4 @@
 export * from "./close-button";
+export * from "./demo";
 export * from "./size";
-export * from "./usage";
 export * from "./with-separator";

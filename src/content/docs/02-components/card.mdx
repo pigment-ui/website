@@ -24,11 +24,13 @@ Copy and paste the source code into your project.
 
 ## Usage
 
-<ComponentPreview slug="card/usage" />
+### Demo
 
-## Properties
+<ComponentPreview slug="card/demo" />
 
 ### With separator
+
+In this case, you will need to use [`<Separator />`](/docs/components/separator) component between `<CardHeader />`, `<CardBody />` and `<CardFooter />` components.
 
 <ComponentPreview slug="card/withSeparator" />
 
@@ -45,7 +47,7 @@ Copy and paste the source code into your project.
 ```ts
 type CardStyleSlots = "base" | "header" | "body" | "footer" | "heading" | "buttons";
 type CardStyleProps = {
-  classNames?: { [key in keyof CardStyleSlots]?: string };
-  styles?: { [key in keyof CardStyleSlots]?: CSSProperties };
+  classNames?: { [slot in keyof CardStyleSlots]?: string };
+  styles?: { [slot in keyof CardStyleSlots]?: CSSProperties };
 };
 ```

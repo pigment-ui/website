@@ -2,7 +2,7 @@ import { DialogTrigger } from "react-aria-components";
 import { Modal, ModalBody, ModalButtons, ModalFooter, ModalHeader, ModalHeading } from "#/ui/modal";
 import { Button } from "#/ui/button";
 
-function ModalUsage() {
+function ModalDemo() {
   return (
     <DialogTrigger>
       <Button>Click me</Button>
@@ -33,7 +33,7 @@ import { DialogTrigger } from "react-aria-components";
 import { Modal, ModalBody, ModalButtons, ModalFooter, ModalHeader, ModalHeading } from "#/ui/modal";
 import { Button } from "#/ui/button";
 
-function ModalUsage() {
+function ModalDemo() {
   return (
     <DialogTrigger>
       <Button>Click me</Button>
@@ -60,4 +60,4 @@ function ModalUsage() {
 }
 `;
 
-export const usage = { code, preview: <ModalUsage /> };
+export const demo = { code, preview: <ModalDemo /> };

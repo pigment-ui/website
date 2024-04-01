@@ -27,9 +27,9 @@ Copy and paste the source code into your project.
 
 ## Usage
 
-<ComponentPreview slug="modal/usage" />
+### Demo
 
-## Properties
+<ComponentPreview slug="modal/demo" />
 
 ### With separator
 
@@ -52,7 +52,7 @@ In this case, you will need to use [`<Dialog />`](/docs/components/dialog) compo
 ```ts
 type ModalStyleSlots = "base" | "header" | "body" | "footer" | "backdrop" | "closeButton";
 type ModalStyleProps = {
-  classNames?: { [key in keyof ModalStyleSlots]?: string };
-  styles?: { [key in keyof ModalStyleSlots]?: CSSProperties };
+  classNames?: { [slot in keyof ModalStyleSlots]?: string };
+  styles?: { [slot in keyof ModalStyleSlots]?: CSSProperties };
 };
 ```

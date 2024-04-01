@@ -5,6 +5,7 @@ import { CodeBlock } from "../shared";
 
 import * as button from "#/preview/button";
 import * as card from "#/preview/card";
+import * as comboBox from "#/preview/combo-box";
 import * as modal from "#/preview/modal";
 
 export function ComponentPreview({ slug }: { slug: string }) {
@@ -26,5 +27,6 @@ export function ComponentPreview({ slug }: { slug: string }) {
 const previews: Record<string, Record<string, { code: string; preview: ReactNode }>> = {
   button,
   card,
+  comboBox,
   modal,
 };

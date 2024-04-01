@@ -1,7 +1,7 @@
 import { Card, CardBody, CardButtons, CardFooter, CardHeader, CardHeading } from "#/ui/card";
 import { Button } from "#/ui/button";
 
-function CardUsage() {
+function CardDemo() {
   return (
     <Card>
       <CardHeader>
@@ -28,7 +28,7 @@ const code = `
 import { Card, CardBody, CardButtons, CardFooter, CardHeader, CardHeading } from "#/ui/card";
 import { Button } from "#/ui/button";
 
-function CardUsage() {
+function CardDemo() {
   return (
     <Card>
       <CardHeader>
@@ -52,4 +52,4 @@ function CardUsage() {
 }
 `;
 
-export const usage = { code, preview: <CardUsage /> };
+export const demo = { code, preview: <CardDemo /> };

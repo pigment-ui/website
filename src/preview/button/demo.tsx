@@ -1,15 +1,15 @@
 import { Button } from "#/ui/button";
 
-function ButtonUsage() {
+function ButtonDemo() {
   return <Button>Click me</Button>;
 }
 
 const code = `
 import { Button } from "#/ui/button";
 
-function ButtonUsage() {
+function ButtonDemo() {
   return <Button>Click me</Button>;
 }
 `;
 
-export const usage = { code, preview: <ButtonUsage /> };
+export const demo = { code, preview: <ButtonDemo /> };
