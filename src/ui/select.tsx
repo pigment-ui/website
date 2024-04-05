@@ -2,7 +2,7 @@
 
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
-import { Button, InputProps, Select as AriaSelect, SelectProps, SelectValue } from "react-aria-components";
+import { Button, Select as AriaSelect, SelectProps, SelectValue } from "react-aria-components";
 
 import { FilterProps, ForwardRefType } from "./types";
 
@@ -13,7 +13,7 @@ import { PigmentPopoverProps, Popover } from "./popover";
 // props
 
 interface PigmentSelectProps<T extends object>
-  extends FilterProps<SelectProps<T> & Omit<InputProps, "size" | "color">>,
+  extends FilterProps<SelectProps<T>>,
     PigmentFieldBaseProps,
     PigmentFieldInputBaseProps,
     Pick<PigmentPopoverProps, "placement" | "offset" | "crossOffset" | "shouldFlip" | "maxHeight">,

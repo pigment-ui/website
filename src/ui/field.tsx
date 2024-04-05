@@ -1,6 +1,6 @@
 "use client";
 
-import { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode, useEffect, useRef, useState } from "react";
+import { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode, useLayoutEffect, useRef, useState } from "react";
 import { FieldError, Group, Label, Text } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
@@ -133,7 +133,7 @@ function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivEle
   const endButtonWidth = endButtonRef.current?.offsetWidth ?? 0;
   const endContentWidth = endContentRef.current?.offsetWidth ?? 0;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setPaddingLeft((startButtonWidth ? startButtonWidth + spacingSize : 0) + (startContentWidth ? startContentWidth + spacingSize : 0) + spacingSize);
     setPaddingRight((endButtonWidth ? endButtonWidth + spacingSize : 0) + (endContentWidth ? endContentWidth + spacingSize : 0) + spacingSize);
     setMounted(true);

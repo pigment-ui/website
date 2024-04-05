@@ -121,6 +121,7 @@ function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement
     <AriaMenuItem
       ref={ref}
       id={typeof children === "string" ? children : undefined}
+      textValue={typeof children === "string" ? children : undefined}
       {...props}
       className={({ isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         styleSlots.base({

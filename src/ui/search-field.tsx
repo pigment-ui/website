@@ -2,7 +2,7 @@
 
 import { Cross2Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
-import { Button, Input, InputProps, SearchField as AriaSearchField, SearchFieldProps } from "react-aria-components";
+import { Button, Input, SearchField as AriaSearchField, SearchFieldProps } from "react-aria-components";
 
 import { FilterProps } from "./types";
 
@@ -10,10 +10,7 @@ import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } 
 
 // props
 
-interface PigmentSearchFieldProps
-  extends FilterProps<SearchFieldProps & Omit<InputProps, "size">>,
-    PigmentFieldBaseProps,
-    PigmentFieldInputBaseProps {}
+interface PigmentSearchFieldProps extends FilterProps<SearchFieldProps>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
 
 // component
 

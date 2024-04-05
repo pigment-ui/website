@@ -147,6 +147,7 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
   return (
     <AriaListBoxItem
       ref={ref}
+      id={typeof children === "string" ? children : undefined}
       textValue={typeof children === "string" ? children : undefined}
       {...props}
       className={({ isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
