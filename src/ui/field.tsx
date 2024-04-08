@@ -28,7 +28,7 @@ export const fieldStyles = tv({
 export const fieldInputStyles = tv({
   slots: {
     base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden",
-    self: "flex-1 h-full bg-transparent outline-none placeholder:text-default-500",
+    self: "flex-1 h-full bg-transparent outline-none placeholder:text-default-500 flex items-center",
     content: "text-default-700",
     button: "grid place-items-center bg-default-1000 bg-opacity-10 data-[hovered]:bg-opacity-20 data-[pressed]:scale-95 outline-none",
   },
@@ -45,12 +45,18 @@ export const fieldInputStyles = tv({
       full: { base: radiusVariants.radius.full, button: smallRadiusVariants.radius.full },
       none: { base: radiusVariants.radius.none, button: smallRadiusVariants.radius.none },
     },
+    isTextArea: { true: "h-auto items-start" },
     isInvalid: { true: "border-error-500 border-opacity-50" },
     isHovered: { true: "bg-default-50" },
     isFocusWithin: { true: "border-opacity-100" },
     ...isFocusVisibleVariants,
     ...isDisabledVariants,
   },
+  compoundVariants: [
+    { isTextArea: true, size: "sm", className: { base: "py-2" } },
+    { isTextArea: true, size: "md", className: { base: "py-2.5" } },
+    { isTextArea: true, size: "lg", className: { base: "py-3" } },
+  ],
 });
 
 // props
@@ -70,6 +76,7 @@ interface PigmentFieldProps extends PigmentFieldBaseProps {
 interface PigmentFieldInputBaseProps extends SizeProps, RadiusProps, ContentProps {}
 
 interface PigmentFieldInputProps extends PigmentFieldInputBaseProps {
+  isTextArea?: boolean;
   isInvalid?: boolean;
   isDisabled?: boolean;
   children?: ReactElement;
@@ -110,9 +117,9 @@ function _Field(props: PigmentFieldProps, ref: ForwardedRef<HTMLDivElement>) {
 const Field = forwardRef(_Field);
 
 function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { size = "md", radius = "md", isInvalid, isDisabled, startContent, endContent, startButton, endButton, children } = props;
+  const { size = "md", radius = "md", isInvalid, isDisabled, isTextArea = false, startContent, endContent, startButton, endButton, children } = props;
 
-  const styleSlots = fieldInputStyles({ size, radius });
+  const styleSlots = fieldInputStyles({ size, radius, isTextArea });
 
   const hasStartButton = !!startButton;
   const hasEndButton = !!endButton;
@@ -163,7 +170,7 @@ function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivEle
 
       {children &&
         cloneElement(children, {
-          style: { paddingLeft, paddingRight },
+          style: { paddingLeft, paddingRight, ...children.props?.style },
           className: styleSlots.self({ className: children.props?.className }),
         })}
 

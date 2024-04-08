@@ -50,7 +50,7 @@ export const variantColorRadiusStyles = tv({
       warning: "",
       error: "",
     },
-    isHovered: { true: "cursor-pointer" },
+    isHovered: { true: "" },
     isPressed: { true: "scale-95" },
     ...radiusVariants,
     ...isDisabledVariants,
@@ -143,4 +143,18 @@ export const variantColorRadiusStyles = tv({
     { variant: "bordered", isHovered: true, className: "bg-opacity-10" },
     { variant: "faded", isHovered: true, className: "bg-default-200" },
   ],
+});
+
+export const segmentStyles = tv({
+  base: "text-default-1000 outline-none [caret-color:transparent;]",
+  variants: {
+    size: {
+      sm: "py-0.5 px-1",
+      md: "py-1 px-1.5",
+      lg: "py-1.5 px-2",
+    },
+    isFocused: { true: "bg-default-1000 text-default-0" },
+    ...smallRadiusVariants,
+  },
+  defaultVariants: { size: "md", radius: "md" },
 });
