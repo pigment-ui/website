@@ -142,7 +142,7 @@ function _Field(props: PigmentFieldProps, ref: ForwardedRef<HTMLDivElement>) {
           errorMessageComponent
         ) : errorMessageProps && validationErrors ? (
           <span {...errorMessageProps} className={styleSlots.errorMessageStyles()}>
-            {validationErrors.join(", ")}
+            {validationErrors.join(" ")}
           </span>
         ) : (
           <FieldError className={styleSlots.errorMessageStyles()} />
