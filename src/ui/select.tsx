@@ -39,42 +39,46 @@ function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedR
 
   return (
     <AriaSelect {...props}>
-      <Field {...props}>
-        <FieldInput
-          {...props}
-          endButton={
-            <div className="pointer-events-none">
-              <ChevronDownIcon />
-            </div>
-          }
-        >
-          <Button ref={ref} className="flex items-center">
-            <SelectValue />
-          </Button>
-        </FieldInput>
-      </Field>
-
-      <Popover
-        isNonModal={false}
-        placement={placement}
-        offset={offset}
-        crossOffset={crossOffset}
-        shouldFlip={shouldFlip}
-        maxHeight={maxHeight}
-        className="w-[var(--trigger-width)] overflow-auto p-2"
-      >
-        <ListBox
-          isCard={false}
-          color={color}
-          size={size}
-          itemClassNames={itemClassNames}
-          sectionClassNames={sectionClassNames}
-          itemStyles={itemStyles}
-          sectionStyles={sectionStyles}
-        >
-          {children}
-        </ListBox>
-      </Popover>
+      {(renderProps) => (
+        <>
+          <Field {...renderProps} {...props}>
+            <FieldInput
+              endButton={
+                <div className="pointer-events-none">
+                  <ChevronDownIcon />
+                </div>
+              }
+              {...renderProps}
+              {...props}
+            >
+              <Button ref={ref} className="flex items-center">
+                <SelectValue />
+              </Button>
+            </FieldInput>
+          </Field>
+          <Popover
+            isNonModal={false}
+            placement={placement}
+            offset={offset}
+            crossOffset={crossOffset}
+            shouldFlip={shouldFlip}
+            maxHeight={maxHeight}
+            className="w-[var(--trigger-width)] overflow-auto p-2"
+          >
+            <ListBox
+              isCard={false}
+              color={color}
+              size={size}
+              itemClassNames={itemClassNames}
+              sectionClassNames={sectionClassNames}
+              itemStyles={itemStyles}
+              sectionStyles={sectionStyles}
+            >
+              {children}
+            </ListBox>
+          </Popover>
+        </>
+      )}
     </AriaSelect>
   );
 }

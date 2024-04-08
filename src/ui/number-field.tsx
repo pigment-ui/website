@@ -17,23 +17,26 @@ interface PigmentNumberFieldProps extends FilterProps<NumberFieldProps>, Pigment
 function _NumberField(props: PigmentNumberFieldProps, ref: ForwardedRef<HTMLInputElement>) {
   return (
     <AriaNumberField {...props}>
-      <Field {...props}>
-        <FieldInput
-          startButton={
-            <Button slot="decrement">
-              <MinusIcon />
-            </Button>
-          }
-          endButton={
-            <Button slot="increment">
-              <PlusIcon />
-            </Button>
-          }
-          {...props}
-        >
-          <Input ref={ref} />
-        </FieldInput>
-      </Field>
+      {(renderProps) => (
+        <Field {...renderProps} {...props}>
+          <FieldInput
+            startButton={
+              <Button slot="decrement">
+                <MinusIcon />
+              </Button>
+            }
+            endButton={
+              <Button slot="increment">
+                <PlusIcon />
+              </Button>
+            }
+            {...renderProps}
+            {...props}
+          >
+            <Input ref={ref} />
+          </FieldInput>
+        </Field>
+      )}
     </AriaNumberField>
   );
 }

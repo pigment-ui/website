@@ -17,17 +17,18 @@ interface PigmentSearchFieldProps extends FilterProps<SearchFieldProps>, Pigment
 function _SearchField(props: PigmentSearchFieldProps, ref: ForwardedRef<HTMLInputElement>) {
   return (
     <AriaSearchField {...props}>
-      {({ isEmpty }) => (
-        <Field {...props}>
+      {(renderProps) => (
+        <Field {...renderProps} {...props}>
           <FieldInput
             startContent={<MagnifyingGlassIcon />}
             endButton={
-              !isEmpty ? (
+              !renderProps.isEmpty ? (
                 <Button>
                   <Cross2Icon />
                 </Button>
               ) : undefined
             }
+            {...renderProps}
             {...props}
           >
             <Input ref={ref} />

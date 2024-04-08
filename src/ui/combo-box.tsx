@@ -39,40 +39,44 @@ function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: Forwar
 
   return (
     <AriaComboBox {...props}>
-      <Field {...props}>
-        <FieldInput
-          {...props}
-          endButton={
-            <Button>
-              <ChevronDownIcon />
-            </Button>
-          }
-        >
-          <Input ref={ref} />
-        </FieldInput>
-      </Field>
-
-      <Popover
-        isNonModal={false}
-        placement={placement}
-        offset={offset}
-        crossOffset={crossOffset}
-        shouldFlip={shouldFlip}
-        maxHeight={maxHeight}
-        className="w-[var(--trigger-width)] overflow-auto p-2"
-      >
-        <ListBox
-          isCard={false}
-          color={color}
-          size={size}
-          itemClassNames={itemClassNames}
-          sectionClassNames={sectionClassNames}
-          itemStyles={itemStyles}
-          sectionStyles={sectionStyles}
-        >
-          {children}
-        </ListBox>
-      </Popover>
+      {(renderProps) => (
+        <>
+          <Field {...renderProps} {...props}>
+            <FieldInput
+              endButton={
+                <Button>
+                  <ChevronDownIcon />
+                </Button>
+              }
+              {...renderProps}
+              {...props}
+            >
+              <Input ref={ref} />
+            </FieldInput>
+          </Field>
+          <Popover
+            isNonModal={false}
+            placement={placement}
+            offset={offset}
+            crossOffset={crossOffset}
+            shouldFlip={shouldFlip}
+            maxHeight={maxHeight}
+            className="w-[var(--trigger-width)] overflow-auto p-2"
+          >
+            <ListBox
+              isCard={false}
+              color={color}
+              size={size}
+              itemClassNames={itemClassNames}
+              sectionClassNames={sectionClassNames}
+              itemStyles={itemStyles}
+              sectionStyles={sectionStyles}
+            >
+              {children}
+            </ListBox>
+          </Popover>
+        </>
+      )}
     </AriaComboBox>
   );
 }

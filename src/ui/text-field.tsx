@@ -16,11 +16,13 @@ interface PigmentTextFieldProps extends FilterProps<TextFieldProps>, PigmentFiel
 function _TextField(props: PigmentTextFieldProps, ref: ForwardedRef<HTMLInputElement>) {
   return (
     <AriaTextField {...props}>
-      <Field {...props}>
-        <FieldInput {...props}>
-          <Input ref={ref} />
-        </FieldInput>
-      </Field>
+      {(renderProps) => (
+        <Field {...renderProps} {...props}>
+          <FieldInput {...renderProps} {...props}>
+            <Input ref={ref} />
+          </FieldInput>
+        </Field>
+      )}
     </AriaTextField>
   );
 }

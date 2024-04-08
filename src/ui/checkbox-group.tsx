@@ -50,9 +50,11 @@ function _CheckboxGroup(props: PigmentCheckboxGroupProps, ref: ForwardedRef<HTML
   return (
     <CheckboxGroupSlotsProvider value={{ size, radius, checkboxItemClassNames, checkboxItemStyles }}>
       <AriaCheckboxGroup ref={ref} {...props}>
-        <Field {...props}>
-          <div className={checkboxGroupStyles({ size, orientation })}>{children}</div>
-        </Field>
+        {(renderProps) => (
+          <Field {...renderProps} {...props}>
+            <div className={checkboxGroupStyles({ size, orientation })}>{children}</div>
+          </Field>
+        )}
       </AriaCheckboxGroup>
     </CheckboxGroupSlotsProvider>
   );

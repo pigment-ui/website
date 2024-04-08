@@ -67,12 +67,11 @@ interface PigmentFieldProps extends PigmentFieldBaseProps {
   children?: ReactElement;
 }
 
-interface PigmentFieldInputBaseProps extends SizeProps, RadiusProps, ContentProps {
-  isInvalid?: boolean;
-  isDisabled?: boolean;
-}
+interface PigmentFieldInputBaseProps extends SizeProps, RadiusProps, ContentProps {}
 
 interface PigmentFieldInputProps extends PigmentFieldInputBaseProps {
+  isInvalid?: boolean;
+  isDisabled?: boolean;
   children?: ReactElement;
   startButton?: ReactElement;
   endButton?: ReactElement;

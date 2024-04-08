@@ -41,8 +41,8 @@ const checkboxStyles = tv({
     ...isDisabledVariants,
   },
   compoundVariants: [
-    { isIndeterminate: true, isInvalid: true, className: { box: "bg-error-500" } },
     { isSelected: true, isInvalid: true, className: { box: "bg-error-500" } },
+    { isIndeterminate: true, isInvalid: true, className: { box: "bg-error-500" } },
   ],
 });
 
@@ -91,7 +91,7 @@ function _Checkbox(props: PigmentCheckboxProps, ref: ForwardedRef<HTMLLabelEleme
             })}
             style={mergeProps(checkboxItemStyles?.box, styles?.box)}
           >
-            {isIndeterminate ? <MinusIcon /> : isSelected ? <CheckIcon /> : null}
+            {isSelected ? <CheckIcon /> : isIndeterminate ? <MinusIcon /> : null}
           </div>
           {children}
         </>
