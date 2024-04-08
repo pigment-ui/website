@@ -39,7 +39,7 @@ function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: Forwar
 
   return (
     <AriaComboBox {...props}>
-      <Field {...props} className="" style={{}}>
+      <Field {...props}>
         <FieldInput
           {...props}
           endButton={

@@ -22,7 +22,7 @@ import { ChildrenProps, ColorProps, ContentProps, FilterProps, ForwardRefType, S
 import { createSlots } from "./utils";
 
 import { Card } from "./card";
-import { Field, PigmentFieldBaseProps } from "./field";
+import { PigmentFieldBaseProps } from "./field";
 
 // styles
 
@@ -114,13 +114,11 @@ function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: Forwarde
 
   return (
     <ListBoxSlotsProvider value={{ color, size, itemClassNames, sectionClassNames, itemStyles, sectionStyles }}>
-      <Field {...props}>
-        <Component>
-          <AriaListBox ref={ref} {...props} className="" style={{}}>
-            {children}
-          </AriaListBox>
-        </Component>
-      </Field>
+      <Component>
+        <AriaListBox ref={ref} {...props} className="" style={{}}>
+          {children}
+        </AriaListBox>
+      </Component>
     </ListBoxSlotsProvider>
   );
 }

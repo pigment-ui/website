@@ -7,7 +7,7 @@ import { Button, Tag as AriaTag, TagGroup as AriaTagGroup, TagGroupProps, TagLis
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { isDisabledVariants, isFocusVisibleVariants, isPressedVariants, radiusVariants } from "./styles";
+import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
 import { ColorProps, ContentProps, FilterProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
@@ -54,10 +54,10 @@ const tagStyles = tv({
     isSelectable: { true: "cursor-pointer", false: "cursor-default" },
     isSelected: { true: { base: "bg-opacity-100 text-default-0", removeButton: "bg-default-0" } },
     isHovered: { true: "bg-opacity-20" },
+    isPressed: { true: "scale-95" },
     isFocusWithin: { true: "bg-opacity-30" },
     ...isFocusVisibleVariants,
     ...isDisabledVariants,
-    ...isPressedVariants,
   },
   compoundVariants: [{ isSelected: true, isHovered: true, className: { base: "bg-opacity-90" } }],
 });
@@ -90,7 +90,7 @@ function _TagGroup<T extends object>(props: PigmentTagGroupProps<T>, ref: Forwar
   return (
     <TagGroupSlotsProvider value={{ color, size, radius }}>
       <AriaTagGroup ref={ref} {...props}>
-        <Field {...props} className="" style={{}}>
+        <Field {...props}>
           <TagList items={items} renderEmptyState={renderEmptyState} className={tagGroupStyles({ size })}>
             {children}
           </TagList>

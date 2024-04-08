@@ -4,8 +4,8 @@ import { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode, useLay
 import { FieldError, Group, Label, Text } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
-import { ContentProps, RadiusProps, SizeProps, StyleProps } from "./types";
+import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants } from "./styles";
+import { ContentProps, RadiusProps, SizeProps } from "./types";
 
 // styles
 
@@ -29,7 +29,7 @@ export const fieldInputStyles = tv({
   slots: {
     base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden",
     self: "flex-1 h-full bg-transparent outline-none placeholder:text-default-500",
-    content: "text-default-700 pointer-events-none",
+    content: "text-default-700",
     button: "grid place-items-center bg-default-1000 bg-opacity-10 data-[hovered]:bg-opacity-20 data-[pressed]:scale-95 outline-none",
   },
   variants: {
@@ -39,14 +39,12 @@ export const fieldInputStyles = tv({
       lg: { base: "h-12 text-base", content: "[&_svg]:size-6", button: "h-8 w-8 [&_svg]:size-5" },
     },
     radius: {
-      sm: { base: radiusVariants.radius.sm, button: radiusVariants.radius.sm },
-      md: { base: radiusVariants.radius.md, button: radiusVariants.radius.md },
-      lg: { base: radiusVariants.radius.lg, button: radiusVariants.radius.lg },
-      full: { base: radiusVariants.radius.full, button: radiusVariants.radius.full },
-      none: { base: radiusVariants.radius.none, button: radiusVariants.radius.none },
+      sm: { base: radiusVariants.radius.sm, button: smallRadiusVariants.radius.sm },
+      md: { base: radiusVariants.radius.md, button: smallRadiusVariants.radius.md },
+      lg: { base: radiusVariants.radius.lg, button: smallRadiusVariants.radius.lg },
+      full: { base: radiusVariants.radius.full, button: smallRadiusVariants.radius.full },
+      none: { base: radiusVariants.radius.none, button: smallRadiusVariants.radius.none },
     },
-    hasStartButton: { true: "" },
-    hasEndButton: { true: "" },
     isInvalid: { true: "border-error-500 border-opacity-50" },
     isHovered: { true: "bg-default-50" },
     isFocusWithin: { true: "border-opacity-100" },
@@ -65,7 +63,7 @@ interface PigmentFieldBaseProps extends SizeProps {
   labelNecessityIndicator?: "symbol" | "text";
 }
 
-interface PigmentFieldProps extends PigmentFieldBaseProps, StyleProps {
+interface PigmentFieldProps extends PigmentFieldBaseProps {
   children?: ReactElement;
 }
 
@@ -83,12 +81,12 @@ interface PigmentFieldInputProps extends PigmentFieldInputBaseProps {
 // component
 
 function _Field(props: PigmentFieldProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { label, description, errorMessage, size = "md", isRequired, labelNecessityIndicator = "symbol", children, className, style } = props;
+  const { label, description, errorMessage, size = "md", isRequired, labelNecessityIndicator = "symbol", children } = props;
 
   const styleSlots = fieldStyles({ size });
 
   return (
-    <div ref={ref} className={styleSlots.base({ className })} style={style}>
+    <div ref={ref} className={styleSlots.base()}>
       {label && (
         <Label className={styleSlots.labelStyles()}>
           {label}
@@ -115,11 +113,12 @@ const Field = forwardRef(_Field);
 function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivElement>) {
   const { size = "md", radius = "md", isInvalid, isDisabled, startContent, endContent, startButton, endButton, children } = props;
 
+  const styleSlots = fieldInputStyles({ size, radius });
+
   const hasStartButton = !!startButton;
   const hasEndButton = !!endButton;
-  const styleSlots = fieldInputStyles({ size, radius, hasStartButton, hasEndButton });
-
   const spacingSize = { sm: 8, md: 10, lg: 12 }[size];
+
   const [mounted, setMounted] = useState<boolean>(false);
   const [paddingLeft, setPaddingLeft] = useState<number>(spacingSize);
   const [paddingRight, setPaddingRight] = useState<number>(spacingSize);

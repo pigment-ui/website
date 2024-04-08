@@ -1,17 +1,5 @@
 import { tv } from "tailwind-variants";
 
-export const isHoveredVariants = {
-  isHovered: {
-    true: "cursor-pointer",
-  },
-};
-
-export const isPressedVariants = {
-  isPressed: {
-    true: "scale-95",
-  },
-};
-
 export const isDisabledVariants = {
   isDisabled: {
     true: "opacity-50 cursor-not-allowed",
@@ -35,6 +23,16 @@ export const radiusVariants = {
   },
 };
 
+export const smallRadiusVariants = {
+  radius: {
+    sm: "rounded-md",
+    md: "rounded-lg",
+    lg: "rounded-xl",
+    full: "rounded-full",
+    none: "rounded-none",
+  },
+};
+
 export const variantColorRadiusStyles = tv({
   base: "",
   variants: {
@@ -52,9 +50,9 @@ export const variantColorRadiusStyles = tv({
       warning: "",
       error: "",
     },
+    isHovered: { true: "cursor-pointer" },
+    isPressed: { true: "scale-95" },
     ...radiusVariants,
-    ...isHoveredVariants,
-    ...isPressedVariants,
     ...isDisabledVariants,
     ...isFocusVisibleVariants,
   },
