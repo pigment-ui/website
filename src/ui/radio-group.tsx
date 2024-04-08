@@ -46,7 +46,7 @@ const radioStyles = tv({
     isFocusVisible: { true: { box: isFocusVisibleVariants.isFocusVisible.true } },
     ...isDisabledVariants,
   },
-  compoundVariants: [{ isSelected: true, isHovered: true, className: { box: "border-opacity-80" } }],
+  compoundVariants: [{ isSelected: true, isHovered: true, className: { box: "border-opacity-90" } }],
 });
 
 type RadioStylesReturnType = ReturnType<typeof radioStyles>;

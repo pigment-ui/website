@@ -35,7 +35,7 @@ const checkboxStyles = tv({
     isSelected: { true: { box: "border-none bg-default-1000 text-default-0" } },
     isIndeterminate: { true: { box: "border-none bg-default-1000 text-default-0" } },
     isInvalid: { true: { box: "border-error-500" } },
-    isHovered: { true: { box: "border-opacity-100 bg-opacity-80" } },
+    isHovered: { true: { box: "border-opacity-100 bg-opacity-90" } },
     isPressed: { true: { box: "scale-90" } },
     isFocusVisible: { true: { box: isFocusVisibleVariants.isFocusVisible.true } },
     ...isDisabledVariants,
