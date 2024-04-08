@@ -1,7 +1,7 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { TextArea as AriaTextArea, TextAreaProps, TextField, TextFieldProps } from "react-aria-components";
+import { TextArea as AriaTextArea, TextField, TextFieldProps } from "react-aria-components";
 
 import { FilterProps } from "./types";
 
@@ -9,11 +9,7 @@ import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } 
 
 // props
 
-interface PigmentTextAreaProps
-  extends FilterProps<TextFieldProps>,
-    Omit<TextAreaProps, keyof TextFieldProps>,
-    PigmentFieldBaseProps,
-    PigmentFieldInputBaseProps {}
+interface PigmentTextAreaProps extends FilterProps<TextFieldProps>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
 
 // component
 
