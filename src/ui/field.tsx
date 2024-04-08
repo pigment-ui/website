@@ -1,7 +1,8 @@
 "use client";
 
-import { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode, useLayoutEffect, useRef, useState } from "react";
-import { Group, Label, Text } from "react-aria-components";
+import { FocusableElement } from "@react-types/shared";
+import { cloneElement, DOMAttributes, ForwardedRef, forwardRef, ReactElement, ReactNode, useLayoutEffect, useRef, useState } from "react";
+import { FieldError, Group, Label, Text } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants } from "./styles";
@@ -65,11 +66,16 @@ interface PigmentFieldBaseProps extends SizeProps {
   label?: ReactNode;
   description?: ReactNode;
   errorMessage?: ReactNode;
-  isRequired?: boolean;
   labelNecessityIndicator?: "symbol" | "text";
 }
 
 interface PigmentFieldProps extends PigmentFieldBaseProps {
+  labelProps?: DOMAttributes<FocusableElement>;
+  descriptionProps?: DOMAttributes<FocusableElement>;
+  errorMessageProps?: DOMAttributes<FocusableElement>;
+  isInvalid?: boolean;
+  validationErrors?: string[];
+  isRequired?: boolean;
   children?: ReactElement;
 }
 
@@ -87,31 +93,63 @@ interface PigmentFieldInputProps extends PigmentFieldInputBaseProps {
 // component
 
 function _Field(props: PigmentFieldProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { label, description, errorMessage, size = "md", isRequired, labelNecessityIndicator = "symbol", children } = props;
+  const {
+    label,
+    labelProps,
+    description,
+    descriptionProps,
+    errorMessage,
+    errorMessageProps,
+    isInvalid,
+    validationErrors,
+    isRequired,
+    labelNecessityIndicator = "symbol",
+    size = "md",
+    children,
+  } = props;
 
   const styleSlots = fieldStyles({ size });
 
+  const labelComponent = cloneElement(labelProps ? <label {...labelProps} /> : <Label />, {
+    className: styleSlots.labelStyles(),
+    children: (
+      <>
+        {label}
+        {labelNecessityIndicator === "symbol" && isRequired && <span> *</span>}
+        {labelNecessityIndicator === "text" && <span> {isRequired ? "(required)" : "(optional)"}</span>}
+      </>
+    ),
+  });
+
+  const descriptionComponent = cloneElement(descriptionProps ? <span {...descriptionProps} /> : <Text slot="description" />, {
+    className: styleSlots.descriptionStyles(),
+    children: description,
+  });
+
+  const errorMessageComponent = cloneElement(errorMessageProps ? <span {...errorMessageProps} /> : <Text slot="errorMessage" />, {
+    className: styleSlots.errorMessageStyles(),
+    children: errorMessage,
+  });
+
   return (
     <div ref={ref} className={styleSlots.base()}>
-      {label && (
-        <Label className={styleSlots.labelStyles()}>
-          {label}
-          {labelNecessityIndicator === "symbol" && isRequired && <span> *</span>}
-          {labelNecessityIndicator === "text" && <span> {isRequired ? "(required)" : "(optional)"}</span>}
-        </Label>
-      )}
+      {label && labelComponent}
 
       {children}
 
-      {errorMessage ? (
-        <Text slot="errorMessage" className={styleSlots.errorMessageStyles()}>
-          {errorMessage}
-        </Text>
-      ) : description ? (
-        <Text slot="description" className={styleSlots.descriptionStyles()}>
-          {description}
-        </Text>
-      ) : null}
+      {isInvalid ? (
+        errorMessage ? (
+          errorMessageComponent
+        ) : errorMessageProps && validationErrors ? (
+          <span {...errorMessageProps} className={styleSlots.errorMessageStyles()}>
+            {validationErrors.join(", ")}
+          </span>
+        ) : (
+          <FieldError className={styleSlots.errorMessageStyles()} />
+        )
+      ) : (
+        description && descriptionComponent
+      )}
     </div>
   );
 }
