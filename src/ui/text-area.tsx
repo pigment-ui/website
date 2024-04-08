@@ -9,7 +9,9 @@ import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } 
 
 // props
 
-interface PigmentTextAreaProps extends FilterProps<TextFieldProps>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
+interface PigmentTextAreaProps extends FilterProps<TextFieldProps>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {
+  rows?: number;
+}
 
 // component
 
@@ -19,7 +21,7 @@ function _TextArea(props: PigmentTextAreaProps, ref: ForwardedRef<HTMLTextAreaEl
       {(renderProps) => (
         <Field {...renderProps} {...props}>
           <FieldInput {...renderProps} {...props} isTextArea>
-            <AriaTextArea ref={ref} rows={5} className="[resize:none;]" />
+            <AriaTextArea ref={ref} rows={props.rows ?? 5} className="[resize:none;]" />
           </FieldInput>
         </Field>
       )}
