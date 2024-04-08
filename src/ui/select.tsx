@@ -39,7 +39,7 @@ function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedR
 
   return (
     <AriaSelect {...props}>
-      <Field {...props} className="" style={{}}>
+      <Field {...props}>
         <FieldInput
           {...props}
           endButton={
