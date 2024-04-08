@@ -11,7 +11,7 @@ import { Input, InputContext, LabelContext, Provider, SlotProps, TextContext } f
 import { FilterProps } from "./types";
 import { RACValidation, removeDataAttributes, RenderProps, useRenderProps, useSlot } from "./utils-react-aria";
 
-import { Field, FieldErrorContext, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
+import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
 
 // props
 
@@ -85,7 +85,7 @@ function _AriaColorField(props: ColorFieldProps, ref: ForwardedRef<HTMLInputElem
           [LabelContext, { ...labelProps, ref: labelRef }],
           [InputContext, { ...inputProps, ref: inputRef }],
           [TextContext, { slots: { description: descriptionProps, errorMessage: errorMessageProps } }],
-          [FieldErrorContext, validation],
+          // [FieldErrorContext, validation],
         ]}
       >
         {renderProps.children}
