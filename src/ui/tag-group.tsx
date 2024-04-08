@@ -72,7 +72,7 @@ interface PigmentTagGroupProps<T extends object>
     ColorProps,
     SizeProps,
     RadiusProps,
-    PigmentFieldBaseProps {}
+    Omit<PigmentFieldBaseProps, "isRequired" | "labelNecessityIndicator"> {}
 
 interface PigmentTagProps extends FilterProps<TagProps>, ColorProps, ContentProps, StyleSlotsToStyleProps<TagStylesReturnType> {}
 
