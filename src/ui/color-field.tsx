@@ -1,14 +1,15 @@
 "use client";
 
+import { useObjectRef } from "@react-aria/utils";
 import { AriaColorFieldProps, useColorField } from "@react-aria/color";
+import { useColorFieldState } from "@react-stately/color";
 import { ForwardedRef, forwardRef } from "react";
+import { useField } from "react-aria";
+import { FieldErrorContext, LabelContext, Provider, TextContext } from "react-aria-components";
 
 import { FilterProps } from "./types";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
-import { useColorFieldState } from "@react-stately/color";
-import { useField } from "react-aria";
-import { useObjectRef } from "@react-aria/utils";
 
 // props
 
@@ -23,11 +24,19 @@ function _ColorField(props: PigmentColorFieldProps, ref: ForwardedRef<HTMLInputE
   const { descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...props });
 
   return (
-    <Field labelProps={labelProps} descriptionProps={descriptionProps} errorMessageProps={errorMessageProps} {...validation} {...props}>
-      <FieldInput {...validation} {...props}>
-        <input ref={objRef} {...inputProps} />
-      </FieldInput>
-    </Field>
+    <Provider
+      values={[
+        [LabelContext, { ...labelProps }],
+        [TextContext, { slots: { description: descriptionProps, errorMessage: errorMessageProps } }],
+        [FieldErrorContext, validation],
+      ]}
+    >
+      <Field {...validation} {...props}>
+        <FieldInput {...validation} {...props}>
+          <input ref={objRef} {...inputProps} />
+        </FieldInput>
+      </Field>
+    </Provider>
   );
 }
 
