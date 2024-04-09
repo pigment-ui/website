@@ -115,7 +115,7 @@ function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: Forwarde
   return (
     <ListBoxSlotsProvider value={{ color, size, itemClassNames, sectionClassNames, itemStyles, sectionStyles }}>
       <Component>
-        <AriaListBox ref={ref} {...props} className="" style={{}}>
+        <AriaListBox ref={ref} {...props}>
           {children}
         </AriaListBox>
       </Component>

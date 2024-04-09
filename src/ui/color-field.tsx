@@ -12,10 +12,7 @@ import { useObjectRef } from "@react-aria/utils";
 
 // props
 
-interface PigmentColorFieldProps
-  extends Omit<FilterProps<AriaColorFieldProps>, keyof PigmentFieldBaseProps>,
-    PigmentFieldBaseProps,
-    PigmentFieldInputBaseProps {}
+interface PigmentColorFieldProps extends FilterProps<AriaColorFieldProps>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
 
 // component
 
@@ -26,7 +23,7 @@ function _ColorField(props: PigmentColorFieldProps, ref: ForwardedRef<HTMLInputE
   const { descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...props });
 
   return (
-    <Field {...validation} {...props} labelProps={labelProps} descriptionProps={descriptionProps} errorMessageProps={errorMessageProps}>
+    <Field labelProps={labelProps} descriptionProps={descriptionProps} errorMessageProps={errorMessageProps} {...validation} {...props}>
       <FieldInput {...validation} {...props}>
         <input ref={objRef} {...inputProps} />
       </FieldInput>

@@ -32,23 +32,23 @@ const checkboxGroupStyles = tv({
 
 interface PigmentCheckboxGroupProps extends FilterProps<CheckboxGroupProps>, PigmentFieldBaseProps, RadiusProps {
   orientation?: Orientation;
-  checkboxItemClassNames?: PigmentCheckboxProps["classNames"];
-  checkboxItemStyles?: PigmentCheckboxProps["styles"];
+  checkboxClassNames?: PigmentCheckboxProps["classNames"];
+  checkboxStyles?: PigmentCheckboxProps["styles"];
 }
 
 // slots
 
-interface CheckboxGroupSlotsType extends Pick<PigmentCheckboxGroupProps, "size" | "radius" | "checkboxItemClassNames" | "checkboxItemStyles"> {}
+interface CheckboxGroupSlotsType extends Pick<PigmentCheckboxGroupProps, "size" | "radius" | "checkboxClassNames" | "checkboxStyles"> {}
 
 const [CheckboxGroupSlotsProvider, useCheckboxGroupSlots] = createSlots<CheckboxGroupSlotsType>();
 
 // component
 
 function _CheckboxGroup(props: PigmentCheckboxGroupProps, ref: ForwardedRef<HTMLInputElement>) {
-  const { size = "md", radius, orientation = "vertical", children, checkboxItemClassNames, checkboxItemStyles } = props;
+  const { size = "md", radius, orientation = "vertical", children, checkboxClassNames, checkboxStyles } = props;
 
   return (
-    <CheckboxGroupSlotsProvider value={{ size, radius, checkboxItemClassNames, checkboxItemStyles }}>
+    <CheckboxGroupSlotsProvider value={{ size, radius, checkboxClassNames, checkboxStyles }}>
       <AriaCheckboxGroup ref={ref} {...props}>
         {(renderProps) => (
           <Field {...renderProps} {...props}>

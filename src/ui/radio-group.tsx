@@ -13,7 +13,7 @@ import { Field, PigmentFieldBaseProps } from "#/ui/field";
 
 // styles
 
-const radioGroupStyles = tv({
+const radioGroupStylesTv = tv({
   base: "flex",
   variants: {
     size: {
@@ -28,7 +28,7 @@ const radioGroupStyles = tv({
   },
 });
 
-const radioStyles = tv({
+const radioStylesTv = tv({
   slots: {
     base: "flex items-center",
     box: "grid place-items-center border border-default-1000 border-opacity-50 rounded-full",
@@ -49,7 +49,7 @@ const radioStyles = tv({
   compoundVariants: [{ isSelected: true, isHovered: true, className: { box: "border-opacity-90" } }],
 });
 
-type RadioStylesReturnType = ReturnType<typeof radioStyles>;
+type RadioStylesReturnType = ReturnType<typeof radioStylesTv>;
 
 // props
 
@@ -57,27 +57,27 @@ interface PigmentRadioProps extends FilterProps<RadioProps>, SizeProps, StyleSlo
 
 interface PigmentRadioGroupProps extends FilterProps<RadioGroupProps>, PigmentFieldBaseProps {
   orientation?: Orientation;
-  radioItemClassNames?: PigmentRadioProps["classNames"];
-  radioItemStyles?: PigmentRadioProps["styles"];
+  radioClassNames?: PigmentRadioProps["classNames"];
+  radioStyles?: PigmentRadioProps["styles"];
 }
 
 // slots
 
-interface RadioGroupSlotsType extends Pick<PigmentRadioGroupProps, "size" | "radioItemClassNames" | "radioItemStyles"> {}
+interface RadioGroupSlotsType extends Pick<PigmentRadioGroupProps, "size" | "radioClassNames" | "radioStyles"> {}
 
 const [RadioGroupSlotsProvider, useRadioGroupSlots] = createSlots<RadioGroupSlotsType>();
 
 // component
 
 function _RadioGroup(props: PigmentRadioGroupProps, ref: ForwardedRef<HTMLInputElement>) {
-  const { size = "md", orientation = "vertical", children, radioItemClassNames, radioItemStyles } = props;
+  const { size = "md", orientation = "vertical", children, radioClassNames, radioStyles } = props;
 
   return (
-    <RadioGroupSlotsProvider value={{ size, radioItemClassNames, radioItemStyles }}>
+    <RadioGroupSlotsProvider value={{ size, radioClassNames, radioStyles }}>
       <AriaRadioGroup ref={ref} {...props}>
         {(renderProps) => (
           <Field {...renderProps} {...props}>
-            <div className={radioGroupStyles({ size, orientation })}>{children}</div>
+            <div className={radioGroupStylesTv({ size, orientation })}>{children}</div>
           </Field>
         )}
       </AriaRadioGroup>
@@ -88,16 +88,16 @@ function _RadioGroup(props: PigmentRadioGroupProps, ref: ForwardedRef<HTMLInputE
 const RadioGroup = forwardRef(_RadioGroup);
 
 function _Radio(props: PigmentRadioProps, ref: ForwardedRef<HTMLLabelElement>) {
-  const { size = "md", children, className, classNames, radioItemClassNames, style, styles, radioItemStyles } = useRadioGroupSlots(props);
+  const { size = "md", children, className, classNames, radioClassNames, style, styles, radioStyles } = useRadioGroupSlots(props);
 
-  const styleSlots = radioStyles({ size });
+  const styleSlots = radioStylesTv({ size });
 
   return (
     <AriaRadio
       ref={ref}
       {...props}
-      className={styleSlots.base({ className: twMerge(radioItemClassNames?.base, classNames?.base, className) })}
-      style={mergeProps(radioItemStyles?.base, styles?.base, style)}
+      className={styleSlots.base({ className: twMerge(radioClassNames?.base, classNames?.base, className) })}
+      style={mergeProps(radioStyles?.base, styles?.base, style)}
     >
       {({ isSelected, isInvalid, isHovered, isPressed, isDisabled, isFocusVisible }) => (
         <>
@@ -109,9 +109,9 @@ function _Radio(props: PigmentRadioProps, ref: ForwardedRef<HTMLLabelElement>) {
               isPressed,
               isDisabled,
               isFocusVisible,
-              className: twMerge(radioItemClassNames?.box, classNames?.box),
+              className: twMerge(radioClassNames?.box, classNames?.box),
             })}
-            style={mergeProps(radioItemStyles?.box, styles?.box)}
+            style={mergeProps(radioStyles?.box, styles?.box)}
           />
           {children}
         </>

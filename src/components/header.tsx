@@ -44,9 +44,11 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 h-16 w-full border-b border-default-1000/20 bg-default-0/75 backdrop-blur-lg">
       <div className="container flex h-full items-center gap-x-8">
-        <NextLink href="/" prefetch className="text-xl font-bold focus-visible:outline-default-1000">
-          Pigment UI
-        </NextLink>
+        <Button asChild variant={segment === null ? "soft" : "light"}>
+          <NextLink href="/" prefetch className="text-xl font-bold">
+            Pigment UI
+          </NextLink>
+        </Button>
 
         <div className="flex gap-x-2 max-sm:hidden">{routes}</div>
 

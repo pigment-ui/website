@@ -11,17 +11,20 @@ import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } 
 
 interface PigmentTextAreaProps extends FilterProps<TextFieldProps>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {
   rows?: number;
+  isResizable?: boolean;
 }
 
 // component
 
 function _TextArea(props: PigmentTextAreaProps, ref: ForwardedRef<HTMLTextAreaElement>) {
+  const { rows = 5, isResizable = false } = props;
+
   return (
     <TextField {...props}>
       {(renderProps) => (
         <Field {...renderProps} {...props}>
           <FieldInput {...renderProps} {...props} isTextArea>
-            <AriaTextArea ref={ref} rows={props.rows ?? 5} className="[resize:none;]" />
+            <AriaTextArea ref={ref} rows={rows} className={!isResizable ? "[resize:none;]" : undefined} />
           </FieldInput>
         </Field>
       )}

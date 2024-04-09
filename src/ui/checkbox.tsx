@@ -14,7 +14,7 @@ import { useCheckboxGroupSlots } from "./checkbox-group";
 
 // styles
 
-const checkboxStyles = tv({
+const checkboxStylesTv = tv({
   slots: {
     base: "flex items-center",
     box: "grid place-items-center border border-default-1000 border-opacity-50",
@@ -46,7 +46,7 @@ const checkboxStyles = tv({
   ],
 });
 
-type CheckboxStylesReturnType = ReturnType<typeof checkboxStyles>;
+type CheckboxStylesReturnType = ReturnType<typeof checkboxStylesTv>;
 
 // props
 
@@ -61,20 +61,20 @@ function _Checkbox(props: PigmentCheckboxProps, ref: ForwardedRef<HTMLLabelEleme
     children,
     className,
     classNames,
-    checkboxItemClassNames,
+    checkboxClassNames,
     style,
     styles,
-    checkboxItemStyles,
+    checkboxStyles,
   } = useCheckboxGroupSlots(props);
 
-  const styleSlots = checkboxStyles({ size, radius });
+  const styleSlots = checkboxStylesTv({ size, radius });
 
   return (
     <AriaCheckbox
       ref={ref}
       {...props}
-      className={styleSlots.base({ className: twMerge(checkboxItemClassNames?.base, classNames?.base, className) })}
-      style={mergeProps(checkboxItemStyles?.base, styles?.base, style)}
+      className={styleSlots.base({ className: twMerge(checkboxClassNames?.base, classNames?.base, className) })}
+      style={mergeProps(checkboxStyles?.base, styles?.base, style)}
     >
       {({ isSelected, isIndeterminate, isInvalid, isHovered, isPressed, isDisabled, isFocusVisible }) => (
         <>
@@ -87,9 +87,9 @@ function _Checkbox(props: PigmentCheckboxProps, ref: ForwardedRef<HTMLLabelEleme
               isPressed,
               isDisabled,
               isFocusVisible,
-              className: twMerge(checkboxItemClassNames?.box, classNames?.box),
+              className: twMerge(checkboxClassNames?.box, classNames?.box),
             })}
-            style={mergeProps(checkboxItemStyles?.box, styles?.box)}
+            style={mergeProps(checkboxStyles?.box, styles?.box)}
           >
             {isSelected ? <CheckIcon /> : isIndeterminate ? <MinusIcon /> : null}
           </div>

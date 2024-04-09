@@ -1,6 +1,6 @@
 "use client";
 
-import { FocusableElement } from "@react-types/shared";
+import { FocusableElement, ValidationResult } from "@react-types/shared";
 import { cloneElement, DOMAttributes, ForwardedRef, forwardRef, ReactElement, ReactNode, useLayoutEffect, useRef, useState } from "react";
 import { FieldError, Group, Label, Text } from "react-aria-components";
 import { tv } from "tailwind-variants";
@@ -65,16 +65,15 @@ export const fieldInputStyles = tv({
 interface PigmentFieldBaseProps extends SizeProps {
   label?: ReactNode;
   description?: ReactNode;
-  errorMessage?: ReactNode;
+  errorMessage?: ReactNode | ((validationResult: ValidationResult) => ReactNode);
   labelNecessityIndicator?: "symbol" | "text";
 }
 
-interface PigmentFieldProps extends PigmentFieldBaseProps {
+interface PigmentFieldProps extends PigmentFieldBaseProps, Partial<ValidationResult> {
   labelProps?: DOMAttributes<FocusableElement>;
   descriptionProps?: DOMAttributes<FocusableElement>;
   errorMessageProps?: DOMAttributes<FocusableElement>;
   isInvalid?: boolean;
-  validationErrors?: string[];
   isRequired?: boolean;
   children?: ReactElement;
 }
@@ -100,8 +99,9 @@ function _Field(props: PigmentFieldProps, ref: ForwardedRef<HTMLDivElement>) {
     descriptionProps,
     errorMessage,
     errorMessageProps,
-    isInvalid,
     validationErrors,
+    validationDetails,
+    isInvalid,
     isRequired,
     labelNecessityIndicator = "symbol",
     size = "md",
@@ -126,30 +126,24 @@ function _Field(props: PigmentFieldProps, ref: ForwardedRef<HTMLDivElement>) {
     children: description,
   });
 
-  const errorMessageComponent = cloneElement(errorMessageProps ? <span {...errorMessageProps} /> : <Text slot="errorMessage" />, {
-    className: styleSlots.errorMessageStyles(),
-    children: errorMessage,
-  });
-
   return (
     <div ref={ref} className={styleSlots.base()}>
       {label && labelComponent}
-
       {children}
+      {description && descriptionComponent}
 
-      {isInvalid ? (
-        errorMessage ? (
-          errorMessageComponent
-        ) : errorMessageProps && validationErrors ? (
+      {isInvalid &&
+        (errorMessageProps ? (
           <span {...errorMessageProps} className={styleSlots.errorMessageStyles()}>
-            {validationErrors.join(" ")}
+            {errorMessage && validationErrors && validationDetails
+              ? typeof errorMessage === "function"
+                ? errorMessage({ isInvalid, validationErrors, validationDetails })
+                : errorMessage
+              : validationErrors?.join(" ")}
           </span>
         ) : (
-          <FieldError className={styleSlots.errorMessageStyles()} />
-        )
-      ) : (
-        description && descriptionComponent
-      )}
+          <FieldError className={styleSlots.errorMessageStyles()}>{errorMessage}</FieldError>
+        ))}
     </div>
   );
 }
