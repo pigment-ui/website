@@ -22,20 +22,19 @@ import { ColorProps, ContentProps, ForwardRefType, SizeProps, StyleSlotsToStyleP
 import { createSlots } from "./utils";
 
 import { cardStyles } from "./card";
-import { Field, PigmentFieldBaseProps } from "#/ui/field";
 
 // styles
 
 const listBoxStyles = tv({
-  base: "outline-none",
   variants: {
     isCard: { true: cardStyles().base({ className: "p-2" }) },
+    ...isFocusVisibleVariants,
   },
 });
 
 const listBoxItemStyles = tv({
   slots: {
-    base: "flex items-center rounded-lg",
+    base: "flex items-center rounded-lg bg-opacity-0",
     content: "flex-1",
   },
   variants: {
@@ -51,8 +50,8 @@ const listBoxItemStyles = tv({
       md: "text-sm p-2 gap-x-2 [&_svg]:size-4",
       lg: "text-base p-3 gap-x-3 [&_svg]:size-5",
     },
-    isSelectable: { true: "cursor-pointer", false: "cursor-default" },
-    isHovered: { true: "bg-opacity-10", false: "bg-opacity-0" },
+    isSelectable: { true: "cursor-pointer" },
+    isHovered: { true: "bg-opacity-10" },
     isPressed: { true: "bg-opacity-20" },
     ...isDisabledVariants,
     ...isFocusVisibleVariants,
@@ -79,7 +78,7 @@ type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
 
 // props
 
-interface PigmentListBoxProps<T extends object> extends ListBoxProps<T>, ColorProps, SizeProps, PigmentFieldBaseProps {
+interface PigmentListBoxProps<T extends object> extends ListBoxProps<T>, ColorProps, SizeProps {
   isCard?: boolean;
   itemStartContent?: PigmentListBoxItemProps["startContent"];
   itemEndContent?: PigmentListBoxItemProps["endContent"];
@@ -118,16 +117,17 @@ function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: Forwarde
     itemStyles,
     sectionClassNames,
     sectionStyles,
+    children,
   } = props;
 
   return (
     <ListBoxSlotsProvider value={{ color, size, itemStartContent, itemEndContent, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
-      <AriaListBox ref={ref} {...props} className={composeRenderProps(props.className, (className) => listBoxStyles({ isCard, className }))}>
-        {composeRenderProps(props.children, (children) => (
-          <Field {...props}>
-            <>{children}</>
-          </Field>
-        ))}
+      <AriaListBox
+        ref={ref}
+        {...props}
+        className={composeRenderProps(props.className, (className, { isFocusVisible }) => listBoxStyles({ isCard, isFocusVisible, className }))}
+      >
+        {children}
       </AriaListBox>
     </ListBoxSlotsProvider>
   );
@@ -209,7 +209,6 @@ export type { PigmentListBoxProps, PigmentListBoxItemProps, PigmentListBoxSectio
 
 export const filterInlineListBoxProps = (props: any) => ({
   isCard: false,
-  children: props.children,
   color: props.color,
   size: props.size,
   itemStartContent: props.itemStartContent,
@@ -218,4 +217,5 @@ export const filterInlineListBoxProps = (props: any) => ({
   itemStyles: props.itemStyles,
   sectionClassNames: props.sectionClassNames,
   sectionStyles: props.sectionStyles,
+  children: props.children,
 });
