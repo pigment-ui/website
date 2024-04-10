@@ -119,6 +119,8 @@ function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
   return (
     <AriaTag
       ref={ref}
+      id={typeof props.children === "string" ? props.children : undefined}
+      textValue={typeof props.children === "string" ? props.children : undefined}
       {...props}
       className={composeRenderProps(props.className, (className, { isSelected, isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         styleSlots.base({

@@ -54,7 +54,7 @@ function _Menu<T extends object>(props: PigmentMenuProps<T>, ref: ForwardedRef<H
 const Menu = (forwardRef as ForwardRefType)(_Menu);
 
 function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, size, startContent, itemStartContent, endContent, itemEndContent, classNames, itemClassNames, styles, itemStyles, children } =
+  const { color, size, startContent, itemStartContent, endContent, itemEndContent, classNames, itemClassNames, styles, itemStyles } =
     useMenuSlots(props);
 
   const styleSlots = menuItemStyles({ color, size });
@@ -62,8 +62,8 @@ function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement
   return (
     <AriaMenuItem
       ref={ref}
-      id={typeof children === "string" ? children : undefined}
-      textValue={typeof children === "string" ? children : undefined}
+      id={typeof props.children === "string" ? props.children : undefined}
+      textValue={typeof props.children === "string" ? props.children : undefined}
       {...props}
       className={composeRenderProps(props.className, (className, { isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         styleSlots.base({

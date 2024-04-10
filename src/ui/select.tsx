@@ -27,15 +27,7 @@ function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedR
       {(renderProps) => (
         <>
           <Field {...renderProps} {...props}>
-            <FieldInput
-              endButton={
-                <div className="pointer-events-none">
-                  <ChevronDownIcon />
-                </div>
-              }
-              {...renderProps}
-              {...props}
-            >
+            <FieldInput endContent={<ChevronDownIcon />} {...renderProps} {...props}>
               <Button ref={ref} className="flex items-center">
                 <SelectValue />
               </Button>

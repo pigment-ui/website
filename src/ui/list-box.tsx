@@ -27,7 +27,7 @@ import { cardStyles } from "./card";
 
 const listBoxStyles = tv({
   variants: {
-    isCard: { true: cardStyles().base({ className: "p-2" }) },
+    isCard: { true: cardStyles().base({ className: "p-2", hasShadow: false }) },
     ...isFocusVisibleVariants,
   },
 });
@@ -117,7 +117,6 @@ function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: Forwarde
     itemStyles,
     sectionClassNames,
     sectionStyles,
-    children,
   } = props;
 
   return (
@@ -126,9 +125,7 @@ function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: Forwarde
         ref={ref}
         {...props}
         className={composeRenderProps(props.className, (className, { isFocusVisible }) => listBoxStyles({ isCard, isFocusVisible, className }))}
-      >
-        {children}
-      </AriaListBox>
+      />
     </ListBoxSlotsProvider>
   );
 }
@@ -136,7 +133,7 @@ function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: Forwarde
 const ListBox = (forwardRef as ForwardRefType)(_ListBox);
 
 function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, size, startContent, itemStartContent, endContent, itemEndContent, classNames, itemClassNames, styles, itemStyles, children } =
+  const { color, size, startContent, itemStartContent, endContent, itemEndContent, classNames, itemClassNames, styles, itemStyles } =
     useListBoxSlots(props);
 
   const styleSlots = listBoxItemStyles({ color, size });
@@ -144,8 +141,8 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
   return (
     <AriaListBoxItem
       ref={ref}
-      id={typeof children === "string" ? children : undefined}
-      textValue={typeof children === "string" ? children : undefined}
+      id={typeof props.children === "string" ? props.children : undefined}
+      textValue={typeof props.children === "string" ? props.children : undefined}
       {...props}
       className={composeRenderProps(props.className, (className, { isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         styleSlots.base({
@@ -209,6 +206,7 @@ export type { PigmentListBoxProps, PigmentListBoxItemProps, PigmentListBoxSectio
 
 export const filterInlineListBoxProps = (props: any) => ({
   isCard: false,
+  children: props.children,
   color: props.color,
   size: props.size,
   itemStartContent: props.itemStartContent,
@@ -217,5 +215,4 @@ export const filterInlineListBoxProps = (props: any) => ({
   itemStyles: props.itemStyles,
   sectionClassNames: props.sectionClassNames,
   sectionStyles: props.sectionStyles,
-  children: props.children,
 });

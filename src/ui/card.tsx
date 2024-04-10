@@ -22,8 +22,10 @@ const cardStyles = tv({
   variants: {
     hasShadow: {
       true: "[box-shadow:0_5px_20px_rgba(0,0,0,.1)] dark:[box-shadow:0_5px_20px_rgba(255,255,255,.1)]",
+      false: "shadow-none",
     },
   },
+  defaultVariants: { hasShadow: true },
 });
 
 type CardStylesReturnType = ReturnType<typeof cardStyles>;

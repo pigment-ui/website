@@ -23,7 +23,7 @@ function _Popover(props: PigmentPopoverProps, ref: ForwardedRef<HTMLDivElement>)
   const { children } = props;
 
   return (
-    <AriaPopover ref={ref} offset={8} {...props} className={composeRenderProps(props.className, (className) => popoverStyles({ className }))}>
+    <AriaPopover ref={ref} {...props} className={composeRenderProps(props.className, (className) => popoverStyles({ className }))}>
       <Dialog>{children}</Dialog>
     </AriaPopover>
   );
