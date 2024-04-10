@@ -201,7 +201,7 @@ const ListBoxSection = (forwardRef as ForwardRefType)(_ListBoxSection);
 
 // exports
 
-export { ListBox, ListBoxItem, ListBoxSection, listBoxStyles, listBoxItemStyles };
+export { ListBox, ListBoxItem, ListBoxSection, listBoxItemStyles };
 export type { PigmentListBoxProps, PigmentListBoxItemProps, PigmentListBoxSectionProps, ListBoxSlotsType };
 
 export const filterInlineListBoxProps = (props: any) => ({

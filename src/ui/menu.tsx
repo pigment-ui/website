@@ -13,14 +13,19 @@ import {
   PopoverProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
+import { tv } from "tailwind-variants";
 
 import { ForwardRefType, StyleProps } from "./types";
 import { createSlots } from "./utils";
-import { listBoxItemStyles, ListBoxSection, ListBoxSlotsType, listBoxStyles, PigmentListBoxItemProps, PigmentListBoxProps } from "./list-box";
+
+import { cardStyles } from "./card";
+import { listBoxItemStyles, ListBoxSection, ListBoxSlotsType, PigmentListBoxItemProps, PigmentListBoxProps } from "./list-box";
 
 // styles
 
-const menuStyles = listBoxStyles;
+const menuStyles = tv({
+  base: cardStyles().base({ className: "p-2" }),
+});
 
 const menuItemStyles = listBoxItemStyles;
 
@@ -44,7 +49,7 @@ function _Menu<T extends object>(props: PigmentMenuProps<T>, ref: ForwardedRef<H
 
   return (
     <MenuSlotsProvider value={{ color, size, itemStartContent, itemEndContent, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
-      <Popover maxHeight={300} {...props} className={composeRenderProps(props.className, (className) => menuStyles({ isCard: true, className }))}>
+      <Popover maxHeight={300} {...props} className={composeRenderProps(props.className, (className) => menuStyles({ className }))}>
         <AriaMenu ref={ref} {...props} className="outline-none" style={{}} />
       </Popover>
     </MenuSlotsProvider>
