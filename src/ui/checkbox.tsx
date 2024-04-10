@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckIcon, MinusIcon } from "@radix-ui/react-icons";
+import { CheckIcon, MinusIcon } from "lucide-react";
 import { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import { Checkbox as AriaCheckbox, CheckboxProps, composeRenderProps } from "react-aria-components";

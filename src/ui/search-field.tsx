@@ -1,6 +1,6 @@
 "use client";
 
-import { Cross2Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { SearchIcon, XIcon } from "lucide-react";
 import { ForwardedRef, forwardRef } from "react";
 import { Button, Input, SearchField as AriaSearchField, SearchFieldProps } from "react-aria-components";
 
@@ -18,11 +18,11 @@ function _SearchField(props: PigmentSearchFieldProps, ref: ForwardedRef<HTMLInpu
       {(renderProps) => (
         <Field {...renderProps} {...props}>
           <FieldInput
-            startContent={<MagnifyingGlassIcon />}
+            startContent={<SearchIcon />}
             endButton={
               !renderProps.isEmpty ? (
                 <Button>
-                  <Cross2Icon />
+                  <XIcon />
                 </Button>
               ) : undefined
             }

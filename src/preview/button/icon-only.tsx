@@ -1,49 +1,49 @@
+import { PinIcon } from "lucide-react";
 import { Button } from "#/ui/button";
-import { DrawingPinFilledIcon } from "@radix-ui/react-icons";
 
 function ButtonIconOnly() {
   return (
     <div className="flex flex-wrap gap-4">
       <Button isIconOnly variant="solid">
-        <DrawingPinFilledIcon />
+        <PinIcon />
       </Button>
       <Button isIconOnly variant="soft">
-        <DrawingPinFilledIcon />
+        <PinIcon />
       </Button>
       <Button isIconOnly variant="light">
-        <DrawingPinFilledIcon />
+        <PinIcon />
       </Button>
       <Button isIconOnly variant="bordered">
-        <DrawingPinFilledIcon />
+        <PinIcon />
       </Button>
       <Button isIconOnly variant="faded">
-        <DrawingPinFilledIcon />
+        <PinIcon />
       </Button>
     </div>
   );
 }
 
 const code = `
+import { PinIcon } from "lucide-react";
 import { Button } from "#/ui/button";
-import { DrawingPinFilledIcon } from "@radix-ui/react-icons";
 
 function ButtonIconOnly() {
   return (
     <div className="flex flex-wrap gap-4">
       <Button isIconOnly variant="solid">
-        <DrawingPinFilledIcon />
+        <PinIcon />
       </Button>
       <Button isIconOnly variant="soft">
-        <DrawingPinFilledIcon />
+        <PinIcon />
       </Button>
       <Button isIconOnly variant="light">
-        <DrawingPinFilledIcon />
+        <PinIcon />
       </Button>
       <Button isIconOnly variant="bordered">
-        <DrawingPinFilledIcon />
+        <PinIcon />
       </Button>
       <Button isIconOnly variant="faded">
-        <DrawingPinFilledIcon />
+        <PinIcon />
       </Button>
     </div>
   );

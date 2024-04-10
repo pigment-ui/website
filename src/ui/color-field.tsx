@@ -3,12 +3,12 @@
 import { useObjectRef } from "@react-aria/utils";
 import { AriaColorFieldProps, useColorField } from "@react-aria/color";
 import { useColorFieldState } from "@react-stately/color";
+import { DropletIcon } from "lucide-react";
 import { ForwardedRef, forwardRef } from "react";
 import { mergeProps, useField } from "react-aria";
 import { FieldErrorContext, LabelContext, Provider, TextContext } from "react-aria-components";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
-import { ColorWheelIcon } from "@radix-ui/react-icons";
 
 // props
 
@@ -31,7 +31,7 @@ function _ColorField(props: PigmentColorFieldProps, ref: ForwardedRef<HTMLInputE
       ]}
     >
       <Field {...validation} {...props}>
-        <FieldInput {...validation} {...props} startContent={<ColorWheelIcon style={{ color: state.inputValue }} />}>
+        <FieldInput {...validation} {...props} startContent={<DropletIcon style={{ color: state.inputValue, fill: "currentcolor" }} />}>
           <input ref={objRef} {...mergeProps(fieldProps, inputProps)} />
         </FieldInput>
       </Field>

@@ -1,4 +1,4 @@
-import { LinkedInLogoIcon } from "@radix-ui/react-icons";
+import { LinkedinIcon } from "lucide-react";
 import { Button } from "#/ui/button";
 
 export function Footer() {
@@ -9,7 +9,7 @@ export function Footer() {
 
         <Button asChild isIconOnly variant="light" radius="full" className="[&:not(:hover)]:text-default-500">
           <a href="https://www.linkedin.com/company/pigment-ui" target="_blank">
-            <LinkedInLogoIcon />
+            <LinkedinIcon />
           </a>
         </Button>
       </div>

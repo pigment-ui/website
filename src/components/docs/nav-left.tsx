@@ -1,12 +1,12 @@
 "use client";
 
-import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { Doc } from "contentlayer/generated";
 import NextLink from "next/link";
 import { twMerge } from "tailwind-merge";
 import { useState } from "react";
 
 import { Button } from "#/ui/button";
+import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 
 export function NavLeft({ doc: docProps, allDocs }: { doc: Doc; allDocs: Doc[] }) {
   const docGroupNames = Array.from(new Set(allDocs.map((doc) => doc.slug.split("/")[0])));

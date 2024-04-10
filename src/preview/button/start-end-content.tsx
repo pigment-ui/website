@@ -1,12 +1,12 @@
 import { Button } from "#/ui/button";
-import { DrawingPinFilledIcon, PersonIcon } from "@radix-ui/react-icons";
+import { PinIcon, UserIcon } from "lucide-react";
 
 function ButtonStartEndContent() {
   return (
     <div className="flex flex-wrap gap-4">
-      <Button startContent={<PersonIcon />}>Click me</Button>
-      <Button endContent={<DrawingPinFilledIcon />}>Click me</Button>
-      <Button startContent={<PersonIcon />} endContent={<DrawingPinFilledIcon />}>
+      <Button startContent={<UserIcon />}>Click me</Button>
+      <Button endContent={<PinIcon />}>Click me</Button>
+      <Button startContent={<UserIcon />} endContent={<PinIcon />}>
         Click me
       </Button>
     </div>
@@ -15,14 +15,14 @@ function ButtonStartEndContent() {
 
 const code = `
 import { Button } from "#/ui/button";
-import { DrawingPinFilledIcon, PersonIcon } from "@radix-ui/react-icons";
+import { PinIcon, UserIcon } from "lucide-react";
 
-function ButtonStartAndEndContent() {
+function ButtonStartEndContent() {
   return (
     <div className="flex flex-wrap gap-4">
-      <Button startContent={<PersonIcon />}>Click me</Button>
-      <Button endContent={<DrawingPinFilledIcon />}>Click me</Button>
-      <Button startContent={<PersonIcon />} endContent={<DrawingPinFilledIcon />}>
+      <Button startContent={<UserIcon />}>Click me</Button>
+      <Button endContent={<PinIcon />}>Click me</Button>
+      <Button startContent={<UserIcon />} endContent={<PinIcon />}>
         Click me
       </Button>
     </div>

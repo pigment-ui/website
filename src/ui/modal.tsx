@@ -1,6 +1,6 @@
 "use client";
 
-import { Cross2Icon } from "@radix-ui/react-icons";
+import { XIcon } from "lucide-react";
 import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps, useId } from "react-aria";
 import { composeRenderProps, Modal as AriaModal, ModalOverlay, ModalOverlayProps } from "react-aria-components";
@@ -82,7 +82,7 @@ function _Modal(props: PigmentModalProps, ref: ForwardedRef<HTMLDivElement>) {
               className={styleSlots.closeButton({ className: classNames?.closeButton })}
               style={styles?.closeButton}
             >
-              <Cross2Icon />
+              <XIcon />
             </Button>
           </AriaModal>
         )}

@@ -5,11 +5,11 @@ import { useTheme } from "next-themes";
 import { Button } from "#/ui/button";
 import { useEffect, useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { GitHubLogoIcon, Half2Icon, HamburgerMenuIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { DialogTrigger, MenuTrigger } from "react-aria-components";
 import { Popover } from "#/ui/popover";
 import { twMerge } from "tailwind-merge";
 import { Menu, MenuItem } from "#/ui/menu";
+import { GithubIcon, MenuIcon, MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 
 export function Header() {
   const segment = useSelectedLayoutSegment();
@@ -55,13 +55,13 @@ export function Header() {
         <div className="ml-auto flex gap-x-2">
           <Button asChild isIconOnly variant="faded">
             <a href="https://github.com/pigment-ui" target="_blank">
-              <GitHubLogoIcon />
+              <GithubIcon />
             </a>
           </Button>
 
           <MenuTrigger>
             <Button isIconOnly variant="faded">
-              {mounted ? theme === "light" ? <SunIcon /> : theme === "dark" ? <MoonIcon /> : <Half2Icon /> : <Half2Icon />}
+              {mounted ? theme === "light" ? <SunIcon /> : theme === "dark" ? <MoonIcon /> : <MonitorIcon /> : <MonitorIcon />}
             </Button>
             <Menu onAction={(key) => setTheme((key as string).toLowerCase())} placement="bottom end" className="w-32">
               <MenuItem>Light</MenuItem>
@@ -72,7 +72,7 @@ export function Header() {
 
           <DialogTrigger isOpen={isOpened} onOpenChange={setIsOpened}>
             <Button isIconOnly variant="faded" className="sm:hidden">
-              <HamburgerMenuIcon />
+              <MenuIcon />
             </Button>
             <Popover className="flex w-48 flex-col gap-y-2 sm:hidden">{routes}</Popover>
           </DialogTrigger>

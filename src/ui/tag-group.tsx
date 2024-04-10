@@ -1,6 +1,6 @@
 "use client";
 
-import { Cross2Icon } from "@radix-ui/react-icons";
+import { XIcon } from "lucide-react";
 import { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import {
@@ -146,7 +146,7 @@ function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
               className={styleSlots.removeButton({ isSelected, className: classNames?.removeButton })}
               style={styles?.removeButton}
             >
-              <Cross2Icon />
+              <XIcon />
             </Button>
           )}
         </>

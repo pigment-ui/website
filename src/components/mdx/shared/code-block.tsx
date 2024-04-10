@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "#/ui/button";
-import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
 import { Highlight, themes } from "prism-react-renderer";
 import { useTheme } from "next-themes";
+import { CopyCheckIcon, CopyIcon } from "lucide-react";
 
 export function CodeBlock({ code: codeProps, language }: { code: string; language?: string }) {
   const code = codeProps.trim();
@@ -60,7 +60,7 @@ export function CodeBlock({ code: codeProps, language }: { code: string; languag
             .then(() => setCopyTrigger((prev) => prev + 1))
         }
       >
-        {isCopied ? <CheckIcon /> : <CopyIcon />}
+        {isCopied ? <CopyCheckIcon /> : <CopyIcon />}
       </Button>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
+import { MinusIcon, PlusIcon } from "lucide-react";
 import { ForwardedRef, forwardRef } from "react";
 import { Button, Input, NumberField as AriaNumberField, NumberFieldProps } from "react-aria-components";
 

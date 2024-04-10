@@ -1,10 +1,10 @@
-import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Doc } from "contentlayer/generated";
 import NextLink from "next/link";
 
 import { Button } from "#/ui/button";
 import { MDXContent } from "#/components";
 import { Separator } from "#/ui/separator";
+import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon, GithubIcon } from "lucide-react";
 
 export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
   const docIndex = allDocs.findIndex((d) => d.slug === doc.slug);
@@ -20,7 +20,7 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
         {(doc.hasSource || doc.referenceUrl || doc.hasApiReference) && (
           <div className="flex gap-4">
             {doc.hasSource && (
-              <Button asChild size="sm" variant="soft" startContent={<GitHubLogoIcon />}>
+              <Button asChild size="sm" variant="soft" startContent={<GithubIcon />}>
                 <a href={`https://github.com/pigment-ui/website/blob/main/src/ui/${doc.slug.split("/")[1]}.tsx`} target="_blank">
                   Source
                 </a>
@@ -48,7 +48,7 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
 
       <MDXContent code={doc.body.code} />
 
-      <Button asChild startContent={<GitHubLogoIcon />} variant="faded" className="w-fit">
+      <Button asChild startContent={<GithubIcon />} variant="faded" className="w-fit">
         <a href={`https://github.com/pigment-ui/website/edit/main/src/content/${doc._raw.flattenedPath}.mdx`} target="_blank">
           Edit this page
         </a>

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDownIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon } from "lucide-react";
 import { ForwardedRef, forwardRef } from "react";
 import { Button, Popover, PopoverProps, Select as AriaSelect, SelectProps, SelectValue } from "react-aria-components";
 
