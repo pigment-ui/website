@@ -3,13 +3,11 @@
 import { ForwardedRef, forwardRef } from "react";
 import { Input, TextField as AriaTextField, TextFieldProps } from "react-aria-components";
 
-import { FilterProps } from "./types";
-
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
 
 // props
 
-interface PigmentTextFieldProps extends FilterProps<TextFieldProps>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
+interface PigmentTextFieldProps extends TextFieldProps, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
 
 // component
 

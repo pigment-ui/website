@@ -1,11 +1,11 @@
 "use client";
 
-import { Slot } from "@radix-ui/react-slot";
 import { CheckIcon } from "@radix-ui/react-icons";
-import { cloneElement, ForwardedRef, forwardRef } from "react";
+import { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import {
   Collection,
+  composeRenderProps,
   Header,
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,
@@ -18,18 +18,18 @@ import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
 import { isDisabledVariants, isFocusVisibleVariants } from "./styles";
-import { ChildrenProps, ColorProps, ContentProps, FilterProps, ForwardRefType, StyleSlotsToStyleProps } from "./types";
+import { ColorProps, ContentProps, ForwardRefType, SizeProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
-import { Card } from "./card";
-import { PigmentFieldBaseProps } from "./field";
+import { cardStyles } from "./card";
+import { Field, PigmentFieldBaseProps } from "#/ui/field";
 
 // styles
 
 const listBoxStyles = tv({
   base: "outline-none",
   variants: {
-    isCard: { true: "p-2" },
+    isCard: { true: cardStyles().base({ className: "p-2" }) },
   },
 });
 
@@ -79,19 +79,17 @@ type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
 
 // props
 
-interface PigmentListBoxProps<T extends object> extends FilterProps<ListBoxProps<T>>, PigmentFieldBaseProps, ColorProps {
+interface PigmentListBoxProps<T extends object> extends ListBoxProps<T>, ColorProps, SizeProps, PigmentFieldBaseProps {
   isCard?: boolean;
+  itemStartContent?: PigmentListBoxItemProps["startContent"];
+  itemEndContent?: PigmentListBoxItemProps["endContent"];
   itemClassNames?: PigmentListBoxItemProps["classNames"];
-  sectionClassNames?: PigmentListBoxSectionProps<T>["classNames"];
   itemStyles?: PigmentListBoxItemProps["styles"];
+  sectionClassNames?: PigmentListBoxSectionProps<T>["classNames"];
   sectionStyles?: PigmentListBoxSectionProps<T>["styles"];
 }
 
-interface PigmentListBoxItemProps
-  extends FilterProps<ListBoxItemProps>,
-    ColorProps,
-    ContentProps,
-    StyleSlotsToStyleProps<ListBoxItemStylesReturnType> {}
+interface PigmentListBoxItemProps extends ListBoxItemProps, ColorProps, ContentProps, StyleSlotsToStyleProps<ListBoxItemStylesReturnType> {}
 
 interface PigmentListBoxSectionProps<T extends object> extends SectionProps<T>, StyleSlotsToStyleProps<ListBoxSectionStylesReturnType> {
   title: string;
@@ -100,25 +98,37 @@ interface PigmentListBoxSectionProps<T extends object> extends SectionProps<T>, 
 // slots
 
 interface ListBoxSlotsType
-  extends Pick<PigmentListBoxProps<any>, "color" | "size" | "itemClassNames" | "sectionClassNames" | "itemStyles" | "sectionStyles"> {}
+  extends Pick<
+    PigmentListBoxProps<any>,
+    "color" | "size" | "itemStartContent" | "itemEndContent" | "itemClassNames" | "itemStyles" | "sectionClassNames" | "sectionStyles"
+  > {}
 
 const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType>();
 
 // component
 
 function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { isCard = true, color, size = "md", children, itemClassNames, sectionClassNames, itemStyles, sectionStyles } = props;
-
-  const Component = ({ children }: ChildrenProps) =>
-    cloneElement(isCard ? <Card asChild hasShadow={false} /> : <Slot />, { children, className: listBoxStyles({ isCard }) });
+  const {
+    isCard = true,
+    color = "default",
+    size = "md",
+    itemStartContent,
+    itemEndContent,
+    itemClassNames,
+    itemStyles,
+    sectionClassNames,
+    sectionStyles,
+  } = props;
 
   return (
-    <ListBoxSlotsProvider value={{ color, size, itemClassNames, sectionClassNames, itemStyles, sectionStyles }}>
-      <Component>
-        <AriaListBox ref={ref} {...props}>
-          {children}
-        </AriaListBox>
-      </Component>
+    <ListBoxSlotsProvider value={{ color, size, itemStartContent, itemEndContent, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
+      <AriaListBox ref={ref} {...props} className={composeRenderProps(props.className, (className) => listBoxStyles({ isCard, className }))}>
+        {composeRenderProps(props.children, (children) => (
+          <Field {...props}>
+            <>{children}</>
+          </Field>
+        ))}
+      </AriaListBox>
     </ListBoxSlotsProvider>
   );
 }
@@ -126,19 +136,8 @@ function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: Forwarde
 const ListBox = (forwardRef as ForwardRefType)(_ListBox);
 
 function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivElement>) {
-  const {
-    color = "default",
-    size,
-    startContent,
-    endContent,
-    children,
-    className,
-    classNames,
-    itemClassNames,
-    style,
-    styles,
-    itemStyles,
-  } = useListBoxSlots(props);
+  const { color, size, startContent, itemStartContent, endContent, itemEndContent, classNames, itemClassNames, styles, itemStyles, children } =
+    useListBoxSlots(props);
 
   const styleSlots = listBoxItemStyles({ color, size });
 
@@ -148,7 +147,7 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
       id={typeof children === "string" ? children : undefined}
       textValue={typeof children === "string" ? children : undefined}
       {...props}
-      className={({ isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
+      className={composeRenderProps(props.className, (className, { isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         styleSlots.base({
           isHovered,
           isPressed,
@@ -156,13 +155,13 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
           isFocusVisible,
           isSelectable: selectionMode !== "none",
           className: twMerge(itemClassNames?.base, classNames?.base, className),
-        })
-      }
-      style={mergeProps(itemStyles?.base, styles?.base, style)}
+        }),
+      )}
+      style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.base, styles?.base, style))}
     >
-      {({ isSelected }) => (
+      {composeRenderProps(props.children, (children, { isSelected }) => (
         <>
-          {startContent}
+          {startContent ?? itemStartContent}
           <div
             className={styleSlots.content({ className: twMerge(itemClassNames?.content, classNames?.content) })}
             style={mergeProps(itemStyles?.content, styles?.content)}
@@ -170,9 +169,9 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
             {children}
           </div>
           {isSelected && <CheckIcon />}
-          {endContent}
+          {endContent ?? itemEndContent}
         </>
-      )}
+      ))}
     </AriaListBoxItem>
   );
 }
@@ -180,7 +179,7 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
 const ListBoxItem = forwardRef(_ListBoxItem);
 
 function _ListBoxSection<T extends object>(props: PigmentListBoxSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { title, items, size, children, className, classNames, sectionClassNames, style, styles, sectionStyles } = useListBoxSlots(props);
+  const { title, items, size, className, classNames, sectionClassNames, style, styles, sectionStyles, children } = useListBoxSlots(props);
 
   const styleSlots = listBoxSectionStyles({ size });
 
@@ -205,5 +204,18 @@ const ListBoxSection = (forwardRef as ForwardRefType)(_ListBoxSection);
 
 // exports
 
-export { ListBox, ListBoxItem, ListBoxSection };
-export type { PigmentListBoxProps, PigmentListBoxItemProps, PigmentListBoxSectionProps };
+export { ListBox, ListBoxItem, ListBoxSection, listBoxStyles, listBoxItemStyles };
+export type { PigmentListBoxProps, PigmentListBoxItemProps, PigmentListBoxSectionProps, ListBoxSlotsType };
+
+export const filterInlineListBoxProps = (props: any) => ({
+  isCard: false,
+  children: props.children,
+  color: props.color,
+  size: props.size,
+  itemStartContent: props.itemStartContent,
+  itemEndContent: props.itemEndContent,
+  itemClassNames: props.itemClassNames,
+  itemStyles: props.itemStyles,
+  sectionClassNames: props.sectionClassNames,
+  sectionStyles: props.sectionStyles,
+});

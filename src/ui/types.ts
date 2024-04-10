@@ -19,8 +19,6 @@ export type RadiusProps = { radius?: Sizes | "full" | "none" };
 
 export type ContentProps = { startContent?: ReactNode; endContent?: ReactNode };
 
-export type FilterProps<T> = Omit<T, "children" | "className" | "style"> & ChildrenProps & StyleProps;
-
 // Override forwardRef types so generics work.
 declare function forwardRef<T, P = {}>(render: (props: P, ref: Ref<T>) => ReactElement | null): (props: P & RefAttributes<T>) => ReactElement | null;
 export type ForwardRefType = typeof forwardRef;

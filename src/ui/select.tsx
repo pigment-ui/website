@@ -2,41 +2,26 @@
 
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
-import { Button, Select as AriaSelect, SelectProps, SelectValue } from "react-aria-components";
+import { Button, Popover, PopoverProps, Select as AriaSelect, SelectProps, SelectValue } from "react-aria-components";
 
-import { FilterProps, ForwardRefType } from "./types";
+import { ForwardRefType } from "./types";
 
+import { cardStyles } from "./card";
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
-import { ListBox, ListBoxItem, ListBoxSection, PigmentListBoxItemProps, PigmentListBoxProps, PigmentListBoxSectionProps } from "./list-box";
-import { PigmentPopoverProps, Popover } from "./popover";
+import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
 
 // props
 
 interface PigmentSelectProps<T extends object>
-  extends FilterProps<SelectProps<T>>,
+  extends SelectProps<T>,
+    Omit<PopoverProps, keyof SelectProps<T>>,
+    ListBoxSlotsType,
     PigmentFieldBaseProps,
-    PigmentFieldInputBaseProps,
-    Pick<PigmentPopoverProps, "placement" | "offset" | "crossOffset" | "shouldFlip" | "maxHeight">,
-    Pick<PigmentListBoxProps<T>, "color" | "itemClassNames" | "sectionClassNames" | "itemStyles" | "sectionStyles"> {}
+    PigmentFieldInputBaseProps {}
 
 // component
 
 function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedRef<HTMLButtonElement>) {
-  const {
-    color,
-    size,
-    placement,
-    offset,
-    crossOffset,
-    shouldFlip,
-    maxHeight = 300,
-    children,
-    itemClassNames,
-    sectionClassNames,
-    itemStyles,
-    sectionStyles,
-  } = props;
-
   return (
     <AriaSelect {...props}>
       {(renderProps) => (
@@ -56,26 +41,9 @@ function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedR
               </Button>
             </FieldInput>
           </Field>
-          <Popover
-            isNonModal={false}
-            placement={placement}
-            offset={offset}
-            crossOffset={crossOffset}
-            shouldFlip={shouldFlip}
-            maxHeight={maxHeight}
-            className="w-[var(--trigger-width)] overflow-auto p-2"
-          >
-            <ListBox
-              isCard={false}
-              color={color}
-              size={size}
-              itemClassNames={itemClassNames}
-              sectionClassNames={sectionClassNames}
-              itemStyles={itemStyles}
-              sectionStyles={sectionStyles}
-            >
-              {children}
-            </ListBox>
+
+          <Popover maxHeight={300} {...props} className={cardStyles().base({ className: "w-[var(--trigger-width)] p-2" })} style={{}}>
+            <ListBox {...filterInlineListBoxProps(props)} />
           </Popover>
         </>
       )}
@@ -85,17 +53,9 @@ function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedR
 
 const Select = (forwardRef as ForwardRefType)(_Select);
 
-function _SelectItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivElement>) {
-  return <ListBoxItem ref={ref} {...props} />;
-}
+const SelectItem = ListBoxItem;
 
-const SelectItem = forwardRef(_SelectItem);
-
-function _SelectSection<T extends object>(props: PigmentListBoxSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  return <ListBoxSection ref={ref} {...props} />;
-}
-
-const SelectSection = (forwardRef as ForwardRefType)(_SelectSection);
+const SelectSection = ListBoxSection;
 
 // exports
 

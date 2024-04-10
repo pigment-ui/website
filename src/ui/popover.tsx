@@ -1,34 +1,31 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { Popover as AriaPopover, PopoverProps } from "react-aria-components";
+import { composeRenderProps, Popover as AriaPopover, PopoverProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import { FilterProps } from "./types";
-
-import { Card } from "./card";
+import { cardStyles } from "./card";
+import { Dialog, PigmentDialogProps } from "./dialog";
 
 // styles
 
 const popoverStyles = tv({
-  base: "p-4",
+  base: cardStyles().base({ className: "p-4" }),
 });
 
 // props
 
-interface PigmentPopoverProps extends FilterProps<PopoverProps> {}
+interface PigmentPopoverProps extends Omit<PopoverProps, "children">, Pick<PigmentDialogProps, "children"> {}
 
 // component
 
 function _Popover(props: PigmentPopoverProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { children, className, style } = props;
+  const { children } = props;
 
   return (
-    <Card asChild className={popoverStyles({ className })} style={style}>
-      <AriaPopover ref={ref} offset={8} {...props} className="" style={{}}>
-        {children}
-      </AriaPopover>
-    </Card>
+    <AriaPopover ref={ref} offset={8} {...props} className={composeRenderProps(props.className, (className) => popoverStyles({ className }))}>
+      <Dialog>{children}</Dialog>
+    </AriaPopover>
   );
 }
 

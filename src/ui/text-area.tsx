@@ -3,13 +3,11 @@
 import { ForwardedRef, forwardRef } from "react";
 import { TextArea as AriaTextArea, TextField, TextFieldProps } from "react-aria-components";
 
-import { FilterProps } from "./types";
-
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
 
 // props
 
-interface PigmentTextAreaProps extends FilterProps<TextFieldProps>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {
+interface PigmentTextAreaProps extends TextFieldProps, PigmentFieldBaseProps, PigmentFieldInputBaseProps {
   rows?: number;
   isResizable?: boolean;
 }

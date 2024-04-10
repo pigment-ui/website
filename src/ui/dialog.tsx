@@ -17,13 +17,7 @@ interface PigmentDialogProps extends DialogProps {}
 // component
 
 function _Dialog(props: PigmentDialogProps, ref: ForwardedRef<HTMLElement>) {
-  const { children, className, style } = props;
-
-  return (
-    <AriaDialog ref={ref} {...props} className={dialogStyles({ className })} style={style}>
-      {children}
-    </AriaDialog>
-  );
+  return <AriaDialog ref={ref} {...props} className={dialogStyles()} />;
 }
 
 const Dialog = forwardRef(_Dialog);

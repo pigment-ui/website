@@ -3,12 +3,21 @@
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
-import { Button, Tag as AriaTag, TagGroup as AriaTagGroup, TagGroupProps, TagList, TagListProps, TagProps } from "react-aria-components";
+import {
+  Button,
+  composeRenderProps,
+  Tag as AriaTag,
+  TagGroup as AriaTagGroup,
+  TagGroupProps,
+  TagList,
+  TagListProps,
+  TagProps,
+} from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
-import { ColorProps, ContentProps, FilterProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
+import { ColorProps, ContentProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { Field, PigmentFieldBaseProps } from "./field";
@@ -67,14 +76,14 @@ type TagStylesReturnType = ReturnType<typeof tagStyles>;
 // props
 
 interface PigmentTagGroupProps<T extends object>
-  extends Omit<FilterProps<TagGroupProps>, "children">,
+  extends Omit<TagGroupProps, "children">,
     Pick<TagListProps<T>, "children" | "items" | "renderEmptyState">,
     ColorProps,
     SizeProps,
     RadiusProps,
-    Omit<PigmentFieldBaseProps, "labelNecessityIndicator"> {}
+    PigmentFieldBaseProps {}
 
-interface PigmentTagProps extends FilterProps<TagProps>, ColorProps, ContentProps, StyleSlotsToStyleProps<TagStylesReturnType> {}
+interface PigmentTagProps extends TagProps, ColorProps, ContentProps, StyleSlotsToStyleProps<TagStylesReturnType> {}
 
 // slots
 
@@ -103,7 +112,7 @@ function _TagGroup<T extends object>(props: PigmentTagGroupProps<T>, ref: Forwar
 const TagGroup = (forwardRef as ForwardRefType)(_TagGroup);
 
 function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, size, radius, startContent, endContent, children, className, classNames, style, styles } = useTagGroupSlots(props);
+  const { color, size, radius, startContent, endContent, classNames, styles } = useTagGroupSlots(props);
 
   const styleSlots = tagStyles({ color, size, radius });
 
@@ -111,7 +120,7 @@ function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
     <AriaTag
       ref={ref}
       {...props}
-      className={({ isSelected, isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
+      className={composeRenderProps(props.className, (className, { isSelected, isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         styleSlots.base({
           isSelected,
           isHovered,
@@ -120,11 +129,11 @@ function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
           isFocusVisible,
           isSelectable: selectionMode !== "none",
           className: twMerge(classNames?.base, className),
-        })
-      }
-      style={mergeProps(styles?.base, style)}
+        }),
+      )}
+      style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
     >
-      {({ allowsRemoving, isSelected }) => (
+      {composeRenderProps(props.children, (children, { allowsRemoving, isSelected }) => (
         <>
           {startContent}
           <span>{children}</span>
@@ -139,7 +148,7 @@ function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
             </Button>
           )}
         </>
-      )}
+      ))}
     </AriaTag>
   );
 }

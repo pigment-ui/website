@@ -4,13 +4,11 @@ import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import { ForwardedRef, forwardRef } from "react";
 import { Button, Input, NumberField as AriaNumberField, NumberFieldProps } from "react-aria-components";
 
-import { FilterProps } from "./types";
-
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
 
 // props
 
-interface PigmentNumberFieldProps extends FilterProps<NumberFieldProps>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
+interface PigmentNumberFieldProps extends NumberFieldProps, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
 
 // component
 

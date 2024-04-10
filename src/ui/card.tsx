@@ -1,6 +1,5 @@
 "use client";
 
-import { Slot } from "@radix-ui/react-slot";
 import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps } from "react-aria";
 import { twMerge } from "tailwind-merge";
@@ -13,7 +12,7 @@ import { createSlots } from "./utils";
 
 const cardStyles = tv({
   slots: {
-    base: "bg-default-0 text-default-1000 border border-default-1000/20 bg-clip-padding backdrop-blur-xl bg-opacity-75 overflow-hidden rounded-xl outline-none",
+    base: "bg-default-0 text-default-1000 border border-default-1000/20 bg-clip-padding backdrop-blur-xl bg-opacity-75 overflow-auto rounded-xl outline-none",
     header: "p-4",
     body: "p-4",
     footer: "p-4",
@@ -53,13 +52,11 @@ function _Card(props: PigmentCardProps, ref: ForwardedRef<HTMLDivElement>) {
 
   const styleSlots = cardStyles({ hasShadow });
 
-  const Component = asChild ? Slot : "div";
-
   return (
     <CardSlotsProvider value={{ styleSlots, classNames, styles }}>
-      <Component ref={ref} className={styleSlots.base({ className: twMerge(classNames?.base, className) })} style={mergeProps(styles?.base, style)}>
+      <div ref={ref} className={styleSlots.base({ className: twMerge(classNames?.base, className) })} style={mergeProps(styles?.base, style)}>
         {children}
-      </Component>
+      </div>
     </CardSlotsProvider>
   );
 }
@@ -143,5 +140,5 @@ const CardButtons = forwardRef(_CardButtons);
 
 // exports
 
-export { Card, CardHeader, CardBody, CardFooter, CardHeading, CardButtons };
+export { Card, CardHeader, CardBody, CardFooter, CardHeading, CardButtons, cardStyles };
 export type { PigmentCardProps };

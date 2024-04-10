@@ -7,13 +7,12 @@ import { ForwardedRef, forwardRef } from "react";
 import { useField } from "react-aria";
 import { FieldErrorContext, LabelContext, Provider, TextContext } from "react-aria-components";
 
-import { FilterProps } from "./types";
-
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
+import { ColorWheelIcon } from "@radix-ui/react-icons";
 
 // props
 
-interface PigmentColorFieldProps extends FilterProps<AriaColorFieldProps>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
+interface PigmentColorFieldProps extends AriaColorFieldProps, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
 
 // component
 
@@ -32,7 +31,7 @@ function _ColorField(props: PigmentColorFieldProps, ref: ForwardedRef<HTMLInputE
       ]}
     >
       <Field {...validation} {...props}>
-        <FieldInput {...validation} {...props}>
+        <FieldInput {...validation} {...props} startContent={<ColorWheelIcon style={{ color: state.inputValue }} />}>
           <input ref={objRef} {...inputProps} />
         </FieldInput>
       </Field>

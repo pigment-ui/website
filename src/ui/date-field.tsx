@@ -3,14 +3,14 @@
 import { ForwardedRef, forwardRef } from "react";
 import { DateField as AriaDateField, DateFieldProps, DateInput, DateSegment, DateValue } from "react-aria-components";
 
-import { FilterProps, ForwardRefType } from "./types";
+import { ForwardRefType } from "./types";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
-import { segmentStyles } from "#/ui/styles";
+import { segmentStyles } from "./styles";
 
 // props
 
-interface PigmentDateFieldProps<T extends DateValue> extends FilterProps<DateFieldProps<T>>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
+interface PigmentDateFieldProps<T extends DateValue> extends DateFieldProps<T>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
 
 // component
 
