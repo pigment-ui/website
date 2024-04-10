@@ -50,7 +50,7 @@ const listBoxItemStyles = tv({
       md: "text-sm p-2 gap-x-2 [&_svg]:size-4",
       lg: "text-base p-3 gap-x-3 [&_svg]:size-5",
     },
-    isSelectable: { true: "cursor-pointer" },
+    isSelectable: { true: "cursor-pointer", false: "cursor-default" },
     isHovered: { true: "bg-opacity-10" },
     isPressed: { true: "bg-opacity-20" },
     ...isDisabledVariants,

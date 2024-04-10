@@ -4,7 +4,7 @@ import { useObjectRef } from "@react-aria/utils";
 import { AriaColorFieldProps, useColorField } from "@react-aria/color";
 import { useColorFieldState } from "@react-stately/color";
 import { ForwardedRef, forwardRef } from "react";
-import { useField } from "react-aria";
+import { mergeProps, useField } from "react-aria";
 import { FieldErrorContext, LabelContext, Provider, TextContext } from "react-aria-components";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
@@ -20,7 +20,7 @@ function _ColorField(props: PigmentColorFieldProps, ref: ForwardedRef<HTMLInputE
   const objRef = useObjectRef(ref);
   const state = useColorFieldState({ validationBehavior: "native", ...props });
   const { labelProps, inputProps, ...validation } = useColorField({ validationBehavior: "native", ...props }, state, objRef);
-  const { descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...props });
+  const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...validation, ...props });
 
   return (
     <Provider
@@ -32,7 +32,7 @@ function _ColorField(props: PigmentColorFieldProps, ref: ForwardedRef<HTMLInputE
     >
       <Field {...validation} {...props}>
         <FieldInput {...validation} {...props} startContent={<ColorWheelIcon style={{ color: state.inputValue }} />}>
-          <input ref={objRef} {...inputProps} />
+          <input ref={objRef} {...mergeProps(fieldProps, inputProps)} />
         </FieldInput>
       </Field>
     </Provider>
