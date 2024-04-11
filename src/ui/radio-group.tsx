@@ -11,7 +11,7 @@ import { SizeProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { checkboxGroupStyles } from "./checkbox-group";
-import { Field, PigmentFieldBaseProps } from "#/ui/field";
+import { Field, PigmentFieldBaseProps } from "./field";
 
 // styles
 
@@ -77,7 +77,7 @@ function _RadioGroup(props: PigmentRadioGroupProps, ref: ForwardedRef<HTMLInputE
 const RadioGroup = forwardRef(_RadioGroup);
 
 function _Radio(props: PigmentRadioProps, ref: ForwardedRef<HTMLLabelElement>) {
-  const { size = "md", children, classNames, itemClassNames, styles, itemStyles } = useRadioGroupSlots(props);
+  const { size = "md", classNames, itemClassNames, styles, itemStyles } = useRadioGroupSlots(props);
 
   const styleSlots = radioStyles({ size });
 
@@ -90,7 +90,7 @@ function _Radio(props: PigmentRadioProps, ref: ForwardedRef<HTMLLabelElement>) {
       )}
       style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.base, styles?.base, style))}
     >
-      {({ isSelected, isInvalid, isHovered, isPressed, isDisabled, isFocusVisible }) => (
+      {composeRenderProps(props.children, (children, { isSelected, isInvalid, isHovered, isPressed, isDisabled, isFocusVisible }) => (
         <>
           <div
             className={styleSlots.self({
@@ -106,7 +106,7 @@ function _Radio(props: PigmentRadioProps, ref: ForwardedRef<HTMLLabelElement>) {
           />
           {children}
         </>
-      )}
+      ))}
     </AriaRadio>
   );
 }

@@ -42,7 +42,7 @@ const listBoxItemStyles = tv({
       default: "bg-default-1000 text-default-1000",
       info: "bg-info-500 text-info-500",
       success: "bg-success-500 text-success-500",
-      warning: "text-warning-500",
+      warning: "bg-warning-500 text-warning-500",
       error: "bg-error-500 text-error-500",
     },
     size: {
