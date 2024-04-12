@@ -5,9 +5,8 @@ import { mergeProps } from "react-aria";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { AsChildProps, ChildrenProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
+import { ChildrenProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
-import { Slot } from "@radix-ui/react-slot";
 
 // styles
 
@@ -33,12 +32,7 @@ type CardStylesReturnType = ReturnType<typeof cardStyles>;
 
 // props
 
-interface PigmentCardProps
-  extends HTMLAttributes<HTMLDivElement>,
-    AsChildProps,
-    ChildrenProps,
-    StyleProps,
-    StyleSlotsToStyleProps<CardStylesReturnType> {
+interface PigmentCardProps extends HTMLAttributes<HTMLDivElement>, ChildrenProps, StyleProps, StyleSlotsToStyleProps<CardStylesReturnType> {
   hasShadow?: boolean;
 }
 
@@ -51,17 +45,15 @@ const [CardSlotsProvider, useCardSlots] = createSlots<CardSlotsType>();
 // component
 
 function _Card(props: PigmentCardProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { hasShadow = true, asChild, children, className, classNames, style, styles } = props;
+  const { hasShadow = true, children, className, classNames, style, styles } = props;
 
   const styleSlots = cardStyles({ hasShadow });
 
-  const Component = asChild ? Slot : "div";
-
   return (
     <CardSlotsProvider value={{ styleSlots, classNames, styles }}>
-      <Component ref={ref} className={styleSlots.base({ className: twMerge(classNames?.base, className) })} style={mergeProps(styles?.base, style)}>
+      <div ref={ref} className={styleSlots.base({ className: twMerge(classNames?.base, className) })} style={mergeProps(styles?.base, style)}>
         {children}
-      </Component>
+      </div>
     </CardSlotsProvider>
   );
 }

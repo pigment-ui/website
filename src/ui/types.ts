@@ -1,6 +1,5 @@
 import { CSSProperties, ReactElement, ReactNode, Ref, RefAttributes } from "react";
 
-export type AsChildProps = { asChild?: boolean };
 export type ChildrenProps = { children?: ReactNode };
 
 export type StyleProps = { className?: string; style?: CSSProperties };
