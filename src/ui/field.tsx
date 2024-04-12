@@ -1,12 +1,13 @@
 "use client";
 
 import { ValidationResult } from "@react-types/shared";
-import { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode, useLayoutEffect, useRef, useState } from "react";
+import { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode, useLayoutEffect, useState } from "react";
 import { FieldError, Group, Label, Text } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants } from "./styles";
 import { ContentProps, RadiusProps, SizeProps } from "./types";
+import { useObserveElementWidth } from "./utils";
 
 // styles
 
@@ -131,14 +132,10 @@ function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivEle
   const [paddingLeft, setPaddingLeft] = useState<number>(spacingSize);
   const [paddingRight, setPaddingRight] = useState<number>(spacingSize);
 
-  const startButtonRef = useRef<HTMLButtonElement>(null);
-  const startContentRef = useRef<HTMLDivElement>(null);
-  const endButtonRef = useRef<HTMLButtonElement>(null);
-  const endContentRef = useRef<HTMLDivElement>(null);
-  const startButtonWidth = startButtonRef.current?.offsetWidth ?? 0;
-  const startContentWidth = startContentRef.current?.offsetWidth ?? 0;
-  const endButtonWidth = endButtonRef.current?.offsetWidth ?? 0;
-  const endContentWidth = endContentRef.current?.offsetWidth ?? 0;
+  const { width: startButtonWidth, ref: startButtonRef } = useObserveElementWidth<HTMLButtonElement>();
+  const { width: startContentWidth, ref: startContentRef } = useObserveElementWidth<HTMLDivElement>();
+  const { width: endButtonWidth, ref: endButtonRef } = useObserveElementWidth<HTMLButtonElement>();
+  const { width: endContentWidth, ref: endContentRef } = useObserveElementWidth<HTMLDivElement>();
 
   useLayoutEffect(() => {
     setPaddingLeft((startButtonWidth ? startButtonWidth + spacingSize : 0) + (startContentWidth ? startContentWidth + spacingSize : 0) + spacingSize);
