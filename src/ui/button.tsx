@@ -3,7 +3,7 @@
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import { useObjectRef } from "@react-aria/utils";
 import { ForwardedRef, forwardRef } from "react";
-import { AriaButtonProps, mergeProps, useButton, useFocusRing, useHover } from "react-aria";
+import { AriaButtonProps, HoverProps, mergeProps, useButton, useFocusRing, useHover } from "react-aria";
 import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
 
@@ -35,7 +35,16 @@ const buttonStyles = tv({
 
 // props
 
-interface PigmentButtonProps extends AriaButtonProps, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps, ChildrenProps, StyleProps {
+interface PigmentButtonProps
+  extends AriaButtonProps,
+    HoverProps,
+    VariantProps,
+    ColorProps,
+    SizeProps,
+    RadiusProps,
+    ContentProps,
+    ChildrenProps,
+    StyleProps {
   isIconOnly?: boolean;
   isLoading?: boolean;
   asChild?: boolean;
@@ -65,7 +74,7 @@ function _Button(props: PigmentButtonProps, ref: ForwardedRef<HTMLButtonElement>
 
   const objRef = useObjectRef(ref);
   const { buttonProps, isPressed } = useButton({ ...restProps, isDisabled }, objRef);
-  const { hoverProps, isHovered } = useHover({ isDisabled });
+  const { hoverProps, isHovered } = useHover({ ...restProps, isDisabled });
   const { focusProps, isFocusVisible } = useFocusRing();
 
   const Component = asChild ? Slot : "button";
