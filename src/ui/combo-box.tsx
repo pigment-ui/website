@@ -2,7 +2,7 @@
 
 import { ChevronDownIcon } from "lucide-react";
 import { ForwardedRef, forwardRef } from "react";
-import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, Popover, PopoverProps } from "react-aria-components";
+import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, InputProps, Popover, PopoverProps, TextFieldProps } from "react-aria-components";
 
 import { ForwardRefType } from "./types";
 
@@ -14,6 +14,7 @@ import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBox
 
 interface PigmentComboBoxProps<T extends object>
   extends ComboBoxProps<T>,
+    Omit<InputProps, keyof TextFieldProps | "size" | "color">,
     Omit<PopoverProps, keyof ComboBoxProps<T>>,
     ListBoxSlotsType,
     PigmentFieldBaseProps,
@@ -40,7 +41,7 @@ function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: Forwar
             </FieldInput>
           </Field>
 
-          <Popover maxHeight={300} {...props} className={cardStyles().base({ className: "w-[var(--trigger-width)] p-2" })} style={{}}>
+          <Popover maxHeight={300} {...props} className={cardStyles().base({ className: "w-[var(--trigger-width)] overflow-auto p-2" })} style={{}}>
             <ListBox {...filterInlineListBoxProps(props)} />
           </Popover>
         </>

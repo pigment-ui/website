@@ -34,7 +34,7 @@ function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedR
             </FieldInput>
           </Field>
 
-          <Popover maxHeight={300} {...props} className={cardStyles().base({ className: "w-[var(--trigger-width)] p-2" })} style={{}}>
+          <Popover maxHeight={300} {...props} className={cardStyles().base({ className: "w-[var(--trigger-width)] overflow-auto p-2" })} style={{}}>
             <ListBox {...filterInlineListBoxProps(props)} />
           </Popover>
         </>

@@ -2,13 +2,17 @@
 
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { ForwardedRef, forwardRef } from "react";
-import { Button, Input, NumberField as AriaNumberField, NumberFieldProps } from "react-aria-components";
+import { Button, Input, InputProps, NumberField as AriaNumberField, NumberFieldProps, TextFieldProps } from "react-aria-components";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
 
 // props
 
-interface PigmentNumberFieldProps extends NumberFieldProps, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
+interface PigmentNumberFieldProps
+  extends NumberFieldProps,
+    Omit<InputProps, keyof TextFieldProps | "size" | "step">,
+    PigmentFieldBaseProps,
+    PigmentFieldInputBaseProps {}
 
 // component
 

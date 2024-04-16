@@ -12,7 +12,7 @@ import { createSlots } from "./utils";
 
 const cardStyles = tv({
   slots: {
-    base: "bg-default-0 text-default-1000 border border-default-1000/20 bg-clip-padding backdrop-blur-xl bg-opacity-75 overflow-auto rounded-xl outline-none",
+    base: "bg-default-0 text-default-1000 border border-default-1000/20 bg-clip-padding backdrop-blur-xl bg-opacity-75 rounded-xl outline-none",
     header: "p-4",
     body: "p-4",
     footer: "p-4",

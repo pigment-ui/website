@@ -1,14 +1,13 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { TextArea as AriaTextArea, TextField, TextFieldProps } from "react-aria-components";
+import { TextArea as AriaTextArea, TextAreaProps, TextField, TextFieldProps } from "react-aria-components";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
 
 // props
 
-interface PigmentTextAreaProps extends TextFieldProps, PigmentFieldBaseProps, PigmentFieldInputBaseProps {
-  rows?: number;
+interface PigmentTextAreaProps extends TextFieldProps, Omit<TextAreaProps, keyof TextFieldProps>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {
   isResizable?: boolean;
 }
 
