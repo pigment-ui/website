@@ -11,16 +11,18 @@ import { Button } from "#/ui";
 
 export function CodeBlock({
   code: propsCode,
+  setCode: setPropsCode,
   language,
   canEdit = false,
   className,
 }: {
   code: string;
+  setCode?: (code: string) => void;
   language?: string;
   canEdit?: boolean;
   className?: string;
 }) {
-  const code = propsCode.trim();
+  const [code, setCode] = useState<string>(propsCode.trim());
 
   const [copyTrigger, setCopyTrigger] = useState<number>(0);
   const [isCopied, setIsCopied] = useState<boolean>(false);
@@ -43,6 +45,10 @@ export function CodeBlock({
       <div className={twMerge("max-h-96 w-full overflow-auto rounded-xl border border-default-1000/20 bg-default-0 font-mono text-sm", className)}>
         <LiveEditor
           code={code}
+          onChange={(value) => {
+            setCode(value);
+            setPropsCode?.(value);
+          }}
           language={language ?? ""}
           disabled={!canEdit}
           theme={mounted ? (resolvedTheme === "light" ? themes.oneLight : themes.oneDark) : undefined}

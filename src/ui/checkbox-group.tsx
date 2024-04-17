@@ -3,13 +3,13 @@
 import { ForwardedRef, forwardRef } from "react";
 import { Orientation } from "react-aria";
 import { CheckboxGroup as AriaCheckboxGroup, CheckboxGroupProps, composeRenderProps } from "react-aria-components";
+import { tv } from "tailwind-variants";
 
 import { RadiusProps } from "./types";
 import { createSlots } from "./utils";
 
 import { PigmentCheckboxProps } from "./checkbox";
 import { Field, PigmentFieldBaseProps } from "./field";
-import { tv } from "tailwind-variants";
 
 // styles
 
