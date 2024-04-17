@@ -8,7 +8,7 @@ export function Colors() {
 
   return (
     <div className="!my-16 space-y-8">
-      {colorValues[resolvedTheme as "light" | "dark"].map((color, index) => (
+      {colorValues[resolvedTheme as "light" | "dark"]?.map((color, index) => (
         <div key={index} className="space-y-4">
           <h2 className="text-xl font-medium">{capitalize(color.name)}</h2>
           <div className="grid grid-cols-3 gap-4 sm:grid-cols-5 sm:gap-8 md:grid-cols-7">
