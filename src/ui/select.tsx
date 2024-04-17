@@ -1,8 +1,17 @@
 "use client";
 
 import { ChevronDownIcon } from "lucide-react";
-import { ForwardedRef, forwardRef } from "react";
-import { Button, Popover, PopoverProps, Select as AriaSelect, SelectProps, SelectValue } from "react-aria-components";
+import { ForwardedRef, forwardRef, ReactNode } from "react";
+import {
+  Button,
+  ListBoxProps,
+  Popover,
+  PopoverProps,
+  Select as AriaSelect,
+  SelectProps,
+  SelectValue,
+  SelectValueRenderProps,
+} from "react-aria-components";
 
 import { ForwardRefType } from "./types";
 
@@ -13,15 +22,20 @@ import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBox
 // props
 
 interface PigmentSelectProps<T extends object>
-  extends SelectProps<T>,
+  extends Omit<SelectProps<T>, "children">,
+    Pick<ListBoxProps<T>, "items" | "children">,
     Omit<PopoverProps, keyof SelectProps<T>>,
     ListBoxSlotsType,
     PigmentFieldBaseProps,
-    PigmentFieldInputBaseProps {}
+    PigmentFieldInputBaseProps {
+  renderValue?: (selectValue: Omit<SelectValueRenderProps<T>, "isPlaceholder">) => ReactNode;
+}
 
 // component
 
 function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedRef<HTMLButtonElement>) {
+  const { renderValue, placeholder } = props;
+
   return (
     <AriaSelect {...props}>
       {(renderProps) => (
@@ -29,7 +43,11 @@ function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedR
           <Field {...renderProps} {...props}>
             <FieldInput endContent={<ChevronDownIcon />} {...renderProps} {...props}>
               <Button ref={ref} className="flex items-center">
-                <SelectValue />
+                <SelectValue>
+                  {({ selectedItem, selectedText }) =>
+                    renderValue && selectedItem ? renderValue({ selectedItem: selectedItem as T, selectedText }) : placeholder ?? "Select"
+                  }
+                </SelectValue>
               </Button>
             </FieldInput>
           </Field>

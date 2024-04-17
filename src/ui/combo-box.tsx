@@ -2,7 +2,17 @@
 
 import { ChevronDownIcon } from "lucide-react";
 import { ForwardedRef, forwardRef } from "react";
-import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, InputProps, Popover, PopoverProps, TextFieldProps } from "react-aria-components";
+import {
+  Button,
+  ComboBox as AriaComboBox,
+  ComboBoxProps,
+  Input,
+  InputProps,
+  ListBoxProps,
+  Popover,
+  PopoverProps,
+  TextFieldProps,
+} from "react-aria-components";
 
 import { ForwardRefType } from "./types";
 
@@ -13,8 +23,9 @@ import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBox
 // props
 
 interface PigmentComboBoxProps<T extends object>
-  extends ComboBoxProps<T>,
-    Omit<InputProps, keyof TextFieldProps | "size" | "color">,
+  extends Omit<ComboBoxProps<T>, "children">,
+    Pick<ListBoxProps<T>, "items" | "children">,
+    Omit<InputProps, keyof TextFieldProps | "color" | "size">,
     Omit<PopoverProps, keyof ComboBoxProps<T>>,
     ListBoxSlotsType,
     PigmentFieldBaseProps,

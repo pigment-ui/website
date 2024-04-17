@@ -31,9 +31,9 @@ export const fieldInputStyles = tv({
   slots: {
     base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden",
     self: "flex-1 h-full bg-transparent outline-none placeholder:text-default-500 flex items-center",
-    content: "text-default-700",
+    content: "flex items-center text-neutral-700",
     button:
-      "grid place-items-center bg-default-1000 bg-opacity-10 data-[hovered]:bg-opacity-20 data-[pressed]:scale-95 data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed outline-none",
+      "grid place-items-center bg-default-1000 bg-opacity-10 data-[hovered]:bg-opacity-20 data-[pressed]:scale-90 data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed",
   },
   variants: {
     size: {
