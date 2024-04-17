@@ -44,9 +44,10 @@ function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedR
             <FieldInput endContent={<ChevronDownIcon />} {...renderProps} {...props}>
               <Button ref={ref} className="flex items-center">
                 <SelectValue>
-                  {({ selectedItem, selectedText }) =>
-                    renderValue && selectedItem ? renderValue({ selectedItem: selectedItem as T, selectedText }) : placeholder ?? "Select"
-                  }
+                  {renderValue
+                    ? ({ selectedItem, selectedText }) =>
+                        selectedItem ? renderValue({ selectedItem: selectedItem as T, selectedText }) : placeholder ?? "Select"
+                    : undefined}
                 </SelectValue>
               </Button>
             </FieldInput>
