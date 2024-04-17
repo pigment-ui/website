@@ -1,13 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Button } from "#/ui/button";
-import { Highlight, themes } from "prism-react-renderer";
-import { useTheme } from "next-themes";
 import { CopyCheckIcon, CopyIcon } from "lucide-react";
+import { useTheme } from "next-themes";
+import { themes } from "prism-react-renderer";
+import { useEffect, useState } from "react";
+import { LiveEditor } from "react-live";
+import { twMerge } from "tailwind-merge";
 
-export function CodeBlock({ code: codeProps, language }: { code: string; language?: string }) {
-  const code = codeProps.trim();
+import { Button } from "#/ui";
+
+export function CodeBlock({
+  code: propsCode,
+  language,
+  canEdit = false,
+  className,
+}: {
+  code: string;
+  language?: string;
+  canEdit?: boolean;
+  className?: string;
+}) {
+  const code = propsCode.trim();
 
   const [copyTrigger, setCopyTrigger] = useState<number>(0);
   const [isCopied, setIsCopied] = useState<boolean>(false);
@@ -27,26 +40,18 @@ export function CodeBlock({ code: codeProps, language }: { code: string; languag
 
   return (
     <div className="group relative">
-      <Highlight
-        code={code}
-        language={language ?? ""}
-        theme={mounted ? (resolvedTheme === "light" ? themes.oneLight : themes.oneDark) : { plain: { color: "transparent" }, styles: [] }}
-      >
-        {({ tokens, getLineProps, getTokenProps }) => (
-          <pre
-            data-language={language}
-            className="max-h-96 overflow-auto rounded-xl border border-default-1000/20 bg-default-0 p-4 font-mono text-sm"
-          >
-            {tokens.map((line, i) => (
-              <div key={i} {...getLineProps({ line })}>
-                {line.map((token, key) => (
-                  <span key={key} {...getTokenProps({ token })} />
-                ))}
-              </div>
-            ))}
-          </pre>
-        )}
-      </Highlight>
+      <div className={twMerge("max-h-96 w-full overflow-auto rounded-xl border border-default-1000/20 bg-default-0 font-mono text-sm", className)}>
+        <LiveEditor
+          code={code}
+          language={language ?? ""}
+          disabled={!canEdit}
+          theme={mounted ? (resolvedTheme === "light" ? themes.oneLight : themes.oneDark) : undefined}
+          className={twMerge(
+            "w-fit focus:outline focus:outline-2 [&_pre]:!bg-transparent [&_pre]:!p-4",
+            mounted ? canEdit && "[&_pre]:!whitespace-nowrap" : "[&_*]:!text-transparent",
+          )}
+        />
+      </div>
 
       <Button
         isIconOnly

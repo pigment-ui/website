@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronDownIcon } from "lucide-react";
 import { ForwardedRef, forwardRef } from "react";
 import {
   Button,
@@ -14,6 +13,7 @@ import {
   TextFieldProps,
 } from "react-aria-components";
 
+import { ChevronDownIcon } from "./icons";
 import { ForwardRefType } from "./types";
 
 import { cardStyles } from "./card";

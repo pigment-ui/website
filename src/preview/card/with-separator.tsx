@@ -1,6 +1,4 @@
-import { Card, CardBody, CardButtons, CardFooter, CardHeader, CardHeading } from "#/ui/card";
-import { Button } from "#/ui/button";
-import { Separator } from "#/ui/separator";
+import { Button, Card, CardBody, CardButtons, CardFooter, CardHeader, CardHeading, Separator } from "#/ui";
 
 function CardWithSeparator() {
   return (

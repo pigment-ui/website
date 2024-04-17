@@ -6,7 +6,7 @@ import { marked } from "marked";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { Button } from "#/ui/button";
+import { Button } from "#/ui";
 
 export function NavRight({ doc }: { doc: Doc }) {
   const docHeadings = marked

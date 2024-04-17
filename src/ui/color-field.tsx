@@ -3,10 +3,11 @@
 import { useObjectRef } from "@react-aria/utils";
 import { AriaColorFieldProps, useColorField } from "@react-aria/color";
 import { useColorFieldState } from "@react-stately/color";
-import { DropletIcon } from "lucide-react";
 import { ForwardedRef, forwardRef } from "react";
 import { mergeProps, useField } from "react-aria";
 import { FieldErrorContext, LabelContext, Provider, TextContext } from "react-aria-components";
+
+import { DropletIcon } from "./icons";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
 

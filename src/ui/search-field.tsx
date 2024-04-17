@@ -1,8 +1,9 @@
 "use client";
 
-import { SearchIcon, XIcon } from "lucide-react";
 import { ForwardedRef, forwardRef } from "react";
 import { Button, Input, SearchField as AriaSearchField, SearchFieldProps } from "react-aria-components";
+
+import { SearchIcon, XIcon } from "./icons";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
+
 import { CodeBlock } from "../shared";
 
 import * as button from "#/preview/button";
@@ -15,11 +16,11 @@ export function ComponentPreview({ slug }: { slug: string }) {
   const preview = previews[name][section]?.preview ?? "No preview available";
 
   return (
-    <div className="[&>div>pre]:rounded-t-none">
+    <div>
       <div className="grid min-h-64 place-items-center rounded-t-xl border border-b-0 border-default-1000/20 bg-default-0/50 p-8 backdrop-blur-xl">
         {preview}
       </div>
-      <CodeBlock code={code} language="tsx" />
+      <CodeBlock code={code} language="tsx" canEdit className="rounded-t-none" />
     </div>
   );
 }

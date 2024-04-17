@@ -1,6 +1,5 @@
 "use client";
 
-import { XIcon } from "lucide-react";
 import { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import {
@@ -16,6 +15,7 @@ import {
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
+import { XIcon } from "./icons";
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
 import { ColorProps, ContentProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";

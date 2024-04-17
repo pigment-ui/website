@@ -3,8 +3,7 @@ import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon, GithubIcon } from "luc
 import NextLink from "next/link";
 
 import { MDXContent } from "#/components";
-import { Button } from "#/ui/button";
-import { Separator } from "#/ui/separator";
+import { Button, Separator } from "#/ui";
 
 export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
   const docIndex = allDocs.findIndex((d) => d.slug === doc.slug);
