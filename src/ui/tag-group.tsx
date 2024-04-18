@@ -17,7 +17,7 @@ import { tv } from "tailwind-variants";
 
 import { XIcon } from "./icons";
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
-import { ColorProps, ContentProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
+import { ColorProps, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { Field, PigmentFieldBaseProps } from "./field";
@@ -79,25 +79,27 @@ interface PigmentTagGroupProps<T extends object>
   extends Omit<TagGroupProps, "children">,
     Pick<TagListProps<T>, "children" | "items" | "renderEmptyState">,
     ColorProps,
-    SizeProps,
     RadiusProps,
-    PigmentFieldBaseProps {}
+    PigmentFieldBaseProps {
+  itemClassNames?: PigmentTagProps["classNames"];
+  itemStyles?: PigmentTagProps["styles"];
+}
 
 interface PigmentTagProps extends TagProps, ColorProps, ContentProps, StyleSlotsToStyleProps<TagStylesReturnType> {}
 
 // slots
 
-interface TagGroupSlotsType extends Pick<PigmentTagGroupProps<any>, "color" | "size" | "radius"> {}
+interface TagGroupSlotsType extends Pick<PigmentTagGroupProps<any>, "color" | "size" | "radius" | "itemClassNames" | "itemStyles"> {}
 
 const [TagGroupSlotsProvider, useTagGroupSlots] = createSlots<TagGroupSlotsType>();
 
 // component
 
 function _TagGroup<T extends object>(props: PigmentTagGroupProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { color = "default", size = "md", radius = "md", items, renderEmptyState, children } = props;
+  const { color = "default", size = "md", radius = "md", items, renderEmptyState, children, itemClassNames, itemStyles } = props;
 
   return (
-    <TagGroupSlotsProvider value={{ color, size, radius }}>
+    <TagGroupSlotsProvider value={{ color, size, radius, itemClassNames, itemStyles }}>
       <AriaTagGroup ref={ref} {...props}>
         <Field {...props}>
           <TagList items={items} renderEmptyState={renderEmptyState} className={tagGroupStyles({ size })}>
@@ -112,7 +114,7 @@ function _TagGroup<T extends object>(props: PigmentTagGroupProps<T>, ref: Forwar
 const TagGroup = (forwardRef as ForwardRefType)(_TagGroup);
 
 function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, size, radius, startContent, endContent, classNames, styles } = useTagGroupSlots(props);
+  const { color, size, radius, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useTagGroupSlots(props);
 
   const styleSlots = tagStyles({ color, size, radius });
 
@@ -130,10 +132,10 @@ function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
           isDisabled,
           isFocusVisible,
           isSelectable: selectionMode !== "none",
-          className: twMerge(classNames?.base, className),
+          className: twMerge(itemClassNames?.base, classNames?.base, className),
         }),
       )}
-      style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
+      style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.base, styles?.base, style))}
     >
       {composeRenderProps(props.children, (children, { allowsRemoving, isSelected }) => (
         <>
@@ -143,8 +145,8 @@ function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
           {allowsRemoving && (
             <Button
               slot="remove"
-              className={styleSlots.removeButton({ isSelected, className: classNames?.removeButton })}
-              style={styles?.removeButton}
+              className={styleSlots.removeButton({ isSelected, className: twMerge(itemClassNames?.removeButton, classNames?.removeButton) })}
+              style={mergeProps(itemStyles?.removeButton, styles?.removeButton)}
             >
               <XIcon />
             </Button>

@@ -23,3 +23,34 @@ Create `modal.tsx` file.
 Copy and paste the source code into your project.
 
 </Steps>
+
+### Demo
+
+<ComponentPreview slug="modal/demo" />
+
+### With separator
+
+In this case, you will need to use [`<Separator />`](/docs/components/separator) component between `<ModalHeader />`, `<ModalBody />` and `<ModalFooter />` components.
+
+<ComponentPreview slug="modal/withSeparator" />
+
+### Size
+
+<ComponentPreview slug="modal/size" />
+
+### Close
+
+<ComponentPreview slug="modal/close" />
+
+## Style slots
+
+```ts
+type ModalStyleSlots = "base" | "backdrop" | "closeButton" | "header" | "body" | "footer" | "heading" | "buttons";
+
+type ModalStyleProps = {
+  classNames?: { [slot in keyof ModalStyleSlots]?: string };
+  styles?: { [slot in keyof ModalStyleSlots]?: CSSProperties };
+};
+```
+
+<ComponentPreview slug="modal/styleSlots" />

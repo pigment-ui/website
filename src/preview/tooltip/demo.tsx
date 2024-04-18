@@ -6,14 +6,12 @@ import { TooltipTrigger } from "react-aria-components";
 
 function TooltipDemo() {
   return (
-    <div>
-      <TooltipTrigger>
-        <Button>Hover me</Button>
-        <Tooltip>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, quos?</p>
-        </Tooltip>
-      </TooltipTrigger>
-    </div>
+    <TooltipTrigger>
+      <Button>Hover me</Button>
+      <Tooltip>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, quos?</p>
+      </Tooltip>
+    </TooltipTrigger>
   );
 }
 

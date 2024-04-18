@@ -4,7 +4,9 @@ import * as checkbox from "./checkbox";
 import * as checkboxGroup from "./checkbox-group";
 import * as colorField from "./color-field";
 import * as dateField from "./date-field";
+import * as modal from "./modal";
 import * as numberField from "./number-field";
+import * as popover from "./popover";
 import * as searchField from "./search-field";
 import * as separator from "./separator";
 import * as skeleton from "./skeleton";
@@ -21,7 +23,9 @@ const preview: Record<string, Record<string, { code: string; scope?: any }>> = {
   checkboxGroup,
   colorField,
   dateField,
+  modal,
   numberField,
+  popover,
   searchField,
   separator,
   skeleton,

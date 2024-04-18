@@ -12,7 +12,7 @@ import { createSlots } from "./utils";
 
 import { Button } from "./button";
 import { cardStyles } from "./card";
-import { Dialog, PigmentDialogProps } from "./dialog";
+import { Dialog } from "./dialog";
 
 // styles
 
@@ -24,11 +24,7 @@ const modalStyles = tv({
     closeButton: "absolute top-2 right-2",
   },
   variants: {
-    size: {
-      sm: "max-w-lg",
-      md: "max-w-2xl",
-      lg: "max-w-4xl",
-    },
+    size: { sm: "max-w-lg", md: "max-w-2xl", lg: "max-w-4xl" },
   },
 });
 
@@ -36,11 +32,7 @@ type ModalStylesReturnType = ReturnType<typeof modalStyles>;
 
 // props
 
-interface PigmentModalProps
-  extends Omit<ModalOverlayProps, "children">,
-    Pick<PigmentDialogProps, "children">,
-    SizeProps,
-    StyleSlotsToStyleProps<ModalStylesReturnType> {}
+interface PigmentModalProps extends ModalOverlayProps, SizeProps, StyleSlotsToStyleProps<ModalStylesReturnType> {}
 
 interface PigmentModalSectionProps extends ChildrenProps, StyleProps {}
 
@@ -62,8 +54,8 @@ function _Modal(props: PigmentModalProps, ref: ForwardedRef<HTMLDivElement>) {
 
   return (
     <ModalSlotsProvider value={{ headerId, bodyId, styleSlots, classNames, styles }}>
-      <ModalOverlay {...restProps} className={styleSlots.backdrop({ className: classNames?.backdrop })} style={styles?.backdrop}>
-        {({ state }) => (
+      <ModalOverlay isDismissable {...restProps} className={styleSlots.backdrop({ className: classNames?.backdrop })} style={styles?.backdrop}>
+        {composeRenderProps(props.children, (children, { state }) => (
           <AriaModal
             ref={ref}
             {...restProps}
@@ -85,7 +77,7 @@ function _Modal(props: PigmentModalProps, ref: ForwardedRef<HTMLDivElement>) {
               <XIcon />
             </Button>
           </AriaModal>
-        )}
+        ))}
       </ModalOverlay>
     </ModalSlotsProvider>
   );
