@@ -12,6 +12,7 @@ import * as spinner from "./spinner";
 import * as textArea from "./text-area";
 import * as textField from "./text-field";
 import * as timeField from "./time-field";
+import * as tooltip from "./tooltip";
 
 const preview: Record<string, Record<string, { code: string; scope?: any }>> = {
   button,
@@ -28,6 +29,7 @@ const preview: Record<string, Record<string, { code: string; scope?: any }>> = {
   textArea,
   textField,
   timeField,
+  tooltip,
 };
 
 export default preview;
