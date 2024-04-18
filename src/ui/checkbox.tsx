@@ -34,7 +34,7 @@ const checkboxStyles = tv({
     },
     isSelected: { true: { self: "border-none bg-opacity-100 text-default-0" } },
     isIndeterminate: { true: { self: "border-none bg-opacity-100 text-default-0" } },
-    isInvalid: { true: { self: "border-error-500" } },
+    isInvalid: { true: { base: "text-error-500", self: "border-error-500" } },
     isHovered: { true: { self: "border-opacity-100" } },
     isPressed: { true: { self: "scale-90" } },
     isFocusVisible: { true: { self: isFocusVisibleVariants.isFocusVisible.true } },
@@ -64,8 +64,8 @@ function _Checkbox(props: PigmentCheckboxProps, ref: ForwardedRef<HTMLLabelEleme
     <AriaCheckbox
       ref={ref}
       {...props}
-      className={composeRenderProps(props.className, (className, { isDisabled }) =>
-        styleSlots.base({ isDisabled, className: twMerge(itemClassNames?.base, classNames?.base, className) }),
+      className={composeRenderProps(props.className, (className, { isInvalid, isDisabled }) =>
+        styleSlots.base({ isInvalid, isDisabled, className: twMerge(itemClassNames?.base, classNames?.base, className) }),
       )}
       style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.base, styles?.base, style))}
     >

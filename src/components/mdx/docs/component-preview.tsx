@@ -10,6 +10,7 @@ import * as ui from "#/ui";
 import * as button from "#/preview/button";
 import * as card from "#/preview/card";
 import * as checkbox from "#/preview/checkbox";
+import * as checkboxGroup from "#/preview/checkboxGroup";
 
 function filterPreviewCode(code: string) {
   return code
@@ -47,4 +48,5 @@ const previews: Record<string, Record<string, { code: string; scope?: any }>> = 
   button,
   card,
   checkbox,
+  checkboxGroup,
 };

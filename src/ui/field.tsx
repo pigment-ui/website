@@ -91,7 +91,7 @@ interface PigmentFieldInputProps extends PigmentFieldInputBaseProps {
 // component
 
 function _Field(props: PigmentFieldProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { label, description, errorMessage, isRequired, labelNecessityIndicator = "symbol", size = "md", children } = props;
+  const { label, description, errorMessage, isRequired, isInvalid, labelNecessityIndicator = "symbol", size = "md", children } = props;
 
   const styleSlots = fieldStyles({ size });
 
