@@ -45,10 +45,10 @@ const [MenuSlotsProvider, useMenuSlots] = createSlots<ListBoxSlotsType>();
 // component
 
 function _Menu<T extends object>(props: PigmentMenuProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { color = "default", size = "md", itemStartContent, itemEndContent, itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
+  const { color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
 
   return (
-    <MenuSlotsProvider value={{ color, size, itemStartContent, itemEndContent, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
+    <MenuSlotsProvider value={{ color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
       <Popover maxHeight={300} {...props} className={composeRenderProps(props.className, (className) => menuStyles({ className }))}>
         <AriaMenu ref={ref} {...props} className="outline-none" style={{}} />
       </Popover>
@@ -59,8 +59,7 @@ function _Menu<T extends object>(props: PigmentMenuProps<T>, ref: ForwardedRef<H
 const Menu = (forwardRef as ForwardRefType)(_Menu);
 
 function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, size, startContent, itemStartContent, endContent, itemEndContent, classNames, itemClassNames, styles, itemStyles } =
-    useMenuSlots(props);
+  const { color, size, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useMenuSlots(props);
 
   const styleSlots = menuItemStyles({ color, size });
 
@@ -84,7 +83,7 @@ function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement
     >
       {composeRenderProps(props.children, (children, { isSelected }) => (
         <>
-          {startContent ?? itemStartContent}
+          {startContent}
           <div
             className={styleSlots.content({ className: twMerge(itemClassNames?.content, classNames?.content) })}
             style={mergeProps(itemStyles?.content, styles?.content)}
@@ -92,7 +91,7 @@ function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement
             {children}
           </div>
           {isSelected && <CheckIcon />}
-          {endContent ?? itemEndContent}
+          {endContent}
         </>
       ))}
     </AriaMenuItem>
