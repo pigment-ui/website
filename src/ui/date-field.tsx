@@ -3,6 +3,7 @@
 import { ForwardedRef, forwardRef } from "react";
 import { DateField as AriaDateField, DateFieldProps, DateInput, DateSegment, DateValue } from "react-aria-components";
 
+import { CalendarIcon } from "./icons";
 import { ForwardRefType } from "./types";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
@@ -21,7 +22,7 @@ function _DateField<T extends DateValue>(props: PigmentDateFieldProps<T>, ref: F
     <AriaDateField {...props}>
       {(renderProps) => (
         <Field {...renderProps} {...props}>
-          <FieldInput {...renderProps} {...props}>
+          <FieldInput startContent={<CalendarIcon />} {...renderProps} {...props}>
             <DateInput ref={ref}>
               {(segment) => <DateSegment segment={segment} className={({ isFocused }) => segmentStyles({ size, radius, isFocused })} />}
             </DateInput>

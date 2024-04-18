@@ -3,6 +3,7 @@
 import { ForwardedRef, forwardRef } from "react";
 import { DateInput, DateSegment, TimeField as AriaTimeField, TimeFieldProps, TimeValue } from "react-aria-components";
 
+import { ClockIcon } from "./icons";
 import { segmentStyles } from "./styles";
 import { ForwardRefType } from "./types";
 
@@ -21,7 +22,7 @@ function _TimeField<T extends TimeValue>(props: PigmentTimeFieldProps<T>, ref: F
     <AriaTimeField {...props}>
       {(renderProps) => (
         <Field {...renderProps} {...props}>
-          <FieldInput {...renderProps} {...props}>
+          <FieldInput startContent={<ClockIcon />} {...renderProps} {...props}>
             <DateInput ref={ref}>
               {(segment) => <DateSegment segment={segment} className={({ isFocused }) => segmentStyles({ size, radius, isFocused })} />}
             </DateInput>

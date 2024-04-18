@@ -29,11 +29,11 @@ export const fieldStyles = tv({
 
 export const fieldInputStyles = tv({
   slots: {
-    base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden",
-    self: "flex-1 h-full bg-transparent outline-none placeholder:text-default-500 flex items-center [&[aria-disabled]]:pointer-events-none",
+    base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden data-[disabled]:bg-default-1000/10",
+    self: "flex-1 h-full bg-transparent outline-none placeholder:text-default-500 flex items-center data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
     content: "flex items-center text-neutral-700",
     button:
-      "grid place-items-center bg-default-1000 bg-opacity-10 data-[hovered]:bg-opacity-20 data-[pressed]:scale-90 data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed",
+      "grid place-items-center bg-default-1000 bg-opacity-10 data-[hovered]:bg-opacity-20 data-[pressed]:scale-90 data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed duration-300",
   },
   variants: {
     size: {
