@@ -19,8 +19,8 @@ const radioGroupStyles = checkboxGroupStyles;
 
 const radioStyles = tv({
   slots: {
-    base: "flex items-center",
-    self: "grid place-items-center border border-default-1000 border-opacity-50 rounded-full",
+    base: "flex items-center cursor-pointer",
+    self: "grid place-items-center border border-default-1000 border-opacity-50 rounded-full duration-300",
   },
   variants: {
     size: {
@@ -29,7 +29,7 @@ const radioStyles = tv({
       lg: { base: "text-lg gap-x-2.5", self: "size-7 [&>svg]:size-6" },
     },
     isSelected: { true: { self: "border-8 border-opacity-100" } },
-    isInvalid: { true: { self: "border-error-500" } },
+    isInvalid: { true: { base: "text-error-500", self: "border-error-500" } },
     isHovered: { true: { self: "border-opacity-100" } },
     isPressed: { true: { self: "scale-90" } },
     isFocusVisible: { true: { self: isFocusVisibleVariants.isFocusVisible.true } },
@@ -85,12 +85,12 @@ function _Radio(props: PigmentRadioProps, ref: ForwardedRef<HTMLLabelElement>) {
     <AriaRadio
       ref={ref}
       {...props}
-      className={composeRenderProps(props.className, (className) =>
-        styleSlots.base({ className: twMerge(itemClassNames?.base, classNames?.base, className) }),
+      className={composeRenderProps(props.className, (className, { isInvalid, isDisabled }) =>
+        styleSlots.base({ isInvalid, isDisabled, className: twMerge(itemClassNames?.base, classNames?.base, className) }),
       )}
       style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.base, styles?.base, style))}
     >
-      {composeRenderProps(props.children, (children, { isSelected, isInvalid, isHovered, isPressed, isDisabled, isFocusVisible }) => (
+      {composeRenderProps(props.children, (children, { isSelected, isInvalid, isHovered, isPressed, isFocusVisible }) => (
         <>
           <div
             className={styleSlots.self({
@@ -98,7 +98,6 @@ function _Radio(props: PigmentRadioProps, ref: ForwardedRef<HTMLLabelElement>) {
               isInvalid,
               isHovered,
               isPressed,
-              isDisabled,
               isFocusVisible,
               className: twMerge(itemClassNames?.self, classNames?.self),
             })}
