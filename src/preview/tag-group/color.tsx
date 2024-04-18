@@ -11,6 +11,13 @@ function TagGroupColor() {
         <Tag>Shopping</Tag>
       </TagGroup>
 
+      <TagGroup color="primary" selectionMode="multiple" label="Categories" description="Lorem ipsum dolor sit amet.">
+        <Tag>News</Tag>
+        <Tag>Travel</Tag>
+        <Tag>Gaming</Tag>
+        <Tag>Shopping</Tag>
+      </TagGroup>
+
       <TagGroup color="info" selectionMode="multiple" label="Categories" description="Lorem ipsum dolor sit amet.">
         <Tag>News</Tag>
         <Tag>Travel</Tag>

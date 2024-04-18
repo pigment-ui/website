@@ -45,6 +45,7 @@ export const variantColorRadiusStyles = tv({
     },
     color: {
       default: "",
+      primary: "",
       info: "",
       success: "",
       warning: "",
@@ -62,6 +63,11 @@ export const variantColorRadiusStyles = tv({
       variant: ["solid", "soft", "light", "bordered"],
       color: "default",
       className: "bg-default-1000",
+    },
+    {
+      variant: ["solid", "soft", "light", "bordered"],
+      color: "primary",
+      className: "bg-primary-500",
     },
     {
       variant: ["solid", "soft", "light", "bordered"],
@@ -91,6 +97,11 @@ export const variantColorRadiusStyles = tv({
     },
     {
       variant: ["soft", "light", "bordered", "faded"],
+      color: "primary",
+      className: "text-primary-500",
+    },
+    {
+      variant: ["soft", "light", "bordered", "faded"],
       color: "info",
       className: "text-info-500",
     },
@@ -114,6 +125,11 @@ export const variantColorRadiusStyles = tv({
       variant: ["bordered"],
       color: "default",
       className: "border-default-1000",
+    },
+    {
+      variant: ["bordered"],
+      color: "primary",
+      className: "border-primary-500",
     },
     {
       variant: ["bordered"],

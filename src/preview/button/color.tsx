@@ -23,6 +23,24 @@ function ButtonColor() {
       </div>
 
       <div className="flex flex-wrap gap-4">
+        <Button color="primary" variant="solid">
+          Click me
+        </Button>
+        <Button color="primary" variant="soft">
+          Click me
+        </Button>
+        <Button color="primary" variant="light">
+          Click me
+        </Button>
+        <Button color="primary" variant="bordered">
+          Click me
+        </Button>
+        <Button color="primary" variant="faded">
+          Click me
+        </Button>
+      </div>
+
+      <div className="flex flex-wrap gap-4">
         <Button color="info" variant="solid">
           Click me
         </Button>

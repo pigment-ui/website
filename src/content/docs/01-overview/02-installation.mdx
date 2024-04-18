@@ -5,7 +5,7 @@ description: "Learn how to install and use Pigment UI components."
 
 ## Initial requirements
 
-- Create your Next.js application with Tailwind CSS.
+- Create your [Next.js](https://nextjs.org/docs/getting-started/installation) application with [Tailwind CSS](https://tailwindcss.com/docs/guides/nextjs).
 - Install needed packages which will be used for creating components.
 
 ```bash
@@ -94,8 +94,9 @@ const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   darkMode: "class",
   theme: {
+    // ...
     extend: {
-      container: { center: true, padding: "1rem", screens: { xl: "1280px" } },
+      // ...
       colors: {
         default: {
           0: "rgb(var(--default-0) / <alpha-value>)",

@@ -39,6 +39,7 @@ const tagStyles = tv({
   variants: {
     color: {
       default: { base: "bg-default-1000", removeButton: "bg-default-1000" },
+      primary: { base: "bg-primary-500", removeButton: "bg-primary-500" },
       info: { base: "bg-info-500", removeButton: "bg-info-500" },
       success: { base: "bg-success-500", removeButton: "bg-success-500" },
       warning: { base: "bg-warning-500", removeButton: "bg-warning-500" },

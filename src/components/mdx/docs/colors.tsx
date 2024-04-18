@@ -8,20 +8,21 @@ export function Colors() {
 
   return (
     <div className="!my-16 space-y-8">
-      {colorValues[resolvedTheme as "light" | "dark"]?.map((color, index) => (
-        <div key={index} className="space-y-4">
-          <h2 className="text-xl font-medium">{capitalize(color.name)}</h2>
-          <div className="grid grid-cols-3 gap-4 sm:grid-cols-5 sm:gap-8 md:grid-cols-7">
-            {color.values.map((value, index) => (
-              <div key={index} className="flex flex-col items-center space-y-2">
-                <div className="aspect-square w-full rounded-xl" style={{ background: `rgb(${value.value})` }} />
-                <span className="text-sm font-semibold">{value.name}</span>
-                <span className="whitespace-nowrap text-xs font-semibold text-default-500">{value.value}</span>
-              </div>
-            ))}
+      {resolvedTheme &&
+        colorValues[resolvedTheme as "light" | "dark"]?.map((color, index) => (
+          <div key={index} className="space-y-4">
+            <h2 className="text-xl font-medium">{capitalize(color.name)}</h2>
+            <div className="grid grid-cols-3 gap-4 sm:grid-cols-5 sm:gap-8 md:grid-cols-7">
+              {color.values.map((value, index) => (
+                <div key={index} className="flex flex-col items-center space-y-2">
+                  <div className="aspect-square w-full rounded-xl" style={{ background: `rgb(${value.value})` }} />
+                  <span className="text-sm font-semibold">{value.name}</span>
+                  <span className="whitespace-nowrap text-xs font-semibold text-default-500">{value.value}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 }
@@ -44,6 +45,22 @@ const colorValues = {
         { name: "900", value: "23 23 23" },
         { name: "950", value: "10 10 10" },
         { name: "1000", value: "0 0 0" },
+      ],
+    },
+    {
+      name: "primary",
+      values: [
+        { name: "50", value: "255 247 237" },
+        { name: "100", value: "255 237 213" },
+        { name: "200", value: "254 215 170" },
+        { name: "300", value: "253 186 116" },
+        { name: "400", value: "251 146 60" },
+        { name: "500", value: "249 115 22" },
+        { name: "600", value: "234 88 12" },
+        { name: "700", value: "194 65 12" },
+        { name: "800", value: "154 52 18" },
+        { name: "900", value: "124 45 18" },
+        { name: "950", value: "67 20 7" },
       ],
     },
     {
@@ -128,6 +145,22 @@ const colorValues = {
         { name: "900", value: "245 245 245" },
         { name: "950", value: "250 250 250" },
         { name: "1000", value: "255 255 255" },
+      ],
+    },
+    {
+      name: "primary",
+      values: [
+        { name: "50", value: "67 20 7" },
+        { name: "100", value: "124 45 18" },
+        { name: "200", value: "154 52 18" },
+        { name: "300", value: "194 65 12" },
+        { name: "400", value: "234 88 12" },
+        { name: "500", value: "249 115 22" },
+        { name: "600", value: "251 146 60" },
+        { name: "700", value: "253 186 116" },
+        { name: "800", value: "254 215 170" },
+        { name: "900", value: "255 237 213" },
+        { name: "950", value: "255 247 237" },
       ],
     },
     {
