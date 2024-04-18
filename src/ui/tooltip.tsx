@@ -10,7 +10,7 @@ import { cardStyles } from "./card";
 // styles
 
 const tooltipStyles = tv({
-  base: cardStyles().base({ className: "p-2" }),
+  base: cardStyles().base({ className: "p-4" }),
 });
 
 // props
