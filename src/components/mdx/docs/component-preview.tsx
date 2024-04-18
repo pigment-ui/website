@@ -8,19 +8,20 @@ import { CodeBlock } from "../shared";
 import * as ui from "#/ui";
 
 import * as button from "#/preview/button";
+import * as card from "#/preview/card";
 
 function filterPreviewCode(code: string) {
   return code
     .split("\n")
-    .filter((line) => !line.includes("export") && !line.includes("import"))
+    .filter((line) => !line.includes("import"))
     .join("\n");
 }
 
 export function ComponentPreview({ slug }: { slug: string }) {
   const name = slug.split("/")[0];
   const section = slug.split("/")[1];
-  const code = previews[name][section]?.code;
-  const scope = previews[name][section]?.scope;
+  const code = previews[name]?.[section]?.code ?? "";
+  const scope = previews[name]?.[section]?.scope ?? {};
 
   const [previewCode, setPreviewCode] = useState<string>(filterPreviewCode(code));
 
@@ -32,7 +33,7 @@ export function ComponentPreview({ slug }: { slug: string }) {
             <LivePreview />
           </div>
           <div>
-            <LiveError className="border border-b-0 border-error-700/20 bg-error-100/50 p-4 text-sm text-error-500 backdrop-blur-xl" />
+            <LiveError className="overflow-auto border border-b-0 border-error-700/20 bg-error-100/50 p-4 text-sm text-error-500 backdrop-blur-xl" />
           </div>
           <CodeBlock code={code} setCode={(value) => setPreviewCode(filterPreviewCode(value))} language="tsx" canEdit className="rounded-t-none" />
         </LiveProvider>
@@ -43,4 +44,5 @@ export function ComponentPreview({ slug }: { slug: string }) {
 
 const previews: Record<string, Record<string, { code: string; scope?: any }>> = {
   button,
+  card,
 };

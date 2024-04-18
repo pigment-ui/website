@@ -8,7 +8,7 @@ import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
 
 import { variantColorRadiusStyles } from "./styles";
-import { ChildrenProps, ColorProps, ContentProps, RadiusProps, SizeProps, StyleProps, VariantProps } from "./types";
+import { ColorProps, ContentProps, RadiusProps, SizeProps, StyleProps, VariantProps } from "./types";
 
 import { Spinner } from "./spinner";
 
@@ -35,16 +35,7 @@ const buttonStyles = tv({
 
 // props
 
-interface PigmentButtonProps
-  extends AriaButtonProps,
-    HoverProps,
-    VariantProps,
-    ColorProps,
-    SizeProps,
-    RadiusProps,
-    ContentProps,
-    ChildrenProps,
-    StyleProps {
+interface PigmentButtonProps extends AriaButtonProps, HoverProps, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps, StyleProps {
   isIconOnly?: boolean;
   isLoading?: boolean;
   asChild?: boolean;

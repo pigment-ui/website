@@ -2,7 +2,7 @@ const code = `
 import { Button } from "#/ui";
 
 function ButtonDemo() {
-  return <Button>Click me</Button>;
+  return <Button onPress={() => console.log("Clicked!")}>Click me</Button>;
 }
 `;
 

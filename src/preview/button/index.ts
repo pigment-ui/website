@@ -6,5 +6,5 @@ export * from "./icon-only";
 export * from "./loading";
 export * from "./radius";
 export * from "./size";
-export * from "./start-end-content";
+export * from "./content";
 export * from "./variant";

@@ -4,7 +4,7 @@ const code = `
 import { Button } from "#/ui";
 import { PinIcon, UserIcon } from "lucide-react";
 
-function ButtonStartEndContent() {
+function ButtonContent() {
   return (
     <div className="flex flex-wrap gap-4">
       <Button startContent={<UserIcon />}>Click me</Button>
@@ -15,4 +15,4 @@ function ButtonStartEndContent() {
 }
 `;
 
-export const startEndContent = { code, scope: { PinIcon, UserIcon } };
+export const content = { code, scope: { PinIcon, UserIcon } };

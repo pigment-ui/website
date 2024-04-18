@@ -1,8 +1,8 @@
 import { PinIcon } from "lucide-react";
 
 const code = `
-import { PinIcon } from "lucide-react";
 import { Button } from "#/ui";
+import { PinIcon } from "lucide-react";
 
 function ButtonIconOnly() {
   return (

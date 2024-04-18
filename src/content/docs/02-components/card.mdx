@@ -21,3 +21,32 @@ Create `card.tsx` file.
 Copy and paste the source code into your project.
 
 </Steps>
+
+## Usage
+
+### Demo
+
+<ComponentPreview slug="card/demo" />
+
+### With separator
+
+In this case, you will need to use [`<Separator />`](/docs/components/separator) component between `<CardHeader />`, `<CardBody />` and `<CardFooter />` components.
+
+<ComponentPreview slug="card/withSeparator" />
+
+### Has shadow
+
+<ComponentPreview slug="card/hasShadow" />
+
+## Style slots
+
+```ts
+type CardStyleSlots = "base" | "header" | "body" | "footer" | "heading" | "buttons";
+
+type CardStyleProps = {
+  classNames?: { [slot in keyof CardStyleSlots]?: string };
+  styles?: { [slot in keyof CardStyleSlots]?: CSSProperties };
+};
+```
+
+<ComponentPreview slug="card/styleSlots" />

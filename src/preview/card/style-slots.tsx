@@ -1,9 +1,9 @@
 const code = `
 import { Button, Card, CardBody, CardButtons, CardFooter, CardHeader, CardHeading, Separator } from "#/ui";
 
-function CardHasShadow() {
+function CardStyleSlots() {
   return (
-    <Card hasShadow={false}>
+    <Card classNames={{ base: "bg-default-300", heading: "underline", buttons: "justify-start" }}>
       <CardHeader>
         <CardHeading>Lorem ipsum dolor sit amet.</CardHeading>
       </CardHeader>
@@ -31,4 +31,4 @@ function CardHasShadow() {
 }
 `;
 
-export const hasShadow = { code };
+export const styleSlots = { code };
