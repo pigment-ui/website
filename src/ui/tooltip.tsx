@@ -29,7 +29,7 @@ function _Tooltip(props: PigmentTooltipProps, ref: ForwardedRef<HTMLDivElement>)
               viewBox="0 0 8 8"
               className={twMerge(
                 "size-4 fill-white",
-                { bottom: "rotate-180", left: "rotate-90", right: "-rotate-90", top: "", center: "" }[placement],
+                { bottom: "rotate-180", left: "-rotate-90", right: "rotate-90", top: "", center: "" }[placement],
               )}
             >
               <path d="M0 0 L4 4 L8 0" />
