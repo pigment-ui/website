@@ -42,7 +42,12 @@ export function CodeBlock({
 
   return (
     <div className="group relative">
-      <div className={twMerge("max-h-96 w-full overflow-auto rounded-xl border border-default-1000/20 bg-default-0 font-mono text-sm", className)}>
+      <div
+        className={twMerge(
+          "max-h-96 w-full overflow-auto rounded-xl border border-default-1000/20 bg-default-0 font-mono text-sm focus-within:ring-2 focus-within:ring-default-1000",
+          className,
+        )}
+      >
         <LiveEditor
           code={code}
           onChange={(value) => {
@@ -51,9 +56,10 @@ export function CodeBlock({
           }}
           language={language ?? ""}
           disabled={!canEdit}
+          tabMode="focus"
           theme={mounted ? (resolvedTheme === "light" ? themes.oneLight : themes.oneDark) : undefined}
           className={twMerge(
-            "w-fit focus:outline focus:outline-2 [&_pre]:!bg-transparent [&_pre]:!p-4",
+            "w-fit min-w-full [&>pre]:!bg-transparent [&>pre]:!p-4",
             mounted ? canEdit && "[&_pre]:!whitespace-nowrap" : "[&_*]:!text-transparent",
           )}
         />

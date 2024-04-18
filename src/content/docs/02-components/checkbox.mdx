@@ -23,3 +23,42 @@ Create `checkbox.tsx` file.
 Copy and paste the source code into your project.
 
 </Steps>
+
+## Usage
+
+### Demo
+
+<ComponentPreview slug="checkbox/demo" />
+
+### Size
+
+<ComponentPreview slug="checkbox/size" />
+
+### Radius
+
+<ComponentPreview slug="checkbox/radius" />
+
+### Indeterminate
+
+<ComponentPreview slug="checkbox/indeterminate" />
+
+### Invalid
+
+<ComponentPreview slug="checkbox/invalid" />
+
+### Disabled
+
+<ComponentPreview slug="checkbox/disabled" />
+
+## Style slots
+
+```ts
+type CheckboxStyleSlots = "base" | "self";
+
+type CheckboxStyleProps = {
+  classNames?: { [slot in keyof CheckboxStyleSlots]?: string };
+  styles?: { [slot in keyof CheckboxStyleSlots]?: CSSProperties };
+};
+```
+
+<ComponentPreview slug="checkbox/styleSlots" />

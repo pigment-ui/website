@@ -16,8 +16,8 @@ import { useCheckboxGroupSlots } from "./checkbox-group";
 
 const checkboxStyles = tv({
   slots: {
-    base: "flex items-center",
-    self: "grid place-items-center border border-default-1000 border-opacity-50",
+    base: "flex items-center cursor-pointer",
+    self: "grid place-items-center bg-default-1000 bg-opacity-0 border border-default-1000 border-opacity-50 text-default-0 duration-300",
   },
   variants: {
     size: {
@@ -32,15 +32,16 @@ const checkboxStyles = tv({
       full: { self: smallRadiusVariants.radius.full },
       none: { self: smallRadiusVariants.radius.none },
     },
-    isSelected: { true: { self: "border-none bg-default-1000 text-default-0" } },
-    isIndeterminate: { true: { self: "border-none bg-default-1000 text-default-0" } },
+    isSelected: { true: { self: "border-none bg-opacity-100 text-default-0" } },
+    isIndeterminate: { true: { self: "border-none bg-opacity-100 text-default-0" } },
     isInvalid: { true: { self: "border-error-500" } },
-    isHovered: { true: { self: "border-opacity-100 bg-opacity-90" } },
+    isHovered: { true: { self: "border-opacity-100" } },
     isPressed: { true: { self: "scale-90" } },
     isFocusVisible: { true: { self: isFocusVisibleVariants.isFocusVisible.true } },
     ...isDisabledVariants,
   },
   compoundVariants: [
+    { isSelected: true, isHovered: true, className: { self: "bg-opacity-90" } },
     { isSelected: true, isInvalid: true, className: { self: "bg-error-500" } },
     { isIndeterminate: true, isInvalid: true, className: { self: "bg-error-500" } },
   ],
@@ -63,34 +64,30 @@ function _Checkbox(props: PigmentCheckboxProps, ref: ForwardedRef<HTMLLabelEleme
     <AriaCheckbox
       ref={ref}
       {...props}
-      className={composeRenderProps(props.className, (className) =>
-        styleSlots.base({ className: twMerge(itemClassNames?.base, classNames?.base, className) }),
+      className={composeRenderProps(props.className, (className, { isDisabled }) =>
+        styleSlots.base({ isDisabled, className: twMerge(itemClassNames?.base, classNames?.base, className) }),
       )}
       style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.base, styles?.base, style))}
     >
-      {composeRenderProps(
-        props.children,
-        (children, { isSelected, isIndeterminate, isInvalid, isHovered, isPressed, isDisabled, isFocusVisible }) => (
-          <>
-            <div
-              className={styleSlots.self({
-                isSelected,
-                isIndeterminate,
-                isInvalid,
-                isHovered,
-                isPressed,
-                isDisabled,
-                isFocusVisible,
-                className: twMerge(itemClassNames?.self, classNames?.self),
-              })}
-              style={mergeProps(itemStyles?.self, styles?.self)}
-            >
-              {isSelected ? <CheckIcon /> : isIndeterminate ? <MinusIcon /> : null}
-            </div>
-            {children}
-          </>
-        ),
-      )}
+      {composeRenderProps(props.children, (children, { isSelected, isIndeterminate, isInvalid, isHovered, isPressed, isFocusVisible }) => (
+        <>
+          <div
+            className={styleSlots.self({
+              isSelected,
+              isIndeterminate,
+              isInvalid,
+              isHovered,
+              isPressed,
+              isFocusVisible,
+              className: twMerge(itemClassNames?.self, classNames?.self),
+            })}
+            style={mergeProps(itemStyles?.self, styles?.self)}
+          >
+            {isSelected ? <CheckIcon /> : isIndeterminate ? <MinusIcon /> : null}
+          </div>
+          {children}
+        </>
+      ))}
     </AriaCheckbox>
   );
 }
