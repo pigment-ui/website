@@ -3,14 +3,10 @@
 import { useState } from "react";
 import { LiveError, LivePreview, LiveProvider } from "react-live";
 
-import { CodeBlock } from "../shared";
-
 import * as ui from "#/ui";
+import preview from "#/preview";
 
-import * as button from "#/preview/button";
-import * as card from "#/preview/card";
-import * as checkbox from "#/preview/checkbox";
-import * as checkboxGroup from "#/preview/checkboxGroup";
+import { CodeBlock } from "../shared";
 
 function filterPreviewCode(code: string) {
   return code
@@ -22,8 +18,8 @@ function filterPreviewCode(code: string) {
 export function ComponentPreview({ slug }: { slug: string }) {
   const name = slug.split("/")[0];
   const section = slug.split("/")[1];
-  const code = previews[name]?.[section]?.code ?? "";
-  const scope = previews[name]?.[section]?.scope ?? {};
+  const code = preview?.[name]?.[section]?.code ?? "";
+  const scope = preview?.[name]?.[section]?.scope ?? {};
 
   const [previewCode, setPreviewCode] = useState<string>(filterPreviewCode(code));
 
@@ -43,10 +39,3 @@ export function ComponentPreview({ slug }: { slug: string }) {
     </div>
   );
 }
-
-const previews: Record<string, Record<string, { code: string; scope?: any }>> = {
-  button,
-  card,
-  checkbox,
-  checkboxGroup,
-};

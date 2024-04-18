@@ -32,7 +32,7 @@ function _ColorField(props: PigmentColorFieldProps, ref: ForwardedRef<HTMLInputE
       ]}
     >
       <Field {...validation} {...props}>
-        <FieldInput {...validation} {...props} startContent={<DropletIcon style={{ color: state.inputValue, fill: "currentcolor" }} />}>
+        <FieldInput startContent={<DropletIcon style={{ color: state.inputValue, fill: "currentColor" }} />} {...validation} {...props}>
           <input ref={objRef} {...mergeProps(fieldProps, inputProps)} />
         </FieldInput>
       </Field>
