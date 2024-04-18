@@ -1,7 +1,7 @@
 const code = `
 import { NumberField } from "#/ui";
 
-function NumberFieldDemo() {
+function NumberFieldDisabled() {
   return <NumberField isDisabled label="Width" description="Lorem ipsum dolor sit amet." />;
 }
 `;

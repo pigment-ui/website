@@ -3,7 +3,7 @@ import { Checkbox } from "#/ui";
 
 function CheckboxRadius() {
   return (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-col gap-4">
       <Checkbox radius="sm">Unsubscribe</Checkbox>
       <Checkbox radius="md">Unsubscribe</Checkbox>
       <Checkbox radius="lg">Unsubscribe</Checkbox>

@@ -1,7 +1,7 @@
 const code = `
 import { TextArea } from "#/ui";
 
-function TextAreaDemo() {
+function TextAreaInvalid() {
   return <TextArea isInvalid errorMessage="This is an error message." label="Comment" description="Lorem ipsum dolor sit amet." />;
 }
 `;

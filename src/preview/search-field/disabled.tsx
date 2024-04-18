@@ -1,7 +1,7 @@
 const code = `
 import { SearchField } from "#/ui";
 
-function SearchFieldDemo() {
+function SearchFieldDisabled() {
   return <SearchField isDisabled label="Search" description="Lorem ipsum dolor sit amet." />;
 }
 `;

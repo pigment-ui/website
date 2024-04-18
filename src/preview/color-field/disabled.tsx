@@ -1,7 +1,7 @@
 const code = `
 import { ColorField } from "#/ui";
 
-function ColorFieldDemo() {
+function ColorFieldDisabled() {
   return <ColorField isDisabled label="Color" description="Lorem ipsum dolor sit amet." />;
 }
 `;
