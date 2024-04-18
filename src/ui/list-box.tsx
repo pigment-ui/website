@@ -80,8 +80,6 @@ type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
 
 interface PigmentListBoxProps<T extends object> extends ListBoxProps<T>, ColorProps, SizeProps {
   isCard?: boolean;
-  itemStartContent?: PigmentListBoxItemProps["startContent"];
-  itemEndContent?: PigmentListBoxItemProps["endContent"];
   itemClassNames?: PigmentListBoxItemProps["classNames"];
   itemStyles?: PigmentListBoxItemProps["styles"];
   sectionClassNames?: PigmentListBoxSectionProps<T>["classNames"];
@@ -97,30 +95,17 @@ interface PigmentListBoxSectionProps<T extends object> extends SectionProps<T>, 
 // slots
 
 interface ListBoxSlotsType
-  extends Pick<
-    PigmentListBoxProps<any>,
-    "color" | "size" | "itemStartContent" | "itemEndContent" | "itemClassNames" | "itemStyles" | "sectionClassNames" | "sectionStyles"
-  > {}
+  extends Pick<PigmentListBoxProps<any>, "color" | "size" | "itemClassNames" | "itemStyles" | "sectionClassNames" | "sectionStyles"> {}
 
 const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType>();
 
 // component
 
 function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const {
-    isCard = true,
-    color = "default",
-    size = "md",
-    itemStartContent,
-    itemEndContent,
-    itemClassNames,
-    itemStyles,
-    sectionClassNames,
-    sectionStyles,
-  } = props;
+  const { isCard = true, color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
 
   return (
-    <ListBoxSlotsProvider value={{ color, size, itemStartContent, itemEndContent, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
+    <ListBoxSlotsProvider value={{ color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
       <AriaListBox
         ref={ref}
         {...props}
@@ -133,8 +118,7 @@ function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: Forwarde
 const ListBox = (forwardRef as ForwardRefType)(_ListBox);
 
 function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, size, startContent, itemStartContent, endContent, itemEndContent, classNames, itemClassNames, styles, itemStyles } =
-    useListBoxSlots(props);
+  const { color, size, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useListBoxSlots(props);
 
   const styleSlots = listBoxItemStyles({ color, size });
 
@@ -158,7 +142,7 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
     >
       {composeRenderProps(props.children, (children, { isSelected }) => (
         <>
-          {startContent ?? itemStartContent}
+          {startContent}
           <div
             className={styleSlots.content({ className: twMerge(itemClassNames?.content, classNames?.content) })}
             style={mergeProps(itemStyles?.content, styles?.content)}
@@ -166,7 +150,7 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
             {children}
           </div>
           {isSelected && <CheckIcon />}
-          {endContent ?? itemEndContent}
+          {endContent}
         </>
       ))}
     </AriaListBoxItem>

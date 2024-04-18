@@ -25,20 +25,16 @@ import { Field, PigmentFieldBaseProps } from "./field";
 // styles
 
 const tagGroupStyles = tv({
-  base: "flex flex-wrap",
+  base: "flex flex-wrap outline-none",
   variants: {
-    size: {
-      sm: "gap-2",
-      md: "gap-2.5",
-      lg: "gap-3",
-    },
+    size: { sm: "gap-2 text-xs", md: "gap-2.5 text-sm", lg: "gap-3 text-base" },
   },
 });
 
 const tagStyles = tv({
   slots: {
-    base: "flex items-center bg-opacity-10 overflow-hidden",
-    removeButton: "grid place-items-center bg-opacity-20 data-[hovered]:bg-opacity-30 data-[pressed]:scale-95 outline-none",
+    base: "flex items-center bg-opacity-10 overflow-hidden duration-300",
+    removeButton: "grid place-items-center bg-opacity-20 data-[hovered]:bg-opacity-30 data-[pressed]:scale-90 outline-none",
   },
   variants: {
     color: {
