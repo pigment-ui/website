@@ -3,7 +3,7 @@ import { Skeleton } from "#/ui";
 
 function SkeletonDemo() {
   return (
-    <div className="w-96">
+    <div className="w-64">
       <Skeleton className="h-4" />
     </div>
   );

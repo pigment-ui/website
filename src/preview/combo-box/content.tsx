@@ -6,7 +6,7 @@ import { PinIcon, UserIcon } from "lucide-react";
 
 function ComboBoxContent() {
   return (
-    <ComboBox startContent={<UserIcon />} endContent={<PinIcon />} label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+    <ComboBox startContent={<UserIcon />} endContent={<PinIcon />} label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
       <ComboBoxItem>Aardvark</ComboBoxItem>
       <ComboBoxItem>Cat</ComboBoxItem>
       <ComboBoxItem>Dog</ComboBoxItem>

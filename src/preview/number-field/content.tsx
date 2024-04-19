@@ -5,7 +5,7 @@ import { Button } from "#/ui";
 import { PinIcon, UserIcon } from "lucide-react";
 
 function NumberFieldContent() {
-  return <NumberField startContent={<UserIcon />} endContent={<PinIcon />} label="Width" description="Lorem ipsum dolor sit amet." />;
+  return <NumberField startContent={<UserIcon />} endContent={<PinIcon />} label="Width" description="Lorem ipsum dolor sit amet." className="w-64" />;
 }
 `;
 

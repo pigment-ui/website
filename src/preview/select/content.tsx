@@ -6,7 +6,7 @@ import { PinIcon, UserIcon } from "lucide-react";
 
 function SelectContent() {
   return (
-    <Select startContent={<UserIcon />} endContent={<PinIcon />} label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+    <Select startContent={<UserIcon />} endContent={<PinIcon />} label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
       <SelectItem>Aardvark</SelectItem>
       <SelectItem>Cat</SelectItem>
       <SelectItem>Dog</SelectItem>

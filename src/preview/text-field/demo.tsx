@@ -2,7 +2,7 @@ const code = `
 import { TextField } from "#/ui";
 
 function TextFieldDemo() {
-  return <TextField label="First name" description="Lorem ipsum dolor sit amet." />;
+  return <TextField label="First name" description="Lorem ipsum dolor sit amet." className="w-64" />;
 }
 `;
 

@@ -3,8 +3,8 @@ import { Button, TextArea } from "#/ui";
 
 function TextAreaValidation() {
   return (
-    <form className="w-64 space-y-4">
-      <TextArea isRequired label="Comment" description="Lorem ipsum dolor sit amet." />
+    <form className="space-y-4">
+      <TextArea isRequired label="Comment" description="Lorem ipsum dolor sit amet." className="w-64" />
       <Button type="submit">Submit</Button>
     </form>
   );

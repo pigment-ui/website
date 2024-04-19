@@ -3,8 +3,8 @@ import { ComboBox, ComboBoxItem } from "#/ui";
 
 function ComboBoxValidation() {
   return (
-    <form className="w-64 space-y-4">
-      <ComboBox isRequired label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+    <form className="space-y-4">
+      <ComboBox isRequired label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
         <ComboBoxItem>Aardvark</ComboBoxItem>
         <ComboBoxItem>Cat</ComboBoxItem>
         <ComboBoxItem>Dog</ComboBoxItem>

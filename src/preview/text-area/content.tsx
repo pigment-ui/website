@@ -5,7 +5,7 @@ import { Button } from "#/ui";
 import { PinIcon, UserIcon } from "lucide-react";
 
 function TextAreaContent() {
-  return <TextArea startContent={<UserIcon />} endContent={<PinIcon />} label="Comment" description="Lorem ipsum dolor sit amet." />;
+  return <TextArea startContent={<UserIcon />} endContent={<PinIcon />} label="Comment" description="Lorem ipsum dolor sit amet." className="w-64" />;
 }
 `;
 

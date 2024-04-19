@@ -3,7 +3,7 @@ import { Select, SelectItem } from "#/ui";
 
 function SelectDisabledIndividual() {
   return (
-    <Select disabledKeys={["Dog"]} label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+    <Select disabledKeys={["Dog"]} label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
       <SelectItem>Aardvark</SelectItem>
       <SelectItem>Cat</SelectItem>
       <SelectItem>Dog</SelectItem>

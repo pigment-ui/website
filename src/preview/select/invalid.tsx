@@ -3,7 +3,7 @@ import { Select, SelectItem } from "#/ui";
 
 function SelectInvalid() {
   return (
-    <Select isInvalid errorMessage="This is an error message." label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+    <Select isInvalid errorMessage="This is an error message." label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
       <SelectItem>Aardvark</SelectItem>
       <SelectItem>Cat</SelectItem>
       <SelectItem>Dog</SelectItem>

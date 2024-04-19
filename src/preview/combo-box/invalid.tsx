@@ -3,7 +3,7 @@ import { ComboBox, ComboBoxItem } from "#/ui";
 
 function ComboBoxInvalid() {
   return (
-    <ComboBox isInvalid errorMessage="This is an error message." label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+    <ComboBox isInvalid errorMessage="This is an error message." label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
       <ComboBoxItem>Aardvark</ComboBoxItem>
       <ComboBoxItem>Cat</ComboBoxItem>
       <ComboBoxItem>Dog</ComboBoxItem>

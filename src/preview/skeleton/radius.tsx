@@ -3,7 +3,7 @@ import { Skeleton } from "#/ui";
 
 function SkeletonRadius() {
   return (
-    <div className="w-96 flex flex-col gap-4">
+    <div className="w-64 space-y-4">
       <Skeleton radius="sm" className="h-4" />
       <Skeleton radius="md" className="h-4" />
       <Skeleton radius="lg" className="h-4" />

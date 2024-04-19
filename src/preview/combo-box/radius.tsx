@@ -15,23 +15,23 @@ function ComboBoxRadius() {
 
   return (
     <div className="flex flex-col gap-4">
-      <ComboBox radius="sm" label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+      <ComboBox radius="sm" label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
 
-      <ComboBox radius="md" label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+      <ComboBox radius="md" label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
 
-      <ComboBox radius="lg" label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+      <ComboBox radius="lg" label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
       
-      <ComboBox radius="full" label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+      <ComboBox radius="full" label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
       
-      <ComboBox radius="none" label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+      <ComboBox radius="none" label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
     </div>

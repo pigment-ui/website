@@ -3,7 +3,7 @@ import { ComboBox, ComboBoxItem } from "#/ui";
 
 function ComboBoxDemo() {
   return (
-    <ComboBox label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+    <ComboBox label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
       <ComboBoxItem>Aardvark</ComboBoxItem>
       <ComboBoxItem>Cat</ComboBoxItem>
       <ComboBoxItem>Dog</ComboBoxItem>

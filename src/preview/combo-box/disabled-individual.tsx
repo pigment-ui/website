@@ -3,7 +3,7 @@ import { ComboBox, ComboBoxItem } from "#/ui";
 
 function ComboBoxDisabledIndividual() {
   return (
-    <ComboBox disabledKeys={["Dog"]} label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+    <ComboBox disabledKeys={["Dog"]} label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
       <ComboBoxItem>Aardvark</ComboBoxItem>
       <ComboBoxItem>Cat</ComboBoxItem>
       <ComboBoxItem>Dog</ComboBoxItem>

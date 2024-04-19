@@ -3,8 +3,8 @@ import { Select, SelectItem } from "#/ui";
 
 function SelectValidation() {
   return (
-    <form className="w-64 space-y-4">
-      <Select isRequired label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+    <form className="space-y-4">
+      <Select isRequired label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
         <SelectItem>Aardvark</SelectItem>
         <SelectItem>Cat</SelectItem>
         <SelectItem>Dog</SelectItem>

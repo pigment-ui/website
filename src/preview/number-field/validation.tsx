@@ -3,8 +3,8 @@ import { Button, NumberField } from "#/ui";
 
 function NumberFieldValidation() {
   return (
-    <form className="w-64 space-y-4">
-      <NumberField isRequired label="Width" description="Lorem ipsum dolor sit amet." />
+    <form className="space-y-4">
+      <NumberField isRequired label="Width" description="Lorem ipsum dolor sit amet." className="w-64" />
       <Button type="submit">Submit</Button>
     </form>
   );

@@ -15,15 +15,15 @@ function SelectSize() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Select size="sm" label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+      <Select size="sm" label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
         {renderSelectContent}
       </Select>
 
-      <Select size="md" label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+      <Select size="md" label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
         {renderSelectContent}
       </Select>
 
-      <Select size="lg" label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+      <Select size="lg" label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
         {renderSelectContent}
       </Select>
     </div>

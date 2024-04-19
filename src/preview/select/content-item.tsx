@@ -6,7 +6,7 @@ import { CatIcon, DogIcon } from "lucide-react";
 
 function SelectContentItem() {
   return (
-    <Select label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+    <Select label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
       <SelectItem>Aardvark</SelectItem>
       <SelectItem startContent={<CatIcon />}>Cat</SelectItem>
       <SelectItem endContent={<DogIcon />}>Dog</SelectItem>

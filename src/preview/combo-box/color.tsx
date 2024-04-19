@@ -15,27 +15,27 @@ function ComboBoxColor() {
 
   return (
     <div className="flex flex-col gap-4">
-      <ComboBox color="default" label={<div className="text-default-1000">Favorite Animal</div>} description="Lorem ipsum dolor sit amet.">
+      <ComboBox color="default" label={<div className="text-default-1000">Favorite Animal</div>} description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
 
-      <ComboBox color="primary" label={<div className="text-primary-500">Favorite Animal</div>} description="Lorem ipsum dolor sit amet.">
+      <ComboBox color="primary" label={<div className="text-primary-500">Favorite Animal</div>} description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
 
-      <ComboBox color="info" label={<div className="text-info-500">Favorite Animal</div>} description="Lorem ipsum dolor sit amet.">
+      <ComboBox color="info" label={<div className="text-info-500">Favorite Animal</div>} description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
       
-      <ComboBox color="success" label={<div className="text-success-500">Favorite Animal</div>} description="Lorem ipsum dolor sit amet.">
+      <ComboBox color="success" label={<div className="text-success-500">Favorite Animal</div>} description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
       
-      <ComboBox color="warning" label={<div className="text-warning-500">Favorite Animal</div>} description="Lorem ipsum dolor sit amet.">
+      <ComboBox color="warning" label={<div className="text-warning-500">Favorite Animal</div>} description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
       
-      <ComboBox color="error" label={<div className="text-error-500">Favorite Animal</div>} description="Lorem ipsum dolor sit amet.">
+      <ComboBox color="error" label={<div className="text-error-500">Favorite Animal</div>} description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
     </div>

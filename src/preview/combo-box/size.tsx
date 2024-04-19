@@ -15,15 +15,15 @@ function ComboBoxSize() {
 
   return (
     <div className="flex flex-col gap-4">
-      <ComboBox size="sm" label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+      <ComboBox size="sm" label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
 
-      <ComboBox size="md" label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+      <ComboBox size="md" label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
 
-      <ComboBox size="lg" label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+      <ComboBox size="lg" label="Favorite Animal" description="Lorem ipsum dolor sit amet." className="w-64">
         {renderComboBoxContent}
       </ComboBox>
     </div>
