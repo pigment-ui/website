@@ -26,7 +26,14 @@ function _Tooltip(props: PigmentTooltipProps, ref: ForwardedRef<HTMLDivElement>)
   const { showArrow = true, arrowSize = 16 } = props;
 
   return (
-    <AriaTooltip ref={ref} offset={16} {...props} className={composeRenderProps(props.className, (className) => tooltipStyles({ className }))}>
+    <AriaTooltip
+      ref={ref}
+      offset={16}
+      {...props}
+      className={composeRenderProps(props.className, (className, { isEntering, isExiting }) =>
+        tooltipStyles({ className: twMerge(isEntering && "animate-fadeIn", isExiting && "animate-fadeOut", className) }),
+      )}
+    >
       {composeRenderProps(props.children, (children, { placement }) => (
         <>
           {showArrow && (

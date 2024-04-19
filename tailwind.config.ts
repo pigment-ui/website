@@ -89,6 +89,16 @@ const config: Config = {
         },
       },
     },
+
+    keyframes: {
+      fadeIn: { from: { opacity: "0" }, to: { opacity: "1" } },
+      fadeOut: { from: { opacity: "1" }, to: { opacity: "0" } },
+    },
+
+    animation: {
+      fadeIn: "fadeIn 300ms forwards",
+      fadeOut: "fadeOut 300ms forwards",
+    },
   },
   plugins: [],
 };
