@@ -16,8 +16,8 @@ export function Header() {
 
   const routes = [
     ["/docs/overview/introduction", "Docs"],
-    ["/examples", "Examples"],
-    ["/themes", "Themes"],
+    // ["/examples", "Examples"],
+    // ["/themes", "Themes"],
   ].map(([href, title]) => (
     <Button
       key={title}
