@@ -14,6 +14,12 @@ export function generateMetadata({ params: { slug } }: { params: { slug: string[
   };
 }
 
+export async function generateStaticParams() {
+  return allDocsSorted.map((doc) => ({
+    slug: doc.slug.split("/"),
+  }));
+}
+
 export default function Page({ params: { slug } }: { params: { slug: string[] } }) {
   const doc = allDocsSorted.find((doc) => doc.slug === slug.join("/"));
   if (!doc) notFound();
