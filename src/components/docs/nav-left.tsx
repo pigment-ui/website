@@ -1,25 +1,27 @@
-// "use client";
+"use client";
 
 import { Doc } from "contentlayer/generated";
+import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import NextLink from "next/link";
 import { twMerge } from "tailwind-merge";
+import { useState } from "react";
 
 import { Button } from "#/ui";
 
 export function NavLeft({ doc: docProps, allDocs }: { doc: Doc; allDocs: Doc[] }) {
   const docGroupNames = Array.from(new Set(allDocs.map((doc) => doc.slug.split("/")[0])));
 
-  // const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <nav className="sticky top-16 z-10 max-lg:-mx-4 lg:col-span-2 lg:h-[calc(100vh-64px)]">
-      {/*<button*/}
-      {/*  className="flex w-full items-center gap-2 border-b border-b-default-1000/20 bg-default-0/75 p-4 text-start backdrop-blur-lg hover:bg-default-1000/10 active:bg-default-1000/20 lg:hidden [&>svg]:size-4"*/}
-      {/*  onClick={() => setIsOpen((prev) => !prev)}*/}
-      {/*>*/}
-      {/*  {isOpen ? <ChevronDownIcon /> : <ChevronRightIcon />}*/}
-      {/*  Menu*/}
-      {/*</button>*/}
+      <button
+        className="flex w-full items-center gap-2 border-b border-b-default-1000/20 bg-default-0/75 p-4 text-start backdrop-blur-lg hover:bg-default-1000/10 active:bg-default-1000/20 lg:hidden [&>svg]:size-4"
+        onClick={() => setIsOpen((prev) => !prev)}
+      >
+        {isOpen ? <ChevronDownIcon /> : <ChevronRightIcon />}
+        Menu
+      </button>
 
       <div
         className={twMerge([
@@ -27,7 +29,7 @@ export function NavLeft({ doc: docProps, allDocs }: { doc: Doc; allDocs: Doc[] }
           "max-lg:pb-32 max-lg:pl-4 max-lg:pt-8 lg:py-16",
           "max-lg:absolute max-lg:inset-x-0 max-lg:top-full max-lg:h-[calc(100vh-120px)]",
           "max-lg:bg-default-0/75 max-lg:backdrop-blur-lg",
-          // !isOpen && "max-lg:hidden",
+          !isOpen && "max-lg:hidden",
         ])}
       >
         {docGroupNames.map((docGroupName) => (
