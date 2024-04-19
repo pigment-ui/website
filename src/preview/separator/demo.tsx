@@ -3,7 +3,7 @@ import { Separator } from "#/ui";
 
 function SeparatorDemo() {
   return (
-    <div className="w-96">
+    <div className="w-64">
       <Separator />
     </div>
   );
