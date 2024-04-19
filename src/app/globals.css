@@ -10,6 +10,11 @@
     @apply h-2 w-2;
   }
 
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    @apply bg-transparent;
+  }
+
   ::-webkit-scrollbar-thumb {
     @apply rounded-xl bg-default-300 hover:bg-default-400;
   }
@@ -23,6 +28,10 @@
 }
 
 @layer utilities {
+  .scrollbar-show-on-hover:not(:hover)::-webkit-scrollbar-thumb {
+    @apply bg-transparent;
+  }
+
   .step {
     counter-increment: step;
   }

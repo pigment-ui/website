@@ -25,8 +25,8 @@ export function NavLeft({ doc: docProps, allDocs }: { doc: Doc; allDocs: Doc[] }
 
       <div
         className={twMerge([
-          "h-full overflow-y-auto",
-          "max-lg:p-4 lg:py-16",
+          "scrollbar-show-on-hover h-full overflow-y-auto pr-4",
+          "max-lg:pb-16 max-lg:pl-4 max-lg:pt-8 lg:py-16",
           "max-lg:absolute max-lg:inset-x-0 max-lg:top-full max-lg:h-[calc(100vh-120px)]",
           "max-lg:bg-default-0/75 max-lg:backdrop-blur-lg",
           !isOpen && "max-lg:hidden",

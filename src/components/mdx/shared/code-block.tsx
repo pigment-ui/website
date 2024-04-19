@@ -44,7 +44,7 @@ export function CodeBlock({
     <div className="group relative">
       <div
         className={twMerge(
-          "max-h-96 w-full overflow-auto rounded-xl border border-default-1000/20 bg-default-0 font-mono text-sm focus-within:ring-2 focus-within:ring-default-1000",
+          "scrollbar-show-on-hover max-h-96 w-full overflow-auto rounded-xl border border-default-1000/20 bg-default-0 font-mono text-sm focus-within:ring-2 focus-within:ring-default-1000",
           className,
         )}
       >
