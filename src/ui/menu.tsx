@@ -33,7 +33,7 @@ const menuItemStyles = listBoxItemStyles;
 
 interface PigmentMenuProps<T extends object>
   extends Omit<MenuProps<T>, keyof StyleProps>,
-    Omit<PigmentListBoxProps<T>, keyof MenuProps<T> | "isCard">,
+    Omit<PigmentListBoxProps<T>, keyof MenuProps<T> | "asCard">,
     Omit<PopoverProps, keyof Omit<MenuProps<T>, keyof StyleProps>> {}
 
 interface PigmentMenuItemProps extends MenuItemProps, Omit<PigmentListBoxItemProps, keyof MenuItemProps> {}

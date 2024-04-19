@@ -27,7 +27,7 @@ import { cardStyles } from "./card";
 
 const listBoxStyles = tv({
   variants: {
-    isCard: { true: cardStyles().base({ className: "p-2", hasShadow: false }) },
+    asCard: { true: cardStyles().base({ className: "p-2", hasShadow: false }) },
     ...isFocusVisibleVariants,
   },
 });
@@ -80,7 +80,7 @@ type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
 // props
 
 interface PigmentListBoxProps<T extends object> extends ListBoxProps<T>, ColorProps, SizeProps {
-  isCard?: boolean;
+  asCard?: boolean;
   itemClassNames?: PigmentListBoxItemProps["classNames"];
   itemStyles?: PigmentListBoxItemProps["styles"];
   sectionClassNames?: PigmentListBoxSectionProps<T>["classNames"];
@@ -103,14 +103,14 @@ const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType>();
 // component
 
 function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { isCard = true, color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
+  const { asCard = true, color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
 
   return (
     <ListBoxSlotsProvider value={{ color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
       <AriaListBox
         ref={ref}
         {...props}
-        className={composeRenderProps(props.className, (className, { isFocusVisible }) => listBoxStyles({ isCard, isFocusVisible, className }))}
+        className={composeRenderProps(props.className, (className, { isFocusVisible }) => listBoxStyles({ asCard, isFocusVisible, className }))}
       />
     </ListBoxSlotsProvider>
   );
@@ -190,7 +190,7 @@ export { ListBox, ListBoxItem, ListBoxSection, listBoxItemStyles };
 export type { PigmentListBoxProps, PigmentListBoxItemProps, PigmentListBoxSectionProps, ListBoxSlotsType };
 
 export const filterInlineListBoxProps = (props: any) => ({
-  isCard: false,
+  asCard: false,
   children: props.children,
   color: props.color,
   size: props.size,
