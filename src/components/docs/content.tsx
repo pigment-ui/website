@@ -58,12 +58,16 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
       <div className="flex">
         {previousDoc && (
           <Button asChild variant="light" startContent={<ArrowLeftIcon />}>
-            <NextLink href={previousDoc.url}>{previousDoc.title}</NextLink>
+            <NextLink href={previousDoc.url} prefetch>
+              {previousDoc.title}
+            </NextLink>
           </Button>
         )}
         {nextDoc && (
           <Button asChild variant="light" endContent={<ArrowRightIcon />} className="ml-auto">
-            <NextLink href={nextDoc.url}>{nextDoc.title}</NextLink>
+            <NextLink href={nextDoc.url} prefetch>
+              {nextDoc.title}
+            </NextLink>
           </Button>
         )}
       </div>
