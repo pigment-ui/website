@@ -34,7 +34,7 @@ export const smallRadiusVariants = {
 };
 
 export const variantColorRadiusStyles = tv({
-  base: "relative flex items-center justify-center min-w-max whitespace-nowrap overflow-hidden duration-300",
+  base: "relative flex items-center justify-center w-fit min-w-max whitespace-nowrap overflow-hidden duration-300",
   variants: {
     variant: {
       solid: "text-default-0",
