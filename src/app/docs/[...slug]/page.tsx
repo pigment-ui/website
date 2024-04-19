@@ -1,17 +1,18 @@
 import { allDocs } from "contentlayer/generated";
+import { capitalize } from "inflection";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { Content, NavLeft, NavRight } from "#/components/docs";
 
-const partFilter = (str: string) =>
-  str
-    .split("/")
-    .map((slugPart) => (!isNaN(parseInt(slugPart.slice(0, 2))) ? slugPart.slice(3) : slugPart))
-    .join("/");
+export function generateMetadata({ params: { slug } }: { params: { slug: string[] } }): Metadata {
+  const doc = allDocsSorted.find((doc) => doc.slug === slug.join("/"));
 
-const allDocsSorted = allDocs
-  .sort((a, b) => a.slug.localeCompare(b.slug))
-  .map((doc) => ({ ...doc, slug: partFilter(doc.slug), url: partFilter(doc.url) }));
+  return {
+    title: `Pigment UI | Docs - ${capitalize(slug[1])}`,
+    description: doc?.description,
+  };
+}
 
 export default function Page({ params: { slug } }: { params: { slug: string[] } }) {
   const doc = allDocsSorted.find((doc) => doc.slug === slug.join("/"));
@@ -25,3 +26,13 @@ export default function Page({ params: { slug } }: { params: { slug: string[] } 
     </main>
   );
 }
+
+const partFilter = (str: string) =>
+  str
+    .split("/")
+    .map((slugPart) => (!isNaN(parseInt(slugPart.slice(0, 2))) ? slugPart.slice(3) : slugPart))
+    .join("/");
+
+const allDocsSorted = allDocs
+  .sort((a, b) => a.slug.localeCompare(b.slug))
+  .map((doc) => ({ ...doc, slug: partFilter(doc.slug), url: partFilter(doc.url) }));
