@@ -6,6 +6,14 @@
 /* ... */
 
 @layer base {
+  ::-webkit-scrollbar {
+    @apply h-2 w-2;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-xl bg-default-300 hover:bg-default-400;
+  }
+
   body {
     @apply bg-default-0 text-default-1000;
   }

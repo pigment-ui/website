@@ -29,7 +29,7 @@ function _Popover(props: PigmentPopoverProps, ref: ForwardedRef<HTMLDivElement>)
             <svg
               viewBox="0 0 8 8"
               className={twMerge(
-                "size-4 fill-white",
+                "size-4 fill-default-0 stroke-default-1000/20 stroke-[.5px]",
                 { bottom: "rotate-180", left: "-rotate-90", right: "rotate-90", top: "", center: "" }[placement],
               )}
             >
