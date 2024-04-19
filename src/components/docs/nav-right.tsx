@@ -45,7 +45,7 @@ export function NavRight({ doc }: { doc: Doc }) {
                 asChild
                 isIconOnly
                 variant={heading.id === activeSlug ? "soft" : "light"}
-                className={twMerge(heading.id !== activeSlug && "text-default-500", "justify-start")}
+                className={twMerge("w-full", heading.id !== activeSlug && "text-default-500", "justify-start")}
               >
                 <a href={`#${heading.id}`}>{heading.text}</a>
               </Button>

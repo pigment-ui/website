@@ -29,7 +29,7 @@ export const fieldStyles = tv({
 
 export const fieldInputStyles = tv({
   slots: {
-    base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden data-[disabled]:bg-default-1000/10",
+    base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden data-[disabled]:bg-default-1000/10 duration-300",
     self: "flex-1 h-full bg-transparent outline-none placeholder:text-default-500 flex items-center data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
     content: "flex items-center text-neutral-700",
     button:
@@ -49,7 +49,7 @@ export const fieldInputStyles = tv({
       none: { base: radiusVariants.radius.none, button: smallRadiusVariants.radius.none },
     },
     isTextArea: { true: "h-auto items-start" },
-    isInvalid: { true: { base: "border-error-500 border-opacity-50", self: "bg-red-500" } },
+    isInvalid: { true: "border-error-500 border-opacity-50" },
     isHovered: { true: "bg-default-50" },
     isFocusWithin: { true: "border-opacity-100" },
     ...isFocusVisibleVariants,

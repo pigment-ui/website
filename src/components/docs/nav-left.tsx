@@ -44,7 +44,7 @@ export function NavLeft({ doc: docProps, allDocs }: { doc: Doc; allDocs: Doc[] }
                       asChild
                       isIconOnly
                       variant={doc.slug === docProps.slug ? "soft" : "light"}
-                      className={twMerge(doc.slug !== docProps.slug && "text-default-500", "justify-start")}
+                      className={twMerge("w-full", doc.slug !== docProps.slug && "text-default-500", "justify-start")}
                     >
                       <NextLink href={doc.url} prefetch>
                         {doc.title}
