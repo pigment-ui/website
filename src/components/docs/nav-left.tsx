@@ -6,8 +6,6 @@ import NextLink from "next/link";
 import { twMerge } from "tailwind-merge";
 import { useState } from "react";
 
-import { Button } from "#/ui";
-
 export function NavLeft({ doc: docProps, allDocs }: { doc: Doc; allDocs: Doc[] }) {
   const docGroupNames = Array.from(new Set(allDocs.map((doc) => doc.slug.split("/")[0])));
 
@@ -40,16 +38,9 @@ export function NavLeft({ doc: docProps, allDocs }: { doc: Doc; allDocs: Doc[] }
                 .filter((doc) => doc.slug.split("/")[0] === docGroupName)
                 .map((doc) => (
                   <li key={doc.slug}>
-                    <Button
-                      asChild
-                      isIconOnly
-                      variant={doc.slug === docProps.slug ? "soft" : "light"}
-                      className={twMerge(doc.slug !== docProps.slug && "text-default-500", "justify-start")}
-                    >
-                      <NextLink href={doc.url} prefetch>
-                        {doc.title}
-                      </NextLink>
-                    </Button>
+                    <NextLink href={doc.url} prefetch>
+                      {doc.title}
+                    </NextLink>
                   </li>
                 ))}
             </ul>
