@@ -14,7 +14,6 @@ function PopoverDemo() {
     </DialogTrigger>
   );
 }
-
 `;
 
 export const demo = { code, scope: { DialogTrigger } };

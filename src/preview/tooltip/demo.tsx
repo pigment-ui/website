@@ -14,7 +14,6 @@ function TooltipDemo() {
     </TooltipTrigger>
   );
 }
-
 `;
 
 export const demo = { code, scope: { TooltipTrigger } };

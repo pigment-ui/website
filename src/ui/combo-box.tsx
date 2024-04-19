@@ -35,7 +35,7 @@ interface PigmentComboBoxProps<T extends object>
 
 function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: ForwardedRef<HTMLInputElement>) {
   return (
-    <AriaComboBox {...props}>
+    <AriaComboBox menuTrigger="focus" {...props}>
       {(renderProps) => (
         <>
           <Field {...renderProps} {...props}>

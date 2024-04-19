@@ -3,6 +3,7 @@ import * as card from "./card";
 import * as checkbox from "./checkbox";
 import * as checkboxGroup from "./checkbox-group";
 import * as colorField from "./color-field";
+import * as comboBox from "./combo-box";
 import * as dateField from "./date-field";
 import * as listBox from "./list-box";
 import * as menu from "./menu";
@@ -11,6 +12,7 @@ import * as numberField from "./number-field";
 import * as popover from "./popover";
 import * as radioGroup from "./radio-group";
 import * as searchField from "./search-field";
+import * as select from "./select";
 import * as separator from "./separator";
 import * as skeleton from "./skeleton";
 import * as spinner from "./spinner";
@@ -26,6 +28,7 @@ const preview: Record<string, Record<string, { code: string; scope?: any }>> = {
   checkbox,
   checkboxGroup,
   colorField,
+  comboBox,
   dateField,
   listBox,
   menu,
@@ -34,6 +37,7 @@ const preview: Record<string, Record<string, { code: string; scope?: any }>> = {
   popover,
   radioGroup,
   searchField,
+  select,
   separator,
   skeleton,
   spinner,

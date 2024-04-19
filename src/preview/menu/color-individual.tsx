@@ -8,7 +8,7 @@ function MenuIndividual() {
   return (
     <MenuTrigger>
       <Button>Click me</Button>
-      <Menu onAction={alert} className="w-64">
+      <Menu color="info" onAction={alert} className="w-64">
         <MenuItem id="open">Open</MenuItem>
         <MenuItem id="rename">Rename…</MenuItem>
         <MenuItem id="duplicate">Duplicate</MenuItem>

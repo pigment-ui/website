@@ -1,10 +1,10 @@
 import { MenuTrigger } from "react-aria-components";
-import { TrashIcon } from "lucide-react";
+import { ShareIcon, TrashIcon } from "lucide-react";
 
 const code = `
 import { Button, Menu, MenuItem } from "#/ui";
 import { MenuTrigger } from "react-aria-components";
-import { TrashIcon } from "lucide-react";
+import { TrashIcon, ShareIcon } from "lucide-react";
 
 function MenuContent() {
   return (
@@ -14,7 +14,7 @@ function MenuContent() {
         <MenuItem id="open">Open</MenuItem>
         <MenuItem id="rename">Rename…</MenuItem>
         <MenuItem id="duplicate">Duplicate</MenuItem>
-        <MenuItem id="share">Share…</MenuItem>
+        <MenuItem endContent={<ShareIcon />} id="share">Share…</MenuItem>
         <MenuItem startContent={<TrashIcon />} color="error" id="delete">Delete…</MenuItem>
       </Menu>
     </MenuTrigger>
@@ -22,4 +22,4 @@ function MenuContent() {
 }
 `;
 
-export const content = { code, scope: { MenuTrigger, TrashIcon } };
+export const content = { code, scope: { MenuTrigger, TrashIcon, ShareIcon } };

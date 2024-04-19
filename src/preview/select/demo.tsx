@@ -1,0 +1,18 @@
+const code = `
+import { Select, SelectItem } from "#/ui";
+
+function SelectDemo() {
+  return (
+    <Select label="Favorite Animal" description="Lorem ipsum dolor sit amet.">
+      <SelectItem>Aardvark</SelectItem>
+      <SelectItem>Cat</SelectItem>
+      <SelectItem>Dog</SelectItem>
+      <SelectItem>Kangaroo</SelectItem>
+      <SelectItem>Panda</SelectItem>
+      <SelectItem>Snake</SelectItem>
+    </Select>
+  );
+}
+`;
+
+export const demo = { code };
