@@ -46,7 +46,9 @@ export function NavLeft({ doc: docProps, allDocs }: { doc: Doc; allDocs: Doc[] }
                       variant={doc.slug === docProps.slug ? "soft" : "light"}
                       className={twMerge(doc.slug !== docProps.slug && "text-default-500", "justify-start")}
                     >
-                      <NextLink href={doc.url}>{doc.title}</NextLink>
+                      <NextLink prefetch={false} href={doc.url}>
+                        {doc.title}
+                      </NextLink>
                     </Button>
                   </li>
                 ))}
