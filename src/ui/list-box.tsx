@@ -192,6 +192,7 @@ export type { PigmentListBoxProps, PigmentListBoxItemProps, PigmentListBoxSectio
 export const filterInlineListBoxProps = (props: any) => ({
   asCard: false,
   children: props.children,
+  items: props.items,
   color: props.color,
   size: props.size,
   itemStartContent: props.itemStartContent,
