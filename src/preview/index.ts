@@ -5,6 +5,7 @@ import * as checkboxGroup from "./checkbox-group";
 import * as colorField from "./color-field";
 import * as dateField from "./date-field";
 import * as listBox from "./list-box";
+import * as menu from "./menu";
 import * as modal from "./modal";
 import * as numberField from "./number-field";
 import * as popover from "./popover";
@@ -27,6 +28,7 @@ const preview: Record<string, Record<string, { code: string; scope?: any }>> = {
   colorField,
   dateField,
   listBox,
+  menu,
   modal,
   numberField,
   popover,

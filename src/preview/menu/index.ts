@@ -1,3 +1,4 @@
+export * from "./as-card";
 export * from "./color";
 export * from "./color-individual";
 export * from "./content";
