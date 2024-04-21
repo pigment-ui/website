@@ -26,6 +26,7 @@ const chipStyles = tv({
     { size: "lg", isIconOnly: true, className: "px-2.5" },
   ],
 });
+
 // props
 
 interface PigmentChipProps extends Omit<HTMLAttributes<HTMLDivElement>, "color">, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps {

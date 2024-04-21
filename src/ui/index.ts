@@ -18,6 +18,7 @@ export * from "./select";
 export * from "./separator";
 export * from "./skeleton";
 export * from "./spinner";
+export * from "./tabs";
 export * from "./tag-group";
 export * from "./text-area";
 export * from "./text-field";
