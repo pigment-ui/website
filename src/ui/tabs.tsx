@@ -61,10 +61,10 @@ const tabStyles = tv({
       md: "h-8 gap-x-2 px-4 text-sm [&_svg]:size-4",
       lg: "h-10 gap-x-2.5 px-5 text-base [&_svg]:size-5",
     },
-    isSelected: { false: "!bg-transparent !text-default-1000 !border-none" },
+    isSelected: { false: "!bg-transparent !text-default-500 !border-none" },
     ...smallRadiusVariants,
   },
-  compoundVariants: [{ isSelected: false, isHovered: true, className: "!text-default-700" }],
+  compoundVariants: [{ isSelected: false, isHovered: true, className: "!text-default-1000" }],
 });
 
 // props
