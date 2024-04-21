@@ -7,7 +7,7 @@ import { AriaButtonProps, HoverProps, mergeProps, useButton, useFocusRing, useHo
 import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
 
-import { variantColorRadiusStyles } from "./styles";
+import { radiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, ContentProps, RadiusProps, SizeProps, StyleProps, VariantProps } from "./types";
 
 import { Spinner } from "./spinner";
@@ -15,7 +15,7 @@ import { Spinner } from "./spinner";
 // styles
 
 const buttonStyles = tv({
-  extend: variantColorRadiusStyles,
+  extend: variantColorStyles,
   base: "",
   variants: {
     size: {
@@ -25,6 +25,7 @@ const buttonStyles = tv({
     },
     isIconOnly: { true: "" },
     isLoading: { true: "!text-transparent" },
+    ...radiusVariants,
   },
   compoundVariants: [
     { size: "sm", isIconOnly: true, className: "px-2" },

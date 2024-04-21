@@ -33,7 +33,7 @@ export const smallRadiusVariants = {
   },
 };
 
-export const variantColorRadiusStyles = tv({
+export const variantColorStyles = tv({
   base: "relative flex items-center justify-center w-fit min-w-max whitespace-nowrap overflow-hidden duration-300",
   variants: {
     variant: {
@@ -53,7 +53,6 @@ export const variantColorRadiusStyles = tv({
     },
     isHovered: { true: "" },
     isPressed: { true: "scale-95" },
-    ...radiusVariants,
     ...isDisabledVariants,
     ...isFocusVisibleVariants,
   },
