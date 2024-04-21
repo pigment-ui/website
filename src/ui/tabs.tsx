@@ -104,6 +104,7 @@ function _Tab(props: TabProps, ref: ForwardedRef<HTMLDivElement>) {
   return (
     <AriaTab
       ref={ref}
+      id={typeof props.children === "string" ? props.children : undefined}
       {...props}
       className={composeRenderProps(props.className, (className, { isSelected, isHovered, isPressed, isDisabled, isFocusVisible }) =>
         tabStyles({ variant, color, size, radius, isSelected, isHovered: isHovered || isSelected, isPressed, isDisabled, isFocusVisible, className }),
