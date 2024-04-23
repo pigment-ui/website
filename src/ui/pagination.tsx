@@ -6,10 +6,9 @@ import { Button } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
 
-import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from "./icons";
+import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon } from "./icons";
 import { ColorProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps } from "./types";
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
-import { EllipsisIcon } from "lucide-react";
 
 // styles
 
