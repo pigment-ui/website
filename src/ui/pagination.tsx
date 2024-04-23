@@ -15,7 +15,7 @@ import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./st
 const paginationStyles = tv({
   slots: {
     base: "flex flex-wrap",
-    item: "flex items-center justify-center bg-opacity-0 text-default-1000 cursor-pointer outline-none duration-300",
+    item: "flex items-center justify-center bg-opacity-0 cursor-pointer outline-none duration-300",
   },
   variants: {
     color: {
