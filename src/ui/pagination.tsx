@@ -7,44 +7,35 @@ import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
 
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon } from "./icons";
-import { ColorProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps } from "./types";
-import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
+import { ColorProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps, Variants } from "./types";
+import { radiusVariants, variantColorStyles } from "./styles";
 
 // styles
 
 const paginationStyles = tv({
+  extend: variantColorStyles,
   slots: {
-    base: "flex flex-wrap",
-    item: "flex items-center justify-center bg-opacity-0 cursor-pointer outline-none duration-300",
+    base: "relative flex items-center justify-center min-w-max whitespace-nowrap overflow-hidden duration-300",
+    wrapper: "flex flex-wrap",
   },
   variants: {
-    color: {
-      default: { item: "bg-default-1000 text-default-1000" },
-      "default-inverted": { item: "bg-default-0 text-default-0" },
-      primary: { item: "bg-primary-500 text-primary-500" },
-      info: { item: "bg-info-500 text-info-500" },
-      success: { item: "bg-success-500 text-success-500" },
-      warning: { item: "bg-warning-500 text-warning-500" },
-      error: { item: "bg-error-500 text-error-500" },
-    },
     size: {
-      sm: { base: "gap-2", item: "h-8 min-w-8 gap-x-2 px-2 text-xs [&_svg]:size-4" },
-      md: { base: "gap-2.5", item: "h-10 min-w-10 gap-x-2.5 px-2.5 text-sm [&_svg]:size-5" },
-      lg: { base: "gap-3", item: "h-12 min-w-12 gap-x-3 px-3 text-base [&_svg]:size-6" },
+      sm: { wrapper: "gap-2", base: "size-8 text-xs [&_svg]:size-4" },
+      md: { wrapper: "gap-2.5", base: "size-10 text-sm [&_svg]:size-5" },
+      lg: { wrapper: "gap-3", base: "size-12 text-base [&_svg]:size-6" },
     },
-    radius: {
-      sm: { item: radiusVariants.radius.sm },
-      md: { item: radiusVariants.radius.md },
-      lg: { item: radiusVariants.radius.lg },
-      full: { item: radiusVariants.radius.full },
-      none: { item: radiusVariants.radius.none },
-    },
-    isHovered: { true: { item: "bg-opacity-10" } },
-    isPressed: { true: { item: "scale-95" } },
-    isSelected: { true: { item: "bg-opacity-100 text-default-0" } },
-    isDisabled: { true: { item: isDisabledVariants.isDisabled.true } },
-    isFocusVisible: { true: { item: isFocusVisibleVariants.isFocusVisible.true } },
+    isSelected: { true: "!text-default-0" },
+    ...radiusVariants,
   },
+  compoundVariants: [
+    { isSelected: true, color: "default", className: "!bg-default-1000 !border-default-1000" },
+    { isSelected: true, color: "default-inverted", className: "!bg-default-0 !border-default-0" },
+    { isSelected: true, color: "primary", className: "!bg-primary-500 !border-primary-500" },
+    { isSelected: true, color: "info", className: "!bg-info-500 !border-info-500" },
+    { isSelected: true, color: "success", className: "!bg-success-500 !border-success-500" },
+    { isSelected: true, color: "warning", className: "!bg-warning-500 !border-warning-500" },
+    { isSelected: true, color: "error", className: "!bg-error-500 !border-error-500" },
+  ],
 });
 
 type PaginationStylesReturnType = ReturnType<typeof paginationStyles>;
@@ -52,6 +43,7 @@ type PaginationStylesReturnType = ReturnType<typeof paginationStyles>;
 // props
 
 interface PigmentPaginationProps extends ColorProps, SizeProps, RadiusProps, StyleProps, StyleSlotsToStyleProps<PaginationStylesReturnType> {
+  variant?: Exclude<Variants, "solid">;
   total: number;
   page: number;
   onChange: (page: number) => void;
@@ -63,6 +55,7 @@ interface PigmentPaginationProps extends ColorProps, SizeProps, RadiusProps, Sty
 
 function _Pagination(props: PigmentPaginationProps, ref: ForwardedRef<HTMLUListElement>) {
   const {
+    variant = "soft",
     color = "default",
     size = "md",
     radius = "md",
@@ -77,7 +70,7 @@ function _Pagination(props: PigmentPaginationProps, ref: ForwardedRef<HTMLUListE
     styles,
   } = props;
 
-  const styleSlots = paginationStyles({ color, size, radius });
+  const styleSlots = paginationStyles({ variant, color, size, radius });
 
   const paginationRange = usePagination({ total, page, siblingCount });
 
@@ -100,9 +93,9 @@ function _Pagination(props: PigmentPaginationProps, ref: ForwardedRef<HTMLUListE
   let lastPage = paginationRange[paginationRange.length - 1] as number;
 
   return (
-    <ul ref={ref} className={styleSlots.base({ className: twMerge(classNames?.base, className) })} style={mergeProps(styles?.base, style)}>
+    <ul ref={ref} className={styleSlots.wrapper({ className: twMerge(classNames?.wrapper, className) })} style={mergeProps(styles?.wrapper, style)}>
       <li>
-        <Button aria-label="Previous page" isDisabled={page === 1} onPress={onPrevious} className={(renderProps) => styleSlots.item(renderProps)}>
+        <Button aria-label="Previous page" isDisabled={page === 1} onPress={onPrevious} className={(renderProps) => styleSlots.base(renderProps)}>
           <ChevronLeftIcon />
         </Button>
       </li>
@@ -113,7 +106,7 @@ function _Pagination(props: PigmentPaginationProps, ref: ForwardedRef<HTMLUListE
             <Button
               aria-label="Previous dots"
               onPress={() => onChange(page - dotsJump > 1 ? page - dotsJump : 1)}
-              className={(renderProps) => styleSlots.item(renderProps)}
+              className={(renderProps) => styleSlots.base(renderProps)}
             >
               {({ isHovered }) => (isHovered ? <ChevronsLeftIcon /> : <EllipsisIcon />)}
             </Button>
@@ -121,7 +114,7 @@ function _Pagination(props: PigmentPaginationProps, ref: ForwardedRef<HTMLUListE
             <Button
               aria-label="Next dots"
               onPress={() => onChange(page + dotsJump < lastPage ? page + dotsJump : lastPage)}
-              className={(renderProps) => styleSlots.item(renderProps)}
+              className={(renderProps) => styleSlots.base(renderProps)}
             >
               {({ isHovered }) => (isHovered ? <ChevronsRightIcon /> : <EllipsisIcon />)}
             </Button>
@@ -129,7 +122,7 @@ function _Pagination(props: PigmentPaginationProps, ref: ForwardedRef<HTMLUListE
             <Button
               aria-label={`Page ${pageNumber}`}
               onPress={() => onChange(pageNumber)}
-              className={(renderProps) => styleSlots.item({ ...renderProps, isSelected: pageNumber === page })}
+              className={(renderProps) => styleSlots.base({ ...renderProps, isSelected: pageNumber === page })}
             >
               {pageNumber}
             </Button>
@@ -138,7 +131,7 @@ function _Pagination(props: PigmentPaginationProps, ref: ForwardedRef<HTMLUListE
       ))}
 
       <li>
-        <Button aria-label="Next page" isDisabled={page === lastPage} onPress={onNext} className={(renderProps) => styleSlots.item(renderProps)}>
+        <Button aria-label="Next page" isDisabled={page === lastPage} onPress={onNext} className={(renderProps) => styleSlots.base(renderProps)}>
           <ChevronRightIcon />
         </Button>
       </li>
