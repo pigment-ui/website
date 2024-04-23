@@ -11,6 +11,7 @@ export * from "./list-box";
 export * from "./menu";
 export * from "./modal";
 export * from "./number-field";
+export * from "./pagination";
 export * from "./popover";
 export * from "./radio-group";
 export * from "./search-field";
