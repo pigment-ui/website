@@ -16,7 +16,7 @@ import { useCheckboxGroupSlots } from "./checkbox-group";
 
 const checkboxStyles = tv({
   slots: {
-    base: "flex items-center cursor-pointer",
+    base: "grid grid-cols-[auto_1fr] items-center cursor-pointer",
     self: "grid place-items-center bg-default-1000 bg-opacity-0 border border-default-1000 border-opacity-50 text-default-0 duration-300",
   },
   variants: {
@@ -32,8 +32,8 @@ const checkboxStyles = tv({
       full: { self: smallRadiusVariants.radius.full },
       none: { self: smallRadiusVariants.radius.none },
     },
-    isSelected: { true: { self: "border-none bg-opacity-100 text-default-0" } },
-    isIndeterminate: { true: { self: "border-none bg-opacity-100 text-default-0" } },
+    isSelected: { true: { self: "border-none bg-opacity-100" } },
+    isIndeterminate: { true: { self: "border-none bg-opacity-100" } },
     isInvalid: { true: { base: "text-error-500", self: "border-error-500" } },
     isHovered: { true: { self: "border-opacity-100" } },
     isPressed: { true: { self: "scale-90" } },
@@ -85,7 +85,7 @@ function _Checkbox(props: PigmentCheckboxProps, ref: ForwardedRef<HTMLLabelEleme
           >
             {isSelected ? <CheckIcon /> : isIndeterminate ? <MinusIcon /> : null}
           </div>
-          {children}
+          <div>{children}</div>
         </>
       ))}
     </AriaCheckbox>

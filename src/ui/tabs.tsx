@@ -24,8 +24,8 @@ import { createSlots } from "./utils";
 const tabsStyles = tv({
   slots: {
     base: "flex",
-    list: "flex w-fit h-fit bg-default-100",
-    panel: "w-full h-fit bg-default-100",
+    list: "flex w-fit h-fit bg-default-1000/10",
+    panel: "w-full h-fit bg-default-1000/10",
   },
   variants: {
     orientation: {
@@ -107,7 +107,7 @@ function _Tab(props: TabProps, ref: ForwardedRef<HTMLDivElement>) {
       id={typeof props.children === "string" ? props.children : undefined}
       {...props}
       className={composeRenderProps(props.className, (className, { isSelected, isHovered, isPressed, isDisabled, isFocusVisible }) =>
-        tabStyles({ variant, color, size, radius, isSelected, isHovered: isHovered || isSelected, isPressed, isDisabled, isFocusVisible, className }),
+        tabStyles({ variant, color, size, radius, isSelected, isHovered, isPressed, isDisabled, isFocusVisible, className }),
       )}
     />
   );

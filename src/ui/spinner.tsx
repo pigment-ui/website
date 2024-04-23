@@ -12,6 +12,7 @@ const spinnerStyles = tv({
   variants: {
     color: {
       default: "border-b-default-1000 border-l-default-1000",
+      "default-inverted": "border-b-default-0 border-l-default-0",
       primary: "border-b-primary-500 border-l-primary-500",
       info: "border-b-info-500 border-l-info-500",
       success: "border-b-success-500 border-l-success-500",

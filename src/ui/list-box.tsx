@@ -40,6 +40,7 @@ const listBoxItemStyles = tv({
   variants: {
     color: {
       default: "bg-default-1000 text-default-1000",
+      "default-inverted": "bg-default-0 text-default-0",
       primary: "bg-primary-500 text-primary-500",
       info: "bg-info-500 text-info-500",
       success: "bg-success-500 text-success-500",
