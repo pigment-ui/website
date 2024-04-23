@@ -15,7 +15,7 @@ import { radiusVariants, variantColorStyles } from "./styles";
 const paginationStyles = tv({
   extend: variantColorStyles,
   slots: {
-    base: "relative flex items-center justify-center min-w-max whitespace-nowrap overflow-hidden duration-300",
+    base: "grid place-items-center border border-transparent duration-300",
     wrapper: "flex flex-wrap",
   },
   variants: {
@@ -24,17 +24,17 @@ const paginationStyles = tv({
       md: { wrapper: "gap-2.5", base: "size-10 text-sm [&_svg]:size-5" },
       lg: { wrapper: "gap-3", base: "size-12 text-base [&_svg]:size-6" },
     },
-    isSelected: { true: "!text-default-0" },
+    isSelected: { true: "!bg-default-0 !shadow-[0_5px_20px]" },
     ...radiusVariants,
   },
   compoundVariants: [
-    { isSelected: true, color: "default", className: "!bg-default-1000 !border-default-1000" },
-    { isSelected: true, color: "default-inverted", className: "!bg-default-0 !border-default-0" },
-    { isSelected: true, color: "primary", className: "!bg-primary-500 !border-primary-500" },
-    { isSelected: true, color: "info", className: "!bg-info-500 !border-info-500" },
-    { isSelected: true, color: "success", className: "!bg-success-500 !border-success-500" },
-    { isSelected: true, color: "warning", className: "!bg-warning-500 !border-warning-500" },
-    { isSelected: true, color: "error", className: "!bg-error-500 !border-error-500" },
+    { isSelected: true, color: "default", className: "!text-default-1000 !border-default-1000 !shadow-default-1000/20" },
+    { isSelected: true, color: "default-inverted", className: "!text-default-0 !border-default-0 !shadow-default-0/20" },
+    { isSelected: true, color: "primary", className: "!text-primary-500 !border-primary-500 !shadow-primary-500/20" },
+    { isSelected: true, color: "info", className: "!text-info-500 !border-info-500 !shadow-info-500/20" },
+    { isSelected: true, color: "success", className: "!text-success-500 !border-success-500 !shadow-success-500/20" },
+    { isSelected: true, color: "warning", className: "!text-warning-500 !border-warning-500 !shadow-warning-500/20" },
+    { isSelected: true, color: "error", className: "!text-error-500 !border-error-500 !shadow-error-500/20" },
   ],
 });
 
