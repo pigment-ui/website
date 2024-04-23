@@ -14,7 +14,7 @@ import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./st
 
 const paginationStyles = tv({
   slots: {
-    base: "flex flex-nowrap",
+    base: "flex flex-wrap",
     item: "flex items-center justify-center bg-opacity-0 text-default-1000 cursor-pointer outline-none duration-300",
   },
   variants: {
@@ -28,9 +28,9 @@ const paginationStyles = tv({
       error: { item: "bg-error-500 text-error-500" },
     },
     size: {
-      sm: { base: "gap-x-2", item: "h-8 min-w-8 gap-x-2 px-2 text-xs [&_svg]:size-4" },
-      md: { base: "gap-x-2.5", item: "h-10 min-w-10 gap-x-2.5 px-2.5 text-sm [&_svg]:size-5" },
-      lg: { base: "gap-x-3", item: "h-12 min-w-12 gap-x-3 px-3 text-base [&_svg]:size-6" },
+      sm: { base: "gap-2", item: "h-8 min-w-8 gap-x-2 px-2 text-xs [&_svg]:size-4" },
+      md: { base: "gap-2.5", item: "h-10 min-w-10 gap-x-2.5 px-2.5 text-sm [&_svg]:size-5" },
+      lg: { base: "gap-3", item: "h-12 min-w-12 gap-x-3 px-3 text-base [&_svg]:size-6" },
     },
     radius: {
       sm: { item: radiusVariants.radius.sm },
