@@ -1,7 +1,7 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { Button, Input, SearchField as AriaSearchField, SearchFieldProps as AriaSearchFieldProps } from "react-aria-components";
+import { Button, Input, InputProps, SearchField as AriaSearchField, SearchFieldProps as AriaSearchFieldProps } from "react-aria-components";
 
 import { SearchIcon, XIcon } from "lucide-react";
 
@@ -9,7 +9,7 @@ import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field"
 
 // props
 
-interface SearchFieldProps extends AriaSearchFieldProps, FieldBaseProps, FieldInputBaseProps {
+interface SearchFieldProps extends AriaSearchFieldProps, Omit<InputProps, keyof AriaSearchFieldProps | "size">, FieldBaseProps, FieldInputBaseProps {
   hideClearButton?: boolean;
 }
 
