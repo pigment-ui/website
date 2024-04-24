@@ -7,10 +7,10 @@ import {
   composeRenderProps,
   Tag as AriaTag,
   TagGroup as AriaTagGroup,
-  TagGroupProps,
+  TagGroupProps as AriaTagGroupProps,
   TagList,
   TagListProps,
-  TagProps,
+  TagProps as AriaTagProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
@@ -21,7 +21,7 @@ import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./st
 import { ColorProps, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
-import { Field, PigmentFieldBaseProps } from "./field";
+import { Field, FieldBaseProps } from "./field";
 
 // styles
 
@@ -74,27 +74,27 @@ type TagStylesReturnType = ReturnType<typeof tagStyles>;
 
 // props
 
-interface PigmentTagGroupProps<T extends object>
-  extends Omit<TagGroupProps, "children">,
+interface TagGroupProps<T extends object>
+  extends Omit<AriaTagGroupProps, "children">,
     Pick<TagListProps<T>, "children" | "items" | "renderEmptyState">,
     ColorProps,
     RadiusProps,
-    PigmentFieldBaseProps {
-  itemClassNames?: PigmentTagProps["classNames"];
-  itemStyles?: PigmentTagProps["styles"];
+    FieldBaseProps {
+  itemClassNames?: TagProps["classNames"];
+  itemStyles?: TagProps["styles"];
 }
 
-interface PigmentTagProps extends TagProps, ColorProps, ContentProps, StyleSlotsToStyleProps<TagStylesReturnType> {}
+interface TagProps extends AriaTagProps, ColorProps, ContentProps, StyleSlotsToStyleProps<TagStylesReturnType> {}
 
 // slots
 
-interface TagGroupSlotsType extends Pick<PigmentTagGroupProps<any>, "color" | "size" | "radius" | "itemClassNames" | "itemStyles"> {}
+interface TagGroupSlotsType extends Pick<TagGroupProps<any>, "color" | "size" | "radius" | "itemClassNames" | "itemStyles"> {}
 
 const [TagGroupSlotsProvider, useTagGroupSlots] = createSlots<TagGroupSlotsType>();
 
 // component
 
-function _TagGroup<T extends object>(props: PigmentTagGroupProps<T>, ref: ForwardedRef<HTMLDivElement>) {
+function _TagGroup<T extends object>(props: TagGroupProps<T>, ref: ForwardedRef<HTMLDivElement>) {
   const { color = "default", size = "md", radius = "md", items, renderEmptyState, children, itemClassNames, itemStyles } = props;
 
   return (
@@ -112,7 +112,7 @@ function _TagGroup<T extends object>(props: PigmentTagGroupProps<T>, ref: Forwar
 
 const TagGroup = (forwardRef as ForwardRefType)(_TagGroup);
 
-function _Tag(props: PigmentTagProps, ref: ForwardedRef<HTMLDivElement>) {
+function _Tag(props: TagProps, ref: ForwardedRef<HTMLDivElement>) {
   const { color, size, radius, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useTagGroupSlots(props);
 
   const styleSlots = tagStyles({ color, size, radius });
@@ -161,4 +161,4 @@ const Tag = forwardRef(_Tag);
 // exports
 
 export { TagGroup, Tag };
-export type { PigmentTagGroupProps, PigmentTagProps };
+export type { TagGroupProps, TagProps };

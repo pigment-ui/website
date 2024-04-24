@@ -25,11 +25,11 @@ const spinnerStyles = tv({
 
 // props
 
-interface PigmentSpinnerProps extends ColorProps, SizeProps, StyleProps {}
+interface SpinnerProps extends ColorProps, SizeProps, StyleProps {}
 
 // component
 
-function _Spinner(props: PigmentSpinnerProps, ref: ForwardedRef<HTMLDivElement>) {
+function _Spinner(props: SpinnerProps, ref: ForwardedRef<HTMLDivElement>) {
   const { color = "default", size = "md", className, style } = props;
 
   return <div ref={ref} className={spinnerStyles({ color, size, className })} style={style} />;
@@ -40,4 +40,4 @@ const Spinner = forwardRef(_Spinner);
 // exports
 
 export { Spinner };
-export type { PigmentSpinnerProps };
+export type { SpinnerProps };

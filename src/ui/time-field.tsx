@@ -1,22 +1,22 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { DateInput, DateSegment, TimeField as AriaTimeField, TimeFieldProps, TimeValue } from "react-aria-components";
+import { DateInput, DateSegment, TimeField as AriaTimeField, TimeFieldProps as AriaTimeFieldProps, TimeValue } from "react-aria-components";
 
 import { ClockIcon } from "lucide-react";
 
 import { segmentStyles } from "./styles";
 import { ForwardRefType } from "./types";
 
-import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
+import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 
 // props
 
-interface PigmentTimeFieldProps<T extends TimeValue> extends TimeFieldProps<T>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
+interface TimeFieldProps<T extends TimeValue> extends AriaTimeFieldProps<T>, FieldBaseProps, FieldInputBaseProps {}
 
 // component
 
-function _TimeField<T extends TimeValue>(props: PigmentTimeFieldProps<T>, ref: ForwardedRef<HTMLDivElement>) {
+function _TimeField<T extends TimeValue>(props: TimeFieldProps<T>, ref: ForwardedRef<HTMLDivElement>) {
   const { size, radius } = props;
 
   return (
@@ -39,4 +39,4 @@ const TimeField = (forwardRef as ForwardRefType)(_TimeField);
 // exports
 
 export { TimeField };
-export type { PigmentTimeFieldProps };
+export type { TimeFieldProps };

@@ -29,13 +29,13 @@ const chipStyles = tv({
 
 // props
 
-interface PigmentChipProps extends Omit<HTMLAttributes<HTMLDivElement>, "color">, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps {
+interface ChipProps extends Omit<HTMLAttributes<HTMLDivElement>, "color">, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps {
   isIconOnly?: boolean;
 }
 
 // component
 
-function _Chip(props: PigmentChipProps, ref: ForwardedRef<HTMLDivElement>) {
+function _Chip(props: ChipProps, ref: ForwardedRef<HTMLDivElement>) {
   const {
     variant = "solid",
     color = "default",
@@ -64,4 +64,4 @@ const Chip = forwardRef(_Chip);
 // exports
 
 export { Chip };
-export type { PigmentChipProps };
+export type { ChipProps };

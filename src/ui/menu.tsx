@@ -6,8 +6,8 @@ import {
   composeRenderProps,
   Menu as AriaMenu,
   MenuItem as AriaMenuItem,
-  MenuItemProps,
-  MenuProps,
+  MenuItemProps as AriaMenuItemProps,
+  MenuProps as AriaMenuProps,
   Popover,
   PopoverProps,
 } from "react-aria-components";
@@ -20,7 +20,7 @@ import { ForwardRefType, StyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { cardStyles } from "./card";
-import { listBoxItemStyles, ListBoxSection, ListBoxSlotsType, PigmentListBoxItemProps, PigmentListBoxProps } from "./list-box";
+import { ListBoxItemProps, listBoxItemStyles, ListBoxProps, ListBoxSection, ListBoxSlotsType } from "./list-box";
 
 // styles
 
@@ -32,12 +32,12 @@ const menuItemStyles = listBoxItemStyles;
 
 // props
 
-interface PigmentMenuProps<T extends object>
-  extends Omit<MenuProps<T>, keyof StyleProps>,
-    Omit<PigmentListBoxProps<T>, keyof MenuProps<T> | "asCard">,
-    Omit<PopoverProps, keyof Omit<MenuProps<T>, keyof StyleProps>> {}
+interface MenuProps<T extends object>
+  extends Omit<AriaMenuProps<T>, keyof StyleProps>,
+    Omit<ListBoxProps<T>, keyof AriaMenuProps<T> | "asCard">,
+    Omit<PopoverProps, keyof Omit<AriaMenuProps<T>, keyof StyleProps>> {}
 
-interface PigmentMenuItemProps extends MenuItemProps, Omit<PigmentListBoxItemProps, keyof MenuItemProps> {}
+interface MenuItemProps extends AriaMenuItemProps, Omit<ListBoxItemProps, keyof AriaMenuItemProps> {}
 
 // slots
 
@@ -45,7 +45,7 @@ const [MenuSlotsProvider, useMenuSlots] = createSlots<ListBoxSlotsType>();
 
 // component
 
-function _Menu<T extends object>(props: PigmentMenuProps<T>, ref: ForwardedRef<HTMLDivElement>) {
+function _Menu<T extends object>(props: MenuProps<T>, ref: ForwardedRef<HTMLDivElement>) {
   const { color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
 
   return (
@@ -59,7 +59,7 @@ function _Menu<T extends object>(props: PigmentMenuProps<T>, ref: ForwardedRef<H
 
 const Menu = (forwardRef as ForwardRefType)(_Menu);
 
-function _MenuItem(props: PigmentMenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
+function _MenuItem(props: MenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
   const { color, size, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useMenuSlots(props);
 
   const styleSlots = menuItemStyles({ color, size });
@@ -106,4 +106,4 @@ const MenuSection = ListBoxSection;
 // exports
 
 export { Menu, MenuItem, MenuSection };
-export type { PigmentMenuProps, PigmentMenuItemProps };
+export type { MenuProps, MenuItemProps };

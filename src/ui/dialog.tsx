@@ -1,7 +1,7 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { Dialog as AriaDialog, DialogProps } from "react-aria-components";
+import { Dialog as AriaDialog, DialogProps as AriaDialogProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
 // styles
@@ -12,11 +12,11 @@ const dialogStyles = tv({
 
 // props
 
-interface PigmentDialogProps extends DialogProps {}
+interface DialogProps extends AriaDialogProps {}
 
 // component
 
-function _Dialog(props: PigmentDialogProps, ref: ForwardedRef<HTMLElement>) {
+function _Dialog(props: DialogProps, ref: ForwardedRef<HTMLElement>) {
   return <AriaDialog ref={ref} {...props} className={dialogStyles({ className: props.className })} />;
 }
 
@@ -25,4 +25,4 @@ const Dialog = forwardRef(_Dialog);
 // exports
 
 export { Dialog };
-export type { PigmentDialogProps };
+export type { DialogProps };

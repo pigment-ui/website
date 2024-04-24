@@ -1,7 +1,7 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { Separator as AriaSeparator, SeparatorProps } from "react-aria-components";
+import { Separator as AriaSeparator, SeparatorProps as AriaSeparatorProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
 import { SizeProps } from "./types";
@@ -57,11 +57,11 @@ const separatorStyles = tv({
 
 // props
 
-interface PigmentSeparatorProps extends SeparatorProps, SizeProps {}
+interface SeparatorProps extends AriaSeparatorProps, SizeProps {}
 
 // component
 
-function _Separator(props: PigmentSeparatorProps, ref: ForwardedRef<HTMLElement>) {
+function _Separator(props: SeparatorProps, ref: ForwardedRef<HTMLElement>) {
   const { orientation = "horizontal", size = "sm", className, style, ...restProps } = props;
 
   return (
@@ -74,4 +74,4 @@ const Separator = forwardRef(_Separator);
 // exports
 
 export { Separator };
-export type { PigmentSeparatorProps };
+export type { SeparatorProps };

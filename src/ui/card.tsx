@@ -32,7 +32,7 @@ type CardStylesReturnType = ReturnType<typeof cardStyles>;
 
 // props
 
-interface PigmentCardProps extends HTMLAttributes<HTMLDivElement>, ChildrenProps, StyleProps, StyleSlotsToStyleProps<CardStylesReturnType> {
+interface CardProps extends HTMLAttributes<HTMLDivElement>, ChildrenProps, StyleProps, StyleSlotsToStyleProps<CardStylesReturnType> {
   hasShadow?: boolean;
 }
 
@@ -44,7 +44,7 @@ const [CardSlotsProvider, useCardSlots] = createSlots<CardSlotsType>();
 
 // component
 
-function _Card(props: PigmentCardProps, ref: ForwardedRef<HTMLDivElement>) {
+function _Card(props: CardProps, ref: ForwardedRef<HTMLDivElement>) {
   const { hasShadow = true, children, className, classNames, style, styles } = props;
 
   const styleSlots = cardStyles({ hasShadow });
@@ -138,4 +138,4 @@ const CardButtons = forwardRef(_CardButtons);
 // exports
 
 export { Card, CardHeader, CardBody, CardFooter, CardHeading, CardButtons, cardStyles };
-export type { PigmentCardProps };
+export type { CardProps };

@@ -2,14 +2,14 @@
 
 import { ForwardedRef, forwardRef } from "react";
 import { Orientation } from "react-aria";
-import { CheckboxGroup as AriaCheckboxGroup, CheckboxGroupProps, composeRenderProps } from "react-aria-components";
+import { CheckboxGroup as AriaCheckboxGroup, CheckboxGroupProps as AriaCheckboxGroupProps, composeRenderProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
 import { RadiusProps } from "./types";
 import { createSlots } from "./utils";
 
-import { PigmentCheckboxProps } from "./checkbox";
-import { Field, PigmentFieldBaseProps } from "./field";
+import { CheckboxProps } from "./checkbox";
+import { Field, FieldBaseProps } from "./field";
 
 // styles
 
@@ -30,21 +30,21 @@ const checkboxGroupStyles = tv({
 
 // props
 
-interface PigmentCheckboxGroupProps extends CheckboxGroupProps, PigmentFieldBaseProps, RadiusProps {
+interface CheckboxGroupProps extends AriaCheckboxGroupProps, FieldBaseProps, RadiusProps {
   orientation?: Orientation;
-  itemClassNames?: PigmentCheckboxProps["classNames"];
-  itemStyles?: PigmentCheckboxProps["styles"];
+  itemClassNames?: CheckboxProps["classNames"];
+  itemStyles?: CheckboxProps["styles"];
 }
 
 // slots
 
-interface CheckboxGroupSlotsType extends Pick<PigmentCheckboxGroupProps, "size" | "radius" | "itemClassNames" | "itemStyles"> {}
+interface CheckboxGroupSlotsType extends Pick<CheckboxGroupProps, "size" | "radius" | "itemClassNames" | "itemStyles"> {}
 
 const [CheckboxGroupSlotsProvider, useCheckboxGroupSlots] = createSlots<CheckboxGroupSlotsType>();
 
 // component
 
-function _CheckboxGroup(props: PigmentCheckboxGroupProps, ref: ForwardedRef<HTMLInputElement>) {
+function _CheckboxGroup(props: CheckboxGroupProps, ref: ForwardedRef<HTMLInputElement>) {
   const { size = "md", radius, orientation = "vertical", itemClassNames, itemStyles } = props;
 
   return (
@@ -65,4 +65,4 @@ const CheckboxGroup = forwardRef(_CheckboxGroup);
 // exports
 
 export { CheckboxGroup, checkboxGroupStyles, useCheckboxGroupSlots };
-export type { PigmentCheckboxGroupProps };
+export type { CheckboxGroupProps };

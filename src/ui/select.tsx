@@ -7,7 +7,7 @@ import {
   Popover,
   PopoverProps,
   Select as AriaSelect,
-  SelectProps,
+  SelectProps as AriaSelectProps,
   SelectValue,
   SelectValueRenderProps,
 } from "react-aria-components";
@@ -17,24 +17,24 @@ import { ChevronDownIcon } from "lucide-react";
 import { ForwardRefType } from "./types";
 
 import { cardStyles } from "./card";
-import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
+import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
 
 // props
 
-interface PigmentSelectProps<T extends object>
-  extends Omit<SelectProps<T>, "children">,
-    Omit<PopoverProps, keyof SelectProps<T>>,
+interface SelectProps<T extends object>
+  extends Omit<AriaSelectProps<T>, "children">,
+    Omit<PopoverProps, keyof AriaSelectProps<T>>,
     Pick<ListBoxProps<T>, "items" | "children">,
     ListBoxSlotsType,
-    PigmentFieldBaseProps,
-    PigmentFieldInputBaseProps {
+    FieldBaseProps,
+    FieldInputBaseProps {
   renderValue?: (selectValue: Omit<SelectValueRenderProps<T>, "isPlaceholder">) => ReactNode;
 }
 
 // component
 
-function _Select<T extends object>(props: PigmentSelectProps<T>, ref: ForwardedRef<HTMLButtonElement>) {
+function _Select<T extends object>(props: SelectProps<T>, ref: ForwardedRef<HTMLButtonElement>) {
   const { renderValue, placeholder } = props;
 
   return (
@@ -72,4 +72,4 @@ const SelectSection = ListBoxSection;
 // exports
 
 export { Select, SelectItem, SelectSection };
-export type { PigmentSelectProps };
+export type { SelectProps };

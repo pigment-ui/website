@@ -8,8 +8,8 @@ import {
   Header,
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,
-  ListBoxItemProps,
-  ListBoxProps,
+  ListBoxItemProps as AriaListBoxItemProps,
+  ListBoxProps as AriaListBoxProps,
   Section,
   SectionProps,
 } from "react-aria-components";
@@ -81,30 +81,30 @@ type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
 
 // props
 
-interface PigmentListBoxProps<T extends object> extends ListBoxProps<T>, ColorProps, SizeProps {
+interface ListBoxProps<T extends object> extends AriaListBoxProps<T>, ColorProps, SizeProps {
   asCard?: boolean;
-  itemClassNames?: PigmentListBoxItemProps["classNames"];
-  itemStyles?: PigmentListBoxItemProps["styles"];
-  sectionClassNames?: PigmentListBoxSectionProps<T>["classNames"];
-  sectionStyles?: PigmentListBoxSectionProps<T>["styles"];
+  itemClassNames?: ListBoxItemProps["classNames"];
+  itemStyles?: ListBoxItemProps["styles"];
+  sectionClassNames?: ListBoxSectionProps<T>["classNames"];
+  sectionStyles?: ListBoxSectionProps<T>["styles"];
 }
 
-interface PigmentListBoxItemProps extends ListBoxItemProps, ColorProps, ContentProps, StyleSlotsToStyleProps<ListBoxItemStylesReturnType> {}
+interface ListBoxItemProps extends AriaListBoxItemProps, ColorProps, ContentProps, StyleSlotsToStyleProps<ListBoxItemStylesReturnType> {}
 
-interface PigmentListBoxSectionProps<T extends object> extends SectionProps<T>, StyleSlotsToStyleProps<ListBoxSectionStylesReturnType> {
+interface ListBoxSectionProps<T extends object> extends SectionProps<T>, StyleSlotsToStyleProps<ListBoxSectionStylesReturnType> {
   title: string;
 }
 
 // slots
 
 interface ListBoxSlotsType
-  extends Pick<PigmentListBoxProps<any>, "color" | "size" | "itemClassNames" | "itemStyles" | "sectionClassNames" | "sectionStyles"> {}
+  extends Pick<ListBoxProps<any>, "color" | "size" | "itemClassNames" | "itemStyles" | "sectionClassNames" | "sectionStyles"> {}
 
 const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType>();
 
 // component
 
-function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
+function _ListBox<T extends object>(props: ListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
   const { asCard = true, color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
 
   return (
@@ -120,7 +120,7 @@ function _ListBox<T extends object>(props: PigmentListBoxProps<T>, ref: Forwarde
 
 const ListBox = (forwardRef as ForwardRefType)(_ListBox);
 
-function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivElement>) {
+function _ListBoxItem(props: ListBoxItemProps, ref: ForwardedRef<HTMLDivElement>) {
   const { color, size, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useListBoxSlots(props);
 
   const styleSlots = listBoxItemStyles({ color, size });
@@ -162,7 +162,7 @@ function _ListBoxItem(props: PigmentListBoxItemProps, ref: ForwardedRef<HTMLDivE
 
 const ListBoxItem = forwardRef(_ListBoxItem);
 
-function _ListBoxSection<T extends object>(props: PigmentListBoxSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
+function _ListBoxSection<T extends object>(props: ListBoxSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
   const { title, items, size, className, classNames, sectionClassNames, style, styles, sectionStyles, children } = useListBoxSlots(props);
 
   const styleSlots = listBoxSectionStyles({ size });
@@ -189,7 +189,7 @@ const ListBoxSection = (forwardRef as ForwardRefType)(_ListBoxSection);
 // exports
 
 export { ListBox, ListBoxItem, ListBoxSection, listBoxItemStyles };
-export type { PigmentListBoxProps, PigmentListBoxItemProps, PigmentListBoxSectionProps, ListBoxSlotsType };
+export type { ListBoxProps, ListBoxItemProps, ListBoxSectionProps, ListBoxSlotsType };
 
 export const filterInlineListBoxProps = (props: any) => ({
   asCard: false,

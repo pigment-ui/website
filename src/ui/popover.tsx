@@ -1,7 +1,7 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { composeRenderProps, OverlayArrow, Popover as AriaPopover, PopoverProps } from "react-aria-components";
+import { composeRenderProps, OverlayArrow, Popover as AriaPopover, PopoverProps as AriaPopoverProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
 
@@ -16,21 +16,21 @@ const popoverStyles = tv({
 
 // props
 
-interface PigmentPopoverProps extends PopoverProps {
-  showArrow?: boolean;
+interface PopoverProps extends AriaPopoverProps {
+  hideArrow?: boolean;
   arrowSize?: number;
 }
 
 // component
 
-function _Popover(props: PigmentPopoverProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { showArrow = true, arrowSize = 16 } = props;
+function _Popover(props: PopoverProps, ref: ForwardedRef<HTMLDivElement>) {
+  const { hideArrow = false, arrowSize = 16 } = props;
 
   return (
     <AriaPopover ref={ref} offset={16} {...props} className={composeRenderProps(props.className, (className) => popoverStyles({ className }))}>
       {composeRenderProps(props.children, (children, { placement }) => (
         <>
-          {showArrow && (
+          {!hideArrow && (
             <OverlayArrow>
               <svg
                 viewBox="0 0 8 8"
@@ -57,4 +57,4 @@ const Popover = forwardRef(_Popover);
 // exports
 
 export { Popover };
-export type { PigmentPopoverProps };
+export type { PopoverProps };

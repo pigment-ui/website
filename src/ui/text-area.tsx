@@ -1,19 +1,19 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { TextArea as AriaTextArea, TextAreaProps, TextField, TextFieldProps } from "react-aria-components";
+import { TextArea as AriaTextArea, TextAreaProps as AriaTextAreaProps, TextField, TextFieldProps } from "react-aria-components";
 
-import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
+import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 
 // props
 
-interface PigmentTextAreaProps extends TextFieldProps, Omit<TextAreaProps, keyof TextFieldProps>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {
+interface TextAreaProps extends TextFieldProps, Omit<AriaTextAreaProps, keyof TextFieldProps>, FieldBaseProps, FieldInputBaseProps {
   isResizable?: boolean;
 }
 
 // component
 
-function _TextArea(props: PigmentTextAreaProps, ref: ForwardedRef<HTMLTextAreaElement>) {
+function _TextArea(props: TextAreaProps, ref: ForwardedRef<HTMLTextAreaElement>) {
   const { rows = 5, isResizable = false } = props;
 
   return (
@@ -34,4 +34,4 @@ const TextArea = forwardRef(_TextArea);
 // exports
 
 export { TextArea };
-export type { PigmentTextAreaProps };
+export type { TextAreaProps };

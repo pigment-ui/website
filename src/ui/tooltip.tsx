@@ -1,7 +1,7 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { composeRenderProps, OverlayArrow, Tooltip as AriaTooltip, TooltipProps } from "react-aria-components";
+import { composeRenderProps, OverlayArrow, Tooltip as AriaTooltip, TooltipProps as AriaTooltipProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
 
@@ -15,15 +15,15 @@ const tooltipStyles = tv({
 
 // props
 
-interface PigmentTooltipProps extends TooltipProps {
-  showArrow?: boolean;
+interface TooltipProps extends AriaTooltipProps {
+  hideArrow?: boolean;
   arrowSize?: number;
 }
 
 // component
 
-function _Tooltip(props: PigmentTooltipProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { showArrow = true, arrowSize = 16 } = props;
+function _Tooltip(props: TooltipProps, ref: ForwardedRef<HTMLDivElement>) {
+  const { hideArrow = false, arrowSize = 16 } = props;
 
   return (
     <AriaTooltip
@@ -36,7 +36,7 @@ function _Tooltip(props: PigmentTooltipProps, ref: ForwardedRef<HTMLDivElement>)
     >
       {composeRenderProps(props.children, (children, { placement }) => (
         <>
-          {showArrow && (
+          {!hideArrow && (
             <OverlayArrow>
               <svg
                 viewBox="0 0 8 8"
@@ -63,4 +63,4 @@ const Tooltip = forwardRef(_Tooltip);
 // exports
 
 export { Tooltip };
-export type { PigmentTooltipProps };
+export type { TooltipProps };

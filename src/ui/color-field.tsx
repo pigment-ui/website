@@ -9,15 +9,15 @@ import { FieldErrorContext, LabelContext, Provider, TextContext } from "react-ar
 
 import { DropletIcon } from "lucide-react";
 
-import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
+import { Field, FieldInput, FieldBaseProps, FieldInputBaseProps } from "./field";
 
 // props
 
-interface PigmentColorFieldProps extends AriaColorFieldProps, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
+interface ColorFieldProps extends AriaColorFieldProps, FieldBaseProps, FieldInputBaseProps {}
 
 // component
 
-function _ColorField(props: PigmentColorFieldProps, ref: ForwardedRef<HTMLInputElement>) {
+function _ColorField(props: ColorFieldProps, ref: ForwardedRef<HTMLInputElement>) {
   const objRef = useObjectRef(ref);
   const state = useColorFieldState({ validationBehavior: "native", ...props });
   const { labelProps, inputProps, ...validation } = useColorField({ validationBehavior: "native", ...props }, state, objRef);
@@ -45,4 +45,4 @@ const ColorField = forwardRef(_ColorField);
 // exports
 
 export { ColorField };
-export type { PigmentColorFieldProps };
+export type { ColorFieldProps };

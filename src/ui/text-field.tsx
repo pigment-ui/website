@@ -1,21 +1,17 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { Input, InputProps, TextField as AriaTextField, TextFieldProps } from "react-aria-components";
+import { Input, InputProps, TextField as AriaTextField, TextFieldProps as AriaTextFieldProps } from "react-aria-components";
 
-import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
+import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 
 // props
 
-interface PigmentTextFieldProps
-  extends TextFieldProps,
-    Omit<InputProps, keyof TextFieldProps | "size">,
-    PigmentFieldBaseProps,
-    PigmentFieldInputBaseProps {}
+interface TextFieldProps extends AriaTextFieldProps, Omit<InputProps, keyof AriaTextFieldProps | "size">, FieldBaseProps, FieldInputBaseProps {}
 
 // component
 
-function _TextField(props: PigmentTextFieldProps, ref: ForwardedRef<HTMLInputElement>) {
+function _TextField(props: TextFieldProps, ref: ForwardedRef<HTMLInputElement>) {
   return (
     <AriaTextField {...props}>
       {(renderProps) => (
@@ -34,4 +30,4 @@ const TextField = forwardRef(_TextField);
 // exports
 
 export { TextField };
-export type { PigmentTextFieldProps };
+export type { TextFieldProps };

@@ -1,30 +1,39 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, InputProps, ListBoxProps, Popover, PopoverProps } from "react-aria-components";
+import {
+  Button,
+  ComboBox as AriaComboBox,
+  ComboBoxProps as AriaComboBoxProps,
+  Input,
+  InputProps,
+  ListBoxProps,
+  Popover,
+  PopoverProps,
+} from "react-aria-components";
 
 import { ChevronDownIcon } from "lucide-react";
 
 import { ForwardRefType } from "./types";
 
 import { cardStyles } from "./card";
-import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
+import { Field, FieldInput, FieldBaseProps, FieldInputBaseProps } from "./field";
 import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
 
 // props
 
-interface PigmentComboBoxProps<T extends object>
-  extends Omit<ComboBoxProps<T>, "children">,
-    Omit<InputProps, keyof ComboBoxProps<T> | "color" | "size">,
-    Omit<PopoverProps, keyof ComboBoxProps<T>>,
+interface ComboBoxProps<T extends object>
+  extends Omit<AriaComboBoxProps<T>, "children">,
+    Omit<InputProps, keyof AriaComboBoxProps<T> | "color" | "size">,
+    Omit<PopoverProps, keyof AriaComboBoxProps<T>>,
     Pick<ListBoxProps<T>, "items" | "children">,
     ListBoxSlotsType,
-    PigmentFieldBaseProps,
-    PigmentFieldInputBaseProps {}
+    FieldBaseProps,
+    FieldInputBaseProps {}
 
 // component
 
-function _ComboBox<T extends object>(props: PigmentComboBoxProps<T>, ref: ForwardedRef<HTMLInputElement>) {
+function _ComboBox<T extends object>(props: ComboBoxProps<T>, ref: ForwardedRef<HTMLInputElement>) {
   return (
     <AriaComboBox menuTrigger="focus" {...props}>
       {(renderProps) => (
@@ -61,4 +70,4 @@ const ComboBoxSection = ListBoxSection;
 // exports
 
 export { ComboBox, ComboBoxItem, ComboBoxSection };
-export type { PigmentComboBoxProps };
+export type { ComboBoxProps };

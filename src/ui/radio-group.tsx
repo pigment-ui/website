@@ -2,7 +2,13 @@
 
 import { ForwardedRef, forwardRef } from "react";
 import { mergeProps, Orientation } from "react-aria";
-import { composeRenderProps, Radio as AriaRadio, RadioGroup as AriaRadioGroup, RadioGroupProps, RadioProps } from "react-aria-components";
+import {
+  composeRenderProps,
+  Radio as AriaRadio,
+  RadioGroup as AriaRadioGroup,
+  RadioGroupProps as AriaRadioGroupProps,
+  RadioProps as AriaRadioProps,
+} from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
@@ -11,7 +17,7 @@ import { SizeProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { checkboxGroupStyles } from "./checkbox-group";
-import { Field, PigmentFieldBaseProps } from "./field";
+import { Field, FieldBaseProps } from "./field";
 
 // styles
 
@@ -42,23 +48,23 @@ type RadioStylesReturnType = ReturnType<typeof radioStyles>;
 
 // props
 
-interface PigmentRadioProps extends RadioProps, SizeProps, StyleSlotsToStyleProps<RadioStylesReturnType> {}
+interface RadioProps extends AriaRadioProps, SizeProps, StyleSlotsToStyleProps<RadioStylesReturnType> {}
 
-interface PigmentRadioGroupProps extends RadioGroupProps, PigmentFieldBaseProps {
+interface RadioGroupProps extends AriaRadioGroupProps, FieldBaseProps {
   orientation?: Orientation;
-  itemClassNames?: PigmentRadioProps["classNames"];
-  itemStyles?: PigmentRadioProps["styles"];
+  itemClassNames?: RadioProps["classNames"];
+  itemStyles?: RadioProps["styles"];
 }
 
 // slots
 
-interface RadioGroupSlotsType extends Pick<PigmentRadioGroupProps, "size" | "itemClassNames" | "itemStyles"> {}
+interface RadioGroupSlotsType extends Pick<RadioGroupProps, "size" | "itemClassNames" | "itemStyles"> {}
 
 const [RadioGroupSlotsProvider, useRadioGroupSlots] = createSlots<RadioGroupSlotsType>();
 
 // component
 
-function _RadioGroup(props: PigmentRadioGroupProps, ref: ForwardedRef<HTMLInputElement>) {
+function _RadioGroup(props: RadioGroupProps, ref: ForwardedRef<HTMLInputElement>) {
   const { size = "md", orientation = "vertical", itemClassNames, itemStyles } = props;
 
   return (
@@ -76,7 +82,7 @@ function _RadioGroup(props: PigmentRadioGroupProps, ref: ForwardedRef<HTMLInputE
 
 const RadioGroup = forwardRef(_RadioGroup);
 
-function _Radio(props: PigmentRadioProps, ref: ForwardedRef<HTMLLabelElement>) {
+function _Radio(props: RadioProps, ref: ForwardedRef<HTMLLabelElement>) {
   const { size = "md", classNames, itemClassNames, styles, itemStyles } = useRadioGroupSlots(props);
 
   const styleSlots = radioStyles({ size });
@@ -115,4 +121,4 @@ const Radio = forwardRef(_Radio);
 // exports
 
 export { RadioGroup, Radio };
-export type { PigmentRadioGroupProps, PigmentRadioProps };
+export type { RadioGroupProps, RadioProps };

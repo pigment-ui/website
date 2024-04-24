@@ -43,7 +43,7 @@ type PaginationStylesReturnType = ReturnType<typeof paginationStyles>;
 
 // props
 
-interface PigmentPaginationProps extends ColorProps, SizeProps, RadiusProps, StyleProps, StyleSlotsToStyleProps<PaginationStylesReturnType> {
+interface PaginationProps extends ColorProps, SizeProps, RadiusProps, StyleProps, StyleSlotsToStyleProps<PaginationStylesReturnType> {
   variant?: Exclude<Variants, "solid">;
   total: number;
   page: number;
@@ -54,7 +54,7 @@ interface PigmentPaginationProps extends ColorProps, SizeProps, RadiusProps, Sty
 
 // component
 
-function _Pagination(props: PigmentPaginationProps, ref: ForwardedRef<HTMLUListElement>) {
+function _Pagination(props: PaginationProps, ref: ForwardedRef<HTMLUListElement>) {
   const {
     variant = "soft",
     color = "default",
@@ -218,4 +218,4 @@ function usePagination({
 // exports
 
 export { Pagination };
-export type { PigmentPaginationProps };
+export type { PaginationProps };

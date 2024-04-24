@@ -36,7 +36,7 @@ const buttonStyles = tv({
 
 // props
 
-interface PigmentButtonProps extends AriaButtonProps, HoverProps, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps, StyleProps {
+interface ButtonProps extends AriaButtonProps, HoverProps, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps, StyleProps {
   isIconOnly?: boolean;
   isLoading?: boolean;
   asChild?: boolean;
@@ -44,7 +44,7 @@ interface PigmentButtonProps extends AriaButtonProps, HoverProps, VariantProps, 
 
 // component
 
-function _Button(props: PigmentButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
+function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
   const {
     variant = "solid",
     color = "default",
@@ -96,4 +96,4 @@ const Button = forwardRef(_Button);
 // exports
 
 export { Button };
-export type { PigmentButtonProps };
+export type { ButtonProps };

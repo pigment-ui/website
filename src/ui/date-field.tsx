@@ -1,22 +1,22 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { DateField as AriaDateField, DateFieldProps, DateInput, DateSegment, DateValue } from "react-aria-components";
+import { DateField as AriaDateField, DateFieldProps as AriaDateFieldProps, DateInput, DateSegment, DateValue } from "react-aria-components";
 
 import { CalendarIcon } from "lucide-react";
 
 import { ForwardRefType } from "./types";
 
-import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
+import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 import { segmentStyles } from "./styles";
 
 // props
 
-interface PigmentDateFieldProps<T extends DateValue> extends DateFieldProps<T>, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
+interface DateFieldProps<T extends DateValue> extends AriaDateFieldProps<T>, FieldBaseProps, FieldInputBaseProps {}
 
 // component
 
-function _DateField<T extends DateValue>(props: PigmentDateFieldProps<T>, ref: ForwardedRef<HTMLDivElement>) {
+function _DateField<T extends DateValue>(props: DateFieldProps<T>, ref: ForwardedRef<HTMLDivElement>) {
   const { size, radius } = props;
 
   return (
@@ -39,4 +39,4 @@ const DateField = (forwardRef as ForwardRefType)(_DateField);
 // exports
 
 export { DateField };
-export type { PigmentDateFieldProps };
+export type { DateFieldProps };

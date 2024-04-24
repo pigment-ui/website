@@ -33,9 +33,9 @@ type ModalStylesReturnType = ReturnType<typeof modalStyles>;
 
 // props
 
-interface PigmentModalProps extends ModalOverlayProps, SizeProps, StyleSlotsToStyleProps<ModalStylesReturnType> {}
+interface ModalProps extends ModalOverlayProps, SizeProps, StyleSlotsToStyleProps<ModalStylesReturnType> {}
 
-interface PigmentModalSectionProps extends ChildrenProps, StyleProps {}
+interface ModalSectionProps extends ChildrenProps, StyleProps {}
 
 // slots
 
@@ -45,7 +45,7 @@ const [ModalSlotsProvider, useModalSlots] = createSlots<Record<"headerId" | "bod
 
 // component
 
-function _Modal(props: PigmentModalProps, ref: ForwardedRef<HTMLDivElement>) {
+function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
   const { size = "md", children, classNames, styles, ...restProps } = props;
 
   const headerId = useId();
@@ -86,7 +86,7 @@ function _Modal(props: PigmentModalProps, ref: ForwardedRef<HTMLDivElement>) {
 
 const Modal = forwardRef(_Modal);
 
-function _ModalHeader(props: PigmentModalSectionProps, ref: ForwardedRef<HTMLElement>) {
+function _ModalHeader(props: ModalSectionProps, ref: ForwardedRef<HTMLElement>) {
   const { headerId, children, styleSlots, className, classNames, style, styles } = useModalSlots(props);
 
   return (
@@ -103,7 +103,7 @@ function _ModalHeader(props: PigmentModalSectionProps, ref: ForwardedRef<HTMLEle
 
 const ModalHeader = forwardRef(_ModalHeader);
 
-function _ModalBody(props: PigmentModalSectionProps, ref: ForwardedRef<HTMLElement>) {
+function _ModalBody(props: ModalSectionProps, ref: ForwardedRef<HTMLElement>) {
   const { bodyId, children, styleSlots, className, classNames, style, styles } = useModalSlots(props);
 
   return (
@@ -120,7 +120,7 @@ function _ModalBody(props: PigmentModalSectionProps, ref: ForwardedRef<HTMLEleme
 
 const ModalBody = forwardRef(_ModalBody);
 
-function _ModalFooter(props: PigmentModalSectionProps, ref: ForwardedRef<HTMLElement>) {
+function _ModalFooter(props: ModalSectionProps, ref: ForwardedRef<HTMLElement>) {
   const { children, styleSlots, className, classNames, style, styles } = useModalSlots(props);
 
   return (
@@ -165,4 +165,4 @@ const ModalButtons = forwardRef(_ModalButtons);
 // exports
 
 export { Modal, ModalHeader, ModalBody, ModalFooter, ModalHeading, ModalButtons };
-export type { PigmentModalProps };
+export type { ModalProps };

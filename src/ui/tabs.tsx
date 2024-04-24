@@ -11,7 +11,7 @@ import {
   TabPanelProps,
   TabProps,
   Tabs as AriaTabs,
-  TabsProps,
+  TabsProps as AriaTabsProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
@@ -69,17 +69,17 @@ const tabStyles = tv({
 
 // props
 
-interface PigmentTabsProps extends TabsProps, VariantProps, ColorProps, SizeProps, RadiusProps, StyleSlotsToStyleProps<TabsStylesReturnType> {}
+interface TabsProps extends AriaTabsProps, VariantProps, ColorProps, SizeProps, RadiusProps, StyleSlotsToStyleProps<TabsStylesReturnType> {}
 
 // slots
 
 interface TabsSlotsType extends StyleSlotsToSlots<TabsStylesReturnType> {}
 
-const [TabsSlotsProvider, useTabsSlots] = createSlots<Pick<PigmentTabsProps, "variant" | "color" | "size" | "radius"> & TabsSlotsType>();
+const [TabsSlotsProvider, useTabsSlots] = createSlots<Pick<TabsProps, "variant" | "color" | "size" | "radius"> & TabsSlotsType>();
 
 // component
 
-function _Tabs(props: PigmentTabsProps, ref: ForwardedRef<HTMLDivElement>) {
+function _Tabs(props: TabsProps, ref: ForwardedRef<HTMLDivElement>) {
   const { orientation = "vertical", variant = "solid", color = "default", size = "md", radius = "md", classNames, styles } = props;
 
   const styleSlots = tabsStyles({ orientation, size, radius });
@@ -150,4 +150,4 @@ const TabPanel = (forwardRef as ForwardRefType)(_TabPanel);
 // exports
 
 export { Tabs, Tab, TabList, TabPanel };
-export type { PigmentTabsProps };
+export type { TabsProps };

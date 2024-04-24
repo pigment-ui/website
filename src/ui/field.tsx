@@ -59,25 +59,25 @@ export const fieldInputStyles = tv({
 
 // props
 
-interface PigmentFieldBaseProps extends SizeProps {
+interface FieldBaseProps extends SizeProps {
   label?: ReactNode;
   description?: ReactNode;
   errorMessage?: ReactNode | ((validationResult: ValidationResult) => ReactNode);
   labelNecessityIndicator?: "symbol" | "text";
 }
 
-interface PigmentFieldProps extends PigmentFieldBaseProps {
+interface FieldProps extends FieldBaseProps {
   isInvalid?: boolean;
   isRequired?: boolean;
   children?: ReactElement;
 }
 
-interface PigmentFieldInputBaseProps extends SizeProps, RadiusProps {
+interface FieldInputBaseProps extends SizeProps, RadiusProps {
   startContent?: ReactElement;
   endContent?: ReactElement;
 }
 
-interface PigmentFieldInputProps extends PigmentFieldInputBaseProps {
+interface FieldInputProps extends FieldInputBaseProps {
   isTextArea?: boolean;
   isInvalid?: boolean;
   isDisabled?: boolean;
@@ -88,7 +88,7 @@ interface PigmentFieldInputProps extends PigmentFieldInputBaseProps {
 
 // component
 
-function _Field(props: PigmentFieldProps, ref: ForwardedRef<HTMLDivElement>) {
+function _Field(props: FieldProps, ref: ForwardedRef<HTMLDivElement>) {
   const { label, description, errorMessage, isRequired, isInvalid, labelNecessityIndicator = "symbol", size = "md", children } = props;
 
   const styleSlots = fieldStyles({ size });
@@ -118,7 +118,7 @@ function _Field(props: PigmentFieldProps, ref: ForwardedRef<HTMLDivElement>) {
 
 const Field = forwardRef(_Field);
 
-function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivElement>) {
+function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) {
   const { size = "md", radius = "md", isInvalid, isDisabled, isTextArea = false, startContent, endContent, startButton, endButton, children } = props;
 
   const styleSlots = fieldInputStyles({ size, radius, isTextArea });
@@ -210,4 +210,4 @@ const FieldInput = forwardRef(_FieldInput);
 // exports
 
 export { Field, FieldInput };
-export type { PigmentFieldBaseProps, PigmentFieldProps, PigmentFieldInputBaseProps, PigmentFieldInputProps };
+export type { FieldBaseProps, FieldProps, FieldInputBaseProps, FieldInputProps };

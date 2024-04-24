@@ -18,13 +18,13 @@ const skeletonStyles = tv({
 
 // props
 
-interface PigmentSkeletonProps extends RadiusProps, StyleProps {
+interface SkeletonProps extends RadiusProps, StyleProps {
   animation?: "pulse" | "none";
 }
 
 // component
 
-function _Skeleton(props: PigmentSkeletonProps, ref: ForwardedRef<HTMLDivElement>) {
+function _Skeleton(props: SkeletonProps, ref: ForwardedRef<HTMLDivElement>) {
   const { animation = "pulse", radius = "full", className, style } = props;
 
   return <div ref={ref} className={skeletonStyles({ animation, radius, className })} style={style} />;
@@ -35,4 +35,4 @@ const Skeleton = forwardRef(_Skeleton);
 // exports
 
 export { Skeleton };
-export type { PigmentSkeletonProps };
+export type { SkeletonProps };

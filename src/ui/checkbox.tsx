@@ -2,7 +2,7 @@
 
 import { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
-import { Checkbox as AriaCheckbox, CheckboxProps, composeRenderProps } from "react-aria-components";
+import { Checkbox as AriaCheckbox, CheckboxProps as AriaCheckboxProps, composeRenderProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
@@ -52,11 +52,11 @@ type CheckboxStylesReturnType = ReturnType<typeof checkboxStyles>;
 
 // props
 
-interface PigmentCheckboxProps extends CheckboxProps, SizeProps, RadiusProps, StyleSlotsToStyleProps<CheckboxStylesReturnType> {}
+interface CheckboxProps extends AriaCheckboxProps, SizeProps, RadiusProps, StyleSlotsToStyleProps<CheckboxStylesReturnType> {}
 
 // component
 
-function _Checkbox(props: PigmentCheckboxProps, ref: ForwardedRef<HTMLLabelElement>) {
+function _Checkbox(props: CheckboxProps, ref: ForwardedRef<HTMLLabelElement>) {
   const { size = "md", radius = "md", classNames, itemClassNames, styles, itemStyles } = useCheckboxGroupSlots(props);
 
   const styleSlots = checkboxStyles({ size, radius });
@@ -98,4 +98,4 @@ const Checkbox = forwardRef(_Checkbox);
 // exports
 
 export { Checkbox };
-export type { PigmentCheckboxProps };
+export type { CheckboxProps };

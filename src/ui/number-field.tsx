@@ -1,23 +1,30 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { Button, Input, InputProps, NumberField as AriaNumberField, NumberFieldProps, TextFieldProps } from "react-aria-components";
+import {
+  Button,
+  Input,
+  InputProps,
+  NumberField as AriaNumberField,
+  NumberFieldProps as AriaNumberFieldProps,
+  TextFieldProps,
+} from "react-aria-components";
 
 import { MinusIcon, PlusIcon } from "lucide-react";
 
-import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
+import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 
 // props
 
-interface PigmentNumberFieldProps
-  extends NumberFieldProps,
+interface NumberFieldProps
+  extends AriaNumberFieldProps,
     Omit<InputProps, keyof TextFieldProps | "size" | "step">,
-    PigmentFieldBaseProps,
-    PigmentFieldInputBaseProps {}
+    FieldBaseProps,
+    FieldInputBaseProps {}
 
 // component
 
-function _NumberField(props: PigmentNumberFieldProps, ref: ForwardedRef<HTMLInputElement>) {
+function _NumberField(props: NumberFieldProps, ref: ForwardedRef<HTMLInputElement>) {
   return (
     <AriaNumberField {...props}>
       {(renderProps) => (
@@ -49,4 +56,4 @@ const NumberField = forwardRef(_NumberField);
 // exports
 
 export { NumberField };
-export type { PigmentNumberFieldProps };
+export type { NumberFieldProps };
