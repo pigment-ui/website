@@ -28,7 +28,7 @@ export const variantColorStyles = tv({
     },
     color: {
       default: "",
-      "default-inverted": "text-black",
+      "default-inverted": "text-default-1000",
       primary: "",
       info: "",
       success: "",
