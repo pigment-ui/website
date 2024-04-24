@@ -1,12 +1,12 @@
 "use client";
 
 import { ValidationResult } from "@react-types/shared";
-import { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode, useLayoutEffect, useState } from "react";
+import { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode, useEffect, useMemo, useState } from "react";
 import { FieldError, Group, Label, Text } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants } from "./styles";
-import { ContentProps, RadiusProps, SizeProps } from "./types";
+import { RadiusProps, SizeProps } from "./types";
 import { useObserveElementWidth } from "./utils";
 
 // styles
@@ -29,17 +29,17 @@ export const fieldStyles = tv({
 
 export const fieldInputStyles = tv({
   slots: {
-    base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden data-[disabled]:bg-default-1000/10 duration-300",
+    base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden data-[disabled]:bg-default-1000/10 duration-300 transition-colors",
     self: "flex-1 h-full bg-transparent outline-none placeholder:text-default-500 flex items-center data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
-    content: "flex items-center text-neutral-700",
+    content: "text-neutral-500",
     button:
       "grid place-items-center bg-default-1000 bg-opacity-10 data-[hovered]:bg-opacity-20 data-[pressed]:scale-90 data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed duration-300",
   },
   variants: {
     size: {
-      sm: { base: "h-8 text-xs", content: "[&_svg]:size-4", button: "h-6 w-6 [&_svg]:size-3" },
-      md: { base: "h-10 text-sm", content: "[&_svg]:size-5", button: "h-7 w-7 [&_svg]:size-4" },
-      lg: { base: "h-12 text-base", content: "[&_svg]:size-6", button: "h-8 w-8 [&_svg]:size-5" },
+      sm: { base: "h-8 text-xs [&_svg]:size-4", button: "h-6 w-6 [&_svg]:size-3" },
+      md: { base: "h-10 text-sm [&_svg]:size-5", button: "h-7 w-7 [&_svg]:size-4" },
+      lg: { base: "h-12 text-base [&_svg]:size-6", button: "h-8 w-8 [&_svg]:size-5" },
     },
     radius: {
       sm: { base: radiusVariants.radius.sm, button: smallRadiusVariants.radius.sm },
@@ -55,11 +55,6 @@ export const fieldInputStyles = tv({
     ...isFocusVisibleVariants,
     ...isDisabledVariants,
   },
-  compoundVariants: [
-    { isTextArea: true, size: "sm", className: { base: "py-2" } },
-    { isTextArea: true, size: "md", className: { base: "py-2.5" } },
-    { isTextArea: true, size: "lg", className: { base: "py-3" } },
-  ],
 });
 
 // props
@@ -77,7 +72,10 @@ interface PigmentFieldProps extends PigmentFieldBaseProps {
   children?: ReactElement;
 }
 
-interface PigmentFieldInputBaseProps extends SizeProps, RadiusProps, ContentProps {}
+interface PigmentFieldInputBaseProps extends SizeProps, RadiusProps {
+  startContent?: ReactElement;
+  endContent?: ReactElement;
+}
 
 interface PigmentFieldInputProps extends PigmentFieldInputBaseProps {
   isTextArea?: boolean;
@@ -129,20 +127,26 @@ function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivEle
   const hasEndButton = !!endButton;
   const spacingSize = { sm: 8, md: 10, lg: 12 }[size];
 
-  const [mounted, setMounted] = useState<boolean>(false);
-  const [paddingLeft, setPaddingLeft] = useState<number>(spacingSize);
-  const [paddingRight, setPaddingRight] = useState<number>(spacingSize);
+  const [startButtonWidth, startButtonRef] = useObserveElementWidth<HTMLButtonElement>();
+  const [startContentWidth, startContentRef] = useObserveElementWidth<HTMLDivElement>();
+  const [endButtonWidth, endButtonRef] = useObserveElementWidth<HTMLButtonElement>();
+  const [endContentWidth, endContentRef] = useObserveElementWidth<HTMLDivElement>();
 
-  const { width: startButtonWidth, ref: startButtonRef } = useObserveElementWidth<HTMLButtonElement>();
-  const { width: startContentWidth, ref: startContentRef } = useObserveElementWidth<HTMLDivElement>();
-  const { width: endButtonWidth, ref: endButtonRef } = useObserveElementWidth<HTMLButtonElement>();
-  const { width: endContentWidth, ref: endContentRef } = useObserveElementWidth<HTMLDivElement>();
+  const paddingLeft = useMemo(
+    () => (startButtonWidth ? startButtonWidth + spacingSize : 0) + (startContentWidth ? startContentWidth + spacingSize : 0) + spacingSize,
+    [startButtonWidth, startContentWidth, spacingSize],
+  );
 
-  useLayoutEffect(() => {
-    setPaddingLeft((startButtonWidth ? startButtonWidth + spacingSize : 0) + (startContentWidth ? startContentWidth + spacingSize : 0) + spacingSize);
-    setPaddingRight((endButtonWidth ? endButtonWidth + spacingSize : 0) + (endContentWidth ? endContentWidth + spacingSize : 0) + spacingSize);
-    setMounted(true);
-  }, [startButtonWidth, startContentWidth, endButtonWidth, endContentWidth, spacingSize]);
+  const paddingRight = useMemo(
+    () => (endButtonWidth ? endButtonWidth + spacingSize : 0) + (endContentWidth ? endContentWidth + spacingSize : 0) + spacingSize,
+    [endButtonWidth, endContentWidth, spacingSize],
+  );
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <Group
@@ -152,44 +156,49 @@ function _FieldInput(props: PigmentFieldInputProps, ref: ForwardedRef<HTMLDivEle
       className={({ isHovered, isInvalid, isDisabled, isFocusVisible, isFocusWithin }) =>
         styleSlots.base({ isHovered, isInvalid, isDisabled, isFocusVisible, isFocusWithin })
       }
+      style={{
+        paddingTop: isTextArea ? spacingSize : undefined,
+        paddingBottom: isTextArea ? spacingSize : undefined,
+        paddingLeft: !isMounted ? spacingSize : undefined,
+        paddingRight: !isMounted ? spacingSize : undefined,
+        gap: !isMounted ? spacingSize : undefined,
+      }}
     >
       {startButton &&
         cloneElement(startButton, {
           ref: startButtonRef,
-          style: mounted ? { position: "absolute", left: spacingSize } : { marginLeft: spacingSize },
+          style: isMounted ? { position: "absolute", left: spacingSize, ...startButton.props?.style } : {},
           className: styleSlots.button({ className: startButton.props?.className }),
         })}
 
-      {startContent && (
-        <div
-          ref={startContentRef}
-          style={mounted ? { position: "absolute", left: hasStartButton ? spacingSize * 5 : spacingSize } : { marginLeft: spacingSize }}
-          className={styleSlots.content()}
-        >
-          {startContent}
-        </div>
-      )}
+      {startContent &&
+        cloneElement(startContent, {
+          ref: startContentRef,
+          style: isMounted
+            ? { position: "absolute", left: hasStartButton ? spacingSize * 2 + startButtonWidth : spacingSize, ...startContent.props?.style }
+            : {},
+          className: styleSlots.content({ className: startContent.props?.className }),
+        })}
 
       {children &&
         cloneElement(children, {
-          style: { paddingLeft, paddingRight, ...children.props?.style },
+          style: isMounted ? { paddingLeft, paddingRight, ...children.props?.style } : {},
           className: styleSlots.self({ className: children.props?.className }),
         })}
 
-      {endContent && (
-        <div
-          ref={endContentRef}
-          style={mounted ? { position: "absolute", right: hasEndButton ? spacingSize * 5 : spacingSize } : { marginRight: spacingSize }}
-          className={styleSlots.content()}
-        >
-          {endContent}
-        </div>
-      )}
+      {endContent &&
+        cloneElement(endContent, {
+          ref: endContentRef,
+          style: isMounted
+            ? { position: "absolute", right: hasEndButton ? spacingSize * 2 + endButtonWidth : spacingSize, ...endContent.props?.style }
+            : {},
+          className: styleSlots.content({ className: endContent.props?.className }),
+        })}
 
       {endButton &&
         cloneElement(endButton, {
           ref: endButtonRef,
-          style: mounted ? { position: "absolute", right: spacingSize } : { marginRight: spacingSize },
+          style: isMounted ? { position: "absolute", right: spacingSize, ...endButton.props?.style } : {},
           className: styleSlots.button({ className: endButton.props?.className }),
         })}
     </Group>

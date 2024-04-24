@@ -1,5 +1,6 @@
-import { Context, createContext, Provider, RefObject, useContext, useEffect, useRef, useState } from "react";
+import { Context, createContext, ForwardedRef, Provider, RefObject, useContext, useState } from "react";
 import { mergeProps } from "react-aria";
+import { useObjectRef, useResizeObserver } from "@react-aria/utils";
 
 type CreateSlotsReturn<T> = [Provider<T>, <K extends object>(props?: K) => T & K];
 
@@ -13,28 +14,11 @@ export function createSlots<SlotsType extends object>(): CreateSlotsReturn<Slots
   return [Slots.Provider, useSlots];
 }
 
-export function useObserveElementWidth<T extends HTMLElement>(): { width: number; ref: RefObject<T> } {
+export function useObserveElementWidth<T extends HTMLElement>(forwardedRef?: ForwardedRef<T>): [number, RefObject<T>] {
+  const ref = useObjectRef(forwardedRef);
   const [width, setWidth] = useState(0);
-  const ref = useRef<T>(null);
 
-  useEffect(() => {
-    let observerRefValue: T | null = null;
+  useResizeObserver({ ref, onResize: () => (ref.current ? setWidth(ref.current.clientWidth) : undefined) });
 
-    const observer = new ResizeObserver((entries) => {
-      setWidth(entries[0].contentRect.width);
-    });
-
-    if (ref.current) {
-      observer.observe(ref.current);
-      observerRefValue = ref.current;
-    }
-
-    return () => {
-      if (observerRefValue) {
-        observer.unobserve(observerRefValue);
-      }
-    };
-  }, []);
-
-  return { width, ref };
+  return [width, ref];
 }

@@ -23,8 +23,8 @@ import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBox
 
 interface PigmentSelectProps<T extends object>
   extends Omit<SelectProps<T>, "children">,
-    Pick<ListBoxProps<T>, "items" | "children">,
     Omit<PopoverProps, keyof SelectProps<T>>,
+    Pick<ListBoxProps<T>, "items" | "children">,
     ListBoxSlotsType,
     PigmentFieldBaseProps,
     PigmentFieldInputBaseProps {

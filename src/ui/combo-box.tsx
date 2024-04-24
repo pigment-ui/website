@@ -1,17 +1,7 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import {
-  Button,
-  ComboBox as AriaComboBox,
-  ComboBoxProps,
-  Input,
-  InputProps,
-  ListBoxProps,
-  Popover,
-  PopoverProps,
-  TextFieldProps,
-} from "react-aria-components";
+import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, InputProps, ListBoxProps, Popover, PopoverProps } from "react-aria-components";
 
 import { ChevronDownIcon } from "./icons";
 import { ForwardRefType } from "./types";
@@ -24,9 +14,9 @@ import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBox
 
 interface PigmentComboBoxProps<T extends object>
   extends Omit<ComboBoxProps<T>, "children">,
-    Pick<ListBoxProps<T>, "items" | "children">,
-    Omit<InputProps, keyof TextFieldProps | "color" | "size">,
+    Omit<InputProps, keyof ComboBoxProps<T> | "color" | "size">,
     Omit<PopoverProps, keyof ComboBoxProps<T>>,
+    Pick<ListBoxProps<T>, "items" | "children">,
     ListBoxSlotsType,
     PigmentFieldBaseProps,
     PigmentFieldInputBaseProps {}
