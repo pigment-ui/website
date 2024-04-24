@@ -6,7 +6,8 @@ import { Checkbox as AriaCheckbox, CheckboxProps, composeRenderProps } from "rea
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { CheckIcon, MinusIcon } from "./icons";
+import { CheckIcon, MinusIcon } from "lucide-react";
+
 import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
 import { RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 

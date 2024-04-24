@@ -3,7 +3,8 @@
 import { ForwardedRef, forwardRef } from "react";
 import { Button, ComboBox as AriaComboBox, ComboBoxProps, Input, InputProps, ListBoxProps, Popover, PopoverProps } from "react-aria-components";
 
-import { ChevronDownIcon } from "./icons";
+import { ChevronDownIcon } from "lucide-react";
+
 import { ForwardRefType } from "./types";
 
 import { cardStyles } from "./card";

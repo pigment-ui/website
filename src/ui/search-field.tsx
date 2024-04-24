@@ -3,17 +3,21 @@
 import { ForwardedRef, forwardRef } from "react";
 import { Button, Input, SearchField as AriaSearchField, SearchFieldProps } from "react-aria-components";
 
-import { SearchIcon, XIcon } from "./icons";
+import { SearchIcon, XIcon } from "lucide-react";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";
 
 // props
 
-interface PigmentSearchFieldProps extends SearchFieldProps, PigmentFieldBaseProps, PigmentFieldInputBaseProps {}
+interface PigmentSearchFieldProps extends SearchFieldProps, PigmentFieldBaseProps, PigmentFieldInputBaseProps {
+  hideClearButton?: boolean;
+}
 
 // component
 
 function _SearchField(props: PigmentSearchFieldProps, ref: ForwardedRef<HTMLInputElement>) {
+  const { hideClearButton = false } = props;
+
   return (
     <AriaSearchField {...props}>
       {(renderProps) => (
@@ -21,7 +25,7 @@ function _SearchField(props: PigmentSearchFieldProps, ref: ForwardedRef<HTMLInpu
           <FieldInput
             startContent={<SearchIcon />}
             endButton={
-              !renderProps.isEmpty ? (
+              !hideClearButton && !renderProps.isEmpty ? (
                 <Button>
                   <XIcon />
                 </Button>

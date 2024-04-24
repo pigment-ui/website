@@ -3,7 +3,8 @@
 import { ForwardedRef, forwardRef } from "react";
 import { DateInput, DateSegment, TimeField as AriaTimeField, TimeFieldProps, TimeValue } from "react-aria-components";
 
-import { ClockIcon } from "./icons";
+import { ClockIcon } from "lucide-react";
+
 import { segmentStyles } from "./styles";
 import { ForwardRefType } from "./types";
 

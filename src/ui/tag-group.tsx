@@ -15,7 +15,8 @@ import {
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { XIcon } from "./icons";
+import { XIcon } from "lucide-react";
+
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
 import { ColorProps, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";

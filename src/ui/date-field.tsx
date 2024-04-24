@@ -3,7 +3,8 @@
 import { ForwardedRef, forwardRef } from "react";
 import { DateField as AriaDateField, DateFieldProps, DateInput, DateSegment, DateValue } from "react-aria-components";
 
-import { CalendarIcon } from "./icons";
+import { CalendarIcon } from "lucide-react";
+
 import { ForwardRefType } from "./types";
 
 import { Field, FieldInput, PigmentFieldBaseProps, PigmentFieldInputBaseProps } from "./field";

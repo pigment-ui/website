@@ -14,7 +14,8 @@ import {
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { CheckIcon } from "./icons";
+import { CheckIcon } from "lucide-react";
+
 import { ForwardRefType, StyleProps } from "./types";
 import { createSlots } from "./utils";
 

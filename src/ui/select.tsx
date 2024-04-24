@@ -12,7 +12,8 @@ import {
   SelectValueRenderProps,
 } from "react-aria-components";
 
-import { ChevronDownIcon } from "./icons";
+import { ChevronDownIcon } from "lucide-react";
+
 import { ForwardRefType } from "./types";
 
 import { cardStyles } from "./card";

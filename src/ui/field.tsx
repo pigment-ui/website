@@ -1,8 +1,8 @@
 "use client";
 
-import { ValidationResult } from "@react-types/shared";
 import { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode, useEffect, useMemo, useState } from "react";
 import { FieldError, Group, Label, Text } from "react-aria-components";
+import { ValidationResult } from "@react-types/shared";
 import { tv } from "tailwind-variants";
 
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants } from "./styles";
@@ -37,9 +37,9 @@ export const fieldInputStyles = tv({
   },
   variants: {
     size: {
-      sm: { base: "h-8 text-xs [&_svg]:size-4", button: "h-6 w-6 [&_svg]:size-3" },
-      md: { base: "h-10 text-sm [&_svg]:size-5", button: "h-7 w-7 [&_svg]:size-4" },
-      lg: { base: "h-12 text-base [&_svg]:size-6", button: "h-8 w-8 [&_svg]:size-5" },
+      sm: { base: "h-8 text-xs [&_svg]:size-4", button: "h-6 w-6 [&_svg]:!size-3" },
+      md: { base: "h-10 text-sm [&_svg]:size-5", button: "h-7 w-7 [&_svg]:!size-4" },
+      lg: { base: "h-12 text-base [&_svg]:size-6", button: "h-8 w-8 [&_svg]:!size-5" },
     },
     radius: {
       sm: { base: radiusVariants.radius.sm, button: smallRadiusVariants.radius.sm },

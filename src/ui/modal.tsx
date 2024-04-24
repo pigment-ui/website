@@ -6,7 +6,8 @@ import { composeRenderProps, Modal as AriaModal, ModalOverlay, ModalOverlayProps
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { XIcon } from "./icons";
+import { XIcon } from "lucide-react";
+
 import { ChildrenProps, SizeProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
