@@ -44,7 +44,7 @@ function _Select<T extends object>(props: SelectProps<T>, ref: ForwardedRef<HTML
           <Field {...renderProps} {...props}>
             <FieldInput endContent={<ChevronDownIcon />} {...renderProps} {...props}>
               <Button ref={ref} className="flex items-center">
-                <SelectValue>
+                <SelectValue className={({ isPlaceholder }) => (isPlaceholder ? "!text-default-500" : "")}>
                   {renderValue
                     ? ({ selectedItem, selectedText }) =>
                         selectedItem ? renderValue({ selectedItem: selectedItem as T, selectedText }) : placeholder ?? "Select"
