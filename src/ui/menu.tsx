@@ -41,7 +41,7 @@ interface MenuItemProps extends AriaMenuItemProps, Omit<ListBoxItemProps, keyof 
 
 // slots
 
-const [MenuSlotsProvider, useMenuSlots] = createSlots<ListBoxSlotsType>();
+const [MenuSlotsProvider, useMenuSlots] = createSlots<ListBoxSlotsType<object>>();
 
 // component
 
