@@ -16,7 +16,7 @@ import {
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { isFocusVisibleVariants, radiusVariants, smallRadiusVariants, variantColorStyles } from "./styles";
+import { isFocusVisibleVariants, radiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
 
@@ -63,7 +63,7 @@ const tabStyles = tv({
       lg: "h-12 gap-x-3 px-6 text-base [&_svg]:size-6",
     },
     isSelected: { false: "!bg-transparent !text-default-500 !border-none" },
-    ...smallRadiusVariants,
+    ...radiusVariants,
   },
   compoundVariants: [{ isSelected: false, isHovered: true, className: "!text-default-1000" }],
 });
