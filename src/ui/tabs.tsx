@@ -25,13 +25,19 @@ import { createSlots } from "./utils";
 const tabsStyles = tv({
   slots: {
     base: "flex",
-    list: "flex w-fit h-fit bg-default-1000/10",
-    panel: "w-full h-fit bg-default-1000/10",
+    list: "flex w-fit h-fit bg-default-1000/10 backdrop-blur-lg",
+    panel: "w-full h-fit bg-default-1000/10 backdrop-blur-lg",
   },
   variants: {
-    orientation: {
-      vertical: { base: "flex-col" },
-      horizontal: { list: "flex-col" },
+    orientation: { vertical: { base: "flex-col" }, horizontal: { list: "flex-col" } },
+    color: {
+      default: "",
+      "default-inverted": { list: "bg-default-0/10", panel: "bg-default-0/10 text-default-0" },
+      primary: "",
+      info: "",
+      success: "",
+      warning: "",
+      error: "",
     },
     size: {
       sm: { base: "gap-2", list: "p-1 gap-2", panel: "p-2 text-xs" },
@@ -65,7 +71,10 @@ const tabStyles = tv({
     isSelected: { false: "!bg-transparent !text-default-500 !border-none" },
     ...radiusVariants,
   },
-  compoundVariants: [{ isSelected: false, isHovered: true, className: "!text-default-1000" }],
+  compoundVariants: [
+    { isSelected: false, isHovered: true, className: "!text-default-1000" },
+    { isSelected: false, isHovered: true, color: "default-inverted", className: "!text-default-0" },
+  ],
 });
 
 // props
@@ -83,7 +92,7 @@ const [TabsSlotsProvider, useTabsSlots] = createSlots<Pick<TabsProps, "variant" 
 function _Tabs(props: TabsProps, ref: ForwardedRef<HTMLDivElement>) {
   const { orientation = "vertical", variant = "solid", color = "default", size = "md", radius = "md", classNames, styles } = props;
 
-  const styleSlots = tabsStyles({ orientation, size, radius });
+  const styleSlots = tabsStyles({ orientation, color, size, radius });
 
   return (
     <TabsSlotsProvider value={{ variant, color, size, radius, styleSlots, classNames, styles }}>
