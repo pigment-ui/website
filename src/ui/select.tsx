@@ -26,7 +26,7 @@ interface SelectProps<T extends object>
   extends Omit<AriaSelectProps<T>, "children">,
     Omit<PopoverProps, keyof AriaSelectProps<T>>,
     Pick<ListBoxProps<T>, "items" | "children">,
-    ListBoxSlotsType,
+    ListBoxSlotsType<T>,
     FieldBaseProps,
     FieldInputBaseProps {
   renderValue?: (selectValue: Omit<SelectValueRenderProps<T>, "isPlaceholder">) => ReactNode;
@@ -42,7 +42,7 @@ function _Select<T extends object>(props: SelectProps<T>, ref: ForwardedRef<HTML
       {(renderProps) => (
         <>
           <Field {...renderProps} {...props}>
-            <FieldInput endContent={<ChevronDownIcon />} {...renderProps} {...props}>
+            <FieldInput isFocusWithin={renderProps.isOpen} endContent={<ChevronDownIcon />} {...renderProps} {...props}>
               <Button ref={ref} className="flex items-center">
                 <SelectValue className={({ isPlaceholder }) => (isPlaceholder ? "!text-default-500" : "")}>
                   {renderValue

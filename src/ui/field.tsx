@@ -79,6 +79,7 @@ interface FieldInputBaseProps extends SizeProps, RadiusProps {
 
 interface FieldInputProps extends FieldInputBaseProps {
   isTextArea?: boolean;
+  isFocusWithin?: boolean;
   isInvalid?: boolean;
   isDisabled?: boolean;
   children?: ReactElement;
@@ -119,7 +120,19 @@ function _Field(props: FieldProps, ref: ForwardedRef<HTMLDivElement>) {
 const Field = forwardRef(_Field);
 
 function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { size = "md", radius = "md", isInvalid, isDisabled, isTextArea = false, startContent, endContent, startButton, endButton, children } = props;
+  const {
+    size = "md",
+    radius = "md",
+    isInvalid,
+    isDisabled,
+    isTextArea = false,
+    isFocusWithin: isFocusWithinProps,
+    startContent,
+    endContent,
+    startButton,
+    endButton,
+    children,
+  } = props;
 
   const styleSlots = fieldInputStyles({ size, radius, isTextArea });
 
@@ -154,7 +167,7 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
       isInvalid={isInvalid}
       isDisabled={isDisabled}
       className={({ isHovered, isInvalid, isDisabled, isFocusVisible, isFocusWithin }) =>
-        styleSlots.base({ isHovered, isInvalid, isDisabled, isFocusVisible, isFocusWithin })
+        styleSlots.base({ isHovered, isInvalid, isDisabled, isFocusVisible, isFocusWithin: isFocusWithin || isFocusWithinProps })
       }
       style={{
         paddingTop: isTextArea ? spacingSize : undefined,

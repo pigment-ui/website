@@ -97,10 +97,10 @@ interface ListBoxSectionProps<T extends object> extends SectionProps<T>, StyleSl
 
 // slots
 
-interface ListBoxSlotsType
-  extends Pick<ListBoxProps<any>, "color" | "size" | "itemClassNames" | "itemStyles" | "sectionClassNames" | "sectionStyles"> {}
+interface ListBoxSlotsType<T extends object>
+  extends Pick<ListBoxProps<T>, "color" | "size" | "itemClassNames" | "itemStyles" | "sectionClassNames" | "sectionStyles" | "items" | "children"> {}
 
-const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType>();
+const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType<object>>();
 
 // component
 

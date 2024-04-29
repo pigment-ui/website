@@ -7,7 +7,6 @@ import {
   ComboBoxProps as AriaComboBoxProps,
   Input,
   InputProps,
-  ListBoxProps,
   Popover,
   PopoverProps,
 } from "react-aria-components";
@@ -17,7 +16,7 @@ import { ChevronDownIcon } from "lucide-react";
 import { ForwardRefType } from "./types";
 
 import { cardStyles } from "./card";
-import { Field, FieldInput, FieldBaseProps, FieldInputBaseProps } from "./field";
+import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
 
 // props
@@ -26,8 +25,7 @@ interface ComboBoxProps<T extends object>
   extends Omit<AriaComboBoxProps<T>, "children">,
     Omit<InputProps, keyof AriaComboBoxProps<T> | "color" | "size">,
     Omit<PopoverProps, keyof AriaComboBoxProps<T>>,
-    Pick<ListBoxProps<T>, "items" | "children">,
-    ListBoxSlotsType,
+    ListBoxSlotsType<T>,
     FieldBaseProps,
     FieldInputBaseProps {}
 

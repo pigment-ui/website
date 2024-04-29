@@ -21,7 +21,7 @@ const modalStyles = tv({
   extend: cardStyles,
   slots: {
     base: "relative w-full",
-    backdrop: "fixed inset-0 bg-default-0/50 grid place-items-center p-4 backdrop-blur-lg z-[999]",
+    backdrop: "fixed inset-0 bg-default-0/50 grid place-items-center p-4 backdrop-blur-lg z-[999] overflow-auto",
     closeButton: "absolute top-2 right-2",
   },
   variants: {

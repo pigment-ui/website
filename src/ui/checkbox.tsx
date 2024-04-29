@@ -17,7 +17,7 @@ import { useCheckboxGroupSlots } from "./checkbox-group";
 
 const checkboxStyles = tv({
   slots: {
-    base: "grid grid-cols-[auto_1fr] items-center cursor-pointer",
+    base: "grid grid-cols-[auto_1fr] items-center cursor-pointer duration-300",
     self: "grid place-items-center bg-default-1000 bg-opacity-0 border border-default-1000 border-opacity-50 text-default-0 duration-300",
   },
   variants: {
