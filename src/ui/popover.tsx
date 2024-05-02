@@ -6,7 +6,6 @@ import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
 
 import { cardStyles } from "./card";
-import { Dialog } from "./dialog";
 
 // styles
 
@@ -27,7 +26,28 @@ function _Popover(props: PopoverProps, ref: ForwardedRef<HTMLDivElement>) {
   const { hideArrow = false, arrowSize = 16 } = props;
 
   return (
-    <AriaPopover ref={ref} offset={16} {...props} className={composeRenderProps(props.className, (className) => popoverStyles({ className }))}>
+    <AriaPopover
+      ref={ref}
+      offset={16}
+      {...props}
+      className={composeRenderProps(props.className, (className, { isEntering, isExiting, placement }) =>
+        popoverStyles({
+          className: twMerge(
+            "duration-300 [transition-duration:0ms]",
+            isEntering && "animate-in fade-in",
+            isExiting && "animate-out fade-out",
+            {
+              bottom: isEntering ? "slide-in-from-top-4" : isExiting ? "slide-out-to-top-4" : "",
+              left: isEntering ? "slide-in-from-right-4" : isExiting ? "slide-out-to-right-4" : "",
+              right: isEntering ? "slide-in-from-left-4" : isExiting ? "slide-out-to-left-4" : "",
+              top: isEntering ? "slide-in-from-bottom-4" : isExiting ? "slide-out-to-bottom-4" : "",
+              center: "",
+            }[placement],
+            className,
+          ),
+        }),
+      )}
+    >
       {composeRenderProps(props.children, (children, { placement }) => (
         <>
           {!hideArrow && (
@@ -37,15 +57,21 @@ function _Popover(props: PopoverProps, ref: ForwardedRef<HTMLDivElement>) {
                 width={arrowSize}
                 height={arrowSize}
                 className={twMerge(
-                  "fill-default-0 stroke-default-1000/20 stroke-[.5px]",
-                  { bottom: "rotate-180", left: "-rotate-90", right: "rotate-90", top: "", center: "" }[placement],
+                  "fill-white stroke-black/20 stroke-[.5px]",
+                  {
+                    bottom: "translate-y-px rotate-180",
+                    left: "-translate-x-px -rotate-90",
+                    right: "translate-x-px  rotate-90",
+                    top: "-translate-y-px",
+                    center: "",
+                  }[placement],
                 )}
               >
                 <path d="M0 0 L4 4 L8 0" />
               </svg>
             </OverlayArrow>
           )}
-          <Dialog>{children}</Dialog>
+          {children}
         </>
       ))}
     </AriaPopover>

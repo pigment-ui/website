@@ -26,10 +26,13 @@ const tabsStyles = tv({
   slots: {
     base: "flex",
     list: "flex w-fit h-fit bg-default-1000/10 backdrop-blur-lg",
-    panel: "w-full h-fit bg-default-1000/10 backdrop-blur-lg",
+    panel: "w-full h-fit bg-default-1000/10 backdrop-blur-lg rounded-xl",
   },
   variants: {
-    orientation: { vertical: { base: "flex-col" }, horizontal: { list: "flex-col" } },
+    orientation: {
+      vertical: { base: "flex-col" },
+      horizontal: { list: "flex-col" },
+    },
     color: {
       default: "",
       "default-inverted": { list: "bg-default-0/10", panel: "bg-default-0/10 text-default-0" },
@@ -45,11 +48,11 @@ const tabsStyles = tv({
       lg: { base: "gap-3", list: "p-2 gap-3", panel: "p-3 text-base" },
     },
     radius: {
-      sm: { list: radiusVariants.radius.sm, panel: radiusVariants.radius.sm },
-      md: { list: radiusVariants.radius.md, panel: radiusVariants.radius.md },
-      lg: { list: radiusVariants.radius.lg, panel: radiusVariants.radius.lg },
-      full: { list: radiusVariants.radius.full, panel: radiusVariants.radius.full },
-      none: { list: radiusVariants.radius.none, panel: radiusVariants.radius.none },
+      sm: { list: radiusVariants.radius.sm },
+      md: { list: radiusVariants.radius.md },
+      lg: { list: radiusVariants.radius.lg },
+      full: { list: radiusVariants.radius.full },
+      none: { list: radiusVariants.radius.none },
     },
     isFocusVisible: {
       true: { panel: isFocusVisibleVariants.isFocusVisible.true },
@@ -117,7 +120,18 @@ function _Tab(props: TabProps, ref: ForwardedRef<HTMLDivElement>) {
       id={typeof props.children === "string" ? props.children : undefined}
       {...props}
       className={composeRenderProps(props.className, (className, { isSelected, isHovered, isPressed, isDisabled, isFocusVisible }) =>
-        tabStyles({ variant, color, size, radius, isSelected, isHovered, isPressed, isDisabled, isFocusVisible, className }),
+        tabStyles({
+          variant,
+          color,
+          size,
+          radius,
+          isSelected,
+          isHovered: !isSelected && isHovered,
+          isPressed,
+          isDisabled,
+          isFocusVisible,
+          className,
+        }),
       )}
     />
   );

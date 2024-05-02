@@ -30,8 +30,22 @@ function _Tooltip(props: TooltipProps, ref: ForwardedRef<HTMLDivElement>) {
       ref={ref}
       offset={16}
       {...props}
-      className={composeRenderProps(props.className, (className, { isEntering, isExiting }) =>
-        tooltipStyles({ className: twMerge(isEntering && "animate-fadeIn", isExiting && "animate-fadeOut", className) }),
+      className={composeRenderProps(props.className, (className, { isEntering, isExiting, placement }) =>
+        tooltipStyles({
+          className: twMerge(
+            "duration-300 [transition-duration:0ms]",
+            isEntering && "fade-in animate-in",
+            isExiting && "fade-out animate-out",
+            {
+              bottom: isEntering ? "slide-in-from-top-4" : isExiting ? "slide-out-to-top-4" : "",
+              left: isEntering ? "slide-in-from-right-4" : isExiting ? "slide-out-to-right-4" : "",
+              right: isEntering ? "slide-in-from-left-4" : isExiting ? "slide-out-to-left-4" : "",
+              top: isEntering ? "slide-in-from-bottom-4" : isExiting ? "slide-out-to-bottom-4" : "",
+              center: "",
+            }[placement],
+            className,
+          ),
+        }),
       )}
     >
       {composeRenderProps(props.children, (children, { placement }) => (
@@ -43,8 +57,14 @@ function _Tooltip(props: TooltipProps, ref: ForwardedRef<HTMLDivElement>) {
                 width={arrowSize}
                 height={arrowSize}
                 className={twMerge(
-                  "fill-default-0 stroke-default-1000/20 stroke-[.5px]",
-                  { bottom: "rotate-180", left: "-rotate-90", right: "rotate-90", top: "", center: "" }[placement],
+                  "fill-white stroke-black/20 stroke-[.5px]",
+                  {
+                    bottom: "translate-y-px rotate-180",
+                    left: "-translate-x-px -rotate-90",
+                    right: "translate-x-px  rotate-90",
+                    top: "-translate-y-px",
+                    center: "",
+                  }[placement],
                 )}
               >
                 <path d="M0 0 L4 4 L8 0" />
