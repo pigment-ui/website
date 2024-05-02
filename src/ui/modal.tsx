@@ -2,7 +2,7 @@
 
 import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps, useId } from "react-aria";
-import { composeRenderProps, Modal as AriaModal, ModalOverlay, ModalOverlayProps } from "react-aria-components";
+import { composeRenderProps, Dialog, Modal as AriaModal, ModalOverlay, ModalOverlayProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
@@ -13,7 +13,6 @@ import { createSlots } from "./utils";
 
 import { Button } from "./button";
 import { cardStyles } from "./card";
-import { Dialog } from "./dialog";
 
 // styles
 
@@ -63,7 +62,7 @@ function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
             className={composeRenderProps(props.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
             style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
           >
-            <Dialog aria-labelledby={headerId} aria-describedby={bodyId}>
+            <Dialog aria-labelledby={headerId} aria-describedby={bodyId} className="outline-none">
               {children}
             </Dialog>
             <Button

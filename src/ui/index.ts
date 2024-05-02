@@ -6,7 +6,6 @@ export * from "./chip";
 export * from "./color-field";
 export * from "./combo-box";
 export * from "./date-field";
-export * from "./dialog";
 export * from "./list-box";
 export * from "./menu";
 export * from "./modal";
