@@ -53,14 +53,14 @@ export function Header() {
         <div className="flex gap-x-2 max-sm:hidden">{routes}</div>
 
         <div className="ml-auto flex gap-x-2">
-          <Button asChild isIconOnly variant="faded">
+          <Button aria-label="github repo" asChild isIconOnly variant="faded">
             <a href="https://github.com/pigment-ui" target="_blank">
               <GithubIcon />
             </a>
           </Button>
 
           <MenuTrigger>
-            <Button isIconOnly variant="faded">
+            <Button aria-label="theme menu" isIconOnly variant="faded">
               {mounted ? theme === "light" ? <SunIcon /> : theme === "dark" ? <MoonIcon /> : <MonitorIcon /> : <MonitorIcon />}
             </Button>
             <Menu onAction={(key) => setTheme((key as string).toLowerCase())} placement="bottom end" className="w-32">
@@ -71,7 +71,7 @@ export function Header() {
           </MenuTrigger>
 
           <DialogTrigger isOpen={isOpened} onOpenChange={setIsOpened}>
-            <Button isIconOnly variant="faded" className="sm:hidden">
+            <Button aria-label="header menu toggle" isIconOnly variant="faded" className="sm:hidden">
               <MenuIcon />
             </Button>
             <Popover className="flex w-48 flex-col gap-y-2 sm:hidden">{routes}</Popover>
