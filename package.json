@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build --experimental-debug-memory-usage",
     "start": "next start",
     "lint": "next lint"
