@@ -32,7 +32,7 @@ const modalStyles = tv({
       opaque: { backdrop: "bg-default-0/75" },
       transparent: { backdrop: "bg-transparent" },
     },
-    isScrollInside: {
+    insideScroll: {
       true: { dialog: "max-h-[calc(100vh-8rem)]", body: "flex-1 overflow-y-auto" },
       false: { backdrop: "overflow-auto" },
     },
@@ -45,7 +45,7 @@ type ModalStylesReturnType = ReturnType<typeof modalStyles>;
 
 interface ModalProps extends ModalOverlayProps, SizeProps, StyleSlotsToStyleProps<ModalStylesReturnType> {
   backdrop?: "blur" | "opaque" | "transparent";
-  isScrollInside?: boolean;
+  insideScroll?: boolean;
 }
 
 interface ModalSectionProps extends ChildrenProps, StyleProps {}
@@ -59,12 +59,12 @@ const [ModalSlotsProvider, useModalSlots] = createSlots<Record<"headerId" | "bod
 // component
 
 function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { size = "md", backdrop = "blur", isScrollInside = false, children, classNames, styles, ...restProps } = props;
+  const { size = "md", backdrop = "blur", insideScroll = false, children, classNames, styles, ...restProps } = props;
 
   const headerId = useId();
   const bodyId = useId();
 
-  const styleSlots = modalStyles({ size, backdrop, isScrollInside });
+  const styleSlots = modalStyles({ size, backdrop, insideScroll });
 
   return (
     <ModalSlotsProvider value={{ headerId, bodyId, styleSlots, classNames, styles }}>
