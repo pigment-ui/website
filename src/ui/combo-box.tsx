@@ -1,23 +1,16 @@
 "use client";
 
-import { ForwardedRef, forwardRef } from "react";
-import {
-  Button,
-  ComboBox as AriaComboBox,
-  ComboBoxProps as AriaComboBoxProps,
-  Input,
-  InputProps,
-  Popover,
-  PopoverProps,
-} from "react-aria-components";
+import { ForwardedRef, forwardRef, ReactNode } from "react";
+import { Button, ComboBox as AriaComboBox, ComboBoxProps as AriaComboBoxProps, Input, InputProps } from "react-aria-components";
 
 import { ChevronDownIcon } from "lucide-react";
 
 import { ForwardRefType } from "./types";
-
-import { cardStyles } from "./card";
+import { useObserveElementWidth } from "./utils";
 import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
+import { Popover, PopoverProps } from "./popover";
+import { Separator } from "./separator";
 
 // props
 
@@ -27,13 +20,19 @@ interface ComboBoxProps<T extends object>
     Omit<PopoverProps, keyof AriaComboBoxProps<T>>,
     ListBoxSlotsType<T>,
     FieldBaseProps,
-    FieldInputBaseProps {}
+    FieldInputBaseProps {
+  topContent?: ReactNode;
+}
 
 // component
 
 function _ComboBox<T extends object>(props: ComboBoxProps<T>, ref: ForwardedRef<HTMLInputElement>) {
+  const { topContent } = props;
+
+  const [width, comboBoxRef] = useObserveElementWidth<HTMLDivElement>();
+
   return (
-    <AriaComboBox menuTrigger="focus" {...props}>
+    <AriaComboBox ref={comboBoxRef} menuTrigger="focus" {...props}>
       {(renderProps) => (
         <>
           <Field {...renderProps} {...props}>
@@ -50,8 +49,15 @@ function _ComboBox<T extends object>(props: ComboBoxProps<T>, ref: ForwardedRef<
             </FieldInput>
           </Field>
 
-          <Popover maxHeight={300} {...props} className={cardStyles().base({ className: "w-[var(--trigger-width)] overflow-auto p-2" })} style={{}}>
-            <ListBox {...filterInlineListBoxProps(props)} />
+          <Popover maxHeight={300} hideArrow {...props} className="overflow-auto p-0" style={{ width }}>
+            {topContent && (
+              <>
+                {topContent}
+                <Separator />
+              </>
+            )}
+
+            <ListBox {...filterInlineListBoxProps(props)} className="p-2" />
           </Popover>
         </>
       )}

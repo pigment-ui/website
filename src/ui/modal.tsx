@@ -20,11 +20,22 @@ const modalStyles = tv({
   extend: cardStyles,
   slots: {
     base: "relative w-full",
-    backdrop: "fixed inset-0 bg-default-0/50 grid place-items-center p-4 backdrop-blur-lg z-[999] overflow-auto",
+    header: "pr-16",
+    dialog: "flex flex-col relative outline-none",
+    backdrop: "fixed inset-0 flex items-center justify-center px-4 py-16 z-[999]",
     closeButton: "absolute top-2 right-2",
   },
   variants: {
     size: { sm: "max-w-lg", md: "max-w-2xl", lg: "max-w-4xl" },
+    backdrop: {
+      blur: { backdrop: "backdrop-blur-lg bg-default-0/50" },
+      opaque: { backdrop: "bg-default-0/75" },
+      transparent: { backdrop: "bg-transparent" },
+    },
+    isScrollInside: {
+      true: { dialog: "max-h-[calc(100vh-8rem)]", body: "flex-1 overflow-y-auto" },
+      false: { backdrop: "overflow-auto" },
+    },
   },
 });
 
@@ -32,7 +43,10 @@ type ModalStylesReturnType = ReturnType<typeof modalStyles>;
 
 // props
 
-interface ModalProps extends ModalOverlayProps, SizeProps, StyleSlotsToStyleProps<ModalStylesReturnType> {}
+interface ModalProps extends ModalOverlayProps, SizeProps, StyleSlotsToStyleProps<ModalStylesReturnType> {
+  backdrop?: "blur" | "opaque" | "transparent";
+  isScrollInside?: boolean;
+}
 
 interface ModalSectionProps extends ChildrenProps, StyleProps {}
 
@@ -45,12 +59,12 @@ const [ModalSlotsProvider, useModalSlots] = createSlots<Record<"headerId" | "bod
 // component
 
 function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { size = "md", children, classNames, styles, ...restProps } = props;
+  const { size = "md", backdrop = "blur", isScrollInside = false, children, classNames, styles, ...restProps } = props;
 
   const headerId = useId();
   const bodyId = useId();
 
-  const styleSlots = modalStyles({ size });
+  const styleSlots = modalStyles({ size, backdrop, isScrollInside });
 
   return (
     <ModalSlotsProvider value={{ headerId, bodyId, styleSlots, classNames, styles }}>
@@ -62,14 +76,19 @@ function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
             className={composeRenderProps(props.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
             style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
           >
-            <Dialog aria-labelledby={headerId} aria-describedby={bodyId} className="outline-none">
+            <Dialog
+              aria-labelledby={headerId}
+              aria-describedby={bodyId}
+              className={styleSlots.dialog({ className: classNames?.dialog })}
+              style={styles?.dialog}
+            >
               {children}
             </Dialog>
             <Button
               aria-label="Modal close button"
               isIconOnly
-              variant="light"
-              size="sm"
+              variant="soft"
+              radius="full"
               onPress={() => state.close()}
               className={styleSlots.closeButton({ className: classNames?.closeButton })}
               style={styles?.closeButton}
