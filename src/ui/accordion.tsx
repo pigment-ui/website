@@ -26,19 +26,22 @@ const accordionStyles = tv({
   slots: {
     base: "",
     item: "border-b border-default-1000/20 first:border-t",
-    trigger: "flex flex-1 items-center [&[data-state=open]>svg.chevron]:rotate-180",
+    trigger: [
+      "flex flex-1 items-center [&[data-state=open]>svg.chevron]:rotate-180",
+      "outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-default-1000 focus-visible:z-10",
+      "disabled:opacity-50 disabled:cursor-not-allowed",
+    ],
     textWrapper: "flex-1 text-start",
     title: "",
     subtitle: "text-default-500",
-    contentWrapper: "data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden",
-    content: "",
+    content: "data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden",
     chevron: "chevron duration-300",
   },
   variants: {
     size: {
-      sm: { trigger: "py-4 [&_svg]:size-4 gap-x-2", title: "text-sm", subtitle: "text-xs", content: "text-sm pb-4" },
-      md: { trigger: "py-5 [&_svg]:size-5 gap-x-2.5", title: "text-base", subtitle: "text-sm", content: "text-base pb-5" },
-      lg: { trigger: "py-6 [&_svg]:size-6 gap-x-3", title: "text-lg", subtitle: "text-base", content: "text-lg pb-6" },
+      sm: { trigger: "py-4 [&_svg]:size-4 gap-x-2", title: "text-sm", subtitle: "text-xs", content: "text-sm [&>div]:pb-4" },
+      md: { trigger: "py-5 [&_svg]:size-5 gap-x-2.5", title: "text-base", subtitle: "text-sm", content: "text-base [&>div]:pb-5" },
+      lg: { trigger: "py-6 [&_svg]:size-6 gap-x-3", title: "text-lg", subtitle: "text-base", content: "text-lg [&>div]:pb-6" },
     },
   },
 });
@@ -107,13 +110,11 @@ function _AccordionItem(props: AccordionItemProps, ref: ForwardedRef<HTMLDivElem
             )}
           </div>
           {endContent}
-          <ChevronDown className={styleSlots.chevron({ className: classNames?.chevron })} style={styles?.chevron} />
+          <ChevronDown aria-hidden className={styleSlots.chevron({ className: classNames?.chevron })} style={styles?.chevron} />
         </RadixAccordionTrigger>
       </RadixAccordionHeader>
-      <RadixAccordionContent className={styleSlots.contentWrapper({ className: classNames?.contentWrapper })} style={styles?.contentWrapper}>
-        <div className={styleSlots.content({ className: classNames?.content })} style={styles?.content}>
-          {children}
-        </div>
+      <RadixAccordionContent className={styleSlots.content({ className: classNames?.content })} style={styles?.content}>
+        <div>{children}</div>
       </RadixAccordionContent>
     </RadixAccordionItem>
   );
