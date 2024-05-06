@@ -1,50 +1,124 @@
 "use client";
 
-import * as RadixAccordion from "@radix-ui/react-accordion";
-import { AccordionItemProps } from "@radix-ui/react-accordion";
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
+import {
+  AccordionItemProps as RadixAccordionItemProps,
+  AccordionMultipleProps as RadixAccordionMultipleProps,
+  AccordionSingleProps as RadixAccordionSingleProps,
+  Content as RadixAccordionContent,
+  Header as RadixAccordionHeader,
+  Item as RadixAccordionItem,
+  Root as RadixAccordionRoot,
+  Trigger as RadixAccordionTrigger,
+} from "@radix-ui/react-accordion";
+import { ForwardedRef, forwardRef, ReactNode } from "react";
+import { mergeProps } from "react-aria";
 import { twMerge } from "tailwind-merge";
+import { tv } from "tailwind-variants";
 
 import { ChevronDown } from "lucide-react";
 
-const Accordion = RadixAccordion.Root;
+import { ContentProps, SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
+import { createSlots } from "./utils";
 
-const AccordionItem = forwardRef<ElementRef<typeof RadixAccordion.Item>, AccordionItemProps>(({ className, ...props }, ref) => (
-  <RadixAccordion.Item ref={ref} className={twMerge("border-b", className)} {...props} />
-));
-AccordionItem.displayName = "AccordionItem";
+// styles
 
-const AccordionTrigger = forwardRef<ElementRef<typeof RadixAccordion.Trigger>, ComponentPropsWithoutRef<typeof RadixAccordion.Trigger>>(
-  ({ className, children, ...props }, ref) => (
-    <RadixAccordion.Header className="flex">
-      <RadixAccordion.Trigger
+const accordionStyles = tv({
+  slots: {
+    base: "",
+    item: "border-b border-default-1000/20 first:border-t",
+    trigger: "flex flex-1 items-center [&[data-state=open]>svg.chevron]:rotate-180",
+    textWrapper: "flex-1 text-start",
+    title: "",
+    subtitle: "text-default-500",
+    contentWrapper: "data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden",
+    content: "",
+    chevron: "chevron duration-300",
+  },
+  variants: {
+    size: {
+      sm: { trigger: "py-4 [&_svg]:size-4 gap-x-2", title: "text-sm", subtitle: "text-xs", content: "text-sm pb-4" },
+      md: { trigger: "py-5 [&_svg]:size-5 gap-x-2.5", title: "text-base", subtitle: "text-sm", content: "text-base pb-5" },
+      lg: { trigger: "py-6 [&_svg]:size-6 gap-x-3", title: "text-lg", subtitle: "text-base", content: "text-lg pb-6" },
+    },
+  },
+});
+
+type AccordionStylesReturnType = ReturnType<typeof accordionStyles>;
+
+// props
+
+type AccordionProps = (RadixAccordionSingleProps | RadixAccordionMultipleProps) & SizeProps & StyleSlotsToStyleProps<AccordionStylesReturnType>;
+
+type AccordionItemProps = RadixAccordionItemProps &
+  ContentProps & {
+    title: ReactNode;
+    subtitle?: ReactNode;
+    children: ReactNode;
+  };
+
+// slots
+
+interface AccordionSlotsType extends StyleSlotsToSlots<AccordionStylesReturnType> {}
+
+const [AccordionSlotsProvider, useAccordionSlots] = createSlots<AccordionSlotsType>();
+
+// component
+
+function _Accordion(props: AccordionProps, ref: ForwardedRef<HTMLDivElement>) {
+  const { size = "md", className, classNames, style, styles } = props;
+
+  const styleSlots = accordionStyles({ size });
+
+  return (
+    <AccordionSlotsProvider value={{ styleSlots, classNames, styles }}>
+      <RadixAccordionRoot
         ref={ref}
-        className={twMerge(
-          "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
-          className,
-        )}
+        className={styleSlots.base({ className: twMerge(classNames?.base, className) })}
+        style={mergeProps(styles?.base, style)}
         {...props}
-      >
-        {children}
-        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
-      </RadixAccordion.Trigger>
-    </RadixAccordion.Header>
-  ),
-);
-AccordionTrigger.displayName = RadixAccordion.Trigger.displayName;
+      />
+    </AccordionSlotsProvider>
+  );
+}
 
-const AccordionContent = forwardRef<ElementRef<typeof RadixAccordion.Content>, ComponentPropsWithoutRef<typeof RadixAccordion.Content>>(
-  ({ className, children, ...props }, ref) => (
-    <RadixAccordion.Content
+const Accordion = forwardRef(_Accordion);
+
+function _AccordionItem(props: AccordionItemProps, ref: ForwardedRef<HTMLDivElement>) {
+  const { title, subtitle, startContent, endContent, children, styleSlots, className, classNames, style, styles } = useAccordionSlots(props);
+
+  return (
+    <RadixAccordionItem
       ref={ref}
-      className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm transition-all"
+      className={styleSlots.item({ className: twMerge(classNames?.item, className) })}
+      style={mergeProps(styles?.item, style)}
       {...props}
     >
-      <div className={twMerge("pb-4 pt-0", className)}>{children}</div>
-    </RadixAccordion.Content>
-  ),
-);
+      <RadixAccordionHeader className="flex">
+        <RadixAccordionTrigger className={styleSlots.trigger({ className: classNames?.trigger })} style={styles?.trigger}>
+          {startContent}
+          <div className={styleSlots.textWrapper({ className: classNames?.textWrapper })} style={styles?.textWrapper}>
+            <div className={styleSlots.title({ className: classNames?.title })} style={styles?.title}>
+              {title}
+            </div>
+            {subtitle && (
+              <div className={styleSlots.subtitle({ className: classNames?.subtitle })} style={styles?.subtitle}>
+                {subtitle}
+              </div>
+            )}
+          </div>
+          {endContent}
+          <ChevronDown className={styleSlots.chevron({ className: classNames?.chevron })} style={styles?.chevron} />
+        </RadixAccordionTrigger>
+      </RadixAccordionHeader>
+      <RadixAccordionContent className={styleSlots.contentWrapper({ className: classNames?.contentWrapper })} style={styles?.contentWrapper}>
+        <div className={styleSlots.content({ className: classNames?.content })} style={styles?.content}>
+          {children}
+        </div>
+      </RadixAccordionContent>
+    </RadixAccordionItem>
+  );
+}
 
-AccordionContent.displayName = RadixAccordion.Content.displayName;
+const AccordionItem = forwardRef(_AccordionItem);
 
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
+export { Accordion, AccordionItem };
