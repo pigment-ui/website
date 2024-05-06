@@ -75,9 +75,10 @@ export const variantColorStyles = tv({
     { variant: "bordered", isHovered: true, className: "bg-opacity-10" },
     { variant: "faded", isHovered: true, className: "bg-default-200" },
 
-    // faded
-    { variant: "faded", color: "default-inverted", className: "bg-default-900 border border-default-700" },
-    { variant: "faded", color: "default-inverted", isHovered: true, className: "bg-default-800" },
+    // default-inverted
+    { color: "default-inverted", variant: "faded", className: "bg-default-900 border border-default-700" },
+    { color: "default-inverted", variant: "faded", isHovered: true, className: "bg-default-800" },
+    { color: "default-inverted", isFocusVisible: true, className: "outline-default-0" },
   ],
 });
 
