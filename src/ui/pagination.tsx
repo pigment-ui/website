@@ -178,7 +178,7 @@ function usePagination({
     const rightSiblingIndex = Math.min(page + siblingCount, total);
 
     /*
-      We do not show dots just when there is just one page number to be inserted between the extremes of sibling and the page limits i.e 1 and total. Hence we are using leftSiblingIndex > 2 and rightSiblingIndex < total - 2
+      We do not show dots just when there is just one page number to be inserted between the extremes of sibling and the page limits i.e 1 and total. Hence, we are using leftSiblingIndex > 2 and rightSiblingIndex < total - 2
     */
     const shouldShowLeftDots = leftSiblingIndex > 2;
     const shouldShowRightDots = rightSiblingIndex < total - 2;
