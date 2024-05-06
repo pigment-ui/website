@@ -88,6 +88,16 @@ const config: Config = {
           950: "rgb(var(--error-950) / <alpha-value>)",
         },
       },
+
+      keyframes: {
+        "accordion-down": { from: { height: "0px" }, to: { height: "var(--radix-accordion-content-height)" } },
+        "accordion-up": { from: { height: "var(--radix-accordion-content-height)" }, to: { height: "0px" } },
+      },
+
+      animation: {
+        "accordion-down": "accordion-down 300ms",
+        "accordion-up": "accordion-up 300ms",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
