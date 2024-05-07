@@ -274,7 +274,12 @@ function _Slider(props: SliderProps, ref: ForwardedRef<HTMLDivElement>) {
 
                   {showSteps && (
                     <div className={styleSlots.stepsWrapper({ className: classNames?.stepsWrapper })} style={styles?.stepsWrapper}>
-                      {Array.from({ length: (state.getThumbMaxValue(0) - state.getThumbMinValue(0)) / state.step + 1 }).map((_, i) => (
+                      {Array.from({
+                        length:
+                          ((state.values.length === 1 ? state.getThumbMaxValue(0) : state.getThumbMaxValue(1)) - state.getThumbMinValue(0)) /
+                            state.step +
+                          1,
+                      }).map((_, i) => (
                         <div key={i} className={styleSlots.step({ className: classNames?.step })} style={styles?.step} />
                       ))}
                     </div>
