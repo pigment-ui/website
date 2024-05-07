@@ -9,7 +9,7 @@ import { FieldErrorContext, LabelContext, Provider, TextContext } from "react-ar
 
 import { DropletIcon } from "lucide-react";
 
-import { Field, FieldInput, FieldBaseProps, FieldInputBaseProps } from "./field";
+import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 
 // props
 
@@ -26,7 +26,7 @@ function _ColorField(props: ColorFieldProps, ref: ForwardedRef<HTMLInputElement>
   return (
     <Provider
       values={[
-        [LabelContext, { ...labelProps }],
+        [LabelContext, labelProps],
         [TextContext, { slots: { description: descriptionProps, errorMessage: errorMessageProps } }],
         [FieldErrorContext, validation],
       ]}

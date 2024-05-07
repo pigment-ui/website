@@ -13,7 +13,7 @@ import { useObserveElementWidth } from "./utils";
 
 export const fieldStyles = tv({
   slots: {
-    base: "flex flex-col",
+    base: "flex flex-col relative w-full h-full",
     labelStyles: "",
     descriptionStyles: "",
     errorMessageStyles: "text-error-500",
@@ -69,7 +69,7 @@ interface FieldBaseProps extends SizeProps {
 interface FieldProps extends FieldBaseProps {
   isInvalid?: boolean;
   isRequired?: boolean;
-  children?: ReactElement;
+  children?: ReactNode;
 }
 
 interface FieldInputBaseProps extends SizeProps, RadiusProps {

@@ -48,13 +48,13 @@ type RadioStylesReturnType = ReturnType<typeof radioStyles>;
 
 // props
 
-interface RadioProps extends AriaRadioProps, SizeProps, StyleSlotsToStyleProps<RadioStylesReturnType> {}
-
 interface RadioGroupProps extends AriaRadioGroupProps, FieldBaseProps {
   orientation?: Orientation;
   itemClassNames?: RadioProps["classNames"];
   itemStyles?: RadioProps["styles"];
 }
+
+interface RadioProps extends AriaRadioProps, SizeProps, StyleSlotsToStyleProps<RadioStylesReturnType> {}
 
 // slots
 
