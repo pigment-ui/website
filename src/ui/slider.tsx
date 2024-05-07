@@ -85,21 +85,85 @@ const sliderStyles = tv({
     isDragging: { true: { thumb: "cursor-grabbing" } },
     isFocusVisible: { true: { thumb: isFocusVisibleVariants.isFocusVisible.true }, false: { thumb: isFocusVisibleVariants.isFocusVisible.false } },
     hideThumb: { true: { track: "overflow-hidden", thumb: "opacity-0", filler: "rounded-none" } },
+    hasMarks: { true: "" },
   },
   compoundVariants: [
-    { orientation: "horizontal", size: "sm", className: { trackWrapper: "py-2", track: "h-1", step: "h-1", thumbWrapper: "inset-x-2" } },
-    { orientation: "horizontal", size: "md", className: { trackWrapper: "py-3", track: "h-2", step: "h-2", thumbWrapper: "inset-x-2.5" } },
-    { orientation: "horizontal", size: "lg", className: { trackWrapper: "py-4", track: "h-3", step: "h-3", thumbWrapper: "inset-x-3" } },
-    { orientation: "vertical", size: "sm", className: { trackWrapper: "px-2", track: "w-1", step: "w-1", thumbWrapper: "inset-y-2" } },
-    { orientation: "vertical", size: "md", className: { trackWrapper: "px-3", track: "w-2", step: "w-2", thumbWrapper: "inset-y-2.5" } },
-    { orientation: "vertical", size: "lg", className: { trackWrapper: "px-4", track: "w-3", step: "w-3", thumbWrapper: "inset-y-3" } },
+    {
+      orientation: "horizontal",
+      size: "sm",
+      className: {
+        trackWrapper: "py-2",
+        track: "h-1",
+        step: "h-1",
+        thumbWrapper: "inset-x-2",
+        stepsWrapper: "inset-x-2",
+        marksWrapper: "inset-x-2",
+      },
+    },
+    {
+      orientation: "horizontal",
+      size: "md",
+      className: {
+        trackWrapper: "py-3",
+        track: "h-2",
+        step: "h-2",
+        thumbWrapper: "inset-x-2.5",
+        stepsWrapper: "inset-x-2.5",
+        marksWrapper: "inset-x-2.5",
+      },
+    },
+    {
+      orientation: "horizontal",
+      size: "lg",
+      className: {
+        trackWrapper: "py-4",
+        track: "h-3",
+        step: "h-3",
+        thumbWrapper: "inset-x-3",
+        stepsWrapper: "inset-x-3",
+        marksWrapper: "inset-x-3",
+      },
+    },
+    {
+      orientation: "vertical",
+      size: "sm",
+      className: {
+        trackWrapper: "px-2",
+        track: "w-1",
+        step: "w-1",
+        thumbWrapper: "inset-y-2",
+        stepsWrapper: "inset-y-2",
+        marksWrapper: "inset-y-2",
+      },
+    },
+    {
+      orientation: "vertical",
+      size: "md",
+      className: {
+        trackWrapper: "px-3",
+        track: "w-2",
+        step: "w-2",
+        thumbWrapper: "inset-y-2.5",
+        stepsWrapper: "inset-y-2.5",
+        marksWrapper: "inset-y-2.5",
+      },
+    },
+    {
+      orientation: "vertical",
+      size: "lg",
+      className: {
+        trackWrapper: "px-4",
+        track: "w-3",
+        step: "w-3",
+        thumbWrapper: "inset-y-3",
+        stepsWrapper: "inset-y-3",
+        marksWrapper: "inset-y-3",
+      },
+    },
 
-    { orientation: "horizontal", size: "sm", className: { stepsWrapper: "inset-x-2", marksWrapper: "inset-x-2" } },
-    { orientation: "horizontal", size: "md", className: { stepsWrapper: "inset-x-2.5", marksWrapper: "inset-x-2.5" } },
-    { orientation: "horizontal", size: "lg", className: { stepsWrapper: "inset-x-3", marksWrapper: "inset-x-3" } },
-    { orientation: "vertical", size: "sm", className: { stepsWrapper: "inset-y-2", marksWrapper: "inset-y-2" } },
-    { orientation: "vertical", size: "md", className: { stepsWrapper: "inset-y-2.5", marksWrapper: "inset-y-2.5" } },
-    { orientation: "vertical", size: "lg", className: { stepsWrapper: "inset-y-3", marksWrapper: "inset-y-3" } },
+    { orientation: "horizontal", hasMarks: true, size: "sm", className: { sliderWrapper: "pb-4" } },
+    { orientation: "horizontal", hasMarks: true, size: "md", className: { sliderWrapper: "pb-5" } },
+    { orientation: "horizontal", hasMarks: true, size: "lg", className: { sliderWrapper: "pb-6" } },
 
     { orientation: "horizontal", hideThumb: true, className: { thumbWrapper: "inset-x-0" } },
     { orientation: "vertical", hideThumb: true, className: { thumbWrapper: "inset-y-0" } },
@@ -149,7 +213,7 @@ function _Slider(props: SliderProps, ref: ForwardedRef<HTMLDivElement>) {
   const { displayValidation } = useFormValidationState({ ...props, value });
   const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
 
-  const styleSlots = sliderStyles({ orientation, hideThumb, size, radius, isInvalid: displayValidation.isInvalid });
+  const styleSlots = sliderStyles({ orientation, hideThumb, size, radius, hasMarks: !!marks, isInvalid: displayValidation.isInvalid });
 
   return (
     <Provider
