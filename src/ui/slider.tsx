@@ -37,8 +37,8 @@ const sliderStyles = tv({
     filler: "absolute bg-default-1000 [transition:background-color_300ms;]",
     stepsWrapper: "absolute flex items-center justify-between pointer-events-none",
     step: "bg-default-0 z-10",
-    marksWrapper: "",
-    mark: "",
+    marksWrapper: "absolute",
+    mark: "absolute",
   },
   variants: {
     orientation: {
@@ -51,6 +51,8 @@ const sliderStyles = tv({
         contentWrapper: "flex-row w-full",
         stepsWrapper: "flex-row inset-y-0",
         step: "w-px",
+        marksWrapper: "top-full",
+        mark: "-translate-x-1/2",
       },
       vertical: {
         base: "h-full",
@@ -61,6 +63,8 @@ const sliderStyles = tv({
         contentWrapper: "flex-col h-full",
         stepsWrapper: "flex-col inset-x-0",
         step: "h-px",
+        marksWrapper: "left-full",
+        mark: "translate-y-1/2",
       },
     },
     size: {
@@ -90,12 +94,12 @@ const sliderStyles = tv({
     { orientation: "vertical", size: "md", className: { trackWrapper: "px-3", track: "w-2", step: "w-2", thumbWrapper: "inset-y-2.5" } },
     { orientation: "vertical", size: "lg", className: { trackWrapper: "px-4", track: "w-3", step: "w-3", thumbWrapper: "inset-y-3" } },
 
-    { orientation: "horizontal", size: "sm", className: { stepsWrapper: "inset-x-2" } },
-    { orientation: "horizontal", size: "md", className: { stepsWrapper: "inset-x-2.5" } },
-    { orientation: "horizontal", size: "lg", className: { stepsWrapper: "inset-x-3" } },
-    { orientation: "vertical", size: "sm", className: { stepsWrapper: "inset-y-2" } },
-    { orientation: "vertical", size: "md", className: { stepsWrapper: "inset-y-2.5" } },
-    { orientation: "vertical", size: "lg", className: { stepsWrapper: "inset-y-3" } },
+    { orientation: "horizontal", size: "sm", className: { stepsWrapper: "inset-x-2", marksWrapper: "inset-x-2" } },
+    { orientation: "horizontal", size: "md", className: { stepsWrapper: "inset-x-2.5", marksWrapper: "inset-x-2.5" } },
+    { orientation: "horizontal", size: "lg", className: { stepsWrapper: "inset-x-3", marksWrapper: "inset-x-3" } },
+    { orientation: "vertical", size: "sm", className: { stepsWrapper: "inset-y-2", marksWrapper: "inset-y-2" } },
+    { orientation: "vertical", size: "md", className: { stepsWrapper: "inset-y-2.5", marksWrapper: "inset-y-2.5" } },
+    { orientation: "vertical", size: "lg", className: { stepsWrapper: "inset-y-3", marksWrapper: "inset-y-3" } },
 
     { orientation: "horizontal", hideThumb: true, className: { thumbWrapper: "inset-x-0" } },
     { orientation: "vertical", hideThumb: true, className: { thumbWrapper: "inset-y-0" } },
@@ -193,13 +197,7 @@ function _Slider(props: SliderProps, ref: ForwardedRef<HTMLDivElement>) {
                           style={mergeProps(
                             {
                               [orientation === "horizontal" ? "left" : "bottom"]:
-                                state.values.length === 1
-                                  ? -{
-                                      sm: 8,
-                                      md: 10,
-                                      lg: 12,
-                                    }[size]
-                                  : `${state.getThumbPercent(0) * 100}%`,
+                                state.values.length === 1 ? -{ sm: 8, md: 10, lg: 12 }[size] : `${state.getThumbPercent(0) * 100}%`,
                               [orientation === "horizontal" ? "right" : "top"]:
                                 state.values.length === 1 ? `${100 - state.getThumbPercent(0) * 100}%` : `${100 - state.getThumbPercent(1) * 100}%`,
                             },
@@ -214,6 +212,23 @@ function _Slider(props: SliderProps, ref: ForwardedRef<HTMLDivElement>) {
                     <div className={styleSlots.stepsWrapper({ className: classNames?.stepsWrapper })} style={styles?.stepsWrapper}>
                       {Array.from({ length: (state.getThumbMaxValue(0) - state.getThumbMinValue(0)) / state.step + 1 }).map((_, i) => (
                         <div key={i} className={styleSlots.step({ className: classNames?.step })} style={styles?.step} />
+                      ))}
+                    </div>
+                  )}
+
+                  {marks && (
+                    <div className={styleSlots.marksWrapper({ className: classNames?.marksWrapper })} style={styles?.marksWrapper}>
+                      {marks.map((mark, i) => (
+                        <div
+                          key={i}
+                          className={styleSlots.mark({ className: classNames?.mark })}
+                          style={mergeProps(
+                            { [orientation === "horizontal" ? "left" : "bottom"]: `${state.getValuePercent(mark.value) * 100}%` },
+                            styles?.mark,
+                          )}
+                        >
+                          {mark.label}
+                        </div>
                       ))}
                     </div>
                   )}
