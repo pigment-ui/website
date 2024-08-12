@@ -57,11 +57,11 @@ function _Popover(props: PopoverProps, ref: ForwardedRef<HTMLDivElement>) {
                 width={arrowSize}
                 height={arrowSize}
                 className={twMerge(
-                  "fill-white stroke-black/20 stroke-[.5px]",
+                  "fill-default-0 stroke-default-1000/20 stroke-[.5px]",
                   {
                     bottom: "translate-y-px rotate-180",
                     left: "-translate-x-px -rotate-90",
-                    right: "translate-x-px  rotate-90",
+                    right: "translate-x-px rotate-90",
                     top: "-translate-y-px",
                     center: "",
                   }[placement],

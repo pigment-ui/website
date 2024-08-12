@@ -34,8 +34,8 @@ function _Tooltip(props: TooltipProps, ref: ForwardedRef<HTMLDivElement>) {
         tooltipStyles({
           className: twMerge(
             "duration-300 [transition-duration:0ms]",
-            isEntering && "fade-in animate-in",
-            isExiting && "fade-out animate-out",
+            isEntering && "animate-in fade-in",
+            isExiting && "animate-out fade-out",
             {
               bottom: isEntering ? "slide-in-from-top-4" : isExiting ? "slide-out-to-top-4" : "",
               left: isEntering ? "slide-in-from-right-4" : isExiting ? "slide-out-to-right-4" : "",
@@ -57,11 +57,11 @@ function _Tooltip(props: TooltipProps, ref: ForwardedRef<HTMLDivElement>) {
                 width={arrowSize}
                 height={arrowSize}
                 className={twMerge(
-                  "fill-white stroke-black/20 stroke-[.5px]",
+                  "fill-default-0 stroke-default-1000/20 stroke-[.5px]",
                   {
                     bottom: "translate-y-px rotate-180",
                     left: "-translate-x-px -rotate-90",
-                    right: "translate-x-px  rotate-90",
+                    right: "translate-x-px rotate-90",
                     top: "-translate-y-px",
                     center: "",
                   }[placement],
