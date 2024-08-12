@@ -1,3 +1,5 @@
+"use client";
+
 import { Context, createContext, ForwardedRef, Provider, RefObject, useContext, useState } from "react";
 import { mergeProps } from "react-aria";
 import { useObjectRef, useResizeObserver } from "@react-aria/utils";
