@@ -13,7 +13,7 @@ import { useObserveElementWidth } from "./utils";
 
 export const fieldStyles = tv({
   slots: {
-    base: "flex flex-col relative w-full h-full",
+    base: "flex flex-col relative size-full",
     labelStyles: "",
     descriptionStyles: "",
     errorMessageStyles: "text-error-500",

@@ -28,7 +28,7 @@ const sliderStyles = tv({
   slots: {
     base: "",
     output: "absolute top-0 right-0",
-    sliderWrapper: "relative h-full w-full",
+    sliderWrapper: "relative size-full",
     contentWrapper: "flex items-center",
     trackWrapper: "flex-1 relative",
     track: "bg-default-1000/20 cursor-pointer duration-300",
