@@ -32,14 +32,18 @@ export const fieldInputStyles = tv({
     base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden data-[disabled]:bg-default-1000/10 duration-300 transition-colors",
     self: "flex-1 h-full bg-transparent outline-none text-default-1000 placeholder:text-default-500 flex items-center data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
     content: "text-neutral-500",
-    button:
-      "grid place-items-center bg-default-1000 bg-opacity-10 data-[hovered]:bg-opacity-20 data-[pressed]:scale-90 data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed duration-300",
+    button: [
+      "flex items-center bg-default-1000 bg-opacity-10 duration-300",
+      "data-[hovered]:bg-opacity-20 data-[pressed]:scale-90",
+      "data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed",
+      "outline-none data-[focus-visible]:outline data-[focus-visible]:outline-default-1000 data-[focus-visible]:z-10",
+    ],
   },
   variants: {
     size: {
-      sm: { base: "h-8 text-xs [&_svg]:size-4", button: "h-6 w-6 [&_svg]:!size-3" },
-      md: { base: "h-10 text-sm [&_svg]:size-5", button: "h-7 w-7 [&_svg]:!size-4" },
-      lg: { base: "h-12 text-base [&_svg]:size-6", button: "h-8 w-8 [&_svg]:!size-5" },
+      sm: { base: "h-8 text-xs [&_svg]:size-4", button: "h-6 px-1.5 [&_svg]:!size-3" },
+      md: { base: "h-10 text-sm [&_svg]:size-5", button: "h-7 px-1.5 [&_svg]:!size-4" },
+      lg: { base: "h-12 text-base [&_svg]:size-6", button: "h-8 px-1.5 [&_svg]:!size-5" },
     },
     radius: {
       sm: { base: radiusVariants.radius.sm, button: smallRadiusVariants.radius.sm },
@@ -75,6 +79,8 @@ interface FieldProps extends FieldBaseProps {
 interface FieldInputBaseProps extends SizeProps, RadiusProps {
   startContent?: ReactElement;
   endContent?: ReactElement;
+  startButton?: ReactElement;
+  endButton?: ReactElement;
 }
 
 interface FieldInputProps extends FieldInputBaseProps {
