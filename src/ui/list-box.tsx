@@ -128,8 +128,8 @@ function _ListBoxItem(props: ListBoxItemProps, ref: ForwardedRef<HTMLDivElement>
   return (
     <AriaListBoxItem
       ref={ref}
-      id={typeof props.children === "string" ? props.children : undefined}
-      textValue={typeof props.children === "string" ? props.children : undefined}
+      id={props.id ?? (typeof props.children === "string" ? props.children : undefined)}
+      textValue={props.textValue ?? (typeof props.children === "string" ? props.children : undefined)}
       {...props}
       className={composeRenderProps(props.className, (className, { isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         styleSlots.base({
