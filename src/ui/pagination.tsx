@@ -109,7 +109,7 @@ function _Pagination(props: PaginationProps, ref: ForwardedRef<HTMLUListElement>
               onPress={() => onChange(page - dotsJump > 1 ? page - dotsJump : 1)}
               className={(renderProps) => styleSlots.base(renderProps)}
             >
-              {({ isHovered }) => (isHovered ? <ChevronsLeftIcon /> : <EllipsisIcon />)}
+              {({ isHovered, isFocusVisible }) => (isHovered || isFocusVisible ? <ChevronsLeftIcon /> : <EllipsisIcon />)}
             </Button>
           ) : pageNumber === "DOTS_NEXT" ? (
             <Button
@@ -117,7 +117,7 @@ function _Pagination(props: PaginationProps, ref: ForwardedRef<HTMLUListElement>
               onPress={() => onChange(page + dotsJump < lastPage ? page + dotsJump : lastPage)}
               className={(renderProps) => styleSlots.base(renderProps)}
             >
-              {({ isHovered }) => (isHovered ? <ChevronsRightIcon /> : <EllipsisIcon />)}
+              {({ isHovered, isFocusVisible }) => (isHovered || isFocusVisible ? <ChevronsRightIcon /> : <EllipsisIcon />)}
             </Button>
           ) : (
             <Button
