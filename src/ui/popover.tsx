@@ -1,7 +1,7 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { composeRenderProps, OverlayArrow, Popover as AriaPopover, PopoverProps as AriaPopoverProps } from "react-aria-components";
+import { composeRenderProps, DialogTrigger, OverlayArrow, Popover as AriaPopover, PopoverProps as AriaPopoverProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
 
@@ -82,5 +82,5 @@ const Popover = forwardRef(_Popover);
 
 // exports
 
-export { Popover };
+export { Popover, DialogTrigger };
 export type { PopoverProps };

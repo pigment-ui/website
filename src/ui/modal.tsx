@@ -8,7 +8,7 @@ import { tv } from "tailwind-variants";
 
 import { XIcon } from "lucide-react";
 
-import { ChildrenProps, SizeProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
+import { SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { Button } from "./button";
@@ -47,8 +47,6 @@ interface ModalProps extends ModalOverlayProps, SizeProps, StyleSlotsToStyleProp
   backdrop?: "blur" | "opaque" | "transparent";
   insideScroll?: boolean;
 }
-
-interface ModalSectionProps extends ChildrenProps, StyleProps {}
 
 // slots
 
@@ -104,8 +102,8 @@ function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
 
 const Modal = forwardRef(_Modal);
 
-function _ModalHeader(props: ModalSectionProps, ref: ForwardedRef<HTMLElement>) {
-  const { headerId, children, styleSlots, className, classNames, style, styles } = useModalSlots(props);
+function _ModalHeader(props: HTMLAttributes<HTMLElement>, ref: ForwardedRef<HTMLElement>) {
+  const { headerId, bodyId, styleSlots, className, classNames, style, styles, ...restProps } = useModalSlots(props);
 
   return (
     <header
@@ -113,16 +111,15 @@ function _ModalHeader(props: ModalSectionProps, ref: ForwardedRef<HTMLElement>) 
       id={headerId}
       className={styleSlots.header({ className: twMerge(classNames?.header, className) })}
       style={mergeProps(styles?.header, style)}
-    >
-      {children}
-    </header>
+      {...restProps}
+    />
   );
 }
 
 const ModalHeader = forwardRef(_ModalHeader);
 
-function _ModalBody(props: ModalSectionProps, ref: ForwardedRef<HTMLElement>) {
-  const { bodyId, children, styleSlots, className, classNames, style, styles } = useModalSlots(props);
+function _ModalBody(props: HTMLAttributes<HTMLElement>, ref: ForwardedRef<HTMLElement>) {
+  const { headerId, bodyId, styleSlots, className, classNames, style, styles, ...restProps } = useModalSlots(props);
 
   return (
     <section
@@ -130,28 +127,30 @@ function _ModalBody(props: ModalSectionProps, ref: ForwardedRef<HTMLElement>) {
       id={bodyId}
       className={styleSlots.body({ className: twMerge(classNames?.body, className) })}
       style={mergeProps(styles?.body, style)}
-    >
-      {children}
-    </section>
+      {...restProps}
+    />
   );
 }
 
 const ModalBody = forwardRef(_ModalBody);
 
-function _ModalFooter(props: ModalSectionProps, ref: ForwardedRef<HTMLElement>) {
-  const { children, styleSlots, className, classNames, style, styles } = useModalSlots(props);
+function _ModalFooter(props: HTMLAttributes<HTMLElement>, ref: ForwardedRef<HTMLElement>) {
+  const { headerId, bodyId, styleSlots, className, classNames, style, styles, ...restProps } = useModalSlots(props);
 
   return (
-    <footer ref={ref} className={styleSlots.footer({ className: twMerge(classNames?.footer, className) })} style={mergeProps(styles?.footer, style)}>
-      {children}
-    </footer>
+    <footer
+      ref={ref}
+      className={styleSlots.footer({ className: twMerge(classNames?.footer, className) })}
+      style={mergeProps(styles?.footer, style)}
+      {...restProps}
+    />
   );
 }
 
 const ModalFooter = forwardRef(_ModalFooter);
 
 function _ModalHeading<T extends object>(props: HTMLAttributes<HTMLHeadingElement>, ref: ForwardedRef<HTMLHeadingElement>) {
-  const { styleSlots, className, classNames, style, styles, ...restProps } = useModalSlots(props);
+  const { headerId, bodyId, styleSlots, className, classNames, style, styles, ...restProps } = useModalSlots(props);
 
   return (
     <h3
@@ -166,7 +165,7 @@ function _ModalHeading<T extends object>(props: HTMLAttributes<HTMLHeadingElemen
 const ModalHeading = forwardRef(_ModalHeading);
 
 function _ModalButtons<T extends object>(props: HTMLAttributes<HTMLDivElement>, ref: ForwardedRef<HTMLDivElement>) {
-  const { styleSlots, className, classNames, style, styles, ...restProps } = useModalSlots(props);
+  const { headerId, bodyId, styleSlots, className, classNames, style, styles, ...restProps } = useModalSlots(props);
 
   return (
     <div
