@@ -74,4 +74,3 @@ const Separator = forwardRef(_Separator);
 // exports
 
 export { Separator };
-export type { SeparatorProps };

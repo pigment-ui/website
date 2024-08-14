@@ -121,4 +121,3 @@ const Radio = forwardRef(_Radio);
 // exports
 
 export { RadioGroup, Radio };
-export type { RadioGroupProps, RadioProps };

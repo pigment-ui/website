@@ -174,4 +174,3 @@ const TabPanel = (forwardRef as ForwardRefType)(_TabPanel);
 // exports
 
 export { Tabs, Tab, TabList, TabPanel };
-export type { TabsProps };

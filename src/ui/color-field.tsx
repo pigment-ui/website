@@ -35,4 +35,3 @@ const ColorField = forwardRef(_ColorField);
 // exports
 
 export { ColorField };
-export type { ColorFieldProps };

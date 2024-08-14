@@ -229,4 +229,4 @@ const FieldInput = forwardRef(_FieldInput);
 // exports
 
 export { Field, FieldInput };
-export type { FieldBaseProps, FieldProps, FieldInputBaseProps, FieldInputProps };
+export type { FieldBaseProps, FieldInputBaseProps };

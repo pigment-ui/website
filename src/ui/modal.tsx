@@ -182,4 +182,3 @@ const ModalButtons = forwardRef(_ModalButtons);
 // exports
 
 export { Modal, ModalHeader, ModalBody, ModalFooter, ModalHeading, ModalButtons };
-export type { ModalProps };

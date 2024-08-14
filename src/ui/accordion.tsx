@@ -123,5 +123,6 @@ function _AccordionItem(props: AccordionItemProps, ref: ForwardedRef<HTMLDivElem
 
 const AccordionItem = forwardRef(_AccordionItem);
 
+// exports
+
 export { Accordion, AccordionItem };
-export type { AccordionProps, AccordionItemProps };

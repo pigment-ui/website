@@ -91,4 +91,3 @@ function TriggerWrapperWithoutDiv({ children }: { children: ReactElement }) {
 // exports
 
 export { Tooltip, TriggerWrapperWithoutDiv, TooltipTrigger };
-export type { TooltipProps };

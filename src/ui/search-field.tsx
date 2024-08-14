@@ -47,4 +47,3 @@ const SearchField = forwardRef(_SearchField);
 // exports
 
 export { SearchField };
-export type { SearchFieldProps };

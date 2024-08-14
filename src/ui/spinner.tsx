@@ -40,4 +40,3 @@ const Spinner = forwardRef(_Spinner);
 // exports
 
 export { Spinner };
-export type { SpinnerProps };

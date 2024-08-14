@@ -64,4 +64,3 @@ const Chip = forwardRef(_Chip);
 // exports
 
 export { Chip };
-export type { ChipProps };

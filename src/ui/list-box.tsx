@@ -189,7 +189,7 @@ const ListBoxSection = (forwardRef as ForwardRefType)(_ListBoxSection);
 // exports
 
 export { ListBox, ListBoxItem, ListBoxSection, listBoxItemStyles };
-export type { ListBoxProps, ListBoxItemProps, ListBoxSectionProps, ListBoxSlotsType };
+export type { ListBoxSlotsType };
 
 export const filterInlineListBoxProps = (props: any) => ({
   asCard: false,

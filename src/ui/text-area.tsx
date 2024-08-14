@@ -34,4 +34,3 @@ const TextArea = forwardRef(_TextArea);
 // exports
 
 export { TextArea };
-export type { TextAreaProps };

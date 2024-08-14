@@ -56,4 +56,3 @@ const NumberField = forwardRef(_NumberField);
 // exports
 
 export { NumberField };
-export type { NumberFieldProps };

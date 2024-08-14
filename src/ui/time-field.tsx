@@ -39,4 +39,3 @@ const TimeField = (forwardRef as ForwardRefType)(_TimeField);
 // exports
 
 export { TimeField };
-export type { TimeFieldProps };

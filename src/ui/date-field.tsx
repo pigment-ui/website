@@ -39,4 +39,3 @@ const DateField = (forwardRef as ForwardRefType)(_DateField);
 // exports
 
 export { DateField };
-export type { DateFieldProps };

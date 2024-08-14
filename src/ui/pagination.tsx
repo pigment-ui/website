@@ -218,4 +218,3 @@ function usePagination({
 // exports
 
 export { Pagination };
-export type { PaginationProps };

@@ -35,4 +35,3 @@ const Skeleton = forwardRef(_Skeleton);
 // exports
 
 export { Skeleton };
-export type { SkeletonProps };

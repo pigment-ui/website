@@ -30,4 +30,3 @@ const TextField = forwardRef(_TextField);
 // exports
 
 export { TextField };
-export type { TextFieldProps };

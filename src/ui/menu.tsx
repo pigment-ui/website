@@ -1,6 +1,6 @@
 "use client";
 
-import { ForwardedRef, forwardRef } from "react";
+import { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import {
   composeRenderProps,
@@ -20,7 +20,7 @@ import { ForwardRefType, StyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { cardStyles } from "./card";
-import { ListBoxItemProps, listBoxItemStyles, ListBoxProps, ListBoxSection, ListBoxSlotsType } from "./list-box";
+import { ListBox, ListBoxItem, listBoxItemStyles, ListBoxSection, ListBoxSlotsType } from "./list-box";
 
 // styles
 
@@ -34,10 +34,10 @@ const menuItemStyles = listBoxItemStyles;
 
 interface MenuProps<T extends object>
   extends Omit<AriaMenuProps<T>, keyof StyleProps>,
-    Omit<ListBoxProps<T>, keyof AriaMenuProps<T> | "asCard">,
+    Omit<ComponentPropsWithoutRef<typeof ListBox<T>>, keyof AriaMenuProps<T> | "asCard">,
     Omit<PopoverProps, keyof Omit<AriaMenuProps<T>, keyof StyleProps>> {}
 
-interface MenuItemProps extends AriaMenuItemProps, Omit<ListBoxItemProps, keyof AriaMenuItemProps> {}
+interface MenuItemProps extends AriaMenuItemProps, Omit<ComponentPropsWithoutRef<typeof ListBoxItem>, keyof AriaMenuItemProps> {}
 
 // slots
 
@@ -106,4 +106,3 @@ const MenuSection = ListBoxSection;
 // exports
 
 export { Menu, MenuItem, MenuSection };
-export type { MenuProps, MenuItemProps };

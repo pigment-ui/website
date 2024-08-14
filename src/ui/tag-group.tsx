@@ -161,4 +161,3 @@ const Tag = forwardRef(_Tag);
 // exports
 
 export { TagGroup, Tag };
-export type { TagGroupProps, TagProps };

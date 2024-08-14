@@ -1,22 +1,23 @@
 "use client";
 
-import { ForwardedRef, forwardRef, ReactNode } from "react";
+import { ComponentPropsWithoutRef, ForwardedRef, forwardRef, ReactNode } from "react";
 import { Button, Select as AriaSelect, SelectProps as AriaSelectProps, SelectValue, SelectValueRenderProps } from "react-aria-components";
 
 import { ChevronDownIcon } from "lucide-react";
 
 import { ForwardRefType } from "./types";
 import { useObserveElementWidth } from "./utils";
+
 import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
-import { Popover, PopoverProps } from "./popover";
+import { Popover } from "./popover";
 import { Separator } from "./separator";
 
 // props
 
 interface SelectProps<T extends object>
   extends Omit<AriaSelectProps<T>, "children">,
-    Omit<PopoverProps, keyof AriaSelectProps<T>>,
+    Omit<ComponentPropsWithoutRef<typeof Popover>, keyof AriaSelectProps<T>>,
     ListBoxSlotsType<T>,
     FieldBaseProps,
     FieldInputBaseProps {
@@ -78,4 +79,3 @@ const SelectSection = ListBoxSection;
 // exports
 
 export { Select, SelectItem, SelectSection };
-export type { SelectProps };

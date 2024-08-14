@@ -320,4 +320,3 @@ const Slider = forwardRef(_Slider);
 // exports
 
 export { Slider };
-export type { SliderProps };

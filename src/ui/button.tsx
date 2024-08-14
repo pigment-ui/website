@@ -96,4 +96,3 @@ const Button = forwardRef(_Button);
 // exports
 
 export { Button };
-export type { ButtonProps };

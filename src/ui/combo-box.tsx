@@ -74,4 +74,3 @@ const ComboBoxSection = ListBoxSection;
 // exports
 
 export { ComboBox, ComboBoxItem, ComboBoxSection };
-export type { ComboBoxProps };

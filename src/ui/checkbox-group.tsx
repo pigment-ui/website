@@ -1,6 +1,6 @@
 "use client";
 
-import { ForwardedRef, forwardRef } from "react";
+import { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
 import { Orientation } from "react-aria";
 import { CheckboxGroup as AriaCheckboxGroup, CheckboxGroupProps as AriaCheckboxGroupProps, composeRenderProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
@@ -8,7 +8,7 @@ import { tv } from "tailwind-variants";
 import { RadiusProps } from "./types";
 import { createSlots } from "./utils";
 
-import { CheckboxProps } from "./checkbox";
+import { Checkbox } from "./checkbox";
 import { Field, FieldBaseProps } from "./field";
 
 // styles
@@ -32,8 +32,8 @@ const checkboxGroupStyles = tv({
 
 interface CheckboxGroupProps extends AriaCheckboxGroupProps, FieldBaseProps, RadiusProps {
   orientation?: Orientation;
-  itemClassNames?: CheckboxProps["classNames"];
-  itemStyles?: CheckboxProps["styles"];
+  itemClassNames?: ComponentPropsWithoutRef<typeof Checkbox>["classNames"];
+  itemStyles?: ComponentPropsWithoutRef<typeof Checkbox>["styles"];
 }
 
 // slots
@@ -65,4 +65,3 @@ const CheckboxGroup = forwardRef(_CheckboxGroup);
 // exports
 
 export { CheckboxGroup, checkboxGroupStyles, useCheckboxGroupSlots };
-export type { CheckboxGroupProps };

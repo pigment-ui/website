@@ -98,4 +98,3 @@ const Checkbox = forwardRef(_Checkbox);
 // exports
 
 export { Checkbox };
-export type { CheckboxProps };

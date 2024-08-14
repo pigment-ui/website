@@ -138,4 +138,3 @@ const CardButtons = forwardRef(_CardButtons);
 // exports
 
 export { Card, CardHeader, CardBody, CardFooter, CardHeading, CardButtons, cardStyles };
-export type { CardProps };
