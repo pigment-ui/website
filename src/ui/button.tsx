@@ -36,7 +36,7 @@ const buttonStyles = tv({
 
 // props
 
-interface ButtonProps extends AriaButtonProps, HoverProps, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps, StyleProps {
+interface ButtonProps extends AriaButtonProps, HoverProps, VariantProps, ColorProps<true>, SizeProps, RadiusProps, ContentProps, StyleProps {
   isIconOnly?: boolean;
   isLoading?: boolean;
   asChild?: boolean;

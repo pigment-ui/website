@@ -22,6 +22,7 @@ export * from "./skeleton";
 export * from "./slider";
 export * from "./spinner";
 export * from "./styles";
+export * from "./switch";
 export * from "./tabs";
 export * from "./tag-group";
 export * from "./text-area";

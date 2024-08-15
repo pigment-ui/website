@@ -25,7 +25,7 @@ const spinnerStyles = tv({
 
 // props
 
-interface SpinnerProps extends ColorProps, SizeProps, StyleProps {}
+interface SpinnerProps extends ColorProps<true>, SizeProps, StyleProps {}
 
 // component
 

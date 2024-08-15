@@ -35,7 +35,6 @@ const tabsStyles = tv({
     },
     color: {
       default: "",
-      "default-inverted": { list: "bg-default-0/10", panel: "bg-default-0/10 text-default-0" },
       primary: "",
       info: "",
       success: "",
@@ -54,9 +53,7 @@ const tabsStyles = tv({
       full: { list: radiusVariants.radius.full },
       none: { list: radiusVariants.radius.none },
     },
-    isFocusVisible: {
-      true: { panel: isFocusVisibleVariants.isFocusVisible.true },
-    },
+    isFocusVisible: { true: { panel: isFocusVisibleVariants.isFocusVisible.true } },
   },
 });
 
@@ -74,10 +71,7 @@ const tabStyles = tv({
     isSelected: { false: "!bg-transparent !text-default-500 !border-none" },
     ...radiusVariants,
   },
-  compoundVariants: [
-    { isSelected: false, isHovered: true, className: "!text-default-1000" },
-    { isSelected: false, isHovered: true, color: "default-inverted", className: "!text-default-0" },
-  ],
+  compoundVariants: [{ isSelected: false, isHovered: true, className: "!text-default-1000" }],
 });
 
 // props

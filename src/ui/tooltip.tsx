@@ -11,7 +11,7 @@ import { mergeProps, useButton } from "react-aria";
 // styles
 
 const tooltipStyles = tv({
-  base: cardStyles().base({ className: "p-4" }),
+  base: cardStyles().base({ className: "p-2" }),
 });
 
 // props

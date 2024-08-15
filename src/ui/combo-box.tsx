@@ -1,6 +1,6 @@
 "use client";
 
-import { ForwardedRef, forwardRef, ReactNode } from "react";
+import { ComponentPropsWithoutRef, ForwardedRef, forwardRef, ReactNode } from "react";
 import { Button, ComboBox as AriaComboBox, ComboBoxProps as AriaComboBoxProps, Input, InputProps } from "react-aria-components";
 
 import { ChevronDownIcon } from "lucide-react";
@@ -9,7 +9,7 @@ import { ForwardRefType } from "./types";
 import { useObserveElementWidth } from "./utils";
 import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
-import { Popover, PopoverProps } from "./popover";
+import { Popover } from "./popover";
 import { Separator } from "./separator";
 
 // props
@@ -17,7 +17,7 @@ import { Separator } from "./separator";
 interface ComboBoxProps<T extends object>
   extends Omit<AriaComboBoxProps<T>, "children">,
     Omit<InputProps, keyof AriaComboBoxProps<T> | "color" | "size">,
-    Omit<PopoverProps, keyof AriaComboBoxProps<T>>,
+    Omit<ComponentPropsWithoutRef<typeof Popover>, keyof AriaComboBoxProps<T>>,
     ListBoxSlotsType<T>,
     FieldBaseProps,
     FieldInputBaseProps {

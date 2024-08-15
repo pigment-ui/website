@@ -29,7 +29,7 @@ const chipStyles = tv({
 
 // props
 
-interface ChipProps extends Omit<HTMLAttributes<HTMLDivElement>, "color">, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps {
+interface ChipProps extends Omit<HTMLAttributes<HTMLDivElement>, "color">, VariantProps, ColorProps<true>, SizeProps, RadiusProps, ContentProps {
   isIconOnly?: boolean;
 }
 
