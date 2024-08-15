@@ -67,8 +67,8 @@ function _MenuItem(props: MenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
   return (
     <AriaMenuItem
       ref={ref}
-      id={props.id ?? (typeof props.children === "string" ? props.children : undefined)}
-      textValue={props.textValue ?? (typeof props.children === "string" ? props.children : undefined)}
+      id={typeof props.children === "string" ? props.children : undefined}
+      textValue={typeof props.children === "string" ? props.children : undefined}
       {...props}
       className={composeRenderProps(props.className, (className, { isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         styleSlots.base({
