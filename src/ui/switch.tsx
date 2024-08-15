@@ -79,7 +79,9 @@ function _Switch(props: SwitchProps, ref: ForwardedRef<HTMLLabelElement>) {
           <div className={styleSlots.self({ isHovered, isPressed, isSelected, isFocusVisible, className: classNames?.self })} style={styles?.self}>
             <div className={styleSlots.thumb({ isSelected, isPressed, className: classNames?.thumb })} style={styles?.thumb} />
           </div>
-          <div>{children}</div>
+          <div className={styleSlots.content({ className: classNames?.content })} style={styles?.content}>
+            {children}
+          </div>
         </>
       ))}
     </AriaSwitch>
