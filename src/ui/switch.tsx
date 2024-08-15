@@ -69,7 +69,9 @@ function _Switch(props: SwitchProps, ref: ForwardedRef<HTMLLabelElement>) {
     <AriaSwitch
       ref={ref}
       {...props}
-      className={composeRenderProps(props.className, (className, {}) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
+      className={composeRenderProps(props.className, (className, { isDisabled }) =>
+        styleSlots.base({ isDisabled, className: twMerge(classNames?.base, className) }),
+      )}
       style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
     >
       {composeRenderProps(props.children, (children, { isHovered, isPressed, isSelected, isFocusVisible }) => (
