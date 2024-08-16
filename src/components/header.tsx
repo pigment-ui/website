@@ -10,13 +10,14 @@ import { Popover } from "#/ui/popover";
 import { twMerge } from "tailwind-merge";
 import { Menu, MenuItem } from "#/ui/menu";
 import { GithubIcon, MenuIcon, MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
+import Image from "next/image";
 
 export function Header() {
   const segment = useSelectedLayoutSegment();
 
   const routes = [
     ["/docs/overview/introduction", "Docs"],
-    // ["/examples", "Examples"],
+    ["/examples", "Examples"],
     // ["/themes", "Themes"],
   ].map(([href, title]) => (
     <Button
@@ -44,9 +45,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 h-16 w-full border-b border-default-1000/20 bg-default-0/75 backdrop-blur-lg">
       <div className="container flex h-full items-center gap-x-8">
-        <Button asChild variant={segment === null ? "soft" : "light"}>
-          <NextLink href="/" prefetch className="text-xl font-bold">
-            Pigment UI
+        <Button asChild variant={segment === null ? "soft" : "light"} isIconOnly>
+          <NextLink href="/" prefetch>
+            <Image src="/pigment-logo.jpg" alt="logo" priority height={64} width={64} className="size-16 mix-blend-screen" />
           </NextLink>
         </Button>
 
