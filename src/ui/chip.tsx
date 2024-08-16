@@ -40,7 +40,7 @@ function _Chip(props: ChipProps, ref: ForwardedRef<HTMLDivElement>) {
     variant = "solid",
     color = "default",
     size = "md",
-    radius = "md",
+    radius = "full",
     isIconOnly,
     startContent,
     endContent,

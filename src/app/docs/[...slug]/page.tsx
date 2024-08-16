@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { Content, NavLeft, NavRight } from "#/components/docs";
+import { Detail } from "#/components";
 
 export function generateMetadata({ params: { slug } }: { params: { slug: string[] } }): Metadata {
   const doc = allDocsSorted.find((doc) => doc.slug === slug.join("/"));
@@ -25,11 +26,15 @@ export default function Page({ params: { slug } }: { params: { slug: string[] } 
   if (!doc) notFound();
 
   return (
-    <main className="container relative max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-12">
-      <NavLeft doc={doc} allDocs={allDocsSorted} />
-      <Content doc={doc} allDocs={allDocsSorted} />
-      <NavRight doc={doc} />
-    </main>
+    <>
+      <main className="container relative max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-12">
+        <NavLeft doc={doc} allDocs={allDocsSorted} />
+        <Content doc={doc} allDocs={allDocsSorted} />
+        <NavRight doc={doc} />
+      </main>
+
+      <Detail />
+    </>
   );
 }
 

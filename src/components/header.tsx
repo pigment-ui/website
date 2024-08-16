@@ -47,7 +47,7 @@ export function Header() {
       <div className="container flex h-full items-center gap-x-8">
         <Button asChild variant={segment === null ? "soft" : "light"} isIconOnly>
           <NextLink href="/" prefetch>
-            <Image src="/pigment-logo.jpg" alt="logo" priority height={64} width={64} className="size-16 mix-blend-screen" />
+            <Image src="/logo.jpg" alt="logo" priority quality={100} height={64} width={64} className="size-16 mix-blend-screen" />
           </NextLink>
         </Button>
 
