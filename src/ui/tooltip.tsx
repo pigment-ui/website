@@ -59,13 +59,7 @@ function _Tooltip(props: TooltipProps, ref: ForwardedRef<HTMLDivElement>) {
                 height={arrowSize}
                 className={twMerge(
                   "fill-default-0 stroke-default-1000/20 stroke-[.25px]",
-                  {
-                    bottom: "rotate-180",
-                    left: "-rotate-90",
-                    right: "rotate-90",
-                    top: "",
-                    center: "",
-                  }[placement],
+                  { bottom: "rotate-180", left: "-rotate-90", right: "rotate-90", top: "", center: "" }[placement],
                 )}
               >
                 <path d="M0 0 L4 4 L8 0" />
