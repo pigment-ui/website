@@ -10,15 +10,14 @@ import { Popover } from "#/ui/popover";
 import { twMerge } from "tailwind-merge";
 import { Menu, MenuItem } from "#/ui/menu";
 import { GithubIcon, MenuIcon, MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
-import Image from "next/image";
 
 export function Header() {
   const segment = useSelectedLayoutSegment();
 
   const routes = [
     ["/docs/overview/introduction", "Docs"],
-    // ["/examples", "Examples"],
-    // ["/themes", "Themes"],
+    ["/examples", "Examples"],
+    ["/themes", "Themes"],
   ].map(([href, title]) => (
     <Button
       key={title}
@@ -47,11 +46,11 @@ export function Header() {
       <div className="container flex h-full items-center gap-x-8">
         <Button asChild variant={segment === null ? "soft" : "light"} isIconOnly>
           <NextLink href="/" prefetch>
-            <Image src="/logo.jpg" alt="logo" priority quality={100} height={64} width={64} className="size-16 mix-blend-screen" />
+            <img src="/logo.png" alt="logo" className="size-16 invert dark:invert-0" />
           </NextLink>
         </Button>
 
-        <div className="flex gap-x-2 max-sm:hidden">{routes}</div>
+        <div className="flex gap-x-2 max-lg:hidden">{routes}</div>
 
         <div className="ml-auto flex gap-x-2">
           <Button aria-label="github repo" asChild isIconOnly variant="faded">
@@ -72,10 +71,10 @@ export function Header() {
           </MenuTrigger>
 
           <DialogTrigger isOpen={isOpened} onOpenChange={setIsOpened}>
-            <Button aria-label="header menu toggle" isIconOnly variant="faded" className="sm:hidden">
+            <Button aria-label="header menu toggle" isIconOnly variant="faded" className="lg:hidden">
               <MenuIcon />
             </Button>
-            <Popover className="flex w-48 flex-col gap-y-2 sm:hidden">{routes}</Popover>
+            <Popover className="flex w-48 flex-col gap-y-2">{routes}</Popover>
           </DialogTrigger>
         </div>
       </div>

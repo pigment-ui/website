@@ -151,7 +151,7 @@ function ButtonBox({ children, href }: { children: ReactNode; href: string }) {
         isFocusVisible ? "outline-2 outline-offset-2 outline-default-1000" : "outline-none",
       )}
     >
-      <p className="absolute left-8 top-4 rounded-lg bg-default-1000/10 px-2 py-1 font-mono text-sm font-medium text-default-700">
+      <p className="absolute left-8 top-4 rounded-lg bg-default-1000/10 px-2 py-1 font-mono text-sm font-medium">
         {"<"}
         {href.split("-").map((word) => capitalize(word))}
         {" />"}
