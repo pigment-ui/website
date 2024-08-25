@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import { ReactNode, useState } from "react";
-import { mergeProps, useFocusRing, useHover, usePress } from "react-aria";
-import { twMerge } from "tailwind-merge";
 import { BellIcon } from "lucide-react";
 import { capitalize } from "inflection";
 
@@ -24,6 +22,7 @@ import {
   Select,
   SelectItem,
   Slider,
+  Spinner,
   Switch,
   Tag,
   TagGroup,
@@ -31,92 +30,98 @@ import {
   TextField,
 } from "#/ui";
 import { parseDate } from "@internationalized/date";
+import { mergeProps, useFocusRing, useHover, usePress } from "react-aria";
+import { twMerge } from "tailwind-merge";
 
 export default function Page() {
   const [page, setPage] = useState(2);
 
   return (
-    <main>
-      <div className="container py-32 max-lg:py-24">
+    <main className="py-32 max-lg:py-24">
+      <div className="container">
         <div className="grid grid-cols-3 gap-8 max-lg:mx-auto max-lg:max-w-[600px] max-lg:grid-cols-1">
-          <ButtonBox href="badge">
+          <ComponentBox id="badge">
             <Badge content="99+">
               <BellIcon className="size-8" />
             </Badge>
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="button">
+          <ComponentBox id="button">
             <Button>Click Me</Button>
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="checkbox">
+          <ComponentBox id="checkbox">
             <Checkbox defaultSelected>Unsubscribe</Checkbox>
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="chip">
+          <ComponentBox id="chip">
             <Chip>Lorem ipsum</Chip>
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="color-field">
+          <ComponentBox id="color-field">
             <ColorField label="Color" defaultValue="#ff2222" description="Lorem ipsum dolor sit amet." className="w-64" />
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="combo-box">
+          <ComponentBox id="combo-box">
             <ComboBox label="Favorite Animal" defaultSelectedKey="Aardvark" description="Lorem ipsum dolor sit amet." className="w-64">
               <ComboBoxItem>Aardvark</ComboBoxItem>
               <ComboBoxItem>Cat</ComboBoxItem>
               <ComboBoxItem>Dog</ComboBoxItem>
             </ComboBox>
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="date-field">
+          <ComponentBox id="date-field">
             <DateField label="Birth date" defaultValue={parseDate("2003-04-08")} description="Lorem ipsum dolor sit amet." className="w-64" />
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="number-field">
+          <ComponentBox id="number-field">
             <NumberField label="Width" defaultValue={300} description="Lorem ipsum dolor sit amet." className="w-64" />
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="pagination">
+          <ComponentBox id="pagination">
             <Pagination total={3} page={page} onChange={setPage} />
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="radio-grouo">
+          <ComponentBox id="radio-grouo">
             <RadioGroup label="Favorite sports" description="Lorem ipsum dolor sit amet." defaultValue="soccer">
               <Radio value="soccer">Soccer</Radio>
               <Radio value="baseball">Baseball</Radio>
             </RadioGroup>
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="search-field">
+          <ComponentBox id="search-field">
             <SearchField label="Search" defaultValue="Pigment UI" description="Lorem ipsum dolor sit amet." className="w-64" />
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="select">
+          <ComponentBox id="select">
             <Select label="Favorite Animal" defaultSelectedKey="Aardvark" description="Lorem ipsum dolor sit amet." className="w-64">
               <SelectItem>Aardvark</SelectItem>
               <SelectItem>Cat</SelectItem>
               <SelectItem>Dog</SelectItem>
             </Select>
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="slider">
+          <ComponentBox id="slider">
             <Slider label="Opacity" defaultValue={30} description="Lorem ipsum dolor sit amet." className="w-64" />
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="switch">
+          <ComponentBox id="spinner">
+            <Spinner />
+          </ComponentBox>
+
+          <ComponentBox id="switch">
             <Switch defaultSelected>Bluetooth</Switch>
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="tag-group">
+          <ComponentBox id="tag-group">
             <TagGroup label="Categories" description="Lorem ipsum dolor sit amet." selectionMode="multiple" defaultSelectedKeys={["Travel"]}>
               <Tag>News</Tag>
               <Tag>Travel</Tag>
               <Tag>Gaming</Tag>
             </TagGroup>
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="text-area">
+          <ComponentBox id="text-area">
             <TextArea
               label="Comment"
               defaultValue="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
@@ -124,39 +129,39 @@ export default function Page() {
               rows={3}
               className="w-64"
             />
-          </ButtonBox>
+          </ComponentBox>
 
-          <ButtonBox href="text-field">
+          <ComponentBox id="text-field">
             <TextField label="First Name" defaultValue="Rafig" description="Lorem ipsum dolor sit amet." className="w-64" />
-          </ButtonBox>
+          </ComponentBox>
         </div>
       </div>
     </main>
   );
 }
 
-function ButtonBox({ children, href }: { children: ReactNode; href: string }) {
+export function ComponentBox({ children, id }: { children: ReactNode; id: string }) {
   const { hoverProps, isHovered } = useHover({});
   const { pressProps, isPressed } = usePress({});
   const { focusProps, isFocusVisible } = useFocusRing({});
 
   return (
-    <Link
-      href={"/docs/components/" + href}
-      {...mergeProps(hoverProps, pressProps, focusProps)}
-      className={twMerge(
-        "relative flex h-[250px] items-center justify-center rounded-[40px] bg-default-1000/10 duration-300",
-        isHovered && "bg-default-1000/20",
-        isPressed && "scale-95",
-        isFocusVisible ? "outline-2 outline-offset-2 outline-default-1000" : "outline-none",
-      )}
-    >
-      <p className="absolute left-8 top-4 rounded-lg bg-default-1000/10 px-2 py-1 font-mono text-sm font-medium">
+    <div className="relative flex h-[250px] items-center justify-center rounded-[40px] bg-default-1000/10 duration-300">
+      <Link
+        href={"/docs/ids/" + id}
+        {...mergeProps(hoverProps, pressProps, focusProps)}
+        className={twMerge([
+          "absolute left-8 top-4 rounded-lg bg-default-1000/10 px-2 py-1 font-mono text-sm font-medium duration-300",
+          isHovered && "bg-default-1000/20",
+          isPressed && "scale-95",
+          isFocusVisible ? "outline outline-1 outline-offset-1 outline-default-1000" : "outline-none",
+        ])}
+      >
         {"<"}
-        {href.split("-").map((word) => capitalize(word))}
+        {id.split("-").map((word) => capitalize(word))}
         {" />"}
-      </p>
-      <div className="pointer-events-none pt-2">{children}</div>
-    </Link>
+      </Link>
+      <div>{children}</div>
+    </div>
   );
 }

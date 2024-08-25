@@ -13,7 +13,7 @@ import { mergeProps } from "react-aria";
 const badgeStyles = tv({
   extend: variantColorStyles,
   slots: {
-    base: "absolute flex items-center justify-center rounded-full",
+    base: "absolute flex items-center justify-center rounded-full duration-300",
     wrapper: "relative",
   },
   variants: {
