@@ -76,9 +76,9 @@ function _Accordion(props: AccordionProps, ref: ForwardedRef<HTMLDivElement>) {
     <AccordionSlotsProvider value={{ styleSlots, classNames, styles }}>
       <RadixAccordionRoot
         ref={ref}
+        {...props}
         className={styleSlots.base({ className: twMerge(classNames?.base, className) })}
         style={mergeProps(styles?.base, style)}
-        {...props}
       />
     </AccordionSlotsProvider>
   );
@@ -93,9 +93,9 @@ function _AccordionItem(props: AccordionItemProps, ref: ForwardedRef<HTMLDivElem
   return (
     <RadixAccordionItem
       ref={ref}
+      {...restProps}
       className={styleSlots.item({ className: twMerge(classNames?.item, className) })}
       style={mergeProps(styles?.item, style)}
-      {...restProps}
     >
       <RadixAccordionHeader className="flex">
         <RadixAccordionTrigger className={styleSlots.trigger({ className: classNames?.trigger })} style={styles?.trigger}>
