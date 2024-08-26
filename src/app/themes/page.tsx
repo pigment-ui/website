@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Badge, Button, Chip, Pagination, Spinner, Tag, TagGroup } from "#/ui";
+import { Badge, Button, Chip, Pagination, Spinner, Tag, TagGroup, Tooltip, TooltipTrigger } from "#/ui";
 import { BellIcon } from "lucide-react";
 import { Button as AriaButton } from "react-aria-components";
 
 import { twMerge } from "tailwind-merge";
 
 import { ComponentBox } from "#/components";
+import { capitalize } from "inflection";
 
 type Colors = "orange" | "teal" | "indigo" | "fuchsia";
 
@@ -31,20 +32,22 @@ export default function Page() {
     <main className="space-y-16 py-32 max-lg:space-y-12 max-lg:py-24">
       <div className="container flex flex-wrap gap-8 max-lg:gap-6">
         {Object.keys(COLORS).map((color) => (
-          <AriaButton
-            key={color}
-            aria-label={color}
-            onPress={() => setPrimaryColor(color as Colors)}
-            className={({ isHovered, isPressed, isFocusVisible }) =>
-              twMerge([
-                "size-16 rounded-full duration-300 max-lg:size-12",
-                isHovered && "opacity-90",
-                isPressed && "scale-95",
-                isFocusVisible ? "outline outline-2 outline-offset-2 outline-default-1000" : "outline-none",
-              ])
-            }
-            style={{ backgroundColor: `rgb(${COLORS[color as Colors]})` }}
-          />
+          <TooltipTrigger key={color} delay={0} closeDelay={0}>
+            <AriaButton
+              aria-label={color}
+              onPress={() => setPrimaryColor(color as Colors)}
+              className={({ isHovered, isPressed, isFocusVisible }) =>
+                twMerge([
+                  "size-16 rounded-full duration-300 max-lg:size-12",
+                  isHovered && "opacity-90",
+                  isPressed && "scale-95",
+                  isFocusVisible ? "outline outline-2 outline-offset-2 outline-default-1000" : "outline-none",
+                ])
+              }
+              style={{ backgroundColor: `rgb(${COLORS[color as Colors]})` }}
+            />
+            <Tooltip>{capitalize(color)}</Tooltip>
+          </TooltipTrigger>
         ))}
       </div>
 
