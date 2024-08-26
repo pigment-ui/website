@@ -5,8 +5,9 @@ import { Badge, Button, Chip, Pagination, Spinner, Tag, TagGroup } from "#/ui";
 import { BellIcon } from "lucide-react";
 import { Button as AriaButton } from "react-aria-components";
 
-import { ComponentBox } from "#/app/page";
 import { twMerge } from "tailwind-merge";
+
+import { ComponentBox } from "#/components";
 
 type Colors = "orange" | "teal" | "indigo" | "fuchsia";
 
@@ -32,6 +33,7 @@ export default function Page() {
         {Object.keys(COLORS).map((color) => (
           <AriaButton
             key={color}
+            aria-label={color}
             onPress={() => setPrimaryColor(color as Colors)}
             className={({ isHovered, isPressed, isFocusVisible }) =>
               twMerge([
