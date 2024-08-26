@@ -14,7 +14,7 @@ export function ComponentBox({ children, id }: { children: ReactNode; id: string
   return (
     <div className="relative flex h-[250px] items-center justify-center rounded-[40px] bg-default-1000/10 duration-300">
       <Link
-        href={"/docs/ids/" + id}
+        href={"/docs/" + id}
         {...mergeProps(hoverProps, pressProps, focusProps)}
         className={twMerge([
           "absolute left-8 top-4 rounded-lg bg-default-1000/10 px-2 py-1 font-mono text-sm font-medium duration-300",
