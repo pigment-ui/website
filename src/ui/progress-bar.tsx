@@ -71,7 +71,11 @@ const progressBarStyles = tv({
       isCircular: false,
       className: { filler: "-left-1/4 animate-out slide-out-to-right-[500%] repeat-infinite ease-linear [animation-duration:2s]" },
     },
-    { isIndeterminate: true, isCircular: true, className: { trackWrapper: "animate-spin ease-linear [animation-duration:1s]" } },
+    {
+      isIndeterminate: true,
+      isCircular: true,
+      className: { trackWrapper: "animate-spin ease-linear [animation-duration:1s]" },
+    },
   ],
 });
 
