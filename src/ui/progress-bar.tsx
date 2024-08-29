@@ -52,9 +52,9 @@ const progressBarStyles = tv({
     { isCircular: false, color: "success", className: { track: "bg-success-500/10", filler: "bg-success-500" } },
     { isCircular: false, color: "warning", className: { track: "bg-warning-500/10", filler: "bg-warning-500" } },
     { isCircular: false, color: "error", className: { track: "bg-error-500/10", filler: "bg-error-500" } },
-    { isCircular: true, size: "sm", className: { track: "size-16" } },
-    { isCircular: true, size: "md", className: { track: "size-20" } },
-    { isCircular: true, size: "lg", className: { track: "size-24" } },
+    { isCircular: true, size: "sm", className: { track: "size-12" } },
+    { isCircular: true, size: "md", className: { track: "size-16" } },
+    { isCircular: true, size: "lg", className: { track: "size-20" } },
 
     { isCircular: true, color: "default", className: { track: "stroke-default-1000/10", filler: "stroke-default-1000" } },
     { isCircular: true, color: "primary", className: { track: "stroke-primary-500/10", filler: "stroke-primary-500" } },
