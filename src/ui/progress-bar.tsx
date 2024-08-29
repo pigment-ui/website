@@ -117,7 +117,7 @@ function _ProgressBar(props: ProgressBarProps, ref: ForwardedRef<HTMLDivElement>
     >
       {({ percentage = 0, valueText, isIndeterminate: isIndeterminateInline }) => (
         <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>
-          {!!label && !hideValueText && (
+          {(!!label || !hideValueText) && (
             <div className={styleSlots.labelWrapper({ className: classNames?.labelWrapper })} style={styles?.labelWrapper}>
               {!!label && (
                 <Label className={styleSlots.label({ className: classNames?.label })} style={styles?.label}>
