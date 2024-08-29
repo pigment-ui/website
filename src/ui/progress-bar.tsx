@@ -102,7 +102,7 @@ function _ProgressBar(props: ProgressBarProps, ref: ForwardedRef<HTMLDivElement>
   const styleSlots = progressBarStyles({ color, size, isCircular, isIndeterminate });
 
   const renderValueText = (valueText?: string) =>
-    !!valueText && (
+    !hideValueText && (
       <span className={styleSlots.valueText({ className: classNames?.valueText })} style={styles?.valueText}>
         {valueText}
       </span>
@@ -117,7 +117,7 @@ function _ProgressBar(props: ProgressBarProps, ref: ForwardedRef<HTMLDivElement>
     >
       {({ percentage = 0, valueText, isIndeterminate: isIndeterminateInline }) => (
         <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>
-          {(!!label || !hideValueText) && (
+          {((isCircular && !!label) || (!isCircular && (!!label || !hideValueText))) && (
             <div className={styleSlots.labelWrapper({ className: classNames?.labelWrapper })} style={styles?.labelWrapper}>
               {!!label && (
                 <Label className={styleSlots.label({ className: classNames?.label })} style={styles?.label}>
@@ -152,7 +152,7 @@ function _ProgressBar(props: ProgressBarProps, ref: ForwardedRef<HTMLDivElement>
                 />
               </svg>
             )}
-            {isCircular && !hideValueText && renderValueText(valueText)}
+            {isCircular && renderValueText(valueText)}
           </div>
         </div>
       )}
