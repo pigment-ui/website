@@ -1,6 +1,6 @@
 "use client";
 
-import { ForwardedRef, forwardRef } from "react";
+import { ForwardedRef, forwardRef, ReactNode } from "react";
 import { mergeProps } from "react-aria";
 import { composeRenderProps, Label, ProgressBar as AriaProgressBar, ProgressBarProps as AriaProgressBarProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
@@ -14,8 +14,9 @@ const progressBarStyles = tv({
   slots: {
     base: "",
     wrapper: "flex flex-col",
+    labelWrapper: "",
     label: "",
-    valueText: "absolute",
+    valueText: "",
     trackWrapper: "relative",
     track: "",
     filler: "",
@@ -29,14 +30,16 @@ const progressBarStyles = tv({
     },
     isCircular: {
       false: {
-        valueText: "right-0 bottom-full",
+        labelWrapper: "flex justify-between",
+        valueText: "",
         track: "rounded-full relative overflow-hidden",
         filler: "rounded-full absolute inset-y-0 left-0",
       },
       true: {
-        wrapper: "items-center w-fit",
-        label: "order-last",
-        valueText: "top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-center",
+        wrapper: "items-center size-fit",
+        labelWrapper: "order-last",
+        valueText: "absolute",
+        trackWrapper: "grid place-items-center text-center",
         track: "fill-none stroke-2",
       },
     },
@@ -49,12 +52,9 @@ const progressBarStyles = tv({
     { isCircular: false, color: "success", className: { track: "bg-success-500/10", filler: "bg-success-500" } },
     { isCircular: false, color: "warning", className: { track: "bg-warning-500/10", filler: "bg-warning-500" } },
     { isCircular: false, color: "error", className: { track: "bg-error-500/10", filler: "bg-error-500" } },
-    { isCircular: false, size: "sm", className: { track: "h-1" } },
-    { isCircular: false, size: "md", className: { track: "h-2" } },
-    { isCircular: false, size: "lg", className: { track: "h-3" } },
-    { isCircular: false, size: "sm", className: { valueText: "-translate-y-0.5" } },
-    { isCircular: false, size: "md", className: { valueText: "-translate-y-1" } },
-    { isCircular: false, size: "lg", className: { valueText: "-translate-y-1.5" } },
+    { isCircular: true, size: "sm", className: { track: "size-16" } },
+    { isCircular: true, size: "md", className: { track: "size-20" } },
+    { isCircular: true, size: "lg", className: { track: "size-24" } },
 
     { isCircular: true, color: "default", className: { track: "stroke-default-1000/10", filler: "stroke-default-1000" } },
     { isCircular: true, color: "primary", className: { track: "stroke-primary-500/10", filler: "stroke-primary-500" } },
@@ -62,9 +62,9 @@ const progressBarStyles = tv({
     { isCircular: true, color: "success", className: { track: "stroke-success-500/10", filler: "stroke-success-500" } },
     { isCircular: true, color: "warning", className: { track: "stroke-warning-500/10", filler: "stroke-warning-500" } },
     { isCircular: true, color: "error", className: { track: "stroke-error-500/10", filler: "stroke-error-500" } },
-    { isCircular: true, size: "sm", className: { track: "size-16" } },
-    { isCircular: true, size: "md", className: { track: "size-20" } },
-    { isCircular: true, size: "lg", className: { track: "size-24" } },
+    { isCircular: false, size: "sm", className: { track: "h-1" } },
+    { isCircular: false, size: "md", className: { track: "h-2" } },
+    { isCircular: false, size: "lg", className: { track: "h-3" } },
 
     {
       isIndeterminate: true,
@@ -84,7 +84,8 @@ type ProgressBarStylesReturnType = ReturnType<typeof progressBarStyles>;
 // props
 
 interface ProgressBarProps extends AriaProgressBarProps, ColorProps, SizeProps, StyleSlotsToStyleProps<ProgressBarStylesReturnType> {
-  label?: string;
+  label?: ReactNode;
+  hideValueText?: boolean;
   isCircular?: boolean;
 }
 
@@ -96,9 +97,16 @@ const r = 16 - strokeWidth;
 const c = 2 * r * Math.PI;
 
 function _ProgressBar(props: ProgressBarProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { color = "default", size = "md", label, isCircular = false, isIndeterminate = false, classNames, styles } = props;
+  const { color = "default", size = "md", label, hideValueText, isCircular = false, isIndeterminate = false, classNames, styles } = props;
 
   const styleSlots = progressBarStyles({ color, size, isCircular, isIndeterminate });
+
+  const renderValueText = (valueText?: string) =>
+    !!valueText && (
+      <span className={styleSlots.valueText({ className: classNames?.valueText })} style={styles?.valueText}>
+        {valueText}
+      </span>
+    );
 
   return (
     <AriaProgressBar
@@ -109,10 +117,15 @@ function _ProgressBar(props: ProgressBarProps, ref: ForwardedRef<HTMLDivElement>
     >
       {({ percentage = 0, valueText, isIndeterminate: isIndeterminateInline }) => (
         <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>
-          {!!label && (
-            <Label className={styleSlots.label({ className: classNames?.label })} style={styles?.label}>
-              {label}
-            </Label>
+          {!!label && !hideValueText && (
+            <div className={styleSlots.labelWrapper({ className: classNames?.labelWrapper })} style={styles?.labelWrapper}>
+              {!!label && (
+                <Label className={styleSlots.label({ className: classNames?.label })} style={styles?.label}>
+                  {label}
+                </Label>
+              )}
+              {!isCircular && renderValueText(valueText)}
+            </div>
           )}
 
           <div className={styleSlots.trackWrapper({ className: classNames?.trackWrapper })} style={styles?.trackWrapper}>
@@ -139,12 +152,7 @@ function _ProgressBar(props: ProgressBarProps, ref: ForwardedRef<HTMLDivElement>
                 />
               </svg>
             )}
-
-            {!!valueText && (
-              <span className={styleSlots.valueText({ className: classNames?.valueText })} style={styles?.valueText}>
-                {valueText}
-              </span>
-            )}
+            {isCircular && !hideValueText && renderValueText(valueText)}
           </div>
         </div>
       )}
