@@ -14,15 +14,15 @@ import { useObserveElementWidth } from "./utils";
 export const fieldStyles = tv({
   slots: {
     base: "flex flex-col relative size-full",
-    labelStyles: "",
-    descriptionStyles: "",
-    errorMessageStyles: "text-error-500",
+    label: "",
+    description: "",
+    errorMessage: "text-error-500",
   },
   variants: {
     size: {
-      sm: { base: "gap-y-0.5", labelStyles: "text-xs", descriptionStyles: "text-xs", errorMessageStyles: "text-xs" },
-      md: { base: "gap-y-1", labelStyles: "text-sm", descriptionStyles: "text-sm", errorMessageStyles: "text-sm" },
-      lg: { base: "gap-y-1.5", labelStyles: "text-base", descriptionStyles: "text-base", errorMessageStyles: "text-base" },
+      sm: { base: "gap-y-0.5", label: "text-xs", description: "text-xs", errorMessage: "text-xs" },
+      md: { base: "gap-y-1", label: "text-sm", description: "text-sm", errorMessage: "text-sm" },
+      lg: { base: "gap-y-1.5", label: "text-base", description: "text-base", errorMessage: "text-base" },
     },
   },
 });
@@ -103,7 +103,7 @@ function _Field(props: FieldProps, ref: ForwardedRef<HTMLDivElement>) {
   return (
     <div ref={ref} className={styleSlots.base()}>
       {label && (
-        <Label className={styleSlots.labelStyles()}>
+        <Label className={styleSlots.label()}>
           {label}
           {labelNecessityIndicator === "symbol" && isRequired && <span> *</span>}
           {labelNecessityIndicator === "text" && <span> {isRequired ? "(required)" : "(optional)"}</span>}
@@ -113,12 +113,12 @@ function _Field(props: FieldProps, ref: ForwardedRef<HTMLDivElement>) {
       {children}
 
       {description && (
-        <Text slot="description" className={styleSlots.descriptionStyles()}>
+        <Text slot="description" className={styleSlots.description()}>
           {description}
         </Text>
       )}
 
-      <FieldError className={styleSlots.errorMessageStyles()}>{errorMessage}</FieldError>
+      <FieldError className={styleSlots.errorMessage()}>{errorMessage}</FieldError>
     </div>
   );
 }
