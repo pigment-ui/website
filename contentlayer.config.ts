@@ -12,7 +12,6 @@ export const Doc = defineDocumentType(() => ({
   fields: {
     title: { type: "string", required: true },
     description: { type: "string", required: false },
-    hasSource: { type: "boolean", required: false },
     referenceUrl: { type: "string", required: false },
     hasApiReference: { type: "boolean", required: false },
   },

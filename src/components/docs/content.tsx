@@ -16,9 +16,9 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
         <h1 className="text-5xl font-bold">{doc.title}</h1>
         <p className="text-default-700">{doc.description}</p>
 
-        {(doc.hasSource || doc.referenceUrl || doc.hasApiReference) && (
+        {(doc.slug.split("/")[0] === "components" || doc.referenceUrl || doc.hasApiReference) && (
           <div className="flex flex-wrap gap-4">
-            {doc.hasSource && (
+            {doc.slug.split("/")[0] === "components" && (
               <Button asChild size="sm" variant="soft" startContent={<GithubIcon />}>
                 <a href={`https://github.com/pigment-ui/website/blob/main/src/ui/${doc.slug.split("/")[1]}.tsx`} target="_blank">
                   Source
