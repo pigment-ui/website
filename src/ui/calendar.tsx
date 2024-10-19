@@ -30,7 +30,7 @@ import { Field, FieldBaseProps } from "./field";
 const calendarStyles = tv({
   slots: {
     base: "",
-    wrapper: cardStyles().base({ className: "p-4 w-fit max-w-full overflow-auto" }),
+    wrapper: "p-4 w-fit max-w-full overflow-auto",
     header: "flex items-center justify-between",
     heading: "font-medium",
     button: [
@@ -57,6 +57,9 @@ const calendarStyles = tv({
       md: { heading: "text-base", button: "size-7 [&>svg]:size-4", grid: "[&_th]:text-sm [&_th]:size-8 mt-4", cell: "text-sm size-8" },
       lg: { heading: "text-lg", button: "size-8 [&>svg]:size-5", grid: "[&_th]:text-base [&_th]:size-9 mt-5", cell: "text-base size-9" },
     },
+    asCard: {
+      true: { wrapper: cardStyles().base({ hasShadow: false }) },
+    },
   },
 });
 
@@ -70,17 +73,18 @@ interface CalendarProps<T extends DateValue>
     FieldBaseProps,
     StyleSlotsToStyleProps<CalendarStylesReturnType> {
   visibleMonthCount?: number;
+  asCard?: boolean;
 }
 
 // component
 
 function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { visibleMonthCount = 1, value, size = "md", classNames, styles } = props;
+  const { visibleMonthCount = 1, asCard = true, value, size = "md", classNames, styles } = props;
 
   const { displayValidation } = useFormValidationState({ ...props, value });
   const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
 
-  const styleSlots = calendarStyles({ size });
+  const styleSlots = calendarStyles({ asCard, size });
 
   return (
     <Provider

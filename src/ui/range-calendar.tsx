@@ -59,17 +59,18 @@ interface RangeCalendarProps<T extends DateValue>
     FieldBaseProps,
     StyleSlotsToStyleProps<RangeCalendarStylesReturnType> {
   visibleMonthCount?: number;
+  asCard?: boolean;
 }
 
 // component
 
 function _RangeCalendar<T extends DateValue>(props: RangeCalendarProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { visibleMonthCount = 1, value, size = "md", classNames, styles } = props;
+  const { visibleMonthCount = 1, asCard = true, value, size = "md", classNames, styles } = props;
 
   const { displayValidation } = useFormValidationState({ ...props, value });
   const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
 
-  const styleSlots = rangeCalendarStyles({ size });
+  const styleSlots = rangeCalendarStyles({ asCard, size });
 
   const { locale } = useLocale();
 
