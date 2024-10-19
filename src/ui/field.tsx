@@ -14,7 +14,7 @@ import { useObserveElementWidth } from "./utils";
 const fieldStyles = tv({
   slots: {
     base: "flex flex-col relative size-full",
-    label: "",
+    label: "cursor-default",
     description: "",
     errorMessage: "text-error-500",
   },

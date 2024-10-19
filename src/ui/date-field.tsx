@@ -24,9 +24,7 @@ function _DateField<T extends DateValue>(props: DateFieldProps<T>, ref: Forwarde
       {(renderProps) => (
         <Field {...renderProps} {...props}>
           <FieldInput startContent={<CalendarIcon />} {...renderProps} {...props}>
-            <DateInput ref={ref}>
-              {(segment) => <DateSegment segment={segment} className={({ isFocused }) => segmentStyles({ size, radius, isFocused })} />}
-            </DateInput>
+            <DateInput ref={ref}>{(segment) => <DateSegment segment={segment} className={segmentStyles({ size, radius })} />}</DateInput>
           </FieldInput>
         </Field>
       )}

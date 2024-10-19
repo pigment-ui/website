@@ -35,9 +35,9 @@ function _Select<T extends object>(props: SelectProps<T>, ref: ForwardedRef<HTML
       {(renderProps) => (
         <>
           <Field {...renderProps} {...props}>
-            <FieldInput isFocusWithin={renderProps.isOpen} endContent={<ChevronDownIcon className="!text-default-400" />} {...renderProps} {...props}>
+            <FieldInput isFocusWithin={renderProps.isOpen} endContent={<ChevronDownIcon className="!text-default-500" />} {...renderProps} {...props}>
               <Button ref={ref} className="flex items-center">
-                <SelectValue className={({ isPlaceholder }) => (isPlaceholder ? "!text-default-400" : "")}>
+                <SelectValue className={({ isPlaceholder }) => (isPlaceholder ? "!text-default-500" : "")}>
                   {renderValue
                     ? ({ selectedItem, selectedText }) =>
                         selectedItem

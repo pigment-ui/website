@@ -9,6 +9,8 @@ export * from "./chip";
 export * from "./color-field";
 export * from "./combo-box";
 export * from "./date-field";
+export * from "./date-picker";
+export * from "./date-range-picker";
 export * from "./field";
 export * from "./list-box";
 export * from "./menu";

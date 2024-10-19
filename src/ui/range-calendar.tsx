@@ -92,36 +92,38 @@ function _RangeCalendar<T extends DateValue>(props: RangeCalendarProps<T>, ref: 
       >
         <Field {...displayValidation} {...props}>
           <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>
-            <header className={styleSlots.header({ className: classNames?.header })} style={styles?.header}>
-              <Button slot="previous" className={styleSlots.button({ className: classNames?.button })} style={styles?.button}>
-                <ChevronLeftIcon />
-              </Button>
-              <Heading className={styleSlots.heading({ className: classNames?.heading })} style={styles?.heading} />
-              <Button slot="next" className={styleSlots.button({ className: classNames?.button })} style={styles?.button}>
-                <ChevronRightIcon />
-              </Button>
-            </header>
-            <div className={styleSlots.gridWrapper({ className: classNames?.gridWrapper })} style={styles?.gridWrapper}>
-              {Array.from({ length: visibleMonthCount }).map((_, index) => (
-                <CalendarGrid
-                  key={index}
-                  offset={{ months: index }}
-                  className={styleSlots.grid({ className: classNames?.grid })}
-                  style={styles?.grid}
-                >
-                  {(date) => (
-                    <CalendarCell
-                      date={date}
-                      className={styleSlots.cell({
-                        isFirstDay: getDayOfWeek(date, locale) === 0,
-                        isLastDay: getDayOfWeek(date, locale) === 6,
-                        className: classNames?.cell,
-                      })}
-                      style={styles?.cell}
-                    />
-                  )}
-                </CalendarGrid>
-              ))}
+            <div className="flex min-w-fit flex-col">
+              <header className={styleSlots.header({ className: classNames?.header })} style={styles?.header}>
+                <Button slot="previous" className={styleSlots.button({ className: classNames?.button })} style={styles?.button}>
+                  <ChevronLeftIcon />
+                </Button>
+                <Heading className={styleSlots.heading({ className: classNames?.heading })} style={styles?.heading} />
+                <Button slot="next" className={styleSlots.button({ className: classNames?.button })} style={styles?.button}>
+                  <ChevronRightIcon />
+                </Button>
+              </header>
+              <div className={styleSlots.gridWrapper({ className: classNames?.gridWrapper })} style={styles?.gridWrapper}>
+                {Array.from({ length: visibleMonthCount }).map((_, index) => (
+                  <CalendarGrid
+                    key={index}
+                    offset={{ months: index }}
+                    className={styleSlots.grid({ className: classNames?.grid })}
+                    style={styles?.grid}
+                  >
+                    {(date) => (
+                      <CalendarCell
+                        date={date}
+                        className={styleSlots.cell({
+                          isFirstDay: getDayOfWeek(date, locale) === 0,
+                          isLastDay: getDayOfWeek(date, locale) === 6,
+                          className: classNames?.cell,
+                        })}
+                        style={styles?.cell}
+                      />
+                    )}
+                  </CalendarGrid>
+                ))}
+              </div>
             </div>
           </div>
         </Field>

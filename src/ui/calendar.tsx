@@ -31,7 +31,7 @@ const calendarStyles = tv({
   slots: {
     base: "",
     wrapper: "p-4 w-fit max-w-full overflow-auto",
-    header: "flex items-center justify-between",
+    header: "flex items-center justify-between gap-4",
     heading: "font-medium",
     button: [
       "grid place-items-center duration-300 rounded-lg",
@@ -40,7 +40,7 @@ const calendarStyles = tv({
       "outline-none data-[focus-visible]:outline data-[focus-visible]:outline-default-1000 data-[focus-visible]:z-10",
     ],
     gridWrapper: "flex gap-4",
-    grid: "border-separate border-spacing-1 h-fit [&_th]:text-default-700 [&_th]:font-light [&_th]:p-0 [&_td]:p-0",
+    grid: "border-separate border-spacing-1 size-fit [&_th]:text-default-700 [&_th]:font-light [&_th]:p-0 [&_td]:p-0",
     cell: [
       "grid place-items-center duration-300 rounded-lg relative z-0",
       "data-[hovered]:bg-default-200 data-[pressed]:scale-90",
@@ -104,26 +104,28 @@ function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedR
       >
         <Field {...displayValidation} {...props}>
           <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>
-            <header className={styleSlots.header({ className: classNames?.header })} style={styles?.header}>
-              <Button slot="previous" className={styleSlots.button({ className: classNames?.button })} style={styles?.button}>
-                <ChevronLeftIcon />
-              </Button>
-              <Heading className={styleSlots.heading({ className: classNames?.heading })} style={styles?.heading} />
-              <Button slot="next" className={styleSlots.button({ className: classNames?.button })} style={styles?.button}>
-                <ChevronRightIcon />
-              </Button>
-            </header>
-            <div className={styleSlots.gridWrapper({ className: classNames?.gridWrapper })} style={styles?.gridWrapper}>
-              {Array.from({ length: visibleMonthCount }).map((_, index) => (
-                <CalendarGrid
-                  key={index}
-                  offset={{ months: index }}
-                  className={styleSlots.grid({ className: classNames?.grid })}
-                  style={styles?.grid}
-                >
-                  {(date) => <CalendarCell date={date} className={styleSlots.cell({ className: classNames?.cell })} style={styles?.cell} />}
-                </CalendarGrid>
-              ))}
+            <div className="flex min-w-fit flex-col">
+              <header className={styleSlots.header({ className: classNames?.header })} style={styles?.header}>
+                <Button slot="previous" className={styleSlots.button({ className: classNames?.button })} style={styles?.button}>
+                  <ChevronLeftIcon />
+                </Button>
+                <Heading className={styleSlots.heading({ className: classNames?.heading })} style={styles?.heading} />
+                <Button slot="next" className={styleSlots.button({ className: classNames?.button })} style={styles?.button}>
+                  <ChevronRightIcon />
+                </Button>
+              </header>
+              <div className={styleSlots.gridWrapper({ className: classNames?.gridWrapper })} style={styles?.gridWrapper}>
+                {Array.from({ length: visibleMonthCount }).map((_, index) => (
+                  <CalendarGrid
+                    key={index}
+                    offset={{ months: index }}
+                    className={styleSlots.grid({ className: classNames?.grid })}
+                    style={styles?.grid}
+                  >
+                    {(date) => <CalendarCell date={date} className={styleSlots.cell({ className: classNames?.cell })} style={styles?.cell} />}
+                  </CalendarGrid>
+                ))}
+              </div>
             </div>
           </div>
         </Field>

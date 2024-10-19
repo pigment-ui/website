@@ -83,10 +83,13 @@ export const variantColorStyles = tv({
 });
 
 export const segmentStyles = tv({
-  base: "text-default-1000 outline-none [caret-color:transparent;]",
+  base: [
+    "text-default-1000 outline-none [caret-color:transparent;]",
+    "data-[focused]:bg-default-1000 data-[focused]:text-default-0",
+    "data-[placeholder]:text-default-500",
+  ],
   variants: {
     size: { sm: "py-0.5 px-1", md: "py-1 px-1.5", lg: "py-1.5 px-2" },
-    isFocused: { true: "bg-default-1000 text-default-0" },
     ...smallRadiusVariants,
   },
   defaultVariants: { size: "md", radius: "md" },
