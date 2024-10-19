@@ -12,7 +12,7 @@ export function ComponentBox({ children, id }: { children: ReactNode; id: string
   const { focusProps, isFocusVisible } = useFocusRing({});
 
   return (
-    <div className="relative flex h-[250px] items-center justify-center rounded-[40px] bg-default-1000/10 duration-300">
+    <div className="relative flex h-[250px] items-center justify-center rounded-3xl border border-default-200 bg-default-50">
       <Link
         href={"/docs/components/" + id}
         {...mergeProps(hoverProps, pressProps, focusProps)}
