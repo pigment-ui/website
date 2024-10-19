@@ -11,7 +11,6 @@ import { useObserveElementWidth } from "./utils";
 import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
 import { Popover } from "./popover";
-import { Separator } from "./separator";
 
 // props
 
@@ -21,14 +20,13 @@ interface SelectProps<T extends object>
     ListBoxSlotsType<T>,
     FieldBaseProps,
     FieldInputBaseProps {
-  topContent?: ReactNode;
   renderValue?: (selectValue: Omit<SelectValueRenderProps<T>, "isPlaceholder">) => ReactNode;
 }
 
 // component
 
 function _Select<T extends object>(props: SelectProps<T>, ref: ForwardedRef<HTMLButtonElement>) {
-  const { topContent, renderValue, placeholder } = props;
+  const { renderValue, placeholder } = props;
 
   const [width, selectRef] = useObserveElementWidth<HTMLDivElement>();
 
@@ -55,13 +53,6 @@ function _Select<T extends object>(props: SelectProps<T>, ref: ForwardedRef<HTML
           </Field>
 
           <Popover maxHeight={300} hideArrow {...props} className="overflow-auto p-0" style={{ width }}>
-            {topContent && (
-              <>
-                {topContent}
-                <Separator />
-              </>
-            )}
-
             <ListBox {...filterInlineListBoxProps(props)} className="p-2" />
           </Popover>
         </>
