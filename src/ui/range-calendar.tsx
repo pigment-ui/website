@@ -53,15 +53,17 @@ type RangeCalendarStylesReturnType = ReturnType<typeof rangeCalendarStyles>;
 // props
 
 interface RangeCalendarProps<T extends DateValue>
-  extends AriaRangeCalendarProps<T>,
+  extends Omit<AriaRangeCalendarProps<T>, "visibleDuration">,
     Omit<FormValidationProps<RangeValue<T> | null | undefined>, "value" | "builtinValidation">,
     FieldBaseProps,
-    StyleSlotsToStyleProps<RangeCalendarStylesReturnType> {}
+    StyleSlotsToStyleProps<RangeCalendarStylesReturnType> {
+  visibleMonthCount?: number;
+}
 
 // component
 
 function _RangeCalendar<T extends DateValue>(props: RangeCalendarProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { value, size = "md", classNames, styles } = props;
+  const { visibleMonthCount = 1, value, size = "md", classNames, styles } = props;
 
   const { displayValidation } = useFormValidationState({ ...props, value });
   const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
@@ -82,6 +84,7 @@ function _RangeCalendar<T extends DateValue>(props: RangeCalendarProps<T>, ref: 
         {...mergeProps(props, fieldProps)}
         aria-label={props["aria-label"] ?? props.label}
         aria-describedby={props["aria-describedby"] ?? props.description}
+        visibleDuration={{ months: visibleMonthCount }}
         className={composeRenderProps(props.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
         style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
       >
@@ -96,19 +99,28 @@ function _RangeCalendar<T extends DateValue>(props: RangeCalendarProps<T>, ref: 
                 <ChevronRightIcon />
               </Button>
             </header>
-            <CalendarGrid className={styleSlots.grid({ className: classNames?.grid })} style={styles?.grid}>
-              {(date) => (
-                <CalendarCell
-                  date={date}
-                  className={styleSlots.cell({
-                    isFirstDay: getDayOfWeek(date, locale) === 0,
-                    isLastDay: getDayOfWeek(date, locale) === 6,
-                    className: classNames?.cell,
-                  })}
-                  style={styles?.cell}
-                />
-              )}
-            </CalendarGrid>
+            <div className={styleSlots.gridWrapper({ className: classNames?.gridWrapper })} style={styles?.gridWrapper}>
+              {Array.from({ length: visibleMonthCount }).map((_, index) => (
+                <CalendarGrid
+                  key={index}
+                  offset={{ months: index }}
+                  className={styleSlots.grid({ className: classNames?.grid })}
+                  style={styles?.grid}
+                >
+                  {(date) => (
+                    <CalendarCell
+                      date={date}
+                      className={styleSlots.cell({
+                        isFirstDay: getDayOfWeek(date, locale) === 0,
+                        isLastDay: getDayOfWeek(date, locale) === 6,
+                        className: classNames?.cell,
+                      })}
+                      style={styles?.cell}
+                    />
+                  )}
+                </CalendarGrid>
+              ))}
+            </div>
           </div>
         </Field>
       </AriaRangeCalendar>

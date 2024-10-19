@@ -30,7 +30,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 const calendarStyles = tv({
   slots: {
     base: "",
-    wrapper: cardStyles().base({ className: "p-4 w-fit" }),
+    wrapper: cardStyles().base({ className: "p-4 w-fit max-w-full overflow-auto" }),
     header: "flex items-center justify-between",
     heading: "font-medium",
     button: [
@@ -39,7 +39,8 @@ const calendarStyles = tv({
       "data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed",
       "outline-none data-[focus-visible]:outline data-[focus-visible]:outline-default-1000 data-[focus-visible]:z-10",
     ],
-    grid: "border-separate border-spacing-1 [&_th]:text-default-700 [&_th]:font-light [&_th]:p-0 [&_td]:p-0",
+    gridWrapper: "flex gap-4",
+    grid: "border-separate border-spacing-1 h-fit [&_th]:text-default-700 [&_th]:font-light [&_th]:p-0 [&_td]:p-0",
     cell: [
       "grid place-items-center duration-300 rounded-lg relative z-0",
       "data-[hovered]:bg-default-200 data-[pressed]:scale-90",
@@ -47,6 +48,7 @@ const calendarStyles = tv({
       "outline-none data-[focus-visible]:outline data-[focus-visible]:outline-default-1000 data-[focus-visible]:z-10",
       "data-[selected]:bg-default-1000 data-[selected]:text-default-0 data-[invalid]:bg-error-500",
       "data-[unavailable]:line-through data-[unavailable]:text-error-500 data-[unavailable]:data-[invalid]:text-default-0",
+      "data-[outside-month]:hidden",
     ],
   },
   variants: {
@@ -63,15 +65,17 @@ type CalendarStylesReturnType = ReturnType<typeof calendarStyles>;
 // props
 
 interface CalendarProps<T extends DateValue>
-  extends AriaCalendarProps<T>,
+  extends Omit<AriaCalendarProps<T>, "visibleDuration">,
     Omit<FormValidationProps<T | null | undefined>, "value" | "builtinValidation">,
     FieldBaseProps,
-    StyleSlotsToStyleProps<CalendarStylesReturnType> {}
+    StyleSlotsToStyleProps<CalendarStylesReturnType> {
+  visibleMonthCount?: number;
+}
 
 // component
 
 function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { value, size = "md", classNames, styles } = props;
+  const { visibleMonthCount = 1, value, size = "md", classNames, styles } = props;
 
   const { displayValidation } = useFormValidationState({ ...props, value });
   const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
@@ -90,6 +94,7 @@ function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedR
         {...mergeProps(props, fieldProps)}
         aria-label={props["aria-label"] ?? props.label}
         aria-describedby={props["aria-describedby"] ?? props.description}
+        visibleDuration={{ months: visibleMonthCount }}
         className={composeRenderProps(props.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
         style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
       >
@@ -104,9 +109,18 @@ function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedR
                 <ChevronRightIcon />
               </Button>
             </header>
-            <CalendarGrid className={styleSlots.grid({ className: classNames?.grid })} style={styles?.grid}>
-              {(date) => <CalendarCell date={date} className={styleSlots.cell({ className: classNames?.cell })} style={styles?.cell} />}
-            </CalendarGrid>
+            <div className={styleSlots.gridWrapper({ className: classNames?.gridWrapper })} style={styles?.gridWrapper}>
+              {Array.from({ length: visibleMonthCount }).map((_, index) => (
+                <CalendarGrid
+                  key={index}
+                  offset={{ months: index }}
+                  className={styleSlots.grid({ className: classNames?.grid })}
+                  style={styles?.grid}
+                >
+                  {(date) => <CalendarCell date={date} className={styleSlots.cell({ className: classNames?.cell })} style={styles?.cell} />}
+                </CalendarGrid>
+              ))}
+            </div>
           </div>
         </Field>
       </AriaCalendar>
