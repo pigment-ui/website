@@ -305,8 +305,6 @@ function _Slider(props: SliderProps, ref: ForwardedRef<HTMLDivElement>) {
 
                 {endContent}
               </div>
-
-              <div className="relative"></div>
             </div>
           </Field>
         )}

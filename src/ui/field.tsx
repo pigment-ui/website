@@ -11,7 +11,7 @@ import { useObserveElementWidth } from "./utils";
 
 // styles
 
-export const fieldStyles = tv({
+const fieldStyles = tv({
   slots: {
     base: "flex flex-col relative size-full",
     label: "",
@@ -27,7 +27,7 @@ export const fieldStyles = tv({
   },
 });
 
-export const fieldInputStyles = tv({
+const fieldInputStyles = tv({
   slots: {
     base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden data-[disabled]:bg-default-1000/10 duration-300 transition-colors",
     self: "flex-1 h-full bg-transparent outline-none text-default-1000 placeholder:text-default-500 flex items-center data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
@@ -64,9 +64,9 @@ export const fieldInputStyles = tv({
 // props
 
 interface FieldBaseProps extends SizeProps {
-  label?: ReactNode;
-  description?: ReactNode;
-  errorMessage?: ReactNode | ((validationResult: ValidationResult) => ReactNode);
+  label?: string;
+  description?: string;
+  errorMessage?: string | ((validationResult: ValidationResult) => string);
   labelNecessityIndicator?: "symbol" | "text";
 }
 
@@ -228,5 +228,5 @@ const FieldInput = forwardRef(_FieldInput);
 
 // exports
 
-export { Field, FieldInput };
+export { Field, FieldInput, fieldStyles, fieldInputStyles };
 export type { FieldBaseProps, FieldInputBaseProps };
