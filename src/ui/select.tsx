@@ -31,7 +31,7 @@ function _Select<T extends object>(props: SelectProps<T>, ref: ForwardedRef<HTML
   const [width, selectRef] = useObserveElementWidth<HTMLDivElement>();
 
   return (
-    <AriaSelect ref={selectRef} {...props}>
+    <AriaSelect ref={selectRef} placeholder="Select" {...props}>
       {(renderProps) => (
         <>
           <Field {...renderProps} {...props}>

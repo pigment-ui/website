@@ -7,6 +7,7 @@ import { ChevronDownIcon } from "lucide-react";
 
 import { ForwardRefType } from "./types";
 import { useObserveElementWidth } from "./utils";
+
 import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
 import { Popover } from "./popover";
