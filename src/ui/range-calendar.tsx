@@ -18,14 +18,15 @@ import {
 import { FormValidationProps, useFormValidationState } from "@react-stately/form";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
+import { useLocale } from "@react-aria/i18n";
+import { RangeValue } from "@react-types/shared";
+import { getDayOfWeek } from "@internationalized/date";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 import { StyleSlotsToStyleProps } from "./types";
+
+import { calendarStyles } from "./calendar";
 import { Field, FieldBaseProps } from "./field";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { RangeValue } from "@react-types/shared";
-import { calendarStyles } from "#/ui/calendar";
-import { useLocale } from "@react-aria/i18n";
-import { getDayOfWeek } from "@internationalized/date";
 
 // styles
 

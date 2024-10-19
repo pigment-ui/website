@@ -18,12 +18,12 @@ import {
 import { FormValidationProps, useFormValidationState } from "@react-stately/form";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 import { StyleSlotsToStyleProps } from "./types";
 
 import { cardStyles } from "./card";
 import { Field, FieldBaseProps } from "./field";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 // styles
 
