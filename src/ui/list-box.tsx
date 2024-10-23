@@ -1,17 +1,20 @@
 "use client";
 
 import { ForwardedRef, forwardRef } from "react";
-import { mergeProps } from "react-aria";
+import { Key, mergeProps, useField } from "react-aria";
 import {
   Collection,
   composeRenderProps,
+  FieldErrorContext,
   Header,
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,
   ListBoxItemProps as AriaListBoxItemProps,
   ListBoxProps as AriaListBoxProps,
+  Provider,
   Section,
   SectionProps,
+  TextContext,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
@@ -19,19 +22,26 @@ import { tv } from "tailwind-variants";
 import { CheckIcon } from "lucide-react";
 
 import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
-import { ColorProps, ContentProps, ForwardRefType, SizeProps, StyleSlotsToStyleProps } from "./types";
+import { ColorProps, ContentProps, ForwardRefType, StyleProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { cardStyles } from "./card";
+import { FormValidationProps, useFormValidationState } from "@react-stately/form";
+import { Field, FieldBaseProps } from "#/ui/field";
 
 // styles
 
 const listBoxStyles = tv({
+  slots: {
+    base: "",
+    wrapper: "outline-none data-[focus-visible]:outline data-[focus-visible]:outline-default-1000 data-[focus-visible]:z-10",
+  },
   variants: {
-    asCard: { true: cardStyles().base({ className: "p-2", hasShadow: false }) },
-    isFocusVisible: isFocusVisibleVariants,
+    asCard: { true: { wrapper: cardStyles().base({ className: "p-2", hasShadow: false }) } },
   },
 });
+
+type ListBoxStylesReturnType = ReturnType<typeof listBoxStyles>;
 
 const listBoxItemStyles = tv({
   slots: {
@@ -80,7 +90,13 @@ type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
 
 // props
 
-interface ListBoxProps<T extends object> extends AriaListBoxProps<T>, ColorProps, SizeProps {
+interface ListBoxProps<T extends object>
+  extends Omit<AriaListBoxProps<T>, "className" | "style">,
+    StyleProps,
+    ColorProps,
+    Omit<FormValidationProps<"all" | Iterable<Key> | undefined>, "value" | "builtinValidation">,
+    FieldBaseProps,
+    StyleSlotsToStyleProps<ListBoxStylesReturnType> {
   asCard?: boolean;
   itemClassNames?: ListBoxItemProps["classNames"];
   itemStyles?: ListBoxItemProps["styles"];
@@ -104,15 +120,45 @@ const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType<obj
 // component
 
 function _ListBox<T extends object>(props: ListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { asCard = true, color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
+  const {
+    selectedKeys,
+    asCard = true,
+    color = "default",
+    size = "md",
+    className,
+    classNames,
+    itemClassNames,
+    sectionClassNames,
+    style,
+    styles,
+    itemStyles,
+    sectionStyles,
+  } = props;
+
+  const { displayValidation } = useFormValidationState({ ...props, value: selectedKeys });
+  const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
+
+  const styleSlots = listBoxStyles({ asCard });
 
   return (
     <ListBoxSlotsProvider value={{ color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
-      <AriaListBox
-        ref={ref}
-        {...props}
-        className={composeRenderProps(props.className, (className, { isFocusVisible }) => listBoxStyles({ asCard, isFocusVisible, className }))}
-      />
+      <Provider
+        values={[
+          [TextContext, { slots: { description: descriptionProps, errorMessage: errorMessageProps } }],
+          [FieldErrorContext, displayValidation],
+        ]}
+      >
+        <div className={styleSlots.base({ className: twMerge(classNames?.base, className) })} style={mergeProps(styles?.base, style)}>
+          <Field {...displayValidation} {...props}>
+            <AriaListBox
+              ref={ref}
+              {...mergeProps(props, fieldProps)}
+              className={styleSlots.wrapper({ className: classNames?.wrapper })}
+              style={styles?.wrapper}
+            />
+          </Field>
+        </div>
+      </Provider>
     </ListBoxSlotsProvider>
   );
 }
