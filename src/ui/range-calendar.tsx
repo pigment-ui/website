@@ -35,10 +35,7 @@ const rangeCalendarStyles = tv({
     isSelectionEnd: { true: { cell: "rounded-l-none" } },
     isSelectedRange: {
       true: {
-        cell: [
-          "!bg-transparent !text-default-1000 transition-transform",
-          "before:absolute before:inset-y-0 before:-inset-x-1 before:bg-default-200 before:-z-10",
-        ],
+        cell: ["!bg-transparent !text-default-1000", "before:absolute before:inset-y-0 before:-inset-x-1 before:bg-default-200 before:-z-10"],
       },
     },
     isSelectedFirstDay: { true: { cell: [smallRadiusVariants.md, "rounded-r-none overflow-hidden"] } },

@@ -37,7 +37,7 @@ const calendarStyles = tv({
     button: ["grid place-items-center duration-300", smallRadiusVariants.md],
     gridWrapper: "flex gap-4",
     grid: "border-separate border-spacing-1 size-fit [&_th]:text-default-700 [&_th]:font-light [&_th]:p-0 [&_td]:p-0",
-    cell: ["grid place-items-center duration-300 relative z-0", smallRadiusVariants.md],
+    cell: ["grid place-items-center duration-300 transition-transform relative z-0", smallRadiusVariants.md],
   },
   variants: {
     size: {
