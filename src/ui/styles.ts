@@ -1,20 +1,29 @@
 import { tv } from "tailwind-variants";
 
 export const isDisabledVariants = {
-  isDisabled: { true: "opacity-50 cursor-not-allowed" },
-};
+  true: "opacity-50 cursor-not-allowed",
+} as const;
 
 export const isFocusVisibleVariants = {
-  isFocusVisible: { true: "outline outline-2 outline-offset-2 outline-default-1000 z-10", false: "outline-none" },
-};
+  true: "outline outline-2 outline-offset-2 outline-default-1000 z-10",
+  false: "outline-none",
+} as const;
 
 export const radiusVariants = {
-  radius: { sm: "rounded-lg", md: "rounded-xl", lg: "rounded-2xl", full: "rounded-full", none: "rounded-none" },
-};
+  sm: "rounded-lg",
+  md: "rounded-xl",
+  lg: "rounded-2xl",
+  full: "rounded-full",
+  none: "rounded-none",
+} as const;
 
 export const smallRadiusVariants = {
-  radius: { sm: "rounded-md", md: "rounded-lg", lg: "rounded-xl", full: "rounded-full", none: "rounded-none" },
-};
+  sm: "rounded-md",
+  md: "rounded-lg",
+  lg: "rounded-xl",
+  full: "rounded-full",
+  none: "rounded-none",
+} as const;
 
 export const variantColorStyles = tv({
   base: "relative flex items-center justify-center min-w-max whitespace-nowrap overflow-hidden duration-300",
@@ -37,8 +46,8 @@ export const variantColorStyles = tv({
     },
     isHovered: { true: "" },
     isPressed: { true: "scale-95" },
-    ...isDisabledVariants,
-    ...isFocusVisibleVariants,
+    isDisabled: isDisabledVariants,
+    isFocusVisible: isFocusVisibleVariants,
   },
   compoundVariants: [
     // solid & soft & light & bordered
@@ -83,14 +92,12 @@ export const variantColorStyles = tv({
 });
 
 export const segmentStyles = tv({
-  base: [
-    "text-default-1000 outline-none [caret-color:transparent;]",
-    "data-[focused]:bg-default-1000 data-[focused]:text-default-0",
-    "data-[placeholder]:text-default-500",
-  ],
+  base: ["text-default-1000 outline-none [caret-color:transparent;]"],
   variants: {
     size: { sm: "py-0.5 px-1", md: "py-1 px-1.5", lg: "py-1.5 px-2" },
-    ...smallRadiusVariants,
+    isPlaceholder: { true: "text-default-500" },
+    isFocused: { true: "bg-default-1000 text-default-0" },
+    radius: smallRadiusVariants,
   },
   defaultVariants: { size: "md", radius: "md" },
 });

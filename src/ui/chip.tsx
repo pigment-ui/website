@@ -18,7 +18,7 @@ const chipStyles = tv({
       lg: "h-10 gap-x-2.5 px-5 text-base [&_svg]:size-5",
     },
     isIconOnly: { true: "" },
-    ...smallRadiusVariants,
+    radius: smallRadiusVariants,
   },
   compoundVariants: [
     { size: "sm", isIconOnly: true, className: "px-1.5" },

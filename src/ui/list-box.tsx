@@ -18,7 +18,7 @@ import { tv } from "tailwind-variants";
 
 import { CheckIcon } from "lucide-react";
 
-import { isDisabledVariants, isFocusVisibleVariants } from "./styles";
+import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
 import { ColorProps, ContentProps, ForwardRefType, SizeProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
@@ -29,13 +29,13 @@ import { cardStyles } from "./card";
 const listBoxStyles = tv({
   variants: {
     asCard: { true: cardStyles().base({ className: "p-2", hasShadow: false }) },
-    ...isFocusVisibleVariants,
+    isFocusVisible: isFocusVisibleVariants,
   },
 });
 
 const listBoxItemStyles = tv({
   slots: {
-    base: "flex items-center rounded-lg bg-opacity-0",
+    base: ["flex items-center bg-opacity-0", smallRadiusVariants.md],
     content: "flex-1",
   },
   variants: {
@@ -55,8 +55,8 @@ const listBoxItemStyles = tv({
     isSelectable: { true: "cursor-pointer", false: "cursor-default" },
     isHovered: { true: "bg-opacity-10" },
     isPressed: { true: "bg-opacity-20" },
-    ...isDisabledVariants,
-    ...isFocusVisibleVariants,
+    isDisabled: isDisabledVariants,
+    isFocusVisible: isFocusVisibleVariants,
   },
 });
 

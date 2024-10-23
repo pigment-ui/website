@@ -24,7 +24,7 @@ import { RangeCalendar } from "./range-calendar";
 // props
 
 interface DateRangePickerProps<T extends DateValue>
-  extends Omit<AriaDateRangePickerProps<T>, "children">,
+  extends AriaDateRangePickerProps<T>,
     Omit<InputProps, keyof AriaDateRangePickerProps<T> | "color" | "size">,
     Omit<ComponentPropsWithoutRef<typeof Popover>, keyof AriaDateRangePickerProps<T>>,
     FieldBaseProps,
@@ -58,10 +58,7 @@ function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, r
                   {(segment) => (
                     <DateSegment
                       segment={segment}
-                      className={segmentStyles({
-                        size,
-                        radius,
-                      })}
+                      className={({ isFocused, isPlaceholder }) => segmentStyles({ isFocused, isPlaceholder, size, radius })}
                     />
                   )}
                 </DateInput>
@@ -72,10 +69,7 @@ function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, r
                   {(segment) => (
                     <DateSegment
                       segment={segment}
-                      className={segmentStyles({
-                        size,
-                        radius,
-                      })}
+                      className={({ isFocused, isPlaceholder }) => segmentStyles({ isFocused, isPlaceholder, size, radius })}
                     />
                   )}
                 </DateInput>

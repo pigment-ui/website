@@ -24,7 +24,14 @@ function _TimeField<T extends TimeValue>(props: TimeFieldProps<T>, ref: Forwarde
       {(renderProps) => (
         <Field {...renderProps} {...props}>
           <FieldInput startContent={<ClockIcon />} {...renderProps} {...props}>
-            <DateInput ref={ref}>{(segment) => <DateSegment segment={segment} className={segmentStyles({ size, radius })} />}</DateInput>
+            <DateInput ref={ref}>
+              {(segment) => (
+                <DateSegment
+                  segment={segment}
+                  className={({ isFocused, isPlaceholder }) => segmentStyles({ isFocused, isPlaceholder, size, radius })}
+                />
+              )}
+            </DateInput>
           </FieldInput>
         </Field>
       )}

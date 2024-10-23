@@ -1,6 +1,6 @@
 "use client";
 
-import { ForwardedRef, forwardRef } from "react";
+import { ForwardedRef, forwardRef, ReactNode } from "react";
 import { mergeProps, useField } from "react-aria";
 import {
   Button,
@@ -20,6 +20,7 @@ import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
+import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
 import { StyleSlotsToStyleProps } from "./types";
 
 import { cardStyles } from "./card";
@@ -33,23 +34,10 @@ const calendarStyles = tv({
     wrapper: "p-4 w-fit max-w-full overflow-auto",
     header: "flex items-center justify-between gap-4",
     heading: "font-medium",
-    button: [
-      "grid place-items-center duration-300 rounded-lg",
-      "data-[hovered]:bg-default-200 data-[pressed]:scale-90",
-      "data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed",
-      "outline-none data-[focus-visible]:outline data-[focus-visible]:outline-default-1000 data-[focus-visible]:z-10",
-    ],
+    button: ["grid place-items-center duration-300", smallRadiusVariants.md],
     gridWrapper: "flex gap-4",
     grid: "border-separate border-spacing-1 size-fit [&_th]:text-default-700 [&_th]:font-light [&_th]:p-0 [&_td]:p-0",
-    cell: [
-      "grid place-items-center duration-300 rounded-lg relative z-0",
-      "data-[hovered]:bg-default-200 data-[pressed]:scale-90",
-      "data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed",
-      "outline-none data-[focus-visible]:outline data-[focus-visible]:outline-default-1000 data-[focus-visible]:z-10",
-      "data-[selected]:bg-default-1000 data-[selected]:text-default-0 data-[invalid]:bg-error-500",
-      "data-[unavailable]:line-through data-[unavailable]:text-error-500 data-[unavailable]:data-[invalid]:text-default-0",
-      "data-[outside-month]:hidden",
-    ],
+    cell: ["grid place-items-center duration-300 relative z-0", smallRadiusVariants.md],
   },
   variants: {
     size: {
@@ -59,6 +47,31 @@ const calendarStyles = tv({
     },
     asCard: {
       true: { wrapper: cardStyles().base({ hasShadow: false }) },
+    },
+    isHovered: {
+      true: { button: "bg-default-200", cell: "bg-default-200" },
+    },
+    isSelected: {
+      true: { cell: "bg-default-1000 text-default-0" },
+    },
+    isUnavailable: {
+      true: { cell: "line-through text-error-500" },
+    },
+    isInvalid: {
+      true: { cell: "bg-error-500 text-default-0" },
+    },
+    isOutsideMonth: {
+      true: { cell: "hidden" },
+    },
+    isPressed: {
+      true: { button: "scale-90", cell: "scale-90" },
+    },
+    isDisabled: {
+      true: { button: isDisabledVariants.true, cell: isDisabledVariants.true },
+    },
+    isFocusVisible: {
+      true: { button: isFocusVisibleVariants.true, cell: isFocusVisibleVariants.true },
+      false: { button: isFocusVisibleVariants.false, cell: isFocusVisibleVariants.false },
     },
   },
 });
@@ -103,31 +116,31 @@ function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedR
         style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
       >
         <Field {...displayValidation} {...props}>
-          <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>
-            <div className="flex min-w-fit flex-col">
-              <header className={styleSlots.header({ className: classNames?.header })} style={styles?.header}>
-                <Button slot="previous" className={styleSlots.button({ className: classNames?.button })} style={styles?.button}>
-                  <ChevronLeftIcon />
-                </Button>
-                <Heading className={styleSlots.heading({ className: classNames?.heading })} style={styles?.heading} />
-                <Button slot="next" className={styleSlots.button({ className: classNames?.button })} style={styles?.button}>
-                  <ChevronRightIcon />
-                </Button>
-              </header>
-              <div className={styleSlots.gridWrapper({ className: classNames?.gridWrapper })} style={styles?.gridWrapper}>
-                {Array.from({ length: visibleMonthCount }).map((_, index) => (
-                  <CalendarGrid
-                    key={index}
-                    offset={{ months: index }}
-                    className={styleSlots.grid({ className: classNames?.grid })}
-                    style={styles?.grid}
-                  >
-                    {(date) => <CalendarCell date={date} className={styleSlots.cell({ className: classNames?.cell })} style={styles?.cell} />}
-                  </CalendarGrid>
-                ))}
-              </div>
-            </div>
-          </div>
+          <CalendarWrapper styleSlots={styleSlots} classNames={classNames} styles={styles}>
+            {Array.from({ length: visibleMonthCount }).map((_, index) => (
+              <CalendarGrid key={index} offset={{ months: index }} className={styleSlots.grid({ className: classNames?.grid })} style={styles?.grid}>
+                {(date) => (
+                  <CalendarCell
+                    date={date}
+                    className={({ isHovered, isPressed, isDisabled, isFocusVisible, isSelected, isInvalid, isUnavailable, isOutsideMonth }) =>
+                      styleSlots.cell({
+                        isHovered,
+                        isPressed,
+                        isDisabled,
+                        isFocusVisible,
+                        isSelected,
+                        isInvalid,
+                        isUnavailable,
+                        isOutsideMonth,
+                        className: classNames?.cell,
+                      })
+                    }
+                    style={styles?.cell}
+                  />
+                )}
+              </CalendarGrid>
+            ))}
+          </CalendarWrapper>
         </Field>
       </AriaCalendar>
     </Provider>
@@ -136,6 +149,52 @@ function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedR
 
 const Calendar = forwardRef(_Calendar);
 
+function CalendarWrapper({
+  styleSlots,
+  classNames,
+  styles,
+  children,
+}: {
+  styleSlots: CalendarStylesReturnType;
+  classNames: CalendarProps<DateValue>["classNames"];
+  styles: CalendarProps<DateValue>["styles"];
+  children: ReactNode;
+}) {
+  return (
+    <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>
+      <div className="flex min-w-fit flex-col">
+        <header className={styleSlots.header({ className: classNames?.header })} style={styles?.header}>
+          <Button
+            slot="previous"
+            className={({ isHovered, isPressed, isDisabled, isFocusVisible }) =>
+              styleSlots.button({ isHovered, isPressed, isDisabled, isFocusVisible, className: classNames?.button })
+            }
+            style={styles?.button}
+          >
+            <ChevronLeftIcon />
+          </Button>
+
+          <Heading className={styleSlots.heading({ className: classNames?.heading })} style={styles?.heading} />
+
+          <Button
+            slot="next"
+            className={({ isHovered, isPressed, isDisabled, isFocusVisible }) =>
+              styleSlots.button({ isHovered, isPressed, isDisabled, isFocusVisible, className: classNames?.button })
+            }
+            style={styles?.button}
+          >
+            <ChevronRightIcon />
+          </Button>
+        </header>
+
+        <div className={styleSlots.gridWrapper({ className: classNames?.gridWrapper })} style={styles?.gridWrapper}>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // exports
 
-export { Calendar, calendarStyles };
+export { Calendar, CalendarWrapper, calendarStyles };

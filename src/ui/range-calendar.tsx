@@ -3,13 +3,11 @@
 import { ForwardedRef, forwardRef } from "react";
 import { mergeProps, useField } from "react-aria";
 import {
-  Button,
   CalendarCell,
   CalendarGrid,
   composeRenderProps,
   DateValue,
   FieldErrorContext,
-  Heading,
   Provider,
   RangeCalendar as AriaRangeCalendar,
   RangeCalendarProps as AriaRangeCalendarProps,
@@ -21,32 +19,32 @@ import { tv } from "tailwind-variants";
 import { useLocale } from "@react-aria/i18n";
 import { RangeValue } from "@react-types/shared";
 import { getDayOfWeek } from "@internationalized/date";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 import { StyleSlotsToStyleProps } from "./types";
 
-import { calendarStyles } from "./calendar";
+import { calendarStyles, CalendarWrapper } from "./calendar";
 import { Field, FieldBaseProps } from "./field";
+import { smallRadiusVariants } from "#/ui/styles";
 
 // styles
 
 const rangeCalendarStyles = tv({
   extend: calendarStyles,
-  slots: {
-    cell: [
-      "data-[selected]:bg-opacity-0 data-[selected]:text-default-1000",
-      "data-[selected]:before:absolute data-[selected]:before:-z-10 data-[selected]:before:inset-y-0 data-[selected]:before:-inset-x-0.5 data-[selected]:before:bg-default-200",
-      "data-[selection-start]:bg-opacity-100 data-[selection-start]:text-default-0",
-      "data-[selection-end]:bg-opacity-100 data-[selection-end]:text-default-0",
-      "data-[selection-start]:rounded-r-none data-[selection-start]:before:left-full",
-      "data-[selection-end]:rounded-l-none data-[selection-end]:before:right-full",
-      "data-[selection-start]:data-[selection-end]:rounded-lg",
-    ],
-  },
   variants: {
-    isFirstDay: { true: { cell: "data-[selected]:before:rounded-l-lg data-[selected]:before:left-0" } },
-    isLastDay: { true: { cell: "data-[selected]:before:rounded-r-lg data-[selected]:before:right-0" } },
+    isSelectionStart: { true: { cell: "rounded-r-none" } },
+    isSelectionEnd: { true: { cell: "rounded-l-none" } },
+    isSelectedRange: {
+      true: {
+        cell: [
+          "!bg-transparent !text-default-1000 duration-0",
+          "before:absolute before:inset-y-0 before:-inset-x-1 before:bg-default-200 before:-z-10",
+        ],
+      },
+    },
+    isSelectedFirstDay: { true: { cell: [smallRadiusVariants.md, "rounded-r-none overflow-hidden"] } },
+    isSelectedLastDay: { true: { cell: [smallRadiusVariants.md, "rounded-l-none overflow-hidden"] } },
   },
+  compoundVariants: [{ isSelectionStart: true, isSelectionEnd: true, className: { cell: smallRadiusVariants.md } }],
 });
 
 type RangeCalendarStylesReturnType = ReturnType<typeof rangeCalendarStyles>;
@@ -91,41 +89,47 @@ function _RangeCalendar<T extends DateValue>(props: RangeCalendarProps<T>, ref: 
         style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
       >
         <Field {...displayValidation} {...props}>
-          <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>
-            <div className="flex min-w-fit flex-col">
-              <header className={styleSlots.header({ className: classNames?.header })} style={styles?.header}>
-                <Button slot="previous" className={styleSlots.button({ className: classNames?.button })} style={styles?.button}>
-                  <ChevronLeftIcon />
-                </Button>
-                <Heading className={styleSlots.heading({ className: classNames?.heading })} style={styles?.heading} />
-                <Button slot="next" className={styleSlots.button({ className: classNames?.button })} style={styles?.button}>
-                  <ChevronRightIcon />
-                </Button>
-              </header>
-              <div className={styleSlots.gridWrapper({ className: classNames?.gridWrapper })} style={styles?.gridWrapper}>
-                {Array.from({ length: visibleMonthCount }).map((_, index) => (
-                  <CalendarGrid
-                    key={index}
-                    offset={{ months: index }}
-                    className={styleSlots.grid({ className: classNames?.grid })}
-                    style={styles?.grid}
-                  >
-                    {(date) => (
-                      <CalendarCell
-                        date={date}
-                        className={styleSlots.cell({
-                          isFirstDay: getDayOfWeek(date, locale) === 0,
-                          isLastDay: getDayOfWeek(date, locale) === 6,
-                          className: classNames?.cell,
-                        })}
-                        style={styles?.cell}
-                      />
-                    )}
-                  </CalendarGrid>
-                ))}
-              </div>
-            </div>
-          </div>
+          <CalendarWrapper styleSlots={styleSlots} classNames={classNames} styles={styles}>
+            {Array.from({ length: visibleMonthCount }).map((_, index) => (
+              <CalendarGrid key={index} offset={{ months: index }} className={styleSlots.grid({ className: classNames?.grid })} style={styles?.grid}>
+                {(date) => (
+                  <CalendarCell
+                    date={date}
+                    className={({
+                      isHovered,
+                      isPressed,
+                      isDisabled,
+                      isFocusVisible,
+                      isSelected,
+                      isInvalid,
+                      isUnavailable,
+                      isOutsideMonth,
+                      isSelectionStart,
+                      isSelectionEnd,
+                    }) =>
+                      styleSlots.cell({
+                        isHovered,
+                        isPressed,
+                        isDisabled,
+                        isFocusVisible,
+                        isSelected,
+                        isInvalid,
+                        isUnavailable,
+                        isOutsideMonth,
+                        isSelectionStart,
+                        isSelectionEnd,
+                        isSelectedRange: isSelected && !(isSelectionStart || isSelectionEnd),
+                        isSelectedFirstDay: isSelected && getDayOfWeek(date, locale) === 0,
+                        isSelectedLastDay: isSelected && getDayOfWeek(date, locale) === 6,
+                        className: classNames?.cell,
+                      })
+                    }
+                    style={styles?.cell}
+                  />
+                )}
+              </CalendarGrid>
+            ))}
+          </CalendarWrapper>
         </Field>
       </AriaRangeCalendar>
     </Provider>

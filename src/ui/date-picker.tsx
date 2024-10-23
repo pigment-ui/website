@@ -24,7 +24,7 @@ import { Popover } from "./popover";
 // props
 
 interface DatePickerProps<T extends DateValue>
-  extends Omit<AriaDatePickerProps<T>, "children">,
+  extends AriaDatePickerProps<T>,
     Omit<InputProps, keyof AriaDatePickerProps<T> | "color" | "size">,
     Omit<ComponentPropsWithoutRef<typeof Popover>, keyof AriaDatePickerProps<T>>,
     FieldBaseProps,
@@ -53,7 +53,14 @@ function _DatePicker<T extends DateValue>(props: DatePickerProps<T>, ref: Forwar
               {...renderProps}
               {...props}
             >
-              <DateInput ref={ref}>{(segment) => <DateSegment segment={segment} className={segmentStyles({ size, radius })} />}</DateInput>
+              <DateInput ref={ref}>
+                {(segment) => (
+                  <DateSegment
+                    segment={segment}
+                    className={({ isFocused, isPlaceholder }) => segmentStyles({ isFocused, isPlaceholder, size, radius })}
+                  />
+                )}
+              </DateInput>
             </FieldInput>
           </Field>
 

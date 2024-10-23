@@ -26,7 +26,7 @@ const tabsStyles = tv({
   slots: {
     base: "flex",
     list: "flex w-fit h-fit bg-default-1000/10 backdrop-blur-lg",
-    panel: "w-full h-fit bg-default-1000/10 backdrop-blur-lg rounded-xl",
+    panel: ["w-full h-fit bg-default-1000/10 backdrop-blur-lg", radiusVariants.md],
   },
   variants: {
     orientation: {
@@ -47,13 +47,13 @@ const tabsStyles = tv({
       lg: { base: "gap-3", list: "p-2 gap-3", panel: "p-3 text-base" },
     },
     radius: {
-      sm: { list: radiusVariants.radius.sm },
-      md: { list: radiusVariants.radius.md },
-      lg: { list: radiusVariants.radius.lg },
-      full: { list: radiusVariants.radius.full },
-      none: { list: radiusVariants.radius.none },
+      sm: { list: radiusVariants.sm },
+      md: { list: radiusVariants.md },
+      lg: { list: radiusVariants.lg },
+      full: { list: radiusVariants.full },
+      none: { list: radiusVariants.none },
     },
-    isFocusVisible: { true: { panel: isFocusVisibleVariants.isFocusVisible.true } },
+    isFocusVisible: { true: { panel: isFocusVisibleVariants.true } },
   },
 });
 
@@ -69,7 +69,7 @@ const tabStyles = tv({
       lg: "h-12 gap-x-3 px-6 text-base [&_svg]:size-6",
     },
     isSelected: { false: "!bg-transparent !text-default-500 !border-none" },
-    ...radiusVariants,
+    radius: radiusVariants,
   },
   compoundVariants: [{ isSelected: false, isHovered: true, className: "!text-default-1000" }],
 });

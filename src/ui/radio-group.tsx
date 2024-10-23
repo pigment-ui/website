@@ -38,8 +38,8 @@ const radioStyles = tv({
     isInvalid: { true: { base: "text-error-500", self: "border-error-500" } },
     isHovered: { true: { self: "border-opacity-100" } },
     isPressed: { true: { self: "scale-90" } },
-    isFocusVisible: { true: { self: isFocusVisibleVariants.isFocusVisible.true } },
-    ...isDisabledVariants,
+    isFocusVisible: { true: { self: isFocusVisibleVariants.true } },
+    isDisabled: isDisabledVariants,
   },
   compoundVariants: [{ isSelected: true, isHovered: true, className: { self: "border-opacity-90" } }],
 });

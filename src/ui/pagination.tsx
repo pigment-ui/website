@@ -26,7 +26,7 @@ const paginationStyles = tv({
       lg: { wrapper: "gap-3", base: "size-12 text-base [&_svg]:size-6" },
     },
     isSelected: { true: "!text-default-0" },
-    ...radiusVariants,
+    radius: radiusVariants,
   },
   compoundVariants: [
     { isSelected: true, color: "default", className: "!bg-default-1000 !border-default-1000" },

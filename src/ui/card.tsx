@@ -7,12 +7,13 @@ import { tv } from "tailwind-variants";
 
 import { ChildrenProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
+import { radiusVariants } from "#/ui/styles";
 
 // styles
 
 const cardStyles = tv({
   slots: {
-    base: "bg-default-0 text-default-1000 border border-default-1000/20 bg-clip-padding backdrop-blur-xl bg-opacity-75 rounded-xl",
+    base: ["bg-default-0 text-default-1000 border border-default-1000/20 bg-clip-padding backdrop-blur-xl bg-opacity-75", radiusVariants.md],
     header: "p-4",
     body: "p-4",
     footer: "p-4",

@@ -25,7 +25,7 @@ const buttonStyles = tv({
     },
     isIconOnly: { true: "" },
     isLoading: { true: "!text-transparent" },
-    ...radiusVariants,
+    radius: radiusVariants,
   },
   compoundVariants: [
     { size: "sm", isIconOnly: true, className: "px-2" },

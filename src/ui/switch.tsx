@@ -35,8 +35,8 @@ const switchStyles = tv({
     isHovered: { true: "" },
     isPressed: { true: { self: "scale-95" } },
     isSelected: { false: { self: "bg-opacity-40 bg-default-1000" }, true: { self: "bg-opacity-100" } },
-    isFocusVisible: { true: { self: isFocusVisibleVariants.isFocusVisible.true } },
-    ...isDisabledVariants,
+    isFocusVisible: { true: { self: isFocusVisibleVariants.true } },
+    isDisabled: isDisabledVariants,
   },
   compoundVariants: [
     { isSelected: true, size: "sm", className: { thumb: "translate-x-4" } },

@@ -12,7 +12,7 @@ const skeletonStyles = tv({
   base: "bg-default-1000/10",
   variants: {
     animation: { pulse: "animate-pulse", none: "animate-none" },
-    ...radiusVariants,
+    radius: radiusVariants,
   },
 });
 
