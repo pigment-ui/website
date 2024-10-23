@@ -36,7 +36,7 @@ const rangeCalendarStyles = tv({
     isSelectedRange: {
       true: {
         cell: [
-          "!bg-transparent !text-default-1000 duration-0",
+          "!bg-transparent !text-default-1000 transition-transform",
           "before:absolute before:inset-y-0 before:-inset-x-1 before:bg-default-200 before:-z-10",
         ],
       },
