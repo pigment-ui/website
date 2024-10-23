@@ -77,8 +77,8 @@ function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, r
             </FieldInput>
           </Field>
 
-          <Popover hideArrow {...props} className="overflow-auto p-0" style={{ maxWidth: width }}>
-            <RangeCalendar asCard={false} visibleMonthCount={visibleMonthCount} />
+          <Popover hideArrow placement="bottom" {...props} className="overflow-auto p-0" style={{ maxWidth: width }}>
+            <RangeCalendar aria-label={props["aria-label"] || props.label} asCard={false} visibleMonthCount={visibleMonthCount} />
           </Popover>
         </>
       )}

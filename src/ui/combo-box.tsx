@@ -46,7 +46,7 @@ function _ComboBox<T extends object>(props: ComboBoxProps<T>, ref: ForwardedRef<
           </Field>
 
           <Popover maxHeight={300} hideArrow {...props} className="overflow-auto p-0" style={{ width }}>
-            <ListBox {...filterInlineListBoxProps(props)} className="p-2" />
+            <ListBox aria-label={props["aria-label"] || props.label} {...filterInlineListBoxProps(props)} className="p-2" />
           </Popover>
         </>
       )}
