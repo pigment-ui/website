@@ -7,7 +7,7 @@ import { tv } from "tailwind-variants";
 
 import { ChildrenProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
-import { radiusVariants } from "#/ui/styles";
+import { radiusVariants } from "./styles";
 
 // styles
 

@@ -27,7 +27,7 @@ import { createSlots } from "./utils";
 
 import { cardStyles } from "./card";
 import { FormValidationProps, useFormValidationState } from "@react-stately/form";
-import { Field, FieldBaseProps } from "#/ui/field";
+import { Field, FieldBaseProps } from "./field";
 
 // styles
 

@@ -24,7 +24,7 @@ import { StyleSlotsToStyleProps } from "./types";
 
 import { calendarStyles, CalendarWrapper } from "./calendar";
 import { Field, FieldBaseProps } from "./field";
-import { smallRadiusVariants } from "#/ui/styles";
+import { smallRadiusVariants } from "./styles";
 
 // styles
 
