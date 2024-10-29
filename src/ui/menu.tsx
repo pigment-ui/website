@@ -8,8 +8,6 @@ import {
   MenuItem as AriaMenuItem,
   MenuItemProps as AriaMenuItemProps,
   MenuProps as AriaMenuProps,
-  Popover,
-  PopoverProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
@@ -19,13 +17,13 @@ import { CheckIcon } from "lucide-react";
 import { ForwardRefType, StyleProps } from "./types";
 import { createSlots } from "./utils";
 
-import { cardStyles } from "./card";
 import { ListBox, ListBoxItem, listBoxItemStyles, ListBoxSection, ListBoxSlotsType } from "./list-box";
+import { Popover } from "./popover";
 
 // styles
 
 const menuStyles = tv({
-  base: cardStyles().base({ className: "p-2" }),
+  base: "p-2",
 });
 
 const menuItemStyles = listBoxItemStyles;
@@ -35,7 +33,7 @@ const menuItemStyles = listBoxItemStyles;
 interface MenuProps<T extends object>
   extends Omit<AriaMenuProps<T>, keyof StyleProps>,
     Omit<ComponentPropsWithoutRef<typeof ListBox<T>>, keyof AriaMenuProps<T> | "asCard">,
-    Omit<PopoverProps, keyof Omit<AriaMenuProps<T>, keyof StyleProps>> {}
+    Omit<ComponentPropsWithoutRef<typeof Popover>, keyof Omit<AriaMenuProps<T>, keyof StyleProps>> {}
 
 interface MenuItemProps extends AriaMenuItemProps, Omit<ComponentPropsWithoutRef<typeof ListBoxItem>, keyof AriaMenuItemProps> {}
 
@@ -50,7 +48,7 @@ function _Menu<T extends object>(props: MenuProps<T>, ref: ForwardedRef<HTMLDivE
 
   return (
     <MenuSlotsProvider value={{ color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
-      <Popover maxHeight={300} {...props} className={composeRenderProps(props.className, (className) => menuStyles({ className }))}>
+      <Popover hideArrow {...props} className={composeRenderProps(props.className, (className) => menuStyles({ className }))}>
         <AriaMenu ref={ref} {...props} className="outline-none" style={{}} />
       </Popover>
     </MenuSlotsProvider>
