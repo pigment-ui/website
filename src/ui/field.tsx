@@ -6,8 +6,10 @@ import { ValidationResult } from "@react-types/shared";
 import { tv } from "tailwind-variants";
 
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants } from "./styles";
-import { RadiusProps, SizeProps } from "./types";
+import { RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import { useObserveElementWidth } from "./utils";
+import { mergeProps } from "react-aria";
+import { twMerge } from "tailwind-merge";
 
 // styles
 
@@ -26,6 +28,8 @@ const fieldStyles = tv({
     },
   },
 });
+
+type FieldStylesReturnType = ReturnType<typeof fieldStyles>;
 
 const fieldInputStyles = tv({
   slots: {
@@ -61,6 +65,8 @@ const fieldInputStyles = tv({
   },
 });
 
+type FieldInputStylesReturnType = ReturnType<typeof fieldInputStyles>;
+
 // props
 
 interface FieldBaseProps extends SizeProps {
@@ -68,6 +74,8 @@ interface FieldBaseProps extends SizeProps {
   description?: string;
   errorMessage?: string | ((validationResult: ValidationResult) => string);
   labelNecessityIndicator?: "symbol" | "text";
+  fieldClassNames?: StyleSlotsToStyleProps<FieldStylesReturnType>["classNames"];
+  fieldStyles?: StyleSlotsToStyleProps<FieldStylesReturnType>["styles"];
 }
 
 interface FieldProps extends FieldBaseProps {
@@ -81,6 +89,8 @@ interface FieldInputBaseProps extends SizeProps, RadiusProps {
   endContent?: ReactElement;
   startButton?: ReactElement;
   endButton?: ReactElement;
+  fieldInputClassNames?: StyleSlotsToStyleProps<FieldInputStylesReturnType>["classNames"];
+  fieldInputStyles?: StyleSlotsToStyleProps<FieldInputStylesReturnType>["styles"];
 }
 
 interface FieldInputProps extends FieldInputBaseProps {
@@ -96,14 +106,25 @@ interface FieldInputProps extends FieldInputBaseProps {
 // component
 
 function _Field(props: FieldProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { label, description, errorMessage, isRequired, isInvalid, labelNecessityIndicator = "symbol", size = "md", children } = props;
+  const {
+    label,
+    description,
+    errorMessage,
+    isRequired,
+    isInvalid,
+    labelNecessityIndicator = "symbol",
+    size = "md",
+    children,
+    fieldClassNames,
+    fieldStyles: fieldStylesFromProps,
+  } = props;
 
   const styleSlots = fieldStyles({ size });
 
   return (
-    <div ref={ref} className={styleSlots.base()}>
+    <div ref={ref} className={styleSlots.base({ className: fieldClassNames?.base })} style={fieldStylesFromProps?.base}>
       {label && (
-        <Label className={styleSlots.label()}>
+        <Label className={styleSlots.label({ className: fieldClassNames?.label })} style={fieldStylesFromProps?.label}>
           {label}
           {labelNecessityIndicator === "symbol" && isRequired && <span> *</span>}
           {labelNecessityIndicator === "text" && <span> {isRequired ? "(required)" : "(optional)"}</span>}
@@ -113,12 +134,18 @@ function _Field(props: FieldProps, ref: ForwardedRef<HTMLDivElement>) {
       {children}
 
       {description && (
-        <Text slot="description" className={styleSlots.description()}>
+        <Text
+          slot="description"
+          className={styleSlots.description({ className: fieldClassNames?.description })}
+          style={fieldStylesFromProps?.description}
+        >
           {description}
         </Text>
       )}
 
-      <FieldError className={styleSlots.errorMessage()}>{errorMessage}</FieldError>
+      <FieldError className={styleSlots.errorMessage({ className: fieldClassNames?.errorMessage })} style={fieldStylesFromProps?.errorMessage}>
+        {errorMessage}
+      </FieldError>
     </div>
   );
 }
@@ -138,6 +165,8 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
     startButton,
     endButton,
     children,
+    fieldInputClassNames,
+    fieldInputStyles: fieldInputStylesFromProps,
   } = props;
 
   const styleSlots = fieldInputStyles({ size, radius, isTextArea });
@@ -173,52 +202,74 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
       isInvalid={isInvalid}
       isDisabled={isDisabled}
       className={({ isHovered, isInvalid, isDisabled, isFocusVisible, isFocusWithin }) =>
-        styleSlots.base({ isHovered, isInvalid, isDisabled, isFocusVisible, isFocusWithin: isFocusWithin || isFocusWithinProps })
+        styleSlots.base({
+          isHovered,
+          isInvalid,
+          isDisabled,
+          isFocusVisible,
+          isFocusWithin: isFocusWithin || isFocusWithinProps,
+          className: fieldInputClassNames?.base,
+        })
       }
-      style={{
-        paddingTop: isTextArea ? spacingSize : undefined,
-        paddingBottom: isTextArea ? spacingSize : undefined,
-        paddingLeft: !isMounted ? spacingSize : undefined,
-        paddingRight: !isMounted ? spacingSize : undefined,
-        gap: !isMounted ? spacingSize : undefined,
-      }}
+      style={mergeProps(
+        {
+          paddingTop: isTextArea ? spacingSize : undefined,
+          paddingBottom: isTextArea ? spacingSize : undefined,
+          paddingLeft: !isMounted ? spacingSize : undefined,
+          paddingRight: !isMounted ? spacingSize : undefined,
+          gap: !isMounted ? spacingSize : undefined,
+        },
+        fieldInputStylesFromProps?.base,
+      )}
     >
       {startButton &&
         cloneElement(startButton, {
           ref: startButtonRef,
-          style: isMounted ? { position: "absolute", left: spacingSize, ...startButton.props?.style } : {},
-          className: styleSlots.button({ className: startButton.props?.className }),
+          className: styleSlots.button({ className: twMerge(startButton.props?.className, fieldInputClassNames?.button) }),
+          style: mergeProps(
+            isMounted ? { position: "absolute", left: spacingSize, ...startButton.props?.style } : {},
+            fieldInputStylesFromProps?.button,
+          ),
         })}
 
       {startContent &&
         cloneElement(startContent, {
           ref: startContentRef,
-          style: isMounted
-            ? { position: "absolute", left: hasStartButton ? spacingSize * 2 + startButtonWidth : spacingSize, ...startContent.props?.style }
-            : {},
-          className: styleSlots.content({ className: startContent.props?.className }),
+          className: styleSlots.content({ className: twMerge(startContent.props?.className, fieldInputClassNames?.content) }),
+          style: mergeProps(
+            isMounted
+              ? { position: "absolute", left: hasStartButton ? spacingSize * 2 + startButtonWidth : spacingSize, ...startContent.props?.style }
+              : {},
+            fieldInputStylesFromProps?.content,
+          ),
         })}
 
       {children &&
         cloneElement(children, {
-          style: isMounted ? { paddingLeft, paddingRight, ...children.props?.style } : {},
-          className: styleSlots.self({ className: children.props?.className }),
+          className: styleSlots.self({ className: twMerge(children.props?.className, fieldInputClassNames?.self) }),
+          style: mergeProps(isMounted ? { paddingLeft, paddingRight, ...children.props?.style } : {}, fieldInputStylesFromProps?.self),
         })}
 
       {endContent &&
         cloneElement(endContent, {
           ref: endContentRef,
-          style: isMounted
-            ? { position: "absolute", right: hasEndButton ? spacingSize * 2 + endButtonWidth : spacingSize, ...endContent.props?.style }
-            : {},
-          className: styleSlots.content({ className: endContent.props?.className }),
+          className: styleSlots.content({ className: twMerge(endContent.props?.className, fieldInputClassNames?.content) }),
+          style: mergeProps(
+            isMounted
+              ? { position: "absolute", right: hasEndButton ? spacingSize * 2 + endButtonWidth : spacingSize, ...endContent.props?.style }
+              : {},
+            fieldInputStylesFromProps?.content,
+          ),
         })}
 
       {endButton &&
         cloneElement(endButton, {
           ref: endButtonRef,
-          style: isMounted ? { position: "absolute", right: spacingSize, ...endButton.props?.style } : {},
-          className: styleSlots.button({ className: endButton.props?.className }),
+          className: styleSlots.button({ className: twMerge(endButton.props?.className, fieldInputClassNames?.button) }),
+          style: mergeProps(
+            isMounted ? { position: "absolute", right: spacingSize, ...endButton.props?.style } : {},
+            fieldInputStylesFromProps?.button,
+          ),
         })}
     </Group>
   );
