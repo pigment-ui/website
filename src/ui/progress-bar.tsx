@@ -6,7 +6,7 @@ import { composeRenderProps, Label, ProgressBar as AriaProgressBar, ProgressBarP
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { ColorProps, SizeProps, StyleSlotsToStyleProps } from "./types"; // styles
+import { ColorProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 
 // styles
 

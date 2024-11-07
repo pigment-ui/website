@@ -65,7 +65,12 @@ function _DatePicker<T extends DateValue>(props: DatePickerProps<T>, ref: Forwar
           </Field>
 
           <Popover hideArrow placement="bottom" {...props} className="overflow-auto p-0" style={{ maxWidth: width }}>
-            <Calendar aria-label={props["aria-label"] || props.label} asCard={false} visibleMonthCount={visibleMonthCount} />
+            <Calendar
+              aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
+              aria-describedby={props["aria-describedby"] ?? (typeof props.description === "string" ? props.description : undefined)}
+              asCard={false}
+              visibleMonthCount={visibleMonthCount}
+            />
           </Popover>
         </>
       )}

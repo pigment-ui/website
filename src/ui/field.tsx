@@ -70,9 +70,9 @@ type FieldInputStylesReturnType = ReturnType<typeof fieldInputStyles>;
 // props
 
 interface FieldBaseProps extends SizeProps {
-  label?: string;
-  description?: string;
-  errorMessage?: string | ((validationResult: ValidationResult) => string);
+  label?: ReactNode;
+  description?: ReactNode;
+  errorMessage?: ReactNode | ((validationResult: ValidationResult) => ReactNode);
   labelNecessityIndicator?: "symbol" | "text";
   fieldClassNames?: StyleSlotsToStyleProps<FieldStylesReturnType>["classNames"];
   fieldStyles?: StyleSlotsToStyleProps<FieldStylesReturnType>["styles"];

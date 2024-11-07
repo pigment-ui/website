@@ -27,7 +27,7 @@ const accordionStyles = tv({
     base: "",
     item: "border-b border-default-1000/20 first:border-t",
     trigger: [
-      "flex flex-1 items-center [&[data-state=open]>svg.chevron]:rotate-180",
+      "flex flex-1 items-center [&[data-state=open]>.chevron]:rotate-180",
       "outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-default-1000 focus-visible:z-10",
       "disabled:opacity-50 disabled:cursor-not-allowed",
     ],
@@ -100,6 +100,7 @@ function _AccordionItem(props: AccordionItemProps, ref: ForwardedRef<HTMLDivElem
       <RadixAccordionHeader className="flex">
         <RadixAccordionTrigger className={styleSlots.trigger({ className: classNames?.trigger })} style={styles?.trigger}>
           {startContent}
+
           <div className={styleSlots.textWrapper({ className: classNames?.textWrapper })} style={styles?.textWrapper}>
             <div className={styleSlots.title({ className: classNames?.title })} style={styles?.title}>
               {title}
@@ -110,8 +111,10 @@ function _AccordionItem(props: AccordionItemProps, ref: ForwardedRef<HTMLDivElem
               </div>
             )}
           </div>
-          {endContent}
-          <ChevronDown aria-hidden className={styleSlots.chevron({ className: classNames?.chevron })} style={styles?.chevron} />
+
+          <div aria-hidden className={styleSlots.chevron({ className: classNames?.chevron })} style={styles?.chevron}>
+            {endContent ?? <ChevronDown />}
+          </div>
         </RadixAccordionTrigger>
       </RadixAccordionHeader>
       <RadixAccordionContent className={styleSlots.content({ className: classNames?.content })} style={styles?.content}>
