@@ -53,7 +53,11 @@ function _Select<T extends object>(props: SelectProps<T>, ref: ForwardedRef<HTML
           </Field>
 
           <Popover maxHeight={300} hideArrow {...props} className="overflow-auto p-0" style={{ width }}>
-            <ListBox aria-label={props["aria-label"] || props.label} {...filterInlineListBoxProps(props)} className="p-2" />
+            <ListBox
+              aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
+              {...filterInlineListBoxProps(props)}
+              className="p-2"
+            />
           </Popover>
         </>
       )}
