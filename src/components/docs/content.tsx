@@ -12,8 +12,6 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
   const previousDoc = docIndex !== 0 ? allDocs[docIndex - 1] : undefined;
   const nextDoc = docIndex !== allDocs.length - 1 ? allDocs[docIndex + 1] : undefined;
 
-  console.log(doc.url);
-
   return (
     <article className="col-span-10 space-y-16 py-16 lg:px-16 xl:col-span-8">
       <div className="space-y-4">
