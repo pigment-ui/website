@@ -68,14 +68,28 @@ function _Badge(props: BadgeProps, ref: ForwardedRef<HTMLDivElement>) {
     ...restProps
   } = props;
 
-  const styleSlots = badgeStyles({ placement, variant, color, size, isIconOnly, className });
+  const styleSlots = badgeStyles({
+    placement,
+    variant,
+    color,
+    size,
+    isIconOnly,
+    className,
+  });
 
   return (
-    <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>
+    <div
+      className={styleSlots.wrapper({
+        className: classNames?.wrapper,
+      })}
+      style={styles?.wrapper}
+    >
       <div
         ref={ref}
         {...restProps}
-        className={styleSlots.base({ className: twMerge(classNames?.base, className) })}
+        className={styleSlots.base({
+          className: twMerge(classNames?.base, className),
+        })}
         style={mergeProps(styles?.base, style)}
       >
         {startContent}

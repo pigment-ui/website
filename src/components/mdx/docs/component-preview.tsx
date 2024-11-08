@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { LiveError, LivePreview, LiveProvider } from "react-live";
 
-import * as ui from "#/ui";
+import * as ui from "pigment-ui-test";
 import preview from "#/preview";
 
 import { CodeBlock } from "../shared";

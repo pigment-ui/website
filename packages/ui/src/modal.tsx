@@ -2,7 +2,7 @@
 
 import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps, useId } from "react-aria";
-import { composeRenderProps, Dialog, Modal as AriaModal, ModalOverlay, ModalOverlayProps } from "react-aria-components";
+import { composeRenderProps, Dialog, DialogTrigger, Modal as AriaModal, ModalOverlay, ModalOverlayProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
@@ -181,4 +181,4 @@ const ModalButtons = forwardRef(_ModalButtons);
 
 // exports
 
-export { Modal, ModalHeader, ModalBody, ModalFooter, ModalHeading, ModalButtons };
+export { Modal, ModalHeader, ModalBody, ModalFooter, ModalHeading, ModalButtons, DialogTrigger as ModalTrigger };

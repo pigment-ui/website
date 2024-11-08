@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@radix-ui/react-accordion": "^1.1.2",
-    "@radix-ui/react-slot": "^1.0.2",
     "contentlayer": "^0.3.4",
     "github-slugger": "^2.0.0",
     "lucide-react": "^0.368.0",
@@ -18,14 +16,11 @@
     "next": "^14.2.15",
     "next-contentlayer": "^0.3.4",
     "next-themes": "^0.2.1",
+    "pigment-ui-test": "^1.0.13",
     "prism-react-renderer": "^2.3.1",
     "react": "^18",
-    "react-aria": "^3.34.1",
-    "react-aria-components": "^1.4.1",
     "react-dom": "^18",
-    "react-live": "^4.1.6",
-    "tailwind-variants": "^0.1.19",
-    "tailwindcss-animate": "^1.0.7"
+    "react-live": "^4.1.6"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -38,6 +33,7 @@
     "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.6.6",
     "tailwindcss": "^3.3.0",
+    "tsup": "^8.3.5",
     "typescript": "^5"
   },
   "overrides": {

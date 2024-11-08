@@ -1,6 +1,6 @@
 "use client";
 
-import { ForwardedRef, forwardRef } from "react";
+import { ForwardedRef, forwardRef, ReactNode } from "react";
 import { AriaButtonProps, HoverProps, mergeProps, useButton, useFocusRing, useHover } from "react-aria";
 import { useObjectRef } from "@react-aria/utils";
 import { Slot, Slottable } from "@radix-ui/react-slot";
@@ -85,7 +85,7 @@ function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
       )}
 
       {startContent}
-      <Slottable>{children}</Slottable>
+      <Slottable>{children as ReactNode}</Slottable>
       {endContent}
     </Component>
   );

@@ -1,5 +1,7 @@
+"use client";
+
 import { LinkedinIcon } from "lucide-react";
-import { Button } from "#/ui/button";
+import { Button } from "pigment-ui-test";
 
 export function Footer() {
   return (

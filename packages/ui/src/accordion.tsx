@@ -39,9 +39,24 @@ const accordionStyles = tv({
   },
   variants: {
     size: {
-      sm: { trigger: "py-4 [&_svg]:size-4 gap-x-2", title: "text-sm", subtitle: "text-xs", content: "text-sm [&>div]:pb-4" },
-      md: { trigger: "py-5 [&_svg]:size-5 gap-x-2.5", title: "text-base", subtitle: "text-sm", content: "text-base [&>div]:pb-5" },
-      lg: { trigger: "py-6 [&_svg]:size-6 gap-x-3", title: "text-lg", subtitle: "text-base", content: "text-lg [&>div]:pb-6" },
+      sm: {
+        trigger: "py-4 [&_svg]:size-4 gap-x-2",
+        title: "text-sm",
+        subtitle: "text-xs",
+        content: "text-sm [&>div]:pb-4",
+      },
+      md: {
+        trigger: "py-5 [&_svg]:size-5 gap-x-2.5",
+        title: "text-base",
+        subtitle: "text-sm",
+        content: "text-base [&>div]:pb-5",
+      },
+      lg: {
+        trigger: "py-6 [&_svg]:size-6 gap-x-3",
+        title: "text-lg",
+        subtitle: "text-base",
+        content: "text-lg [&>div]:pb-6",
+      },
     },
   },
 });
@@ -77,7 +92,9 @@ function _Accordion(props: AccordionProps, ref: ForwardedRef<HTMLDivElement>) {
       <RadixAccordionRoot
         ref={ref}
         {...props}
-        className={styleSlots.base({ className: twMerge(classNames?.base, className) })}
+        className={styleSlots.base({
+          className: twMerge(classNames?.base, className),
+        })}
         style={mergeProps(styles?.base, style)}
       />
     </AccordionSlotsProvider>
@@ -94,19 +111,31 @@ function _AccordionItem(props: AccordionItemProps, ref: ForwardedRef<HTMLDivElem
     <RadixAccordionItem
       ref={ref}
       {...restProps}
-      className={styleSlots.item({ className: twMerge(classNames?.item, className) })}
+      className={styleSlots.item({
+        className: twMerge(classNames?.item, className),
+      })}
       style={mergeProps(styles?.item, style)}
     >
       <RadixAccordionHeader className="flex">
         <RadixAccordionTrigger className={styleSlots.trigger({ className: classNames?.trigger })} style={styles?.trigger}>
           {startContent}
 
-          <div className={styleSlots.textWrapper({ className: classNames?.textWrapper })} style={styles?.textWrapper}>
+          <div
+            className={styleSlots.textWrapper({
+              className: classNames?.textWrapper,
+            })}
+            style={styles?.textWrapper}
+          >
             <div className={styleSlots.title({ className: classNames?.title })} style={styles?.title}>
               {title}
             </div>
             {subtitle && (
-              <div className={styleSlots.subtitle({ className: classNames?.subtitle })} style={styles?.subtitle}>
+              <div
+                className={styleSlots.subtitle({
+                  className: classNames?.subtitle,
+                })}
+                style={styles?.subtitle}
+              >
                 {subtitle}
               </div>
             )}

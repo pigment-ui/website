@@ -6,7 +6,7 @@ import NextLink from "next/link";
 import { twMerge } from "tailwind-merge";
 import { useState } from "react";
 
-import { Button } from "#/ui";
+import { Button } from "pigment-ui-test";
 
 export function NavLeft({ doc: docProps, allDocs }: { doc: Doc; allDocs: Doc[] }) {
   const docGroupNames = Array.from(new Set(allDocs.map((doc) => doc.slug.split("/")[0])));

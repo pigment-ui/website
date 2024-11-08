@@ -1,9 +1,11 @@
+"use client";
+
 import { Doc } from "contentlayer/generated";
 import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon, GithubIcon } from "lucide-react";
 import NextLink from "next/link";
 
 import { MDXContent } from "#/components";
-import { Button, Separator } from "#/ui";
+import { Button, Separator } from "pigment-ui-test";
 
 export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
   const docIndex = allDocs.findIndex((d) => d.slug === doc.slug);

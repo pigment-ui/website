@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "#/ui";
+import { Button } from "pigment-ui-test";
 
 export default function Page() {
   return (

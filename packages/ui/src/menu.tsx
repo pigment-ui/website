@@ -8,6 +8,7 @@ import {
   MenuItem as AriaMenuItem,
   MenuItemProps as AriaMenuItemProps,
   MenuProps as AriaMenuProps,
+  MenuTrigger,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
@@ -18,7 +19,7 @@ import { ForwardRefType, StyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { ListBox, ListBoxItem, listBoxItemStyles, ListBoxSection, ListBoxSlotsType } from "./list-box";
-import { Popover } from "./popover";
+import { Popover } from "./popover"; // styles
 
 // styles
 
@@ -103,4 +104,4 @@ const MenuSection = ListBoxSection;
 
 // exports
 
-export { Menu, MenuItem, MenuSection };
+export { Menu, MenuItem, MenuSection, MenuTrigger };

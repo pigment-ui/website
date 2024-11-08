@@ -234,7 +234,7 @@ const ListBoxSection = (forwardRef as ForwardRefType)(_ListBoxSection);
 // exports
 
 export { ListBox, ListBoxItem, ListBoxSection, listBoxItemStyles };
-export type { ListBoxSlotsType };
+export type { ListBoxItemProps, ListBoxSectionProps, ListBoxSlotsType };
 
 export const filterInlineListBoxProps = (props: any) => ({
   asCard: false,

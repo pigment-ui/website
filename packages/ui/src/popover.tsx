@@ -76,4 +76,4 @@ const Popover = forwardRef(_Popover);
 
 // exports
 
-export { Popover, DialogTrigger };
+export { Popover, DialogTrigger as PopoverTrigger };

@@ -2,13 +2,10 @@
 
 import NextLink from "next/link";
 import { useTheme } from "next-themes";
-import { Button } from "#/ui/button";
 import { useEffect, useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { DialogTrigger, MenuTrigger } from "react-aria-components";
-import { Popover } from "#/ui/popover";
 import { twMerge } from "tailwind-merge";
-import { Menu, MenuItem } from "#/ui/menu";
+import { Button, Menu, MenuItem, MenuTrigger, Popover, PopoverTrigger } from "pigment-ui-test";
 import { GithubIcon, MenuIcon, MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 
 export function Header() {
@@ -70,12 +67,12 @@ export function Header() {
             </Menu>
           </MenuTrigger>
 
-          <DialogTrigger isOpen={isOpened} onOpenChange={setIsOpened}>
+          <PopoverTrigger isOpen={isOpened} onOpenChange={setIsOpened}>
             <Button aria-label="header menu toggle" isIconOnly variant="faded" className="lg:hidden">
               <MenuIcon />
             </Button>
             <Popover className="flex w-48 flex-col gap-y-2">{routes}</Popover>
-          </DialogTrigger>
+          </PopoverTrigger>
         </div>
       </div>
     </header>

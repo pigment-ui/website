@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Badge, Button, Chip, Pagination, Spinner, Tag, TagGroup, Tooltip, TooltipTrigger } from "#/ui";
+import { Badge, Button, Chip, Pagination, Spinner, Tag, TagGroup, Tooltip, TooltipTrigger } from "pigment-ui-test";
 import { BellIcon } from "lucide-react";
 import { Button as AriaButton } from "react-aria-components";
 

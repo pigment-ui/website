@@ -1,3 +1,4 @@
+export * from "./docs";
 export * from "./mdx";
 export * from "./component-box";
 export * from "./detail";
