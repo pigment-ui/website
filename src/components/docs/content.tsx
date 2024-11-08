@@ -12,6 +12,8 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
   const previousDoc = docIndex !== 0 ? allDocs[docIndex - 1] : undefined;
   const nextDoc = docIndex !== allDocs.length - 1 ? allDocs[docIndex + 1] : undefined;
 
+  console.log(doc.url);
+
   return (
     <article className="col-span-10 space-y-16 py-16 lg:px-16 xl:col-span-8">
       <div className="space-y-4">
@@ -22,7 +24,7 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
           <div className="flex flex-wrap gap-4">
             {doc.slug.split("/")[0] === "components" && (
               <Button asChild size="sm" variant="soft" startContent={<GithubIcon />}>
-                <a href={`https://github.com/pigment-ui/website/blob/main/src/ui/${doc.slug.split("/")[1]}.tsx`} target="_blank">
+                <a href={`https://github.com/pigment-ui/website/blob/main/packages/ui/src/${doc.slug.split("/")[1]}.tsx`} target="_blank">
                   Source
                 </a>
               </Button>

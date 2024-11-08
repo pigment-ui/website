@@ -1,8 +1,25 @@
 ---
 title: "Colors"
-description: "Color palette used in Pigment UI"
+description: "Color variables used in Pigment UI"
+referenceUrl: "https://github.com/pigment-ui/website/blob/main/packages/ui/src/colors.css"
 ---
 
-This color palette is for both **light** and **dark** mode. You can change them or add extra color families (primary, secondary, etc.) by following [Tailwind configuration](/docs/overview/installation#tailwind-configuration) for your project.
+Those color variables are for both **light** and **dark** mode. You can change them by [overriding](#overriding) your desired color variables.
+
+## Color palette
 
 <Colors />
+
+## Overriding
+
+In your `globals.css` file you can override the color variables of Pigment UI, but it has to be done for both **light** and **dark** mode.
+
+```css
+:root {
+  --primary-500: 255 255 0;
+}
+
+:root[class="dark"] {
+  --primary-500: 0 255 255;
+}
+```
