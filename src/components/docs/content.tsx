@@ -15,8 +15,8 @@ export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {
   return (
     <article className="col-span-10 space-y-16 py-16 lg:px-16 xl:col-span-8">
       <div className="space-y-4">
-        <h1 className="text-5xl font-bold">{doc.title}</h1>
-        <p className="text-default-700">{doc.description}</p>
+        <h1 className="text-5xl font-bold max-lg:text-4xl">{doc.title}</h1>
+        <p className="text-default-700 max-lg:text-sm">{doc.description}</p>
 
         {(doc.slug.split("/")[0] === "components" || doc.referenceUrl || doc.hasApiReference) && (
           <div className="flex flex-wrap gap-4">

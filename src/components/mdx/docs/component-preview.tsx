@@ -27,7 +27,7 @@ export function ComponentPreview({ slug }: { slug: string }) {
     <div>
       <div>
         <LiveProvider code={previewCode} scope={{ ...ui, ...scope }}>
-          <div className="grid min-h-64 place-items-center rounded-t-xl border border-b-0 border-default-1000/20 bg-default-0/50 p-8 backdrop-blur-xl">
+          <div className="[&>div]:grid [&>div]:min-h-64 [&>div]:place-items-center [&>div]:overflow-auto [&>div]:rounded-t-xl [&>div]:border [&>div]:border-b-0 [&>div]:border-default-1000/20 [&>div]:bg-default-0/50 [&>div]:p-8 [&>div]:backdrop-blur-xl">
             <LivePreview />
           </div>
           <div>
