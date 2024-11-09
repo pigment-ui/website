@@ -9,49 +9,18 @@ import { SizeProps } from "./types";
 // styles
 
 const separatorStyles = tv({
-  base: "bg-default-1000/20 border-none rounded-full",
+  base: "rounded-full border-none bg-default-1000/20",
   variants: {
-    orientation: {
-      horizontal: "w-full",
-      vertical: "h-full",
-    },
-    size: {
-      sm: "",
-      md: "",
-      lg: "",
-    },
+    orientation: { horizontal: "w-full", vertical: "h-full" },
+    size: { sm: "", md: "", lg: "" },
   },
   compoundVariants: [
-    {
-      orientation: "horizontal",
-      size: "sm",
-      className: "h-px",
-    },
-    {
-      orientation: "horizontal",
-      size: "md",
-      className: "h-0.5",
-    },
-    {
-      orientation: "horizontal",
-      size: "lg",
-      className: "h-1",
-    },
-    {
-      orientation: "vertical",
-      size: "sm",
-      className: "w-px",
-    },
-    {
-      orientation: "vertical",
-      size: "md",
-      className: "w-0.5",
-    },
-    {
-      orientation: "vertical",
-      size: "lg",
-      className: "w-1",
-    },
+    { orientation: "horizontal", size: "sm", className: "h-px" },
+    { orientation: "horizontal", size: "md", className: "h-0.5" },
+    { orientation: "horizontal", size: "lg", className: "h-1" },
+    { orientation: "vertical", size: "sm", className: "w-px" },
+    { orientation: "vertical", size: "md", className: "w-0.5" },
+    { orientation: "vertical", size: "lg", className: "w-1" },
   ],
 });
 

@@ -33,8 +33,8 @@ const tagGroupStyles = tv({
 
 const tagStyles = tv({
   slots: {
-    base: "flex items-center bg-opacity-10 overflow-hidden duration-300",
-    removeButton: "grid place-items-center bg-opacity-20 data-[hovered]:bg-opacity-30 data-[pressed]:scale-90 outline-none",
+    base: "flex items-center overflow-hidden bg-opacity-10 duration-300",
+    removeButton: "grid place-items-center bg-opacity-20 outline-none data-[pressed]:scale-90 data-[hovered]:bg-opacity-30",
   },
   variants: {
     color: {
@@ -46,9 +46,9 @@ const tagStyles = tv({
       error: { base: "bg-error-500", removeButton: "bg-error-500" },
     },
     size: {
-      sm: { base: "h-6 px-2 gap-x-2 text-xs", removeButton: "size-4 [&_svg]:size-3" },
-      md: { base: "h-8 px-2.5 gap-x-2.5 text-sm", removeButton: "size-5 [&_svg]:size-3.5" },
-      lg: { base: "h-10 px-3 gap-x-3 text-base", removeButton: "size-6 [&_svg]:size-4" },
+      sm: { base: "h-6 gap-x-2 px-2 text-xs", removeButton: "size-4 [&_svg]:size-3" },
+      md: { base: "h-8 gap-x-2.5 px-2.5 text-sm", removeButton: "size-5 [&_svg]:size-3.5" },
+      lg: { base: "h-10 gap-x-3 px-3 text-base", removeButton: "size-6 [&_svg]:size-4" },
     },
     radius: {
       sm: { base: radiusVariants.sm, removeButton: radiusVariants.sm },

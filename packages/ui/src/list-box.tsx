@@ -33,7 +33,7 @@ import { Field, FieldBaseProps } from "./field";
 const listBoxStyles = tv({
   slots: {
     base: "",
-    wrapper: "outline-none data-[focus-visible]:outline data-[focus-visible]:outline-default-1000 data-[focus-visible]:z-10",
+    wrapper: "outline-none data-[focus-visible]:z-10 data-[focus-visible]:outline data-[focus-visible]:outline-default-1000",
   },
   variants: {
     asCard: { true: { wrapper: cardStyles().base({ className: "p-2", hasShadow: false }) } },
@@ -57,9 +57,9 @@ const listBoxItemStyles = tv({
       error: "bg-error-500 text-error-500",
     },
     size: {
-      sm: "text-xs p-1 gap-x-1 [&_svg]:size-3",
-      md: "text-sm p-2 gap-x-2 [&_svg]:size-4",
-      lg: "text-base p-3 gap-x-3 [&_svg]:size-5",
+      sm: "gap-x-1 p-1 text-xs [&_svg]:size-3",
+      md: "gap-x-2 p-2 text-sm [&_svg]:size-4",
+      lg: "gap-x-3 p-3 text-base [&_svg]:size-5",
     },
     isSelectable: { true: "cursor-pointer", false: "cursor-default" },
     isHovered: { true: "bg-opacity-10" },
@@ -74,13 +74,13 @@ type ListBoxItemStylesReturnType = ReturnType<typeof listBoxItemStyles>;
 const listBoxSectionStyles = tv({
   slots: {
     base: "first:pt-0 last:pb-0",
-    title: "text-default-500 font-bold border-b border-b-default-1000/20",
+    title: "border-b border-b-default-1000/20 font-bold text-default-500",
   },
   variants: {
     size: {
-      sm: { base: "py-1", title: "p-1 mb-1 text-xs" },
-      md: { base: "py-2", title: "p-2 mb-2 text-sm" },
-      lg: { base: "py-3", title: "p-3 mb-3 text-base" },
+      sm: { base: "py-1", title: "mb-1 p-1 text-xs" },
+      md: { base: "py-2", title: "mb-2 p-2 text-sm" },
+      lg: { base: "py-3", title: "mb-3 p-3 text-base" },
     },
   },
 });

@@ -25,8 +25,8 @@ import { createSlots } from "./utils";
 const tabsStyles = tv({
   slots: {
     base: "flex",
-    list: "flex w-fit h-fit bg-default-1000/10 backdrop-blur-lg",
-    panel: ["w-full h-fit bg-default-1000/10 backdrop-blur-lg", radiusVariants.md],
+    list: "flex h-fit w-fit bg-default-1000/10 backdrop-blur-lg",
+    panel: ["h-fit w-full bg-default-1000/10 backdrop-blur-lg", radiusVariants.md],
   },
   variants: {
     orientation: {
@@ -42,9 +42,9 @@ const tabsStyles = tv({
       error: "",
     },
     size: {
-      sm: { base: "gap-2", list: "p-1 gap-2", panel: "p-2 text-xs" },
-      md: { base: "gap-2.5", list: "p-1.5 gap-2.5", panel: "p-2.5 text-sm" },
-      lg: { base: "gap-3", list: "p-2 gap-3", panel: "p-3 text-base" },
+      sm: { base: "gap-2", list: "gap-2 p-1", panel: "p-2 text-xs" },
+      md: { base: "gap-2.5", list: "gap-2.5 p-1.5", panel: "p-2.5 text-sm" },
+      lg: { base: "gap-3", list: "gap-3 p-2", panel: "p-3 text-base" },
     },
     radius: {
       sm: { list: radiusVariants.sm },
@@ -68,7 +68,7 @@ const tabStyles = tv({
       md: "h-10 gap-x-2.5 px-5 text-sm [&_svg]:size-5",
       lg: "h-12 gap-x-3 px-6 text-base [&_svg]:size-6",
     },
-    isSelected: { false: "!bg-transparent !text-default-500 !border-none" },
+    isSelected: { false: "!border-none !bg-transparent !text-default-500" },
     radius: radiusVariants,
   },
   compoundVariants: [{ isSelected: false, isHovered: true, className: "!text-default-1000" }],

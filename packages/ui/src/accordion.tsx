@@ -27,31 +27,31 @@ const accordionStyles = tv({
     item: "border-b border-default-1000/20 first:border-t",
     trigger: [
       "flex flex-1 items-center [&[data-state=open]>.chevron]:rotate-180",
-      "outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-default-1000 focus-visible:z-10",
-      "disabled:opacity-50 disabled:cursor-not-allowed",
+      "outline-none focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-default-1000",
+      "disabled:cursor-not-allowed disabled:opacity-50",
     ],
     textWrapper: "flex-1 text-start",
     title: "",
     subtitle: "text-default-500",
-    content: "data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden",
+    content: "overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
     chevron: "chevron duration-300",
   },
   variants: {
     size: {
       sm: {
-        trigger: "py-4 [&_svg]:size-4 gap-x-2",
+        trigger: "gap-x-2 py-4 [&_svg]:size-4",
         title: "text-sm",
         subtitle: "text-xs",
         content: "text-sm [&>div]:pb-4",
       },
       md: {
-        trigger: "py-5 [&_svg]:size-5 gap-x-2.5",
+        trigger: "gap-x-2.5 py-5 [&_svg]:size-5",
         title: "text-base",
         subtitle: "text-sm",
         content: "text-base [&>div]:pb-5",
       },
       lg: {
-        trigger: "py-6 [&_svg]:size-6 gap-x-3",
+        trigger: "gap-x-3 py-6 [&_svg]:size-6",
         title: "text-lg",
         subtitle: "text-base",
         content: "text-lg [&>div]:pb-6",

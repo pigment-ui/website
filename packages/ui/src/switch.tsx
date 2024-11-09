@@ -13,9 +13,9 @@ import { ColorProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 
 const switchStyles = tv({
   slots: {
-    base: "flex items-center cursor-pointer",
-    self: "rounded-full duration-300 relative flex items-center",
-    thumb: "rounded-full duration-300 absolute left-1 bg-default-0",
+    base: "flex cursor-pointer items-center",
+    self: "relative flex items-center rounded-full duration-300",
+    thumb: "absolute left-1 rounded-full bg-default-0 duration-300",
     content: "",
   },
   variants: {
@@ -34,7 +34,7 @@ const switchStyles = tv({
     },
     isHovered: { true: "" },
     isPressed: { true: { self: "scale-95" } },
-    isSelected: { false: { self: "bg-opacity-40 bg-default-1000" }, true: { self: "bg-opacity-100" } },
+    isSelected: { false: { self: "bg-default-1000 bg-opacity-40" }, true: { self: "bg-opacity-100" } },
     isFocusVisible: { true: { self: isFocusVisibleVariants.true } },
     isDisabled: isDisabledVariants,
   },

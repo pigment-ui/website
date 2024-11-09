@@ -26,14 +26,14 @@ export const smallRadiusVariants = {
 } as const;
 
 export const variantColorStyles = tv({
-  base: "relative flex items-center justify-center min-w-max whitespace-nowrap overflow-hidden duration-300",
+  base: "relative flex min-w-max items-center justify-center overflow-hidden whitespace-nowrap duration-300",
   variants: {
     variant: {
       solid: "text-default-0",
       soft: "bg-opacity-10",
       light: "bg-opacity-0",
-      bordered: "bg-opacity-0 border border-opacity-50",
-      faded: "bg-default-100 border border-default-300",
+      bordered: "border border-opacity-50 bg-opacity-0",
+      faded: "border border-default-300 bg-default-100",
     },
     color: {
       default: "",
@@ -85,7 +85,7 @@ export const variantColorStyles = tv({
     { variant: "faded", isHovered: true, className: "bg-default-200" },
 
     // default-inverted
-    { color: "default-inverted", variant: "faded", className: "bg-default-900 border border-default-700" },
+    { color: "default-inverted", variant: "faded", className: "border border-default-700 bg-default-900" },
     { color: "default-inverted", variant: "faded", isHovered: true, className: "bg-default-800" },
     { color: "default-inverted", isFocusVisible: true, className: "outline-default-0" },
   ],
@@ -94,7 +94,7 @@ export const variantColorStyles = tv({
 export const segmentStyles = tv({
   base: ["text-default-1000 outline-none [caret-color:transparent;]"],
   variants: {
-    size: { sm: "py-0.5 px-1", md: "py-1 px-1.5", lg: "py-1.5 px-2" },
+    size: { sm: "px-1 py-0.5", md: "px-1.5 py-1", lg: "px-2 py-1.5" },
     isPlaceholder: { true: "text-default-500" },
     isFocused: { true: "bg-default-1000 text-default-0" },
     radius: smallRadiusVariants,

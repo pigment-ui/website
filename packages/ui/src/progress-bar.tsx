@@ -32,11 +32,11 @@ const progressBarStyles = tv({
       false: {
         labelWrapper: "flex justify-between",
         valueText: "",
-        track: "rounded-full relative overflow-hidden",
-        filler: "rounded-full absolute inset-y-0 left-0",
+        track: "relative overflow-hidden rounded-full",
+        filler: "absolute inset-y-0 left-0 rounded-full",
       },
       true: {
-        wrapper: "items-center size-fit",
+        wrapper: "size-fit items-center",
         labelWrapper: "order-last",
         valueText: "absolute",
         trackWrapper: "grid place-items-center text-center",
@@ -69,7 +69,7 @@ const progressBarStyles = tv({
     {
       isIndeterminate: true,
       isCircular: false,
-      className: { filler: "-left-1/4 animate-out slide-out-to-right-[500%] repeat-infinite ease-linear [animation-duration:2s]" },
+      className: { filler: "-left-1/4 ease-linear animate-out slide-out-to-right-[500%] repeat-infinite [animation-duration:2s]" },
     },
     {
       isIndeterminate: true,

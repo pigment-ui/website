@@ -17,9 +17,9 @@ const checkboxGroupStyles = tv({
   base: "flex",
   variants: {
     size: {
-      sm: "py-1.5 gap-1.5",
-      md: "py-2 gap-2",
-      lg: "py-2.5 gap-2.5",
+      sm: "gap-1.5 py-1.5",
+      md: "gap-2 py-2",
+      lg: "gap-2.5 py-2.5",
     },
     orientation: {
       horizontal: "flex-row",

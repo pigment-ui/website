@@ -20,14 +20,14 @@ const modalStyles = tv({
   slots: {
     base: "relative w-full",
     header: "pr-16",
-    dialog: "flex flex-col relative outline-none",
-    backdrop: "fixed inset-0 flex items-center justify-center px-4 py-16 z-[999]",
-    closeButton: "absolute top-2 right-2",
+    dialog: "relative flex flex-col outline-none",
+    backdrop: "fixed inset-0 z-[999] flex items-center justify-center px-4 py-16",
+    closeButton: "absolute right-2 top-2",
   },
   variants: {
     size: { sm: "max-w-lg", md: "max-w-2xl", lg: "max-w-4xl" },
     backdrop: {
-      blur: { backdrop: "backdrop-blur-lg bg-default-0/50" },
+      blur: { backdrop: "bg-default-0/50 backdrop-blur-lg" },
       opaque: { backdrop: "bg-default-0/75" },
       transparent: { backdrop: "bg-transparent" },
     },

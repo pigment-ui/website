@@ -8,7 +8,7 @@ import { ColorProps, SizeProps, StyleProps } from "./types";
 // styles
 
 const spinnerStyles = tv({
-  base: "animate-spin rounded-full border border-t-transparent border-r-transparent",
+  base: "animate-spin rounded-full border border-r-transparent border-t-transparent",
   variants: {
     color: {
       default: "border-b-default-1000 border-l-default-1000",

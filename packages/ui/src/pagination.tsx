@@ -28,12 +28,12 @@ const paginationStyles = tv({
     radius: radiusVariants,
   },
   compoundVariants: [
-    { isSelected: true, color: "default", className: "!bg-default-1000 !border-default-1000" },
-    { isSelected: true, color: "primary", className: "!bg-primary-500 !border-primary-500" },
-    { isSelected: true, color: "info", className: "!bg-info-500 !border-info-500" },
-    { isSelected: true, color: "success", className: "!bg-success-500 !border-success-500" },
-    { isSelected: true, color: "warning", className: "!bg-warning-500 !border-warning-500" },
-    { isSelected: true, color: "error", className: "!bg-error-500 !border-error-500" },
+    { isSelected: true, color: "default", className: "!border-default-1000 !bg-default-1000" },
+    { isSelected: true, color: "primary", className: "!border-primary-500 !bg-primary-500" },
+    { isSelected: true, color: "info", className: "!border-info-500 !bg-info-500" },
+    { isSelected: true, color: "success", className: "!border-success-500 !bg-success-500" },
+    { isSelected: true, color: "warning", className: "!border-warning-500 !bg-warning-500" },
+    { isSelected: true, color: "error", className: "!border-error-500 !bg-error-500" },
   ],
 });
 

@@ -18,13 +18,13 @@ const badgeStyles = tv({
   },
   variants: {
     size: {
-      sm: "h-4 min-w-4 px-1 gap-x-0.5 text-xs [&_svg]:size-2",
-      md: "h-5 min-w-5 px-1.5 gap-x-1 text-sm [&_svg]:size-3",
-      lg: "h-6 min-w-6 px-2 gap-x-1.5 text-base [&_svg]:size-4",
+      sm: "h-4 min-w-4 gap-x-0.5 px-1 text-xs [&_svg]:size-2",
+      md: "h-5 min-w-5 gap-x-1 px-1.5 text-sm [&_svg]:size-3",
+      lg: "h-6 min-w-6 gap-x-1.5 px-2 text-base [&_svg]:size-4",
     },
     placement: {
-      "top-right": "top-0 right-0 translate-x-1/2 -translate-y-1/2",
-      "top-left": "top-0 left-0 -translate-x-1/2 -translate-y-1/2",
+      "top-right": "right-0 top-0 -translate-y-1/2 translate-x-1/2",
+      "top-left": "left-0 top-0 -translate-x-1/2 -translate-y-1/2",
       "bottom-right": "bottom-0 right-0 translate-x-1/2 translate-y-1/2",
       "bottom-left": "bottom-0 left-0 -translate-x-1/2 translate-y-1/2",
     },

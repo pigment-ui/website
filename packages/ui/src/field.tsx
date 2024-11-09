@@ -15,7 +15,7 @@ import { useObserveElementWidth } from "./utils";
 
 const fieldStyles = tv({
   slots: {
-    base: "flex flex-col relative size-full",
+    base: "relative flex size-full flex-col",
     label: "cursor-default",
     description: "",
     errorMessage: "text-error-500",
@@ -33,14 +33,14 @@ type FieldStylesReturnType = ReturnType<typeof fieldStyles>;
 
 const fieldInputStyles = tv({
   slots: {
-    base: "relative flex items-center bg-default-0 border border-default-1000 border-opacity-20 overflow-hidden data-[disabled]:bg-default-1000/10 duration-300 transition-colors",
-    self: "flex-1 h-full bg-transparent outline-none text-default-1000 placeholder:text-default-500 flex items-center data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
+    base: "relative flex items-center overflow-hidden border border-default-1000 border-opacity-20 bg-default-0 transition-colors duration-300 data-[disabled]:bg-default-1000/10",
+    self: "flex h-full flex-1 items-center bg-transparent text-default-1000 outline-none placeholder:text-default-500 data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
     content: "text-neutral-500",
     button: [
       "flex items-center bg-default-1000 bg-opacity-10 duration-300",
-      "data-[hovered]:bg-opacity-20 data-[pressed]:scale-90",
-      "data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed",
-      "outline-none data-[focus-visible]:outline data-[focus-visible]:outline-default-1000 data-[focus-visible]:z-10",
+      "data-[pressed]:scale-90 data-[hovered]:bg-opacity-20",
+      "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
+      "outline-none data-[focus-visible]:z-10 data-[focus-visible]:outline data-[focus-visible]:outline-default-1000",
     ],
   },
   variants: {

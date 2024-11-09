@@ -16,14 +16,14 @@ import { useCheckboxGroupSlots } from "./checkbox-group";
 
 const checkboxStyles = tv({
   slots: {
-    base: "grid grid-cols-[auto_1fr] items-center cursor-pointer duration-300",
-    self: "grid place-items-center bg-default-1000 bg-opacity-0 border border-default-1000 border-opacity-50 text-default-0 duration-300",
+    base: "grid cursor-pointer grid-cols-[auto_1fr] items-center duration-300",
+    self: "grid place-items-center border border-default-1000 border-opacity-50 bg-default-1000 bg-opacity-0 text-default-0 duration-300",
   },
   variants: {
     size: {
-      sm: { base: "text-sm gap-x-1.5", self: "size-5 [&>svg]:size-4" },
-      md: { base: "text-base gap-x-2", self: "size-6 [&>svg]:size-5" },
-      lg: { base: "text-lg gap-x-2.5", self: "size-7 [&>svg]:size-6" },
+      sm: { base: "gap-x-1.5 text-sm", self: "size-5 [&>svg]:size-4" },
+      md: { base: "gap-x-2 text-base", self: "size-6 [&>svg]:size-5" },
+      lg: { base: "gap-x-2.5 text-lg", self: "size-7 [&>svg]:size-6" },
     },
     radius: {
       sm: { self: smallRadiusVariants.sm },

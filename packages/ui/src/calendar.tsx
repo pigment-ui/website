@@ -31,19 +31,19 @@ import { Field, FieldBaseProps } from "./field";
 const calendarStyles = tv({
   slots: {
     base: "",
-    wrapper: "p-4 w-fit max-w-full overflow-auto",
+    wrapper: "w-fit max-w-full overflow-auto p-4",
     header: "flex items-center justify-between gap-4",
     heading: "font-medium",
     button: ["grid place-items-center duration-300", smallRadiusVariants.md],
     gridWrapper: "flex gap-4",
-    grid: "border-separate border-spacing-1 size-fit [&_th]:text-default-700 [&_th]:font-light [&_th]:p-0 [&_td]:p-0",
-    cell: ["grid place-items-center duration-300 transition-transform relative z-0", smallRadiusVariants.md],
+    grid: "size-fit border-separate border-spacing-1 [&_td]:p-0 [&_th]:p-0 [&_th]:font-light [&_th]:text-default-700",
+    cell: ["relative z-0 grid place-items-center transition-transform duration-300", smallRadiusVariants.md],
   },
   variants: {
     size: {
-      sm: { heading: "text-sm", button: "size-6 [&>svg]:size-3", grid: "[&_th]:text-xs [&_th]:size-7 mt-3", cell: "text-xs size-7" },
-      md: { heading: "text-base", button: "size-7 [&>svg]:size-4", grid: "[&_th]:text-sm [&_th]:size-8 mt-4", cell: "text-sm size-8" },
-      lg: { heading: "text-lg", button: "size-8 [&>svg]:size-5", grid: "[&_th]:text-base [&_th]:size-9 mt-5", cell: "text-base size-9" },
+      sm: { heading: "text-sm", button: "size-6 [&>svg]:size-3", grid: "mt-3 [&_th]:size-7 [&_th]:text-xs", cell: "size-7 text-xs" },
+      md: { heading: "text-base", button: "size-7 [&>svg]:size-4", grid: "mt-4 [&_th]:size-8 [&_th]:text-sm", cell: "size-8 text-sm" },
+      lg: { heading: "text-lg", button: "size-8 [&>svg]:size-5", grid: "mt-5 [&_th]:size-9 [&_th]:text-base", cell: "size-9 text-base" },
     },
     asCard: {
       true: { wrapper: cardStyles().base({ hasShadow: false }) },
@@ -55,7 +55,7 @@ const calendarStyles = tv({
       true: { cell: "bg-default-1000 text-default-0" },
     },
     isUnavailable: {
-      true: { cell: "line-through text-error-500" },
+      true: { cell: "text-error-500 line-through" },
     },
     isInvalid: {
       true: { cell: "bg-error-500 text-default-0" },

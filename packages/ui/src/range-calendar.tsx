@@ -35,11 +35,11 @@ const rangeCalendarStyles = tv({
     isSelectionEnd: { true: { cell: "rounded-l-none" } },
     isSelectedRange: {
       true: {
-        cell: ["!bg-transparent !text-default-1000", "before:absolute before:inset-y-0 before:-inset-x-1 before:bg-default-200 before:-z-10"],
+        cell: ["!bg-transparent !text-default-1000", "before:absolute before:-inset-x-1 before:inset-y-0 before:-z-10 before:bg-default-200"],
       },
     },
-    isSelectedFirstDay: { true: { cell: [smallRadiusVariants.md, "rounded-r-none overflow-hidden"] } },
-    isSelectedLastDay: { true: { cell: [smallRadiusVariants.md, "rounded-l-none overflow-hidden"] } },
+    isSelectedFirstDay: { true: { cell: [smallRadiusVariants.md, "overflow-hidden rounded-r-none"] } },
+    isSelectedLastDay: { true: { cell: [smallRadiusVariants.md, "overflow-hidden rounded-l-none"] } },
   },
   compoundVariants: [{ isSelectionStart: true, isSelectionEnd: true, className: { cell: smallRadiusVariants.md } }],
 });

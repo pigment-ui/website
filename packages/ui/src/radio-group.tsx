@@ -25,14 +25,14 @@ const radioGroupStyles = checkboxGroupStyles;
 
 const radioStyles = tv({
   slots: {
-    base: "flex items-center cursor-pointer",
-    self: "grid place-items-center border border-default-1000 border-opacity-50 rounded-full duration-300",
+    base: "flex cursor-pointer items-center",
+    self: "grid place-items-center rounded-full border border-default-1000 border-opacity-50 duration-300",
   },
   variants: {
     size: {
-      sm: { base: "text-sm gap-x-1.5", self: "size-5 [&>svg]:size-4" },
-      md: { base: "text-base gap-x-2", self: "size-6 [&>svg]:size-5" },
-      lg: { base: "text-lg gap-x-2.5", self: "size-7 [&>svg]:size-6" },
+      sm: { base: "gap-x-1.5 text-sm", self: "size-5 [&>svg]:size-4" },
+      md: { base: "gap-x-2 text-base", self: "size-6 [&>svg]:size-5" },
+      lg: { base: "gap-x-2.5 text-lg", self: "size-7 [&>svg]:size-6" },
     },
     isSelected: { true: { self: "border-8 border-opacity-100" } },
     isInvalid: { true: { base: "text-error-500", self: "border-error-500" } },
