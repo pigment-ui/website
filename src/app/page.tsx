@@ -27,7 +27,7 @@ import {
   TagGroup,
   TextArea,
   TextField,
-} from "pigment-ui-test";
+} from "pigment-ui";
 
 import { ComponentBox } from "#/components";
 

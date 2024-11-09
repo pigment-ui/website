@@ -6,7 +6,7 @@ import { marked } from "marked";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { Button } from "pigment-ui-test";
+import { Button } from "pigment-ui";
 
 export function NavRight({ doc }: { doc: Doc }) {
   const docHeadings = marked

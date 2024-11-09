@@ -1,5 +1,5 @@
 {
-  "name": "pigment-ui-test",
+  "name": "pigment-ui",
   "description": "Pigment UI components were built mainly on top of React Aria and Tailwind CSS packages.",
   "author": "Rafig Hajili",
   "homepage": "https://pigment-ui.vercel.app",
@@ -9,7 +9,7 @@
   },
   "license": "ISC",
   "type": "module",
-  "version": "1.0.26",
+  "version": "1.1.0",
   "files": [
     "dist"
   ],

@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { twMerge } from "tailwind-merge";
-import { Button, Menu, MenuItem, MenuTrigger, Popover, PopoverTrigger } from "pigment-ui-test";
+import { Button, Menu, MenuItem, MenuTrigger, Popover, PopoverTrigger } from "pigment-ui";
 import { GithubIcon, MenuIcon, MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 
 export function Header() {

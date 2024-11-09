@@ -9,7 +9,7 @@ description: "Learn how to install and use Pigment UI components."
 - Install Pigment UI package.
 
 ```bash
-npm install pigment-ui-test
+npm install pigment-ui
 ```
 
 ## Colors configuration
@@ -24,7 +24,7 @@ Import color variables in the root layout. See more on [colors](/docs/overview/c
 
 ```tsx
 // ...
-import "pigment-ui-test/colors";
+import "pigment-ui/colors";
 // ...
 ```
 
@@ -36,13 +36,13 @@ Update your Tailwind configuration file.
 
 ```ts
 import type { Config } from "tailwindcss";
-import { twConfig } from "pigment-ui-test";
+import { twConfig } from "pigment-ui";
 
 const config: Config = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
     // add path to Pigment UI components
-    "./node_modules/pigment-ui-test/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/pigment-ui/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   // add tailwind config of Pigment UI as preset
   presets: [twConfig],

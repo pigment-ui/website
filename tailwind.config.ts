@@ -1,8 +1,8 @@
 import type { Config } from "tailwindcss";
-import { twConfig } from "pigment-ui-test";
+import { twConfig } from "pigment-ui";
 
 const config: Config = {
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}", "./node_modules/pigment-ui-test/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}", "./node_modules/pigment-ui/**/*.{js,ts,jsx,tsx,mdx}"],
   presets: [twConfig],
   darkMode: "class",
   theme: {

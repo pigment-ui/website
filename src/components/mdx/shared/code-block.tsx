@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { LiveEditor } from "react-live";
 import { twMerge } from "tailwind-merge";
 
-import { Button } from "pigment-ui-test";
+import { Button } from "pigment-ui";
 
 export function CodeBlock({
   code: propsCode,

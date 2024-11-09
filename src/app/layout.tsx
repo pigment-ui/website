@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Providers } from "./providers";
 
-import "pigment-ui-test/colors";
+import "pigment-ui/colors";
 import "./globals.css";
 
 import { Footer, Header } from "#/components";
