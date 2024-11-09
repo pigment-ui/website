@@ -1,5 +1,5 @@
 const code = `
-import { DateField } from "#/ui";
+import { DateField } from "pigment-ui";
 
 function DateFieldRadius() {
   return (

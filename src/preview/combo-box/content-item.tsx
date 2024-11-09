@@ -1,7 +1,7 @@
 import { CatIcon, DogIcon } from "lucide-react";
 
 const code = `
-import { ComboBox, ComboBoxItem } from "#/ui";
+import { ComboBox, ComboBoxItem } from "pigment-ui";
 import { CatIcon, DogIcon } from "lucide-react";
 
 function ComboBoxContentItem() {

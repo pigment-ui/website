@@ -1,5 +1,5 @@
 const code = `
-import { Button, Radio, RadioGroup } from "#/ui";
+import { Button, Radio, RadioGroup } from "pigment-ui";
 
 function RadioGroupValidation() {
   return (

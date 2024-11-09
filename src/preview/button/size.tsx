@@ -1,5 +1,5 @@
 const code = `
-import { Button } from "#/ui";
+import { Button } from "pigment-ui";
 
 function ButtonSize() {
   return (

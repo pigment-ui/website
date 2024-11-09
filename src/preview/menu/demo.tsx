@@ -1,8 +1,5 @@
-import { MenuTrigger } from "react-aria-components";
-
 const code = `
-import { Button, Menu, MenuItem } from "#/ui";
-import { MenuTrigger } from "react-aria-components";
+import { Button, Menu, MenuItem, MenuTrigger } from "pigment-ui";
 
 function MenuDemo() {
   return (
@@ -20,4 +17,4 @@ function MenuDemo() {
 }
 `;
 
-export const demo = { code, scope: { MenuTrigger } };
+export const demo = { code };

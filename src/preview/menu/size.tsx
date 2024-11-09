@@ -1,8 +1,5 @@
-import { MenuTrigger } from "react-aria-components";
-
 const code = `
-import { Menu, MenuItem } from "#/ui";
-import { MenuTrigger } from "react-aria-components";
+import { Menu, MenuItem, MenuTrigger } from "pigment-ui";
 
 function MenuSize() {
   const renderMenuContent = (
@@ -42,4 +39,4 @@ function MenuSize() {
 }
 `;
 
-export const size = { code, scope: { MenuTrigger } };
+export const size = { code };

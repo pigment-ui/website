@@ -1,5 +1,5 @@
 const code = `
-import { Button, TextField } from "#/ui";
+import { Button, TextField } from "pigment-ui";
 
 function TextFieldValidation() {
   return (

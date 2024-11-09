@@ -1,5 +1,5 @@
 const code = `
-import { NumberField } from "#/ui";
+import { NumberField } from "pigment-ui";
 
 function NumberFieldRadius() {
   return (

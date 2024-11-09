@@ -1,5 +1,5 @@
 const code = `
-import { DateField } from "#/ui";
+import { DateField } from "pigment-ui";
 
 function DateFieldInvalid() {
   return <DateField isInvalid errorMessage="This is an error message." label="Birth date" description="Lorem ipsum dolor sit amet." />;

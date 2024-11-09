@@ -1,5 +1,5 @@
 const code = `
-import { Select, SelectItem } from "#/ui";
+import { Select, SelectItem } from "pigment-ui";
 
 function SelectSize() {
   const renderSelectContent = (

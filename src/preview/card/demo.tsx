@@ -1,5 +1,5 @@
 const code = `
-import { Button, Card, CardBody, CardButtons, CardFooter, CardHeader, CardHeading } from "#/ui";
+import { Button, Card, CardBody, CardButtons, CardFooter, CardHeader, CardHeading } from "pigment-ui";
 
 function CardDemo() {
   return (

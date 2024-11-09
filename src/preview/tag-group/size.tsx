@@ -1,5 +1,5 @@
 const code = `
-import { Tag, TagGroup } from "#/ui";
+import { Tag, TagGroup } from "pigment-ui";
 
 function TagGroupSize() {
   return (

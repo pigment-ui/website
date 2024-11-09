@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 
 const code = `
-import { Button } from "#/ui";
+import { Button } from "pigment-ui";
 import NextLink from "next/link";
 
 function ButtonAsChild() {

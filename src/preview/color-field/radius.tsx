@@ -1,5 +1,5 @@
 const code = `
-import { ColorField } from "#/ui";
+import { ColorField } from "pigment-ui";
 
 function ColorFieldRadius() {
   return (

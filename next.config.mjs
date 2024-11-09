@@ -1,6 +1,5 @@
-import type { NextConfig } from "next";
 import { withContentlayer } from "next-contentlayer";
 
-const nextConfig: NextConfig = {};
+const nextConfig = {};
 
 export default withContentlayer(nextConfig);

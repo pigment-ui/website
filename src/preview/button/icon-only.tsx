@@ -1,7 +1,7 @@
 import { PinIcon } from "lucide-react";
 
 const code = `
-import { Button } from "#/ui";
+import { Button } from "pigment-ui";
 import { PinIcon } from "lucide-react";
 
 function ButtonIconOnly() {

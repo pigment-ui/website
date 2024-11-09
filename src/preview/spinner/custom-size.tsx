@@ -1,5 +1,5 @@
 const code = `
-import { Spinner } from "#/ui";
+import { Spinner } from "pigment-ui";
 
 function SpinnerCustomSize() {
   return <Spinner className="size-16" />;

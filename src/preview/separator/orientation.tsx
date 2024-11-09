@@ -1,5 +1,5 @@
 const code = `
-import { Separator } from "#/ui";
+import { Separator } from "pigment-ui";
 
 function SeparatorOrientation() {
   return (

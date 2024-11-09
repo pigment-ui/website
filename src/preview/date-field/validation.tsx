@@ -1,5 +1,5 @@
 const code = `
-import { Button, DateField } from "#/ui";
+import { Button, DateField } from "pigment-ui";
 
 function DateFieldValidation() {
   return (

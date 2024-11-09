@@ -1,5 +1,5 @@
 const code = `
-import { ListBox, ListBoxItem } from "#/ui";
+import { ListBox, ListBoxItem } from "pigment-ui";
 
 function ListBoxColor() {
   return (

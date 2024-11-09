@@ -1,7 +1,7 @@
 import { PinIcon, UserIcon } from "lucide-react";
 
 const code = `
-import { Select, SelectItem } from "#/ui";
+import { Select, SelectItem } from "pigment-ui";
 import { PinIcon, UserIcon } from "lucide-react";
 
 function SelectContent() {

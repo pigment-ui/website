@@ -1,7 +1,7 @@
 import { useListData } from "@react-stately/data";
 
 const code = `
-import { Tag, TagGroup } from "#/ui";
+import { Tag, TagGroup } from "pigment-ui";
 import { useListData } from "@react-stately/data";
 
 function TagGroupColor() {

@@ -1,5 +1,5 @@
 const code = `
-import { ListBoxItem, ListBox } from "#/ui";
+import { ListBoxItem, ListBox } from "pigment-ui";
 
 function ListBoxDisabled() {
   return (

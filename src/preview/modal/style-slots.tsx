@@ -1,12 +1,9 @@
-import { DialogTrigger } from "react-aria-components";
-
 const code = `
-import { Button, Modal, ModalBody, ModalButtons, ModalFooter, ModalHeader, ModalHeading, Separator } from "#/ui";
-import { DialogTrigger } from "react-aria-components";
+import { Button, Modal, ModalTrigger, ModalBody, ModalButtons, ModalFooter, ModalHeader, ModalHeading, Separator } from "pigment-ui";
 
 function ModalStyleSlots() {
   return (
-    <DialogTrigger>
+    <ModalTrigger>
       <Button>Click me</Button>
       <Modal classNames={{ base: "bg-info-100", backdrop: "bg-info-500/20", closeButton: "text-error-500 bg-error-500", heading: "underline", buttons: "justify-start" }}>
         <ModalHeader>
@@ -32,9 +29,9 @@ function ModalStyleSlots() {
           </ModalButtons>
         </ModalFooter>
       </Modal>
-    </DialogTrigger>
+    </ModalTrigger>
   );
 }
 `;
 
-export const styleSlots = { code, scope: { DialogTrigger } };
+export const styleSlots = { code };

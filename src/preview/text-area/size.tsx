@@ -1,5 +1,5 @@
 const code = `
-import { TextArea } from "#/ui";
+import { TextArea } from "pigment-ui";
 
 function TextAreaSize() {
   return (

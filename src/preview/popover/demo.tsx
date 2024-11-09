@@ -1,19 +1,16 @@
-import { DialogTrigger } from "react-aria-components";
-
 const code = `
-import { Button, Popover } from "#/ui";
-import { DialogTrigger } from "react-aria-components";
+import { Button, Popover, PopoverTrigger } from "pigment-ui";
 
 function PopoverDemo() {
   return (
-    <DialogTrigger>
+    <PopoverTrigger>
       <Button>Click me</Button>
       <Popover>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, quos?</p>
       </Popover>
-    </DialogTrigger>
+    </PopoverTrigger>
   );
 }
 `;
 
-export const demo = { code, scope: { DialogTrigger } };
+export const demo = { code };

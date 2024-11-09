@@ -1,8 +1,5 @@
-import { TooltipTrigger } from "react-aria-components";
-
 const code = `
-import { Button, Tooltip } from "#/ui";
-import { TooltipTrigger } from "react-aria-components";
+import { Button, Tooltip, TooltipTrigger } from "pigment-ui";
 
 function TooltipDemo() {
   return (
@@ -16,4 +13,4 @@ function TooltipDemo() {
 }
 `;
 
-export const demo = { code, scope: { TooltipTrigger } };
+export const demo = { code };

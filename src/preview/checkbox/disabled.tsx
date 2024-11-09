@@ -1,5 +1,5 @@
 const code = `
-import { Checkbox } from "#/ui";
+import { Checkbox } from "pigment-ui";
 
 function CheckboxDisabled() {
   return <Checkbox isDisabled>Unsubscribe</Checkbox>;

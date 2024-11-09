@@ -1,5 +1,5 @@
 const code = `
-import { TextField } from "#/ui";
+import { TextField } from "pigment-ui";
 
 function TextFieldRadius() {
   return (

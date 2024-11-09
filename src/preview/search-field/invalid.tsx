@@ -1,5 +1,5 @@
 const code = `
-import { SearchField } from "#/ui";
+import { SearchField } from "pigment-ui";
 
 function SearchFieldInvalid() {
   return <SearchField isInvalid errorMessage="This is an error message." label="Search" description="Lorem ipsum dolor sit amet." className="w-64" />;

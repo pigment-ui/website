@@ -1,5 +1,5 @@
 const code = `
-import { SearchField } from "#/ui";
+import { SearchField } from "pigment-ui";
 
 function SearchFieldRadius() {
   return (

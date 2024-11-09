@@ -1,7 +1,7 @@
 import { PinIcon, UserIcon } from "lucide-react";
 
 const code = `
-import { Button } from "#/ui";
+import { Button } from "pigment-ui";
 import { PinIcon, UserIcon } from "lucide-react";
 
 function NumberFieldContent() {

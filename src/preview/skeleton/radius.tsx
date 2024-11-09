@@ -1,5 +1,5 @@
 const code = `
-import { Skeleton } from "#/ui";
+import { Skeleton } from "pigment-ui";
 
 function SkeletonRadius() {
   return (

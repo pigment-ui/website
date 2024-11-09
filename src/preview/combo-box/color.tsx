@@ -1,5 +1,5 @@
 const code = `
-import { ComboBox, ComboBoxItem } from "#/ui";
+import { ComboBox, ComboBoxItem } from "pigment-ui";
 
 function ComboBoxColor() {
   const renderComboBoxContent = (

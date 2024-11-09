@@ -1,7 +1,7 @@
 import { PinIcon, UserIcon } from "lucide-react";
 
 const code = `
-import { ComboBox, ComboBoxItem } from "#/ui";
+import { ComboBox, ComboBoxItem } from "pigment-ui";
 import { PinIcon, UserIcon } from "lucide-react";
 
 function ComboBoxContent() {

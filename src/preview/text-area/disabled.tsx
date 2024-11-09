@@ -1,5 +1,5 @@
 const code = `
-import { TextArea } from "#/ui";
+import { TextArea } from "pigment-ui";
 
 function TextAreaDisabled() {
   return <TextArea isDisabled label="Comment" description="Lorem ipsum dolor sit amet." className="w-64" />;

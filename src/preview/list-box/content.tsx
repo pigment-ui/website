@@ -1,7 +1,7 @@
 import { CatIcon, DogIcon } from "lucide-react";
 
 const code = `
-import { ListBox, ListBoxItem } from "#/ui";
+import { ListBox, ListBoxItem } from "pigment-ui";
 import { CatIcon, DogIcon } from "lucide-react";
 
 function ListBoxContent() {

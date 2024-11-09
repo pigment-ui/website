@@ -1,9 +1,7 @@
-import { MenuTrigger } from "react-aria-components";
 import { ShareIcon, TrashIcon } from "lucide-react";
 
 const code = `
-import { Button, Menu, MenuItem } from "#/ui";
-import { MenuTrigger } from "react-aria-components";
+import { Button, Menu, MenuItem, MenuTrigger } from "pigment-ui";
 import { TrashIcon, ShareIcon } from "lucide-react";
 
 function MenuContent() {
@@ -22,4 +20,4 @@ function MenuContent() {
 }
 `;
 
-export const content = { code, scope: { MenuTrigger, TrashIcon, ShareIcon } };
+export const content = { code, scope: { TrashIcon, ShareIcon } };

@@ -13,7 +13,7 @@
     "github-slugger": "^2.0.0",
     "lucide-react": "^0.456.0",
     "marked": "^15.0.0",
-    "next": "^15.0.3",
+    "next": "^14",
     "next-contentlayer": "^0.3.4",
     "next-themes": "^0.4.3",
     "pigment-ui": "^1.2.0",

@@ -1,5 +1,5 @@
 const code = `
-import { Button, Card, CardBody, CardButtons, CardFooter, CardHeader, CardHeading, Separator } from "#/ui";
+import { Button, Card, CardBody, CardButtons, CardFooter, CardHeader, CardHeading, Separator } from "pigment-ui";
 
 function CardStyleSlots() {
   return (

@@ -1,8 +1,5 @@
-import { DialogTrigger } from "react-aria-components";
-
 const code = `
-import { Button, Modal, ModalBody, ModalButtons, ModalFooter, ModalHeader, ModalHeading, Separator } from "#/ui";
-import { DialogTrigger } from "react-aria-components";
+import { Button, Modal, ModalTrigger, ModalBody, ModalButtons, ModalFooter, ModalHeader, ModalHeading, Separator } from "pigment-ui";
 
 function ModalSize() {
   const renderModalContent = (
@@ -34,23 +31,23 @@ function ModalSize() {
 
   return (
     <div className="flex flex-wrap gap-4">
-      <DialogTrigger>
+      <ModalTrigger>
         <Button>Size sm</Button>
         <Modal size="sm">{renderModalContent}</Modal>
-      </DialogTrigger>
+      </ModalTrigger>
 
-      <DialogTrigger>
+      <ModalTrigger>
         <Button>Size md</Button>
         <Modal size="md">{renderModalContent}</Modal>
-      </DialogTrigger>
+      </ModalTrigger>
 
-      <DialogTrigger>
+      <ModalTrigger>
         <Button>Size lg</Button>
         <Modal size="lg">{renderModalContent}</Modal>
-      </DialogTrigger>
+      </ModalTrigger>
     </div>
   );
 }
 `;
 
-export const size = { code, scope: { DialogTrigger } };
+export const size = { code };

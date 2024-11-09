@@ -1,5 +1,5 @@
 const code = `
-import { Checkbox, CheckboxGroup } from "#/ui";
+import { Checkbox, CheckboxGroup } from "pigment-ui";
 
 function CheckboxGroupInvalid() {
   return (

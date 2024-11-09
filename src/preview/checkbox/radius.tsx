@@ -1,5 +1,5 @@
 const code = `
-import { Checkbox } from "#/ui";
+import { Checkbox } from "pigment-ui";
 
 function CheckboxRadius() {
   return (

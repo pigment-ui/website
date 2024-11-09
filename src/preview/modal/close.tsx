@@ -1,12 +1,9 @@
-import { DialogTrigger } from "react-aria-components";
-
 const code = `
-import { Button, Modal, ModalBody, ModalButtons, ModalFooter, ModalHeader, ModalHeading, Separator } from "#/ui";
-import { DialogTrigger } from "react-aria-components";
+import { Button, Modal, ModalTrigger, ModalBody, ModalButtons, ModalFooter, ModalHeader, ModalHeading, Separator } from "pigment-ui";
 
 function ModalClose() {
   return (
-    <DialogTrigger>
+    <ModalTrigger>
       <Button>Click me</Button>
       <Modal>
         {({ state }) => (
@@ -32,9 +29,9 @@ function ModalClose() {
           </>
         )}
       </Modal>
-    </DialogTrigger>
+    </ModalTrigger>
   );
 }
 `;
 
-export const close = { code, scope: { DialogTrigger } };
+export const close = { code };

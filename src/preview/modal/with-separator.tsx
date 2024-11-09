@@ -1,12 +1,9 @@
-import { DialogTrigger } from "react-aria-components";
-
 const code = `
-import { Button, Modal, ModalBody, ModalButtons, ModalFooter, ModalHeader, ModalHeading, Separator } from "#/ui";
-import { DialogTrigger } from "react-aria-components";
+import { Button, Modal, ModalTrigger, ModalBody, ModalButtons, ModalFooter, ModalHeader, ModalHeading, Separator } from "pigment-ui";
 
 function ModalWithSeparator() {
   return (
-    <DialogTrigger>
+    <ModalTrigger>
       <Button>Click me</Button>
       <Modal>
         <ModalHeader>
@@ -32,9 +29,9 @@ function ModalWithSeparator() {
           </ModalButtons>
         </ModalFooter>
       </Modal>
-    </DialogTrigger>
+    </ModalTrigger>
   );
 }
 `;
 
-export const withSeparator = { code, scope: { DialogTrigger } };
+export const withSeparator = { code };

@@ -1,7 +1,7 @@
 import { CatIcon, DogIcon } from "lucide-react";
 
 const code = `
-import { Select, SelectItem } from "#/ui";
+import { Select, SelectItem } from "pigment-ui";
 import { CatIcon, DogIcon } from "lucide-react";
 
 function SelectContentItem() {

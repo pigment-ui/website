@@ -1,8 +1,5 @@
-import { MenuTrigger } from "react-aria-components";
-
 const code = `
-import { Menu, MenuItem } from "#/ui";
-import { MenuTrigger } from "react-aria-components";
+import { Menu, MenuItem, MenuTrigger } from "pigment-ui";
 
 function MenuColor() {
   const renderMenuContent = (
@@ -63,4 +60,4 @@ function MenuColor() {
 }
 `;
 
-export const color = { code, scope: { MenuTrigger } };
+export const color = { code };

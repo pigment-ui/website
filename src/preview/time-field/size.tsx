@@ -1,5 +1,5 @@
 const code = `
-import { TimeField } from "#/ui";
+import { TimeField } from "pigment-ui";
 
 function TimeFieldSize() {
   return (
