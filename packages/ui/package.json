@@ -9,12 +9,17 @@
   },
   "license": "ISC",
   "type": "module",
-  "version": "1.0.18",
+  "version": "1.0.21",
   "files": [
     "dist"
   ],
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.cjs",
+      "require": "./dist/index.js"
+    },
+    "./colors": "./dist/colors.css"
   },
   "scripts": {
     "build": "tsup"
