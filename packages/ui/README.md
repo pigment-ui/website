@@ -1,10 +1,5 @@
----
-title: "Introduction"
-description: "Welcome to Pigment UI!"
----
-
 <p align="center">
-    <a href="https://pigment-ui.vercel.app" target="_blank">
+    <a href="https://pigment-ui.vercel.app">
         <img src="https://pigment-ui.vercel.app/logo.jpg" alt="Pigment UI Logo" width="100" height="100" />
     </a>
 </p>
