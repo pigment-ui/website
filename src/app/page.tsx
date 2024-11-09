@@ -13,8 +13,10 @@ import {
   ComboBox,
   ComboBoxItem,
   DateField,
+  DatePicker,
   NumberField,
   Pagination,
+  ProgressBar,
   Radio,
   RadioGroup,
   SearchField,
@@ -23,6 +25,10 @@ import {
   Slider,
   Spinner,
   Switch,
+  Tab,
+  TabList,
+  TabPanel,
+  Tabs,
   Tag,
   TagGroup,
   TextArea,
@@ -72,12 +78,20 @@ export default function Page() {
             <DateField label="Birth date" defaultValue={parseDate("2003-04-08")} description="Lorem ipsum dolor sit amet." className="w-64" />
           </ComponentBox>
 
+          <ComponentBox id="date-field">
+            <DatePicker label="Birth date" defaultValue={parseDate("2003-04-08")} description="Lorem ipsum dolor sit amet." className="w-64" />
+          </ComponentBox>
+
           <ComponentBox id="number-field">
             <NumberField label="Width" defaultValue={300} description="Lorem ipsum dolor sit amet." className="w-64" />
           </ComponentBox>
 
           <ComponentBox id="pagination">
             <Pagination total={3} page={page} onChange={setPage} />
+          </ComponentBox>
+
+          <ComponentBox id="progress-bar">
+            <ProgressBar label="Loading…" isIndeterminate className="w-64" />
           </ComponentBox>
 
           <ComponentBox id="radio-grouo">
@@ -109,6 +123,19 @@ export default function Page() {
 
           <ComponentBox id="switch">
             <Switch defaultSelected>Bluetooth</Switch>
+          </ComponentBox>
+
+          <ComponentBox id="tabs">
+            <Tabs>
+              <TabList aria-label="Lorem ipsum dolor sit amet">
+                <Tab id="item-1">Tab 1</Tab>
+                <Tab id="item-2">Tab 2</Tab>
+                <Tab id="item-3">Tab 3</Tab>
+              </TabList>
+              <TabPanel id="item-1">Lorem ipsum dolor sit amet.</TabPanel>
+              <TabPanel id="item-2">Consectetur adipisicing elit.</TabPanel>
+              <TabPanel id="item-3">Eaque ex nam quasi.</TabPanel>
+            </Tabs>
           </ComponentBox>
 
           <ComponentBox id="tag-group">

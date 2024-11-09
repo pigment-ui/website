@@ -1,7 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Badge, Button, Chip, Pagination, Spinner, Tag, TagGroup, Tooltip, TooltipTrigger } from "pigment-ui";
+import {
+  Badge,
+  Button,
+  Chip,
+  Pagination,
+  ProgressBar,
+  Spinner,
+  Switch,
+  Tab,
+  TabList,
+  TabPanel,
+  Tabs,
+  Tag,
+  TagGroup,
+  Tooltip,
+  TooltipTrigger,
+} from "pigment-ui";
 import { BellIcon } from "lucide-react";
 import { Button as AriaButton } from "react-aria-components";
 
@@ -71,8 +87,31 @@ export default function Page() {
             <Pagination color="primary" total={3} page={page} onChange={setPage} />
           </ComponentBox>
 
+          <ComponentBox id="progress-bar">
+            <ProgressBar color="primary" label="Loading…" isIndeterminate className="w-64" />
+          </ComponentBox>
+
           <ComponentBox id="spinner">
             <Spinner color="primary" />
+          </ComponentBox>
+
+          <ComponentBox id="switch">
+            <Switch color="primary" defaultSelected>
+              Bluetooth
+            </Switch>
+          </ComponentBox>
+
+          <ComponentBox id="tabs">
+            <Tabs color="primary">
+              <TabList aria-label="Lorem ipsum dolor sit amet">
+                <Tab id="item-1">Tab 1</Tab>
+                <Tab id="item-2">Tab 2</Tab>
+                <Tab id="item-3">Tab 3</Tab>
+              </TabList>
+              <TabPanel id="item-1">Lorem ipsum dolor sit amet.</TabPanel>
+              <TabPanel id="item-2">Consectetur adipisicing elit.</TabPanel>
+              <TabPanel id="item-3">Eaque ex nam quasi.</TabPanel>
+            </Tabs>
           </ComponentBox>
 
           <ComponentBox id="tag-group">
