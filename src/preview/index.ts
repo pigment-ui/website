@@ -33,7 +33,7 @@ import * as textField from "./text-field";
 import * as timeField from "./time-field";
 import * as tooltip from "./tooltip";
 
-const preview = {
+const preview: Record<string, Record<string, { code: any; scope?: any }>> = {
   accordion,
   badge,
   button,
