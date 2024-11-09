@@ -9,7 +9,7 @@
   },
   "license": "ISC",
   "type": "module",
-  "version": "1.0.21",
+  "version": "1.0.24",
   "files": [
     "dist"
   ],
@@ -27,7 +27,7 @@
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.0",
-    "lucide-react": "^0.454.0",
+    "lucide-react": "^0.456.0",
     "react-aria": "^3.35.1",
     "react-aria-components": "^1.4.1",
     "tailwind-merge": "^2.5.4",

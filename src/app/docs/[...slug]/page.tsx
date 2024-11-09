@@ -5,7 +5,8 @@ import { notFound } from "next/navigation";
 
 import { Content, Detail, NavLeft, NavRight } from "#/components";
 
-export function generateMetadata({ params: { slug } }: { params: { slug: string[] } }): Metadata {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string[] }> }): Promise<Metadata> {
+  const { slug } = await params;
   const doc = allDocsSorted.find((doc) => doc.slug === slug.join("/"));
 
   return {
@@ -20,7 +21,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function Page({ params: { slug } }: { params: { slug: string[] } }) {
+export default async function Page({ params }: { params: Promise<{ slug: string[] }> }) {
+  const { slug } = await params;
   const doc = allDocsSorted.find((doc) => doc.slug === slug.join("/"));
   if (!doc) notFound();
 
