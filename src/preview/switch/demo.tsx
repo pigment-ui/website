@@ -3,7 +3,7 @@ import { Switch } from "pigment-ui";
 
 function SwitchDemo() {
   return (
-    <Switch defaultSelected>Low power mode</Switch>
+    <Switch defaultSelected>Bluetooth</Switch>
   );
 }
 `;

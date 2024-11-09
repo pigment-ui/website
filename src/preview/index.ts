@@ -24,6 +24,7 @@ import * as searchField from "./search-field";
 import * as select from "./select";
 import * as separator from "./separator";
 import * as skeleton from "./skeleton";
+import * as slider from "./slider";
 import * as spinner from "./spinner";
 import * as switchComponent from "./switch";
 import * as tabs from "./tabs";
@@ -60,6 +61,7 @@ const preview: Record<string, Record<string, { code: any; scope?: any }>> = {
   select,
   separator,
   skeleton,
+  slider,
   spinner,
   switchComponent,
   tabs,

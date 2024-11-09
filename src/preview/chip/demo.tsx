@@ -3,7 +3,7 @@ import { Chip } from "pigment-ui";
 
 function ChipDemo() {
   return (
-    <Chip>Chip</Chip>
+    <Chip>Lorem ipsum</Chip>
   );
 }
 `;
