@@ -1,6 +1,10 @@
 "use client";
 
-import { ForwardedRef, forwardRef } from "react";
+import { getDayOfWeek } from "@internationalized/date";
+import { useLocale } from "@react-aria/i18n";
+import { FormValidationProps, useFormValidationState } from "@react-stately/form";
+import { RangeValue } from "@react-types/shared";
+import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps, useField } from "react-aria";
 import {
   CalendarCell,
@@ -13,18 +17,14 @@ import {
   RangeCalendarProps as AriaRangeCalendarProps,
   TextContext,
 } from "react-aria-components";
-import { FormValidationProps, useFormValidationState } from "@react-stately/form";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-import { useLocale } from "@react-aria/i18n";
-import { RangeValue } from "@react-types/shared";
-import { getDayOfWeek } from "@internationalized/date";
 
+import { smallRadiusVariants } from "./styles";
 import { StyleSlotsToStyleProps } from "./types";
 
 import { calendarStyles, CalendarWrapper } from "./calendar";
 import { Field, FieldBaseProps } from "./field";
-import { smallRadiusVariants } from "./styles";
 
 // styles
 

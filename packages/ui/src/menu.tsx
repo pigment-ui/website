@@ -1,6 +1,7 @@
 "use client";
 
-import { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
+import { CheckIcon } from "lucide-react";
+import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import {
   composeRenderProps,
@@ -13,19 +14,15 @@ import {
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { CheckIcon } from "lucide-react";
-
 import { ForwardRefType, StyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { ListBox, ListBoxItem, listBoxItemStyles, ListBoxSection, ListBoxSlotsType } from "./list-box";
-import { Popover } from "./popover"; // styles
+import { Popover } from "./popover";
 
 // styles
 
-const menuStyles = tv({
-  base: "p-2",
-});
+const menuStyles = tv({ base: "p-2" });
 
 const menuItemStyles = listBoxItemStyles;
 

@@ -1,6 +1,8 @@
 "use client";
 
-import { ForwardedRef, forwardRef, ReactNode } from "react";
+import { FormValidationProps, useFormValidationState } from "@react-stately/form";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import React, { ForwardedRef, forwardRef, ReactNode } from "react";
 import { mergeProps, useField } from "react-aria";
 import {
   Button,
@@ -15,10 +17,8 @@ import {
   Provider,
   TextContext,
 } from "react-aria-components";
-import { FormValidationProps, useFormValidationState } from "@react-stately/form";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
 import { StyleSlotsToStyleProps } from "./types";

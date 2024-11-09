@@ -1,15 +1,14 @@
 "use client";
 
-import { ForwardedRef, forwardRef, useMemo } from "react";
+import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon } from "lucide-react";
+import React, { ForwardedRef, forwardRef, useMemo } from "react";
 import { mergeProps } from "react-aria";
 import { Button } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
+import { tv } from "tailwind-variants";
 
-import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon } from "lucide-react";
-
-import { ColorProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps, Variants } from "./types";
 import { radiusVariants, variantColorStyles } from "./styles";
+import { ColorProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps, Variants } from "./types";
 
 // styles
 

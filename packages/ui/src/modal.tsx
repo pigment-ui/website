@@ -1,12 +1,11 @@
 "use client";
 
-import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
+import { XIcon } from "lucide-react";
+import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps, useId } from "react-aria";
 import { composeRenderProps, Dialog, DialogTrigger, Modal as AriaModal, ModalOverlay, ModalOverlayProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { XIcon } from "lucide-react";
 
 import { SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";

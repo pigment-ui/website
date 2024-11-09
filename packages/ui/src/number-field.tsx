@@ -1,6 +1,7 @@
 "use client";
 
-import { ForwardedRef, forwardRef } from "react";
+import { MinusIcon, PlusIcon } from "lucide-react";
+import React, { ForwardedRef, forwardRef } from "react";
 import {
   Button,
   Input,
@@ -9,8 +10,6 @@ import {
   NumberFieldProps as AriaNumberFieldProps,
   TextFieldProps,
 } from "react-aria-components";
-
-import { MinusIcon, PlusIcon } from "lucide-react";
 
 import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 

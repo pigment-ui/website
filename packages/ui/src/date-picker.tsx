@@ -1,6 +1,7 @@
 "use client";
 
-import { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
+import { CalendarIcon } from "lucide-react";
+import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
 import {
   Button,
   DateInput,
@@ -10,8 +11,6 @@ import {
   DateValue,
   InputProps,
 } from "react-aria-components";
-
-import { CalendarIcon } from "lucide-react";
 
 import { segmentStyles } from "./styles";
 import { ForwardRefType } from "./types";

@@ -1,9 +1,8 @@
 "use client";
 
-import { ForwardedRef, forwardRef } from "react";
-import { DateInput, DateSegment, TimeField as AriaTimeField, TimeFieldProps as AriaTimeFieldProps, TimeValue } from "react-aria-components";
-
 import { ClockIcon } from "lucide-react";
+import React, { ForwardedRef, forwardRef } from "react";
+import { DateInput, DateSegment, TimeField as AriaTimeField, TimeFieldProps as AriaTimeFieldProps, TimeValue } from "react-aria-components";
 
 import { segmentStyles } from "./styles";
 import { ForwardRefType } from "./types";

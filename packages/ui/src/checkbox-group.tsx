@@ -1,6 +1,6 @@
 "use client";
 
-import { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
+import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
 import { Orientation } from "react-aria";
 import { CheckboxGroup as AriaCheckboxGroup, CheckboxGroupProps as AriaCheckboxGroupProps, composeRenderProps } from "react-aria-components";
 import { tv } from "tailwind-variants";

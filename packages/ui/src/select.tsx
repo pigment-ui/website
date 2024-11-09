@@ -1,9 +1,8 @@
 "use client";
 
-import { ComponentPropsWithoutRef, ForwardedRef, forwardRef, ReactNode } from "react";
-import { Button, Select as AriaSelect, SelectProps as AriaSelectProps, SelectValue, SelectValueRenderProps } from "react-aria-components";
-
 import { ChevronDownIcon } from "lucide-react";
+import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef, ReactNode } from "react";
+import { Button, Select as AriaSelect, SelectProps as AriaSelectProps, SelectValue, SelectValueRenderProps } from "react-aria-components";
 
 import { ForwardRefType } from "./types";
 import { useObserveElementWidth } from "./utils";
@@ -45,7 +44,7 @@ function _Select<T extends object>(props: SelectProps<T>, ref: ForwardedRef<HTML
                               selectedItem: selectedItem as T,
                               selectedText,
                             })
-                          : placeholder ?? "Select"
+                          : (placeholder ?? "Select")
                     : undefined}
                 </SelectValue>
               </Button>

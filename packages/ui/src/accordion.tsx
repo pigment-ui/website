@@ -10,12 +10,11 @@ import {
   Root as RadixAccordionRoot,
   Trigger as RadixAccordionTrigger,
 } from "@radix-ui/react-accordion";
-import { ForwardedRef, forwardRef, ReactNode } from "react";
+import { ChevronDown } from "lucide-react";
+import React, { ForwardedRef, forwardRef, ReactNode } from "react";
 import { mergeProps } from "react-aria";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { ChevronDown } from "lucide-react";
 
 import { ContentProps, SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";

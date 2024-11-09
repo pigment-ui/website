@@ -1,12 +1,11 @@
 "use client";
 
-import { ForwardedRef, forwardRef } from "react";
+import { CheckIcon, MinusIcon } from "lucide-react";
+import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import { Checkbox as AriaCheckbox, CheckboxProps as AriaCheckboxProps, composeRenderProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { CheckIcon, MinusIcon } from "lucide-react";
 
 import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
 import { RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";

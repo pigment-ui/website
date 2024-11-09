@@ -1,9 +1,8 @@
 "use client";
 
-import { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
-import { Button, ComboBox as AriaComboBox, ComboBoxProps as AriaComboBoxProps, Input, InputProps } from "react-aria-components";
-
 import { ChevronDownIcon } from "lucide-react";
+import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
+import { Button, ComboBox as AriaComboBox, ComboBoxProps as AriaComboBoxProps, Input, InputProps } from "react-aria-components";
 
 import { ForwardRefType } from "./types";
 import { useObserveElementWidth } from "./utils";

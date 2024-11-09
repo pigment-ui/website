@@ -1,6 +1,7 @@
 "use client";
 
-import { ForwardedRef, forwardRef } from "react";
+import { FormValidationProps, useFormValidationState } from "@react-stately/form";
+import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps, useField } from "react-aria";
 import {
   composeRenderProps,
@@ -13,7 +14,6 @@ import {
   SliderTrack,
   TextContext,
 } from "react-aria-components";
-import { FormValidationProps, useFormValidationState } from "@react-stately/form";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 

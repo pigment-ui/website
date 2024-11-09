@@ -7,5 +7,5 @@
   "skipNodeModulesBundle": true,
   "target": "es2020",
   "format": ["cjs", "esm"],
-  "entry": ["src/index.ts", "src/colors.css"]
+  "entry": ["src/index.ts"]
 }

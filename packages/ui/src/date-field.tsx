@@ -1,14 +1,13 @@
 "use client";
 
-import { ForwardedRef, forwardRef } from "react";
+import { CalendarIcon } from "lucide-react";
+import React, { ForwardedRef, forwardRef } from "react";
 import { DateField as AriaDateField, DateFieldProps as AriaDateFieldProps, DateInput, DateSegment, DateValue } from "react-aria-components";
 
-import { CalendarIcon } from "lucide-react";
-
+import { segmentStyles } from "./styles";
 import { ForwardRefType } from "./types";
 
 import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
-import { segmentStyles } from "./styles";
 
 // props
 

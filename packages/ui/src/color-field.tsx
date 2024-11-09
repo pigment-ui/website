@@ -1,7 +1,7 @@
 "use client";
 
 import { DropletIcon } from "lucide-react";
-import { ForwardedRef, forwardRef } from "react";
+import React, { ForwardedRef, forwardRef } from "react";
 import { ColorField as AriaColorField, ColorFieldProps as AriaColorFieldProps, Input, InputProps } from "react-aria-components";
 
 import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";

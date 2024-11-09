@@ -1,6 +1,6 @@
 "use client";
 
-import { ForwardedRef, forwardRef, ReactNode } from "react";
+import React, { ForwardedRef, forwardRef, ReactNode } from "react";
 import { mergeProps } from "react-aria";
 import { composeRenderProps, Label, ProgressBar as AriaProgressBar, ProgressBarProps as AriaProgressBarProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";

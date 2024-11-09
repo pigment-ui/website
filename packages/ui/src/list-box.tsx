@@ -1,6 +1,8 @@
 "use client";
 
-import { ForwardedRef, forwardRef } from "react";
+import { FormValidationProps, useFormValidationState } from "@react-stately/form";
+import { CheckIcon } from "lucide-react";
+import React, { ForwardedRef, forwardRef } from "react";
 import { Key, mergeProps, useField } from "react-aria";
 import {
   Collection,
@@ -19,14 +21,11 @@ import {
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { CheckIcon } from "lucide-react";
-
 import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
 import { ColorProps, ContentProps, ForwardRefType, StyleProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 
 import { cardStyles } from "./card";
-import { FormValidationProps, useFormValidationState } from "@react-stately/form";
 import { Field, FieldBaseProps } from "./field";
 
 // styles

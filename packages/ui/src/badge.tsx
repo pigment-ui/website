@@ -1,12 +1,12 @@
 "use client";
 
-import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from "react";
+import React, { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from "react";
+import { mergeProps } from "react-aria";
+import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
 import { variantColorStyles } from "./styles";
 import { ColorProps, ContentProps, SizeProps, StyleSlotsToStyleProps, Variants } from "./types";
-import { twMerge } from "tailwind-merge";
-import { mergeProps } from "react-aria";
 
 // styles
 

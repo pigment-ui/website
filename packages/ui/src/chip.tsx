@@ -1,6 +1,6 @@
 "use client";
 
-import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
+import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { tv } from "tailwind-variants";
 
 import { smallRadiusVariants, variantColorStyles } from "./styles";
