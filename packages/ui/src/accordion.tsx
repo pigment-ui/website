@@ -90,7 +90,6 @@ function _Accordion(props: AccordionProps, ref: ForwardedRef<HTMLDivElement>) {
     <AccordionSlotsProvider value={{ styleSlots, classNames, styles }}>
       <RadixAccordionRoot
         ref={ref}
-        collapsible
         {...props}
         className={styleSlots.base({
           className: twMerge(classNames?.base, className),
