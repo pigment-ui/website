@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon } from "lucide-react";
-import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef, useMemo } from "react";
+import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef, KeyboardEvent, useMemo } from "react";
 import { FocusScope, mergeProps, useFocusManager } from "react-aria";
 import { Button } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
@@ -155,7 +155,7 @@ const Pagination = forwardRef(_Pagination);
 const PaginationButton = forwardRef<HTMLButtonElement, ComponentPropsWithoutRef<typeof Button>>((props, ref) => {
   let focusManager = useFocusManager();
 
-  let onKeyDown = (e) => {
+  let onKeyDown = (e: KeyboardEvent) => {
     switch (e.key) {
       case "ArrowRight":
         focusManager?.focusNext({ wrap: true });
