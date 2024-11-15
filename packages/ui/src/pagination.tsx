@@ -16,7 +16,7 @@ const paginationStyles = tv({
   extend: variantColorStyles,
   slots: {
     base: "grid place-items-center duration-300",
-    wrapper: "flex overflow-auto [&::-webkit-scrollbar]:hidden",
+    wrapper: "flex overflow-auto p-1 [&::-webkit-scrollbar]:hidden",
   },
   variants: {
     size: {
