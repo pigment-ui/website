@@ -60,7 +60,7 @@ function _DatePicker<T extends DateValue>(props: DatePickerProps<T>, ref: Forwar
             </FieldInput>
           </Field>
 
-          <Popover hideArrow placement="bottom" {...props} className="max-w-[calc(100vw-2rem)] overflow-auto p-0">
+          <Popover hideArrow placement="bottom" {...props} className="max-w-[calc(100vw-2rem)] overflow-auto p-0" style={{}}>
             <Calendar
               aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
               aria-describedby={props["aria-describedby"] ?? (typeof props.description === "string" ? props.description : undefined)}
