@@ -110,7 +110,6 @@ function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedR
         ref={ref}
         {...mergeProps(props, fieldProps)}
         aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
-        aria-describedby={props["aria-describedby"] ?? (typeof props.description === "string" ? props.description : undefined)}
         visibleDuration={{ months: visibleMonthCount }}
         className={composeRenderProps(props.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
         style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
