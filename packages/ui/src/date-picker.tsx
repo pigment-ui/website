@@ -14,7 +14,6 @@ import {
 
 import { segmentStyles } from "./styles";
 import { ForwardRefType } from "./types";
-import { useObserveElementWidth } from "./utils";
 
 import { Calendar } from "./calendar";
 import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
@@ -36,10 +35,8 @@ interface DatePickerProps<T extends DateValue>
 function _DatePicker<T extends DateValue>(props: DatePickerProps<T>, ref: ForwardedRef<HTMLInputElement>) {
   const { size, radius, visibleMonthCount } = props;
 
-  const [width, datePickerRef] = useObserveElementWidth<HTMLDivElement>();
-
   return (
-    <AriaDatePicker ref={datePickerRef} {...props}>
+    <AriaDatePicker {...props}>
       {(renderProps) => (
         <>
           <Field {...renderProps} {...props}>
@@ -63,7 +60,7 @@ function _DatePicker<T extends DateValue>(props: DatePickerProps<T>, ref: Forwar
             </FieldInput>
           </Field>
 
-          <Popover hideArrow placement="bottom" {...props} className="overflow-auto p-0" style={{ maxWidth: width }}>
+          <Popover hideArrow placement="bottom" {...props} className="max-w-[calc(100vw-2rem)] overflow-auto p-0">
             <Calendar
               aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
               aria-describedby={props["aria-describedby"] ?? (typeof props.description === "string" ? props.description : undefined)}

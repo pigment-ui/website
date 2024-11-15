@@ -14,7 +14,6 @@ import {
 
 import { segmentStyles } from "./styles";
 import { ForwardRefType } from "./types";
-import { useObserveElementWidth } from "./utils";
 
 import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 import { Popover } from "./popover";
@@ -36,10 +35,8 @@ interface DateRangePickerProps<T extends DateValue>
 function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, ref: ForwardedRef<HTMLInputElement>) {
   const { size, radius, visibleMonthCount } = props;
 
-  const [width, datePickerRef] = useObserveElementWidth<HTMLDivElement>();
-
   return (
-    <AriaDateRangePicker ref={datePickerRef} {...props}>
+    <AriaDateRangePicker {...props}>
       {(renderProps) => (
         <>
           <Field {...renderProps} {...props}>
@@ -76,7 +73,7 @@ function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, r
             </FieldInput>
           </Field>
 
-          <Popover hideArrow placement="bottom" {...props} className="overflow-auto p-0" style={{ maxWidth: width }}>
+          <Popover hideArrow placement="bottom" {...props} className="max-w-[calc(100vw-2rem)] overflow-auto p-0">
             <RangeCalendar
               aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
               aria-describedby={props["aria-describedby"] ?? (typeof props.description === "string" ? props.description : undefined)}
