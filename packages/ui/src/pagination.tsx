@@ -1,8 +1,8 @@
 "use client";
 
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon } from "lucide-react";
-import React, { ForwardedRef, forwardRef, useMemo } from "react";
-import { mergeProps } from "react-aria";
+import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef, useMemo } from "react";
+import { FocusScope, mergeProps, useFocusManager } from "react-aria";
 import { Button } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
@@ -16,7 +16,7 @@ const paginationStyles = tv({
   extend: variantColorStyles,
   slots: {
     base: "grid place-items-center duration-300",
-    wrapper: "flex flex-wrap",
+    wrapper: "flex overflow-auto [&::-webkit-scrollbar]:hidden",
   },
   variants: {
     size: {
@@ -92,53 +92,84 @@ function _Pagination(props: PaginationProps, ref: ForwardedRef<HTMLUListElement>
   let lastPage = paginationRange[paginationRange.length - 1] as number;
 
   return (
-    <ul ref={ref} className={styleSlots.wrapper({ className: twMerge(classNames?.wrapper, className) })} style={mergeProps(styles?.wrapper, style)}>
-      <li>
-        <Button aria-label="Previous page" isDisabled={page === 1} onPress={onPrevious} className={(renderProps) => styleSlots.base(renderProps)}>
-          <ChevronLeftIcon />
-        </Button>
-      </li>
-
-      {paginationRange.map((pageNumber, index) => (
-        <li key={index}>
-          {pageNumber === "DOTS_PREVIOUS" ? (
-            <Button
-              aria-label="Previous dots"
-              onPress={() => onChange(page - dotsJump > 1 ? page - dotsJump : 1)}
-              className={(renderProps) => styleSlots.base(renderProps)}
-            >
-              {({ isHovered, isFocusVisible }) => (isHovered || isFocusVisible ? <ChevronsLeftIcon /> : <EllipsisIcon />)}
-            </Button>
-          ) : pageNumber === "DOTS_NEXT" ? (
-            <Button
-              aria-label="Next dots"
-              onPress={() => onChange(page + dotsJump < lastPage ? page + dotsJump : lastPage)}
-              className={(renderProps) => styleSlots.base(renderProps)}
-            >
-              {({ isHovered, isFocusVisible }) => (isHovered || isFocusVisible ? <ChevronsRightIcon /> : <EllipsisIcon />)}
-            </Button>
-          ) : (
-            <Button
-              aria-label={`Page ${pageNumber}`}
-              onPress={() => onChange(pageNumber)}
-              className={(renderProps) => styleSlots.base({ ...renderProps, isSelected: pageNumber === page })}
-            >
-              {pageNumber}
-            </Button>
-          )}
+    <FocusScope>
+      <ul ref={ref} className={styleSlots.wrapper({ className: twMerge(classNames?.wrapper, className) })} style={mergeProps(styles?.wrapper, style)}>
+        <li>
+          <PaginationButton
+            aria-label="Previous page"
+            isDisabled={page === 1}
+            onPress={onPrevious}
+            className={(renderProps) => styleSlots.base(renderProps)}
+          >
+            <ChevronLeftIcon />
+          </PaginationButton>
         </li>
-      ))}
 
-      <li>
-        <Button aria-label="Next page" isDisabled={page === lastPage} onPress={onNext} className={(renderProps) => styleSlots.base(renderProps)}>
-          <ChevronRightIcon />
-        </Button>
-      </li>
-    </ul>
+        {paginationRange.map((pageNumber, index) => (
+          <li key={index}>
+            {pageNumber === "DOTS_PREVIOUS" ? (
+              <PaginationButton
+                aria-label="Previous dots"
+                onPress={() => onChange(page - dotsJump > 1 ? page - dotsJump : 1)}
+                className={(renderProps) => styleSlots.base(renderProps)}
+              >
+                {({ isHovered, isFocusVisible }) => (isHovered || isFocusVisible ? <ChevronsLeftIcon /> : <EllipsisIcon />)}
+              </PaginationButton>
+            ) : pageNumber === "DOTS_NEXT" ? (
+              <PaginationButton
+                aria-label="Next dots"
+                onPress={() => onChange(page + dotsJump < lastPage ? page + dotsJump : lastPage)}
+                className={(renderProps) => styleSlots.base(renderProps)}
+              >
+                {({ isHovered, isFocusVisible }) => (isHovered || isFocusVisible ? <ChevronsRightIcon /> : <EllipsisIcon />)}
+              </PaginationButton>
+            ) : (
+              <PaginationButton
+                aria-label={`Page ${pageNumber}`}
+                onPress={() => onChange(pageNumber)}
+                className={(renderProps) => styleSlots.base({ ...renderProps, isSelected: pageNumber === page })}
+              >
+                {pageNumber}
+              </PaginationButton>
+            )}
+          </li>
+        ))}
+
+        <li>
+          <PaginationButton
+            aria-label="Next page"
+            isDisabled={page === lastPage}
+            onPress={onNext}
+            className={(renderProps) => styleSlots.base(renderProps)}
+          >
+            <ChevronRightIcon />
+          </PaginationButton>
+        </li>
+      </ul>
+    </FocusScope>
   );
 }
 
 const Pagination = forwardRef(_Pagination);
+
+const PaginationButton = forwardRef<HTMLButtonElement, ComponentPropsWithoutRef<typeof Button>>((props, ref) => {
+  let focusManager = useFocusManager();
+
+  let onKeyDown = (e) => {
+    switch (e.key) {
+      case "ArrowRight":
+        focusManager?.focusNext({ wrap: true });
+        break;
+      case "ArrowLeft":
+        focusManager?.focusPrevious({ wrap: true });
+        break;
+    }
+  };
+
+  return <Button ref={ref} {...props} onKeyDown={onKeyDown} />;
+});
+
+PaginationButton.displayName = "PaginationButton";
 
 // hook
 
