@@ -13,8 +13,8 @@ import { ColorProps, ContentProps, SizeProps, StyleSlotsToStyleProps, Variants }
 const badgeStyles = tv({
   extend: variantColorStyles,
   slots: {
-    base: "absolute flex items-center justify-center rounded-full duration-300",
-    wrapper: "relative",
+    base: "absolute z-10 flex items-center justify-center rounded-full duration-300",
+    wrapper: "relative w-fit",
   },
   variants: {
     size: {
