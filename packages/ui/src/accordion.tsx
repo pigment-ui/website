@@ -33,28 +33,28 @@ const accordionStyles = tv({
     textWrapper: "flex-1 text-start",
     title: "",
     subtitle: "text-default-500",
-    content: "overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
+    content: "overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down [&>div]:!pt-0",
     chevron: "chevron duration-300",
   },
   variants: {
     size: {
       sm: {
-        trigger: "gap-x-2 py-4 [&_svg]:size-4",
+        trigger: "gap-x-2 p-4 [&_svg]:size-4",
         title: "text-sm",
         subtitle: "text-xs",
-        content: "text-sm [&>div]:pb-4",
+        content: "text-sm [&>div]:p-4",
       },
       md: {
-        trigger: "gap-x-2.5 py-5 [&_svg]:size-5",
+        trigger: "gap-x-2.5 p-5 [&_svg]:size-5",
         title: "text-base",
         subtitle: "text-sm",
-        content: "text-base [&>div]:pb-5",
+        content: "text-base [&>div]:p-5",
       },
       lg: {
-        trigger: "gap-x-3 py-6 [&_svg]:size-6",
+        trigger: "gap-x-3 p-6 [&_svg]:size-6",
         title: "text-lg",
         subtitle: "text-base",
-        content: "text-lg [&>div]:pb-6",
+        content: "text-lg [&>div]:p-6",
       },
     },
   },
@@ -90,6 +90,7 @@ function _Accordion(props: AccordionProps, ref: ForwardedRef<HTMLDivElement>) {
     <AccordionSlotsProvider value={{ styleSlots, classNames, styles }}>
       <RadixAccordionRoot
         ref={ref}
+        collapsible
         {...props}
         className={styleSlots.base({
           className: twMerge(classNames?.base, className),
