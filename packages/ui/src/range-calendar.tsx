@@ -51,7 +51,7 @@ type RangeCalendarStylesReturnType = ReturnType<typeof rangeCalendarStyles>;
 interface RangeCalendarProps<T extends DateValue>
   extends Omit<AriaRangeCalendarProps<T>, "visibleDuration">,
     Omit<FormValidationProps<RangeValue<T> | null | undefined>, "value" | "builtinValidation">,
-    FieldBaseProps,
+    Omit<FieldBaseProps, "description">,
     StyleSlotsToStyleProps<RangeCalendarStylesReturnType> {
   visibleMonthCount?: number;
   asCard?: boolean;
