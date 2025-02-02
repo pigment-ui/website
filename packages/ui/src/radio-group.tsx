@@ -1,5 +1,10 @@
 "use client";
 
+import { checkboxGroupStyles } from "./checkbox-group";
+import { Field, FieldBaseProps } from "./field";
+import { isDisabledVariants, isFocusVisibleVariants } from "./styles";
+import { SizeProps, StyleSlotsToStyleProps } from "./types";
+import { createSlots } from "./utils";
 import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps, Orientation } from "react-aria";
 import {
@@ -11,13 +16,6 @@ import {
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { isDisabledVariants, isFocusVisibleVariants } from "./styles";
-import { SizeProps, StyleSlotsToStyleProps } from "./types";
-import { createSlots } from "./utils";
-
-import { checkboxGroupStyles } from "./checkbox-group";
-import { Field, FieldBaseProps } from "./field";
 
 // styles
 

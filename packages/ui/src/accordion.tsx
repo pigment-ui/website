@@ -1,5 +1,7 @@
 "use client";
 
+import { ContentProps, SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
+import { createSlots } from "./utils";
 import {
   AccordionItemProps as RadixAccordionItemProps,
   AccordionMultipleProps as RadixAccordionMultipleProps,
@@ -15,9 +17,6 @@ import React, { ForwardedRef, forwardRef, ReactNode } from "react";
 import { mergeProps } from "react-aria";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { ContentProps, SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
-import { createSlots } from "./utils";
 
 // styles
 

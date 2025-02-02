@@ -1,16 +1,14 @@
 "use client";
 
-import React, { ForwardedRef, forwardRef, ReactNode } from "react";
-import { AriaButtonProps, HoverProps, mergeProps, useButton, useFocusRing, useHover } from "react-aria";
-import { useObjectRef } from "@react-aria/utils";
-import { Slot, Slottable } from "@radix-ui/react-slot";
-import { tv } from "tailwind-variants";
-import { twMerge } from "tailwind-merge";
-
+import { Spinner } from "./spinner";
 import { radiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, ContentProps, RadiusProps, SizeProps, StyleProps, VariantProps } from "./types";
-
-import { Spinner } from "./spinner";
+import { Slot, Slottable } from "@radix-ui/react-slot";
+import { useObjectRef } from "@react-aria/utils";
+import React, { ForwardedRef, forwardRef } from "react";
+import { AriaButtonProps, HoverProps, mergeProps, useButton, useFocusRing, useHover } from "react-aria";
+import { twMerge } from "tailwind-merge";
+import { tv } from "tailwind-variants";
 
 // styles
 
@@ -49,7 +47,7 @@ function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
     variant = "solid",
     color = "default",
     size = "md",
-    radius = "md",
+    radius = size,
     startContent,
     endContent,
     isLoading,
@@ -75,7 +73,21 @@ function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
     <Component
       ref={objRef}
       {...mergeProps(buttonProps, hoverProps, focusProps)}
-      className={buttonStyles({ variant, color, size, radius, isIconOnly, isLoading, isHovered, isPressed, isDisabled, isFocusVisible, className })}
+      data-hovered={isHovered || undefined}
+      data-pressed={isPressed || undefined}
+      className={buttonStyles({
+        variant,
+        color,
+        size,
+        radius,
+        isIconOnly,
+        isLoading,
+        isHovered,
+        isPressed,
+        isDisabled,
+        isFocusVisible,
+        className,
+      })}
       style={style}
     >
       {isLoading && (
@@ -85,7 +97,7 @@ function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
       )}
 
       {startContent}
-      <Slottable>{children as ReactNode}</Slottable>
+      <Slottable>{children}</Slottable>
       {endContent}
     </Component>
   );

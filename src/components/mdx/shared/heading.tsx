@@ -1,5 +1,5 @@
-import { HTMLAttributes } from "react";
 import { slug } from "github-slugger";
+import { HTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
 export function Heading({ as, ...props }: { as: "h2" | "h3" } & HTMLAttributes<HTMLHeadingElement>) {

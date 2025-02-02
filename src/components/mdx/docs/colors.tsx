@@ -1,7 +1,7 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { capitalize } from "inflection";
+import { useTheme } from "next-themes";
 
 export function Colors() {
   const { resolvedTheme } = useTheme();

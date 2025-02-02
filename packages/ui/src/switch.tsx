@@ -1,13 +1,12 @@
 "use client";
 
+import { isDisabledVariants, isFocusVisibleVariants } from "./styles";
+import { ColorProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import { composeRenderProps, Switch as AriaSwitch, SwitchProps as AriaSwitchProps } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
-
-import { isDisabledVariants, isFocusVisibleVariants } from "./styles";
-import { ColorProps, SizeProps, StyleSlotsToStyleProps } from "./types";
+import { tv } from "tailwind-variants";
 
 // styles
 

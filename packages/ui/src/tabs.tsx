@@ -1,5 +1,8 @@
 "use client";
 
+import { isFocusVisibleVariants, radiusVariants, variantColorStyles } from "./styles";
+import { ColorProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { createSlots } from "./utils";
 import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import {
@@ -15,10 +18,6 @@ import {
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { isFocusVisibleVariants, radiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps, VariantProps } from "./types";
-import { createSlots } from "./utils";
 
 // styles
 
@@ -42,9 +41,9 @@ const tabsStyles = tv({
       error: "",
     },
     size: {
-      sm: { base: "gap-2", list: "gap-2 p-1", panel: "p-2 text-xs" },
-      md: { base: "gap-2.5", list: "gap-2.5 p-1.5", panel: "p-2.5 text-sm" },
-      lg: { base: "gap-3", list: "gap-3 p-2", panel: "p-3 text-base" },
+      sm: { base: "gap-2", list: "gap-2 p-1", panel: "p-2" },
+      md: { base: "gap-2.5", list: "gap-2.5 p-1.5", panel: "p-2.5" },
+      lg: { base: "gap-3", list: "gap-3 p-2", panel: "p-3" },
     },
     radius: {
       sm: { list: radiusVariants.sm },
@@ -71,7 +70,10 @@ const tabStyles = tv({
     isSelected: { false: "!border-none !bg-transparent !text-default-500" },
     radius: radiusVariants,
   },
-  compoundVariants: [{ isSelected: false, isHovered: true, className: "!text-default-1000" }],
+  compoundVariants: [
+    { isSelected: false, isHovered: true, className: "!text-default-1000" },
+    { isSelected: false, isHovered: true, color: "default-inverted", className: "!text-default-0" },
+  ],
 });
 
 // props
@@ -87,7 +89,7 @@ const [TabsSlotsProvider, useTabsSlots] = createSlots<Pick<TabsProps, "variant" 
 // component
 
 function _Tabs(props: TabsProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { orientation = "vertical", variant = "solid", color = "default", size = "md", radius = "md", classNames, styles } = props;
+  const { orientation = "vertical", variant = "solid", color = "default", size = "md", radius = size, classNames, styles } = props;
 
   const styleSlots = tabsStyles({ orientation, color, size, radius });
 

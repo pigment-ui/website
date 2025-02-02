@@ -1,10 +1,8 @@
 "use client";
 
+import { StyleProps } from "./types";
 import React, { ForwardedRef, forwardRef } from "react";
 import { tv } from "tailwind-variants";
-
-import { radiusVariants } from "./styles";
-import { RadiusProps, StyleProps } from "./types";
 
 // styles
 
@@ -12,22 +10,21 @@ const skeletonStyles = tv({
   base: "bg-default-1000/10",
   variants: {
     animation: { pulse: "animate-pulse", none: "animate-none" },
-    radius: radiusVariants,
   },
 });
 
 // props
 
-interface SkeletonProps extends RadiusProps, StyleProps {
+interface SkeletonProps extends StyleProps {
   animation?: "pulse" | "none";
 }
 
 // component
 
 function _Skeleton(props: SkeletonProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { animation = "pulse", radius = "full", className, style } = props;
+  const { animation = "pulse", className, style } = props;
 
-  return <div ref={ref} className={skeletonStyles({ animation, radius, className })} style={style} />;
+  return <div ref={ref} className={skeletonStyles({ animation, className })} style={style} />;
 }
 
 const Skeleton = forwardRef(_Skeleton);

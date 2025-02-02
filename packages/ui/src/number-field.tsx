@@ -1,5 +1,6 @@
 "use client";
 
+import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
 import {
@@ -11,33 +12,39 @@ import {
   TextFieldProps,
 } from "react-aria-components";
 
-import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
-
 // props
 
 interface NumberFieldProps
   extends AriaNumberFieldProps,
     Omit<InputProps, keyof TextFieldProps | "size" | "step">,
     FieldBaseProps,
-    FieldInputBaseProps {}
+    FieldInputBaseProps {
+  hideControls?: boolean;
+}
 
 // component
 
 function _NumberField(props: NumberFieldProps, ref: ForwardedRef<HTMLInputElement>) {
+  const { hideControls = false } = props;
+
   return (
     <AriaNumberField {...props}>
       {(renderProps) => (
         <Field {...renderProps} {...props}>
           <FieldInput
             startButton={
-              <Button slot="decrement">
-                <MinusIcon />
-              </Button>
+              !hideControls ? (
+                <Button slot="decrement">
+                  <MinusIcon />
+                </Button>
+              ) : undefined
             }
             endButton={
-              <Button slot="increment">
-                <PlusIcon />
-              </Button>
+              !hideControls ? (
+                <Button slot="increment">
+                  <PlusIcon />
+                </Button>
+              ) : undefined
             }
             {...renderProps}
             {...props}

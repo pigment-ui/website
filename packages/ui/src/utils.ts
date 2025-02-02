@@ -1,8 +1,8 @@
 "use client";
 
+import { useObjectRef, useResizeObserver } from "@react-aria/utils";
 import { Context, createContext, ForwardedRef, Provider, RefObject, useContext, useState } from "react";
 import { mergeProps } from "react-aria";
-import { useObjectRef, useResizeObserver } from "@react-aria/utils";
 
 type CreateSlotsReturn<T> = [Provider<T>, <K extends object>(props?: K) => T & K];
 

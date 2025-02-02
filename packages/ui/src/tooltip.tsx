@@ -1,12 +1,11 @@
 "use client";
 
+import { cardStyles } from "./card";
 import React, { cloneElement, ForwardedRef, forwardRef, ReactElement, useRef } from "react";
 import { mergeProps, useButton } from "react-aria";
 import { composeRenderProps, OverlayArrow, Tooltip as AriaTooltip, TooltipProps as AriaTooltipProps, TooltipTrigger } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { cardStyles } from "./card";
 
 // styles
 
@@ -43,7 +42,7 @@ function _Tooltip(props: TooltipProps, ref: ForwardedRef<HTMLDivElement>) {
               right: isEntering ? "slide-in-from-left-4" : isExiting ? "slide-out-to-left-4" : "",
               top: isEntering ? "slide-in-from-bottom-4" : isExiting ? "slide-out-to-bottom-4" : "",
               center: "",
-            }[placement],
+            }[placement ?? "center"],
             className,
           ),
         }),
@@ -59,7 +58,13 @@ function _Tooltip(props: TooltipProps, ref: ForwardedRef<HTMLDivElement>) {
                 height={arrowSize}
                 className={twMerge(
                   "fill-default-0 stroke-default-1000/20 stroke-[.25px]",
-                  { bottom: "rotate-180", left: "-rotate-90", right: "rotate-90", top: "", center: "" }[placement],
+                  {
+                    bottom: "translate-y-px rotate-180",
+                    left: "-translate-x-px -rotate-90",
+                    right: "translate-x-px rotate-90",
+                    top: "-translate-y-px",
+                    center: "",
+                  }[placement ?? "center"],
                 )}
               >
                 <path d="M0 0 L4 4 L8 0" />
@@ -84,4 +89,4 @@ function TriggerWrapperWithoutDiv({ children }: { children: ReactElement }) {
 
 // exports
 
-export { Tooltip, TriggerWrapperWithoutDiv, TooltipTrigger };
+export { Tooltip, TooltipTrigger, TriggerWrapperWithoutDiv };

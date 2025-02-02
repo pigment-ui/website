@@ -1,14 +1,13 @@
 "use client";
 
+import { radiusVariants, variantColorStyles } from "./styles";
+import { ColorProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps, Variants } from "./types";
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon } from "lucide-react";
 import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef, KeyboardEvent, useMemo } from "react";
 import { FocusScope, mergeProps, useFocusManager } from "react-aria";
 import { Button } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps, Variants } from "./types";
 
 // styles
 
@@ -57,7 +56,7 @@ function _Pagination(props: PaginationProps, ref: ForwardedRef<HTMLUListElement>
     variant = "soft",
     color = "default",
     size = "md",
-    radius = "md",
+    radius = size,
     total,
     page,
     onChange,

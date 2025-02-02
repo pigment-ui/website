@@ -1,5 +1,9 @@
 "use client";
 
+import { ListBox, ListBoxItem, listBoxItemStyles, ListBoxSection, ListBoxSlotsType } from "./list-box";
+import { Popover } from "./popover";
+import { ForwardRefType, StyleProps } from "./types";
+import { createSlots } from "./utils";
 import { CheckIcon } from "lucide-react";
 import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
@@ -13,12 +17,6 @@ import {
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { ForwardRefType, StyleProps } from "./types";
-import { createSlots } from "./utils";
-
-import { ListBox, ListBoxItem, listBoxItemStyles, ListBoxSection, ListBoxSlotsType } from "./list-box";
-import { Popover } from "./popover";
 
 // styles
 
@@ -46,7 +44,7 @@ function _Menu<T extends object>(props: MenuProps<T>, ref: ForwardedRef<HTMLDivE
 
   return (
     <MenuSlotsProvider value={{ color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
-      <Popover hideArrow {...props} className={composeRenderProps(props.className, (className) => menuStyles({ className }))}>
+      <Popover maxHeight={300} hideArrow {...props} className={composeRenderProps(props.className, (className) => menuStyles({ className }))}>
         <AriaMenu ref={ref} {...props} className="outline-none" style={{}} />
       </Popover>
     </MenuSlotsProvider>

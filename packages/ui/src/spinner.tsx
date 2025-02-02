@@ -1,9 +1,8 @@
 "use client";
 
+import { ColorProps, SizeProps, StyleProps } from "./types";
 import React, { ForwardedRef, forwardRef } from "react";
 import { tv } from "tailwind-variants";
-
-import { ColorProps, SizeProps, StyleProps } from "./types";
 
 // styles
 

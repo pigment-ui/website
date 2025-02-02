@@ -1,10 +1,9 @@
-import NextLink from "next/link";
-import Image from "next/image";
-import { useMDXComponent } from "next-contentlayer/hooks";
-import { twMerge } from "tailwind-merge";
-
-import { CodeBlock, Heading } from "./shared";
 import * as docsComponents from "./docs";
+import { CodeBlock, Heading } from "./shared";
+import { useMDXComponent } from "next-contentlayer/hooks";
+import Image from "next/image";
+import NextLink from "next/link";
+import { twMerge } from "tailwind-merge";
 
 export function MDXContent({ code }: { code: string }) {
   const Component = useMDXComponent(code);

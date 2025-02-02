@@ -3,10 +3,9 @@
 import { Doc } from "contentlayer/generated";
 import { slug } from "github-slugger";
 import { marked } from "marked";
+import { Button } from "pigment-ui";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-
-import { Button } from "pigment-ui";
 
 export function NavRight({ doc }: { doc: Doc }) {
   const docHeadings = marked

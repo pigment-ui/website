@@ -1,10 +1,10 @@
 "use client";
 
+import { capitalize } from "inflection";
+import Link from "next/link";
 import { ReactNode } from "react";
 import { mergeProps, useFocusRing, useHover, usePress } from "react-aria";
-import Link from "next/link";
 import { twMerge } from "tailwind-merge";
-import { capitalize } from "inflection";
 
 export function ComponentBox({ children, id }: { children: ReactNode; id: string }) {
   const { hoverProps, isHovered } = useHover({});

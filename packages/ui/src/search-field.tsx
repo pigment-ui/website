@@ -1,10 +1,9 @@
 "use client";
 
+import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 import { SearchIcon, XIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
 import { Button, Input, InputProps, SearchField as AriaSearchField, SearchFieldProps as AriaSearchFieldProps } from "react-aria-components";
-
-import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 
 // props
 

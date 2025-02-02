@@ -1,5 +1,9 @@
 "use client";
 
+import { cardStyles } from "./card";
+import { Field, FieldBaseProps } from "./field";
+import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
+import { StyleSlotsToStyleProps } from "./types";
 import { FormValidationProps, useFormValidationState } from "@react-stately/form";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef, ReactNode } from "react";
@@ -19,12 +23,6 @@ import {
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
-import { StyleSlotsToStyleProps } from "./types";
-
-import { cardStyles } from "./card";
-import { Field, FieldBaseProps } from "./field";
 
 // styles
 
@@ -110,6 +108,7 @@ function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedR
         ref={ref}
         {...mergeProps(props, fieldProps)}
         aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
+        aria-describedby={props["aria-describedby"] ?? (typeof props.description === "string" ? props.description : undefined)}
         visibleDuration={{ months: visibleMonthCount }}
         className={composeRenderProps(props.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
         style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}

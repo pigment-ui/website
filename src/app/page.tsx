@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { BellIcon } from "lucide-react";
+import { ComponentBox } from "#/components";
 import { parseDate } from "@internationalized/date";
-
+import { BellIcon } from "lucide-react";
 import {
   Badge,
   Button,
@@ -34,8 +33,7 @@ import {
   TextArea,
   TextField,
 } from "pigment-ui";
-
-import { ComponentBox } from "#/components";
+import { useState } from "react";
 
 export default function Page() {
   const [page, setPage] = useState(2);

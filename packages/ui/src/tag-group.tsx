@@ -1,5 +1,9 @@
 "use client";
 
+import { Field, FieldBaseProps } from "./field";
+import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
+import { ColorProps, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps } from "./types";
+import { createSlots } from "./utils";
 import { XIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
@@ -16,12 +20,6 @@ import {
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
-import { ColorProps, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps } from "./types";
-import { createSlots } from "./utils";
-
-import { Field, FieldBaseProps } from "./field";
-
 // styles
 
 const tagGroupStyles = tv({
@@ -34,7 +32,7 @@ const tagGroupStyles = tv({
 const tagStyles = tv({
   slots: {
     base: "flex items-center overflow-hidden bg-opacity-10 duration-300",
-    removeButton: "grid place-items-center bg-opacity-20 outline-none data-[pressed]:scale-90 data-[hovered]:bg-opacity-30",
+    removeButton: "grid place-items-center rounded-[inherit] bg-opacity-20 outline-none data-[pressed]:scale-90 data-[hovered]:bg-opacity-30",
   },
   variants: {
     color: {
@@ -50,13 +48,6 @@ const tagStyles = tv({
       md: { base: "h-8 gap-x-2.5 px-2.5 text-sm", removeButton: "size-5 [&_svg]:size-3.5" },
       lg: { base: "h-10 gap-x-3 px-3 text-base", removeButton: "size-6 [&_svg]:size-4" },
     },
-    radius: {
-      sm: { base: radiusVariants.sm, removeButton: radiusVariants.sm },
-      md: { base: radiusVariants.md, removeButton: radiusVariants.md },
-      lg: { base: radiusVariants.lg, removeButton: radiusVariants.lg },
-      full: { base: radiusVariants.full, removeButton: radiusVariants.full },
-      none: { base: radiusVariants.none, removeButton: radiusVariants.none },
-    },
     isSelectable: { true: "cursor-pointer", false: "cursor-default" },
     isSelected: { true: { base: "bg-opacity-100 text-default-0", removeButton: "bg-default-0" } },
     isHovered: { true: "bg-opacity-20" },
@@ -64,6 +55,7 @@ const tagStyles = tv({
     isFocusWithin: { true: "bg-opacity-30" },
     isFocusVisible: isFocusVisibleVariants,
     isDisabled: isDisabledVariants,
+    radius: radiusVariants,
   },
   compoundVariants: [{ isSelected: true, isHovered: true, className: { base: "bg-opacity-90" } }],
 });
@@ -93,7 +85,7 @@ const [TagGroupSlotsProvider, useTagGroupSlots] = createSlots<TagGroupSlotsType>
 // component
 
 function _TagGroup<T extends object>(props: TagGroupProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { color = "default", size = "md", radius = "md", items, renderEmptyState, children, itemClassNames, itemStyles } = props;
+  const { color = "default", size = "md", radius = size, items, renderEmptyState, children, itemClassNames, itemStyles } = props;
 
   return (
     <TagGroupSlotsProvider value={{ color, size, radius, itemClassNames, itemStyles }}>

@@ -1,12 +1,10 @@
 "use client";
 
+import preview from "#/preview";
+import { CodeBlock } from "../shared";
+import * as ui from "pigment-ui";
 import { useState } from "react";
 import { LiveError, LivePreview, LiveProvider } from "react-live";
-
-import * as ui from "pigment-ui";
-import preview from "#/preview";
-
-import { CodeBlock } from "../shared";
 
 function filterPreviewCode(code: string) {
   return code

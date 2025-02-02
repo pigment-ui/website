@@ -1,15 +1,13 @@
 "use client";
 
-import { ChevronDownIcon } from "lucide-react";
-import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
-import { Button, ComboBox as AriaComboBox, ComboBoxProps as AriaComboBoxProps, Input, InputProps } from "react-aria-components";
-
-import { ForwardRefType } from "./types";
-import { useObserveElementWidth } from "./utils";
-
 import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
 import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
 import { Popover } from "./popover";
+import { ForwardRefType } from "./types";
+import { useObserveElementWidth } from "./utils";
+import { ChevronDownIcon } from "lucide-react";
+import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
+import { Button, ComboBox as AriaComboBox, ComboBoxProps as AriaComboBoxProps, Input, InputProps } from "react-aria-components";
 
 // props
 
@@ -45,11 +43,7 @@ function _ComboBox<T extends object>(props: ComboBoxProps<T>, ref: ForwardedRef<
           </Field>
 
           <Popover maxHeight={300} hideArrow {...props} className="overflow-auto p-0" style={{ width }}>
-            <ListBox
-              aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
-              {...filterInlineListBoxProps(props)}
-              className="p-2"
-            />
+            <ListBox {...filterInlineListBoxProps(props)} className="p-2" />
           </Popover>
         </>
       )}

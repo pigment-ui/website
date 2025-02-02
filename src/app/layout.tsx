@@ -1,11 +1,9 @@
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
-import { Providers } from "./providers";
-
-import "pigment-ui/colors";
-import "./globals.css";
-
 import { Footer, Header } from "#/components";
+import "./globals.css";
+import { Providers } from "./providers";
+import type { Metadata } from "next";
+import "pigment-ui/colors";
+import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: "Pigment UI",

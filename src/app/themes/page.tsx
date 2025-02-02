@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { ComponentBox } from "#/components";
+import { capitalize } from "inflection";
+import { BellIcon } from "lucide-react";
 import {
   Badge,
   Button,
@@ -18,13 +20,9 @@ import {
   Tooltip,
   TooltipTrigger,
 } from "pigment-ui";
-import { BellIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button as AriaButton } from "react-aria-components";
-
 import { twMerge } from "tailwind-merge";
-
-import { ComponentBox } from "#/components";
-import { capitalize } from "inflection";
 
 type Colors = "orange" | "teal" | "indigo" | "fuchsia";
 

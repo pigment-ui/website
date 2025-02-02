@@ -1,17 +1,15 @@
 "use client";
 
+import { Button } from "./button";
+import { cardStyles } from "./card";
+import { SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
+import { createSlots } from "./utils";
 import { XIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps, useId } from "react-aria";
 import { composeRenderProps, Dialog, DialogTrigger, Modal as AriaModal, ModalOverlay, ModalOverlayProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
-import { createSlots } from "./utils";
-
-import { Button } from "./button";
-import { cardStyles } from "./card";
 
 // styles
 
@@ -45,6 +43,7 @@ type ModalStylesReturnType = ReturnType<typeof modalStyles>;
 interface ModalProps extends ModalOverlayProps, SizeProps, StyleSlotsToStyleProps<ModalStylesReturnType> {
   backdrop?: "blur" | "opaque" | "transparent";
   insideScroll?: boolean;
+  hideCloseButton?: boolean;
 }
 
 // slots
@@ -56,7 +55,7 @@ const [ModalSlotsProvider, useModalSlots] = createSlots<Record<"headerId" | "bod
 // component
 
 function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { size = "md", backdrop = "blur", insideScroll = false, children, classNames, styles, ...restProps } = props;
+  const { size = "md", backdrop = "blur", insideScroll = false, hideCloseButton = false, children, classNames, styles, ...restProps } = props;
 
   const headerId = useId();
   const bodyId = useId();
@@ -81,17 +80,19 @@ function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
             >
               {children}
             </Dialog>
-            <Button
-              aria-label="Modal close button"
-              isIconOnly
-              variant="soft"
-              radius="full"
-              onPress={() => state.close()}
-              className={styleSlots.closeButton({ className: classNames?.closeButton })}
-              style={styles?.closeButton}
-            >
-              <XIcon />
-            </Button>
+            {!hideCloseButton && (
+              <Button
+                aria-label="Modal close button"
+                isIconOnly
+                variant="soft"
+                radius="full"
+                onPress={() => state.close()}
+                className={styleSlots.closeButton({ className: classNames?.closeButton })}
+                style={styles?.closeButton}
+              >
+                <XIcon />
+              </Button>
+            )}
           </AriaModal>
         ))}
       </ModalOverlay>

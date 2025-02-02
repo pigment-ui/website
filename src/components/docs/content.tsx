@@ -1,10 +1,9 @@
 "use client";
 
+import { MDXContent } from "#/components";
 import { Doc } from "contentlayer/generated";
 import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon, GithubIcon } from "lucide-react";
 import NextLink from "next/link";
-
-import { MDXContent } from "#/components";
 import { Button, Separator } from "pigment-ui";
 
 export function Content({ doc, allDocs }: { doc: Doc; allDocs: Doc[] }) {

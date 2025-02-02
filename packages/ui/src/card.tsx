@@ -1,13 +1,12 @@
 "use client";
 
+import { radiusVariants } from "./styles";
+import { ChildrenProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
+import { createSlots } from "./utils";
 import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps } from "react-aria";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { radiusVariants } from "./styles";
-import { ChildrenProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
-import { createSlots } from "./utils";
 
 // styles
 
@@ -21,10 +20,7 @@ const cardStyles = tv({
     buttons: "flex justify-end gap-x-4",
   },
   variants: {
-    hasShadow: {
-      true: "[box-shadow:0_5px_20px_rgba(0,0,0,.1)] dark:[box-shadow:0_5px_20px_rgba(255,255,255,.1)]",
-      false: "shadow-none",
-    },
+    hasShadow: { true: "[box-shadow:0_5px_20px_rgba(0,0,0,.1)] dark:[box-shadow:0_5px_20px_rgba(255,255,255,.1)]", false: "shadow-none" },
   },
   defaultVariants: { hasShadow: true },
 });

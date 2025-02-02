@@ -1,36 +1,28 @@
 "use client";
 
+import { useCheckboxGroupSlots } from "./checkbox-group";
+import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
+import { RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
+import { Slot } from "@radix-ui/react-slot";
 import { CheckIcon, MinusIcon } from "lucide-react";
-import React, { ForwardedRef, forwardRef } from "react";
+import React, { AnchorHTMLAttributes, ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import { Checkbox as AriaCheckbox, CheckboxProps as AriaCheckboxProps, composeRenderProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
-import { RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
-
-import { useCheckboxGroupSlots } from "./checkbox-group";
-
 // styles
 
 const checkboxStyles = tv({
   slots: {
-    base: "grid cursor-pointer grid-cols-[auto_1fr] items-center duration-300",
-    self: "grid place-items-center border border-default-1000 border-opacity-50 bg-default-1000 bg-opacity-0 text-default-0 duration-300",
+    base: "grid cursor-pointer grid-cols-[auto_1fr] items-start duration-300",
+    self: "grid place-items-center rounded-[inherit] border border-default-1000 border-opacity-50 bg-default-1000 bg-opacity-0 text-default-0 duration-300",
   },
   variants: {
     size: {
       sm: { base: "gap-x-1.5 text-sm", self: "size-5 [&>svg]:size-4" },
       md: { base: "gap-x-2 text-base", self: "size-6 [&>svg]:size-5" },
       lg: { base: "gap-x-2.5 text-lg", self: "size-7 [&>svg]:size-6" },
-    },
-    radius: {
-      sm: { self: smallRadiusVariants.sm },
-      md: { self: smallRadiusVariants.md },
-      lg: { self: smallRadiusVariants.lg },
-      full: { self: smallRadiusVariants.full },
-      none: { self: smallRadiusVariants.none },
     },
     isSelected: { true: { self: "border-none bg-opacity-100" } },
     isIndeterminate: { true: { self: "border-none bg-opacity-100" } },
@@ -39,6 +31,7 @@ const checkboxStyles = tv({
     isPressed: { true: { self: "scale-90" } },
     isFocusVisible: { true: { self: isFocusVisibleVariants.true } },
     isDisabled: isDisabledVariants,
+    radius: smallRadiusVariants,
   },
   compoundVariants: [
     { isSelected: true, isHovered: true, className: { self: "bg-opacity-90" } },
@@ -56,7 +49,7 @@ interface CheckboxProps extends AriaCheckboxProps, SizeProps, RadiusProps, Style
 // component
 
 function _Checkbox(props: CheckboxProps, ref: ForwardedRef<HTMLLabelElement>) {
-  const { size = "md", radius = "md", classNames, itemClassNames, styles, itemStyles } = useCheckboxGroupSlots(props);
+  const { size = "md", radius = size, classNames, itemClassNames, styles, itemStyles } = useCheckboxGroupSlots(props);
 
   const styleSlots = checkboxStyles({ size, radius });
 
@@ -94,6 +87,23 @@ function _Checkbox(props: CheckboxProps, ref: ForwardedRef<HTMLLabelElement>) {
 
 const Checkbox = forwardRef(_Checkbox);
 
+function _CheckboxLink(props: AnchorHTMLAttributes<HTMLAnchorElement> & { asChild?: boolean }, ref: ForwardedRef<HTMLAnchorElement>) {
+  const Component = props.asChild ? Slot : "a";
+
+  return (
+    <Component
+      ref={ref}
+      tabIndex={-1}
+      target="_blank"
+      onClick={(e) => e.stopPropagation()}
+      {...props}
+      className={twMerge("text-primary hover:underline", props.className)}
+    />
+  );
+}
+
+const CheckboxLink = forwardRef(_CheckboxLink);
+
 // exports
 
-export { Checkbox };
+export { Checkbox, CheckboxLink };

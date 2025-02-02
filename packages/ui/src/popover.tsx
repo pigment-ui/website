@@ -1,11 +1,10 @@
 "use client";
 
+import { cardStyles } from "./card";
 import React, { ForwardedRef, forwardRef } from "react";
 import { composeRenderProps, DialogTrigger, OverlayArrow, Popover as AriaPopover, PopoverProps as AriaPopoverProps } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
-
-import { cardStyles } from "./card";
+import { tv } from "tailwind-variants";
 
 // styles
 
@@ -42,7 +41,7 @@ function _Popover(props: PopoverProps, ref: ForwardedRef<HTMLDivElement>) {
               right: isEntering ? "slide-in-from-left-4" : isExiting ? "slide-out-to-left-4" : "",
               top: isEntering ? "slide-in-from-bottom-4" : isExiting ? "slide-out-to-bottom-4" : "",
               center: "",
-            }[placement],
+            }[placement ?? "center"],
             className,
           ),
         }),
@@ -58,7 +57,13 @@ function _Popover(props: PopoverProps, ref: ForwardedRef<HTMLDivElement>) {
                 height={arrowSize}
                 className={twMerge(
                   "fill-default-0 stroke-default-1000/20 stroke-[.25px]",
-                  { bottom: "rotate-180", left: "-rotate-90", right: "rotate-90", top: "", center: "" }[placement],
+                  {
+                    bottom: "translate-y-px rotate-180",
+                    left: "-translate-x-px -rotate-90",
+                    right: "translate-x-px rotate-90",
+                    top: "-translate-y-px",
+                    center: "",
+                  }[placement ?? "center"],
                 )}
               >
                 <path d="M0 0 L4 4 L8 0" />

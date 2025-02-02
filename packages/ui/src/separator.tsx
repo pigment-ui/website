@@ -1,10 +1,9 @@
 "use client";
 
+import { SizeProps } from "./types";
 import React, { ForwardedRef, forwardRef } from "react";
 import { Separator as AriaSeparator, SeparatorProps as AriaSeparatorProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
-
-import { SizeProps } from "./types";
 
 // styles
 

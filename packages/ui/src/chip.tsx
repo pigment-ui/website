@@ -1,10 +1,9 @@
 "use client";
 
-import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
-import { tv } from "tailwind-variants";
-
 import { smallRadiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, ContentProps, RadiusProps, SizeProps, VariantProps } from "./types";
+import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
+import { tv } from "tailwind-variants";
 
 // styles
 
@@ -40,7 +39,7 @@ function _Chip(props: ChipProps, ref: ForwardedRef<HTMLDivElement>) {
     variant = "solid",
     color = "default",
     size = "md",
-    radius = "full",
+    radius = size,
     isIconOnly,
     startContent,
     endContent,

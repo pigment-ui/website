@@ -1,15 +1,13 @@
 "use client";
 
+import { Checkbox } from "./checkbox";
+import { Field, FieldBaseProps } from "./field";
+import { RadiusProps } from "./types";
+import { createSlots } from "./utils";
 import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
 import { Orientation } from "react-aria";
 import { CheckboxGroup as AriaCheckboxGroup, CheckboxGroupProps as AriaCheckboxGroupProps, composeRenderProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
-
-import { RadiusProps } from "./types";
-import { createSlots } from "./utils";
-
-import { Checkbox } from "./checkbox";
-import { Field, FieldBaseProps } from "./field";
 
 // styles
 
@@ -45,7 +43,7 @@ const [CheckboxGroupSlotsProvider, useCheckboxGroupSlots] = createSlots<Checkbox
 // component
 
 function _CheckboxGroup(props: CheckboxGroupProps, ref: ForwardedRef<HTMLInputElement>) {
-  const { size = "md", radius, orientation = "vertical", itemClassNames, itemStyles } = props;
+  const { size = "md", radius = size, orientation = "vertical", itemClassNames, itemStyles } = props;
 
   return (
     <CheckboxGroupSlotsProvider value={{ size, radius, itemClassNames, itemStyles }}>

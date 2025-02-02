@@ -1,12 +1,11 @@
 "use client";
 
+import { ColorProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import React, { ForwardedRef, forwardRef, ReactNode } from "react";
 import { mergeProps } from "react-aria";
 import { composeRenderProps, Label, ProgressBar as AriaProgressBar, ProgressBarProps as AriaProgressBarProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { ColorProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 
 // styles
 

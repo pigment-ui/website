@@ -1,5 +1,9 @@
 "use client";
 
+import { calendarStyles, CalendarWrapper } from "./calendar";
+import { Field, FieldBaseProps } from "./field";
+import { smallRadiusVariants } from "./styles";
+import { StyleSlotsToStyleProps } from "./types";
 import { getDayOfWeek } from "@internationalized/date";
 import { useLocale } from "@react-aria/i18n";
 import { FormValidationProps, useFormValidationState } from "@react-stately/form";
@@ -19,12 +23,6 @@ import {
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
-
-import { smallRadiusVariants } from "./styles";
-import { StyleSlotsToStyleProps } from "./types";
-
-import { calendarStyles, CalendarWrapper } from "./calendar";
-import { Field, FieldBaseProps } from "./field";
 
 // styles
 
@@ -51,7 +49,7 @@ type RangeCalendarStylesReturnType = ReturnType<typeof rangeCalendarStyles>;
 interface RangeCalendarProps<T extends DateValue>
   extends Omit<AriaRangeCalendarProps<T>, "visibleDuration">,
     Omit<FormValidationProps<RangeValue<T> | null | undefined>, "value" | "builtinValidation">,
-    Omit<FieldBaseProps, "description">,
+    FieldBaseProps,
     StyleSlotsToStyleProps<RangeCalendarStylesReturnType> {
   visibleMonthCount?: number;
   asCard?: boolean;
@@ -80,6 +78,7 @@ function _RangeCalendar<T extends DateValue>(props: RangeCalendarProps<T>, ref: 
         ref={ref}
         {...mergeProps(props, fieldProps)}
         aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
+        aria-describedby={props["aria-describedby"] ?? (typeof props.description === "string" ? props.description : undefined)}
         visibleDuration={{ months: visibleMonthCount }}
         className={composeRenderProps(props.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
         style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}

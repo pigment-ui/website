@@ -2,12 +2,11 @@
 
 import { CopyCheckIcon, CopyIcon } from "lucide-react";
 import { useTheme } from "next-themes";
+import { Button } from "pigment-ui";
 import { themes } from "prism-react-renderer";
 import { useEffect, useState } from "react";
 import { LiveEditor } from "react-live";
 import { twMerge } from "tailwind-merge";
-
-import { Button } from "pigment-ui";
 
 export function CodeBlock({
   code: propsCode,

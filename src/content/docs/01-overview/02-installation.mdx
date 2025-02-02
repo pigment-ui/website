@@ -25,6 +25,7 @@ Import color variables in the root layout. See more on [colors](/docs/overview/c
 ```tsx
 // ...
 import "pigment-ui/colors";
+
 // ...
 ```
 
@@ -35,8 +36,8 @@ Update your Tailwind configuration file.
 `tailwind.config.ts`
 
 ```ts
-import type { Config } from "tailwindcss";
 import { twConfig } from "pigment-ui";
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [

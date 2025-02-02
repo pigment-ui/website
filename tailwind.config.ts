@@ -1,5 +1,5 @@
-import type { Config } from "tailwindcss";
 import { twConfig } from "pigment-ui";
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
