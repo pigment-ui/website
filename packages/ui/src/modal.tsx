@@ -86,6 +86,7 @@ function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
                 isIconOnly
                 variant="soft"
                 radius="full"
+                size={size}
                 onPress={() => state.close()}
                 className={styleSlots.closeButton({ className: classNames?.closeButton })}
                 style={styles?.closeButton}

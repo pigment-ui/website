@@ -7,7 +7,6 @@ import { Slot, Slottable } from "@radix-ui/react-slot";
 import { useObjectRef } from "@react-aria/utils";
 import React, { ForwardedRef, forwardRef } from "react";
 import { AriaButtonProps, HoverProps, mergeProps, useButton, useFocusRing, useHover } from "react-aria";
-import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
 // styles
@@ -91,8 +90,8 @@ function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
       style={style}
     >
       {isLoading && (
-        <div className={twMerge("absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2", variant === "solid" && "invert")}>
-          <Spinner size={size} color={variant === "solid" ? "default" : color} />
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Spinner size={size} color={variant === "solid" ? (color === "default-inverted" ? "default" : "default-inverted") : color} />
         </div>
       )}
 
