@@ -19,7 +19,7 @@ const modalStyles = tv({
     base: "relative w-full",
     header: "pr-16",
     dialog: "relative flex flex-col outline-none",
-    backdrop: "fixed inset-0 z-[999] flex items-center justify-center px-4 py-16",
+    backdrop: "fixed inset-0 z-[999] grid place-items-center px-4 py-16",
     closeButton: "absolute right-2 top-2",
   },
   variants: {
@@ -30,7 +30,7 @@ const modalStyles = tv({
       transparent: { backdrop: "bg-transparent" },
     },
     insideScroll: {
-      true: { dialog: "max-h-[calc(100vh-8rem)]", body: "flex-1 overflow-y-auto" },
+      true: { dialog: "max-h-[calc(100vh-8rem)]", body: "overflow-y-auto" },
       false: { backdrop: "overflow-auto" },
     },
   },
