@@ -40,3 +40,4 @@ next-env.d.ts
 src/app/test
 dist
 package-lock.json
+yarn.lock
