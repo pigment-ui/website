@@ -1,6 +1,6 @@
 "use client";
 
-import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
+import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants } from "./styles";
 import { RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import { useObjectRef } from "@react-aria/utils";
 import { ValidationResult } from "@react-types/shared";
@@ -36,7 +36,7 @@ const fieldInputStyles = tv({
     self: "flex size-full flex-1 items-center bg-transparent text-default-1000 outline-none placeholder:text-default-500 data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
     content: "pointer-events-none shrink-0 text-default-700",
     button: [
-      "flex items-center rounded-[inherit] bg-default-1000 bg-opacity-10 px-1.5 text-default-700 outline-none duration-300",
+      "flex items-center bg-default-1000 bg-opacity-10 px-1.5 text-default-700 outline-none duration-300",
       "data-[pressed]:scale-90 data-[hovered]:bg-opacity-20",
       "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
       "data-[focus-visible]:z-10 data-[focus-visible]:outline data-[focus-visible]:outline-default-1000",
@@ -48,13 +48,19 @@ const fieldInputStyles = tv({
       md: { base: "h-10 gap-2.5 px-2.5 text-sm [&_svg]:size-5", button: "h-7 [&_svg]:!size-4" },
       lg: { base: "h-12 gap-3 px-3 text-base [&_svg]:size-6", button: "h-8 [&_svg]:!size-5" },
     },
+    radius: {
+      sm: { base: radiusVariants.sm, button: smallRadiusVariants.sm },
+      md: { base: radiusVariants.md, button: smallRadiusVariants.md },
+      lg: { base: radiusVariants.lg, button: smallRadiusVariants.lg },
+      full: { base: radiusVariants.full, button: smallRadiusVariants.full },
+      none: { base: radiusVariants.none, button: smallRadiusVariants.none },
+    },
     isTextArea: { true: "h-auto items-start" },
     isHovered: { true: "bg-default-50" },
     isFocusWithin: { true: "border-opacity-100" },
     isInvalid: { true: "border-error-500 border-opacity-50" },
     isFocusVisible: isFocusVisibleVariants,
     isDisabled: isDisabledVariants,
-    radius: radiusVariants,
   },
   compoundVariants: [
     { isTextArea: true, size: "sm", className: "py-2" },
