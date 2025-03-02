@@ -16,7 +16,8 @@ const cardStyles = tv({
     header: "p-4",
     body: "p-4",
     footer: "p-4",
-    heading: "text-xl font-bold",
+    title: "text-xl font-bold",
+    subtitle: "text-sm",
     buttons: "flex justify-end gap-x-4",
   },
   variants: {
@@ -102,20 +103,35 @@ function _CardFooter(props: HTMLAttributes<HTMLElement>, ref: ForwardedRef<HTMLE
 
 const CardFooter = forwardRef(_CardFooter);
 
-function _CardHeading(props: HTMLAttributes<HTMLHeadingElement>, ref: ForwardedRef<HTMLHeadingElement>) {
+function _CardTitle(props: HTMLAttributes<HTMLHeadingElement>, ref: ForwardedRef<HTMLHeadingElement>) {
   const { styleSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
 
   return (
     <h3
       ref={ref}
-      className={styleSlots.heading({ className: twMerge(classNames?.heading, className) })}
-      style={mergeProps(styles?.heading, style)}
+      className={styleSlots.title({ className: twMerge(classNames?.title, className) })}
+      style={mergeProps(styles?.title, style)}
       {...restProps}
     />
   );
 }
 
-const CardHeading = forwardRef(_CardHeading);
+const CardTitle = forwardRef(_CardTitle);
+
+function _CardSubtitle(props: HTMLAttributes<HTMLParagraphElement>, ref: ForwardedRef<HTMLParagraphElement>) {
+  const { styleSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
+
+  return (
+    <p
+      ref={ref}
+      className={styleSlots.title({ className: twMerge(classNames?.subtitle, className) })}
+      style={mergeProps(styles?.subtitle, style)}
+      {...restProps}
+    />
+  );
+}
+
+const CardSubtitle = forwardRef(_CardSubtitle);
 
 function _CardButtons(props: HTMLAttributes<HTMLDivElement>, ref: ForwardedRef<HTMLDivElement>) {
   const { styleSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
@@ -134,4 +150,4 @@ const CardButtons = forwardRef(_CardButtons);
 
 // exports
 
-export { Card, CardHeader, CardBody, CardFooter, CardHeading, CardButtons, cardStyles };
+export { Card, CardHeader, CardBody, CardFooter, CardTitle, CardSubtitle, CardButtons, cardStyles };

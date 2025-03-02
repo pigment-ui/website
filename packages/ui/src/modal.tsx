@@ -2,8 +2,9 @@
 
 import { Button } from "./button";
 import { cardStyles } from "./card";
-import { SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
+import { StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
+import { PlacementAxis } from "@react-types/overlays";
 import { XIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps, useId } from "react-aria";
@@ -19,31 +20,43 @@ const modalStyles = tv({
     base: "relative w-full",
     header: "pr-16",
     dialog: "relative flex flex-col outline-none",
-    backdrop: "fixed inset-0 z-[999] grid place-items-center px-4 py-16",
+    backdrop: "fixed inset-0 z-[999] grid",
     closeButton: "absolute right-2 top-2",
   },
   variants: {
-    size: { sm: "max-w-lg", md: "max-w-2xl", lg: "max-w-4xl" },
+    placement: {
+      top: { base: "max-w-full rounded-t-none", backdrop: "items-start pb-16" },
+      bottom: { base: "max-w-full rounded-b-none", backdrop: "items-end pt-16" },
+      left: { base: "max-w-[900px] rounded-l-none", backdrop: "justify-start pr-4" },
+      right: { base: "max-w-[900px] rounded-r-none", backdrop: "justify-end pl-4" },
+      center: { base: "max-w-[900px]", backdrop: "place-items-center px-4 py-16" },
+    },
     backdrop: {
       blur: { backdrop: "bg-default-0/50 backdrop-blur-lg" },
       opaque: { backdrop: "bg-default-0/75" },
       transparent: { backdrop: "bg-transparent" },
     },
     insideScroll: {
-      true: { dialog: "max-h-[calc(100vh-8rem)]", body: "overflow-y-auto" },
+      true: { body: "overflow-y-auto" },
       false: { backdrop: "overflow-auto" },
     },
   },
+  compoundVariants: [
+    { insideScroll: true, placement: ["left", "right"], className: { dialog: "max-h-screen" } },
+    { insideScroll: true, placement: ["top", "bottom"], className: { dialog: "max-h-[calc(100vh-4rem)]" } },
+    { insideScroll: true, placement: ["center"], className: { dialog: "max-h-[calc(100vh-8rem)]" } },
+  ],
 });
 
 type ModalStylesReturnType = ReturnType<typeof modalStyles>;
 
 // props
 
-interface ModalProps extends ModalOverlayProps, SizeProps, StyleSlotsToStyleProps<ModalStylesReturnType> {
+interface ModalProps extends ModalOverlayProps, StyleSlotsToStyleProps<ModalStylesReturnType> {
   backdrop?: "blur" | "opaque" | "transparent";
   insideScroll?: boolean;
   hideCloseButton?: boolean;
+  placement?: PlacementAxis;
 }
 
 // slots
@@ -55,12 +68,12 @@ const [ModalSlotsProvider, useModalSlots] = createSlots<Record<"headerId" | "bod
 // component
 
 function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { size = "md", backdrop = "blur", insideScroll = false, hideCloseButton = false, children, classNames, styles, ...restProps } = props;
+  const { placement = "center", backdrop = "blur", insideScroll = true, hideCloseButton = false, children, classNames, styles, ...restProps } = props;
 
   const headerId = useId();
   const bodyId = useId();
 
-  const styleSlots = modalStyles({ size, backdrop, insideScroll });
+  const styleSlots = modalStyles({ placement, backdrop, insideScroll });
 
   return (
     <ModalSlotsProvider value={{ headerId, bodyId, styleSlots, classNames, styles }}>
@@ -86,7 +99,7 @@ function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
                 isIconOnly
                 variant="soft"
                 radius="full"
-                size={size}
+                size="sm"
                 onPress={() => state.close()}
                 className={styleSlots.closeButton({ className: classNames?.closeButton })}
                 style={styles?.closeButton}
@@ -150,20 +163,35 @@ function _ModalFooter(props: HTMLAttributes<HTMLElement>, ref: ForwardedRef<HTML
 
 const ModalFooter = forwardRef(_ModalFooter);
 
-function _ModalHeading<T extends object>(props: HTMLAttributes<HTMLHeadingElement>, ref: ForwardedRef<HTMLHeadingElement>) {
+function _ModalTitle<T extends object>(props: HTMLAttributes<HTMLHeadingElement>, ref: ForwardedRef<HTMLHeadingElement>) {
   const { headerId, bodyId, styleSlots, className, classNames, style, styles, ...restProps } = useModalSlots(props);
 
   return (
     <h3
       ref={ref}
-      className={styleSlots.heading({ className: twMerge(classNames?.heading, className) })}
-      style={mergeProps(styles?.heading, style)}
+      className={styleSlots.title({ className: twMerge(classNames?.title, className) })}
+      style={mergeProps(styles?.title, style)}
       {...restProps}
     />
   );
 }
 
-const ModalHeading = forwardRef(_ModalHeading);
+const ModalTitle = forwardRef(_ModalTitle);
+
+function _ModalSubtitle<T extends object>(props: HTMLAttributes<HTMLParagraphElement>, ref: ForwardedRef<HTMLParagraphElement>) {
+  const { headerId, bodyId, styleSlots, className, classNames, style, styles, ...restProps } = useModalSlots(props);
+
+  return (
+    <p
+      ref={ref}
+      className={styleSlots.title({ className: twMerge(classNames?.subtitle, className) })}
+      style={mergeProps(styles?.subtitle, style)}
+      {...restProps}
+    />
+  );
+}
+
+const ModalSubtitle = forwardRef(_ModalSubtitle);
 
 function _ModalButtons<T extends object>(props: HTMLAttributes<HTMLDivElement>, ref: ForwardedRef<HTMLDivElement>) {
   const { headerId, bodyId, styleSlots, className, classNames, style, styles, ...restProps } = useModalSlots(props);
@@ -182,4 +210,4 @@ const ModalButtons = forwardRef(_ModalButtons);
 
 // exports
 
-export { Modal, ModalHeader, ModalBody, ModalFooter, ModalHeading, ModalButtons, DialogTrigger as ModalTrigger };
+export { Modal, ModalHeader, ModalBody, ModalFooter, ModalTitle, ModalSubtitle, ModalButtons, DialogTrigger as ModalTrigger };
