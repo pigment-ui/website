@@ -2,7 +2,7 @@
 
 import { Button } from "./button";
 import { cardStyles } from "./card";
-import { StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
+import { SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 import { PlacementAxis } from "@react-types/overlays";
 import { XIcon } from "lucide-react";
@@ -17,19 +17,24 @@ import { tv } from "tailwind-variants";
 const modalStyles = tv({
   extend: cardStyles,
   slots: {
-    base: "relative w-full",
+    base: "relative duration-300",
     header: "pr-16",
     dialog: "relative flex flex-col outline-none",
-    backdrop: "fixed inset-0 z-[999] grid",
+    backdrop: "fixed inset-0 z-[999] grid duration-300",
     closeButton: "absolute right-2 top-2",
   },
   variants: {
     placement: {
-      top: { base: "max-w-full rounded-t-none", backdrop: "items-start pb-16" },
-      bottom: { base: "max-w-full rounded-b-none", backdrop: "items-end pt-16" },
-      left: { base: "max-w-[900px] rounded-l-none", backdrop: "justify-start pr-4" },
-      right: { base: "max-w-[900px] rounded-r-none", backdrop: "justify-end pl-4" },
-      center: { base: "max-w-[900px]", backdrop: "place-items-center px-4 py-16" },
+      top: { base: "rounded-t-none", backdrop: "items-start pb-16" },
+      bottom: { base: "rounded-b-none", backdrop: "items-end pt-16" },
+      left: { base: "rounded-l-none", backdrop: "justify-start pr-4" },
+      right: { base: "rounded-r-none", backdrop: "justify-end pl-4" },
+      center: { base: "", backdrop: "place-items-center px-4 py-16" },
+    },
+    size: {
+      sm: "",
+      md: "",
+      lg: "",
     },
     backdrop: {
       blur: { backdrop: "bg-default-0/50 backdrop-blur-lg" },
@@ -42,6 +47,9 @@ const modalStyles = tv({
     },
   },
   compoundVariants: [
+    { size: "sm", placement: ["left", "right", "center"], className: { dialog: "max-w-[600px]" } },
+    { size: "md", placement: ["left", "right", "center"], className: { dialog: "max-w-[900px]" } },
+    { size: "lg", placement: ["left", "right", "center"], className: { dialog: "max-w-[1200px]" } },
     { insideScroll: true, placement: ["left", "right"], className: { dialog: "max-h-screen" } },
     { insideScroll: true, placement: ["top", "bottom"], className: { dialog: "max-h-[calc(100vh-4rem)]" } },
     { insideScroll: true, placement: ["center"], className: { dialog: "max-h-[calc(100vh-8rem)]" } },
@@ -52,7 +60,7 @@ type ModalStylesReturnType = ReturnType<typeof modalStyles>;
 
 // props
 
-interface ModalProps extends ModalOverlayProps, StyleSlotsToStyleProps<ModalStylesReturnType> {
+interface ModalProps extends ModalOverlayProps, SizeProps, StyleSlotsToStyleProps<ModalStylesReturnType> {
   backdrop?: "blur" | "opaque" | "transparent";
   insideScroll?: boolean;
   hideCloseButton?: boolean;
@@ -68,21 +76,54 @@ const [ModalSlotsProvider, useModalSlots] = createSlots<Record<"headerId" | "bod
 // component
 
 function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { placement = "center", backdrop = "blur", insideScroll = true, hideCloseButton = false, children, classNames, styles, ...restProps } = props;
+  const {
+    placement = "center",
+    size = "md",
+    backdrop = "blur",
+    insideScroll = true,
+    hideCloseButton = false,
+    children,
+    classNames,
+    styles,
+    ...restProps
+  } = props;
 
   const headerId = useId();
   const bodyId = useId();
 
-  const styleSlots = modalStyles({ placement, backdrop, insideScroll });
+  const styleSlots = modalStyles({ placement, size, backdrop, insideScroll });
 
   return (
     <ModalSlotsProvider value={{ headerId, bodyId, styleSlots, classNames, styles }}>
-      <ModalOverlay isDismissable {...restProps} className={styleSlots.backdrop({ className: classNames?.backdrop })} style={styles?.backdrop}>
-        {composeRenderProps(props.children, (children, { state }) => (
+      <ModalOverlay
+        isDismissable
+        {...restProps}
+        className={({ isEntering, isExiting }) =>
+          styleSlots.backdrop({ className: twMerge(isEntering && "animate-in fade-in", isExiting && "animate-out fade-out", classNames?.backdrop) })
+        }
+        style={styles?.backdrop}
+      >
+        {composeRenderProps(props.children, (children, { state, isEntering, isExiting }) => (
           <AriaModal
             ref={ref}
             {...restProps}
-            className={composeRenderProps(props.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
+            className={composeRenderProps(props.className, (className) =>
+              styleSlots.base({
+                className: twMerge(
+                  isEntering && "animate-in fade-in",
+                  isExiting && "animate-out fade-out",
+                  {
+                    left: isEntering ? "slide-in-from-left" : isExiting ? "slide-out-to-left" : "",
+                    right: isEntering ? "slide-in-from-right" : isExiting ? "slide-out-to-right" : "",
+                    top: isEntering ? "slide-in-from-top" : isExiting ? "slide-out-to-top" : "",
+                    bottom: isEntering ? "slide-in-from-bottom" : isExiting ? "slide-out-to-bottom" : "",
+                    center: isEntering ? "zoom-in-95" : isExiting ? "zoom-out-95" : "",
+                  }[placement],
+                  classNames?.base,
+                  className,
+                ),
+              }),
+            )}
             style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
           >
             <Dialog
