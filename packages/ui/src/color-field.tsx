@@ -7,7 +7,11 @@ import { ColorField as AriaColorField, ColorFieldProps as AriaColorFieldProps, I
 
 // props
 
-interface ColorFieldProps extends AriaColorFieldProps, Omit<InputProps, keyof AriaColorFieldProps | "size">, FieldBaseProps, FieldInputBaseProps {}
+interface ColorFieldProps
+  extends AriaColorFieldProps,
+    Omit<InputProps, keyof AriaColorFieldProps | "size" | "color">,
+    FieldBaseProps,
+    FieldInputBaseProps {}
 
 // component
 

@@ -6,7 +6,7 @@ import { TextArea as AriaTextArea, TextAreaProps as AriaTextAreaProps, TextField
 
 // props
 
-interface TextAreaProps extends TextFieldProps, Omit<AriaTextAreaProps, keyof TextFieldProps>, FieldBaseProps, FieldInputBaseProps {
+interface TextAreaProps extends TextFieldProps, Omit<AriaTextAreaProps, keyof TextFieldProps | "color">, FieldBaseProps, FieldInputBaseProps {
   isResizable?: boolean;
 }
 

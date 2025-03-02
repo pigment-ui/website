@@ -16,7 +16,7 @@ import {
 
 interface NumberFieldProps
   extends AriaNumberFieldProps,
-    Omit<InputProps, keyof TextFieldProps | "size" | "step">,
+    Omit<InputProps, keyof TextFieldProps | "size" | "step" | "color">,
     FieldBaseProps,
     FieldInputBaseProps {
   hideControls?: boolean;

@@ -6,7 +6,11 @@ import { Input, InputProps, TextField as AriaTextField, TextFieldProps as AriaTe
 
 // props
 
-interface TextFieldProps extends AriaTextFieldProps, Omit<InputProps, keyof AriaTextFieldProps | "size">, FieldBaseProps, FieldInputBaseProps {}
+interface TextFieldProps
+  extends AriaTextFieldProps,
+    Omit<InputProps, keyof AriaTextFieldProps | "size" | "color">,
+    FieldBaseProps,
+    FieldInputBaseProps {}
 
 // component
 

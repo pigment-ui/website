@@ -19,6 +19,7 @@ const modalStyles = tv({
   slots: {
     base: "relative duration-300",
     header: "pr-16",
+    body: "",
     dialog: "relative flex flex-col outline-none",
     backdrop: "fixed inset-0 z-[999] grid duration-300",
     closeButton: "absolute right-2 top-2",

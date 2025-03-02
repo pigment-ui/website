@@ -7,7 +7,11 @@ import { Button, Input, InputProps, SearchField as AriaSearchField, SearchFieldP
 
 // props
 
-interface SearchFieldProps extends AriaSearchFieldProps, Omit<InputProps, keyof AriaSearchFieldProps | "size">, FieldBaseProps, FieldInputBaseProps {
+interface SearchFieldProps
+  extends AriaSearchFieldProps,
+    Omit<InputProps, keyof AriaSearchFieldProps | "size" | "color">,
+    FieldBaseProps,
+    FieldInputBaseProps {
   hideClearButton?: boolean;
 }
 
