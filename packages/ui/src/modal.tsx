@@ -47,12 +47,12 @@ const modalStyles = tv({
     },
   },
   compoundVariants: [
-    { size: "sm", placement: ["left", "right", "center"], className: { dialog: "max-w-[600px]" } },
-    { size: "md", placement: ["left", "right", "center"], className: { dialog: "max-w-[900px]" } },
-    { size: "lg", placement: ["left", "right", "center"], className: { dialog: "max-w-[1200px]" } },
-    { insideScroll: true, placement: ["left", "right"], className: { dialog: "max-h-screen" } },
-    { insideScroll: true, placement: ["top", "bottom"], className: { dialog: "max-h-[calc(100vh-4rem)]" } },
-    { insideScroll: true, placement: ["center"], className: { dialog: "max-h-[calc(100vh-8rem)]" } },
+    { size: "sm", placement: ["left", "right", "center"], className: { base: "max-w-[600px]" } },
+    { size: "md", placement: ["left", "right", "center"], className: { base: "max-w-[900px]" } },
+    { size: "lg", placement: ["left", "right", "center"], className: { base: "max-w-[1200px]" } },
+    { insideScroll: true, placement: ["left", "right"], className: { base: "max-h-screen" } },
+    { insideScroll: true, placement: ["top", "bottom"], className: { base: "max-h-[calc(100vh-4rem)]" } },
+    { insideScroll: true, placement: ["center"], className: { base: "max-h-[calc(100vh-8rem)]" } },
   ],
 });
 

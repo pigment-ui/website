@@ -1,7 +1,7 @@
 "use client";
 
-import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants } from "./styles";
-import { RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
+import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants, variantColorStyles } from "./styles";
+import { ColorProps, RadiusProps, SizeProps, StyleSlotsToStyleProps, Variants } from "./types";
 import { useObjectRef } from "@react-aria/utils";
 import { ValidationResult } from "@react-types/shared";
 import React, { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
@@ -31,18 +31,32 @@ const fieldStyles = tv({
 type FieldStylesReturnType = ReturnType<typeof fieldStyles>;
 
 const fieldInputStyles = tv({
+  extend: variantColorStyles,
   slots: {
-    base: "flex cursor-text items-center overflow-hidden border border-default-1000 border-opacity-20 bg-default-0 duration-300 data-[disabled]:bg-default-1000/10",
-    self: "flex size-full flex-1 items-center bg-transparent text-default-1000 outline-none placeholder:text-default-500 data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
-    content: "pointer-events-none shrink-0 text-default-700",
+    base: "flex cursor-text items-center overflow-hidden duration-300",
+    self: "flex size-full flex-1 items-center bg-transparent outline-none data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
+    content: "pointer-events-none shrink-0",
     button: [
-      "flex items-center bg-default-1000 bg-opacity-10 px-1.5 text-default-700 outline-none duration-300",
+      "flex items-center bg-opacity-10 px-1.5 text-default-1000 outline-none duration-300",
       "data-[pressed]:scale-90 data-[hovered]:bg-opacity-20",
       "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
       "data-[focus-visible]:z-10 data-[focus-visible]:outline data-[focus-visible]:outline-default-1000",
     ],
   },
   variants: {
+    variant: {
+      soft: "",
+      bordered: "",
+      faded: "",
+    },
+    color: {
+      default: "",
+      primary: "",
+      info: "",
+      success: "",
+      warning: "",
+      error: "",
+    },
     size: {
       sm: { base: "h-8 gap-2 px-2 text-xs [&_svg]:size-4", button: "h-6 [&_svg]:!size-3" },
       md: { base: "h-10 gap-2.5 px-2.5 text-sm [&_svg]:size-5", button: "h-7 [&_svg]:!size-4" },
@@ -56,9 +70,8 @@ const fieldInputStyles = tv({
       none: { base: radiusVariants.none, button: smallRadiusVariants.none },
     },
     isTextArea: { true: "h-auto items-start" },
-    isHovered: { true: "bg-default-50" },
-    isFocusWithin: { true: "border-opacity-100" },
-    isInvalid: { true: "border-error-500 border-opacity-50" },
+    isHovered: { true: "" },
+    isFocusWithin: { true: "ring-2" },
     isFocusVisible: isFocusVisibleVariants,
     isDisabled: isDisabledVariants,
   },
@@ -66,6 +79,18 @@ const fieldInputStyles = tv({
     { isTextArea: true, size: "sm", className: "py-2" },
     { isTextArea: true, size: "md", className: "py-2.5" },
     { isTextArea: true, size: "lg", className: "py-3" },
+    { color: "default", className: { self: "placeholder:text-default-1000/50", button: "bg-default-1000 text-default-1000" } },
+    { color: "primary", className: { self: "placeholder:text-primary-500/50", button: "bg-primary-500 text-primary-500" } },
+    { color: "info", className: { self: "placeholder:text-info-500/50", button: "bg-info-500 text-info-500" } },
+    { color: "success", className: { self: "placeholder:text-success-500/50", button: "bg-success-500 text-success-500" } },
+    { color: "warning", className: { self: "placeholder:text-warning-500/50", button: "bg-warning-500 text-warning-500" } },
+    { color: "error", className: { self: "placeholder:text-error-500/50", button: "bg-error-500 text-error-500" } },
+    { color: "default", isFocusWithin: true, className: { base: "ring-default-1000" } },
+    { color: "primary", isFocusWithin: true, className: { base: "ring-primary-500" } },
+    { color: "info", isFocusWithin: true, className: { base: "ring-info-500" } },
+    { color: "success", isFocusWithin: true, className: { base: "ring-success-500" } },
+    { color: "warning", isFocusWithin: true, className: { base: "ring-warning-500" } },
+    { color: "error", isFocusWithin: true, className: { base: "ring-error-500" } },
   ],
 });
 
@@ -86,7 +111,8 @@ interface FieldProps extends FieldBaseProps {
   children?: ReactNode;
 }
 
-interface FieldInputBaseProps extends SizeProps, RadiusProps {
+interface FieldInputBaseProps extends ColorProps, SizeProps, RadiusProps {
+  variant?: Exclude<Variants, "solid" | "light">;
   startContent?: ReactElement;
   endContent?: ReactElement;
   startButton?: ReactElement;
@@ -142,6 +168,8 @@ const Field = forwardRef(_Field);
 
 function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) {
   const {
+    variant = "soft",
+    color = "default",
     size = "md",
     radius = size,
     isInvalid,
@@ -157,7 +185,7 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
     fieldInputStyles: fieldInputStylesFromProps,
   } = props;
 
-  const styleSlots = fieldInputStyles({ size, radius, isTextArea });
+  const styleSlots = fieldInputStyles({ variant, color, size, radius, isTextArea });
 
   // @ts-ignore
   const selfRef = useObjectRef<HTMLElement>(children?.ref);
@@ -169,11 +197,11 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
       isDisabled={isDisabled}
       className={({ isHovered, isInvalid, isDisabled, isFocusVisible, isFocusWithin }) =>
         styleSlots.base({
-          isHovered,
-          isInvalid,
+          color: isInvalid ? "error" : color,
+          isHovered: isHovered || isFocusWithin || isFocusWithinProps,
+          isFocusWithin: isFocusWithin || isFocusWithinProps,
           isDisabled,
           isFocusVisible,
-          isFocusWithin: isFocusWithin || isFocusWithinProps,
           className: fieldInputClassNames?.base,
         })
       }
