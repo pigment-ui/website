@@ -200,7 +200,7 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
         label: twMerge(
           isLabelInside &&
             twMerge(
-              "absolute z-10 pointer-events-none",
+              "absolute pointer-events-none",
               {
                 default: "text-default-1000",
                 primary: "text-primary-500",
