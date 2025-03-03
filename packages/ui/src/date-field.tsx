@@ -1,6 +1,6 @@
 "use client";
 
-import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
+import { FieldInput, FieldInputBaseProps } from "./field";
 import { segmentStyles } from "./styles";
 import { ForwardRefType } from "./types";
 import { CalendarIcon } from "lucide-react";
@@ -9,7 +9,7 @@ import { DateField as AriaDateField, DateFieldProps as AriaDateFieldProps, DateI
 
 // props
 
-interface DateFieldProps<T extends DateValue> extends AriaDateFieldProps<T>, FieldBaseProps, FieldInputBaseProps {}
+interface DateFieldProps<T extends DateValue> extends AriaDateFieldProps<T>, FieldInputBaseProps {}
 
 // component
 
@@ -19,19 +19,17 @@ function _DateField<T extends DateValue>(props: DateFieldProps<T>, ref: Forwarde
   return (
     <AriaDateField {...props}>
       {(renderProps) => (
-        <Field {...renderProps} {...props}>
-          <FieldInput startContent={<CalendarIcon />} {...renderProps} {...props}>
-            <DateInput>
-              {(segment) => (
-                <DateSegment
-                  ref={segment.isPlaceholder ? ref : undefined}
-                  segment={segment}
-                  className={({ isFocused, isPlaceholder }) => segmentStyles({ size, radius, isFocused, isPlaceholder })}
-                />
-              )}
-            </DateInput>
-          </FieldInput>
-        </Field>
+        <FieldInput startContent={<CalendarIcon />} {...renderProps} {...props}>
+          <DateInput>
+            {(segment) => (
+              <DateSegment
+                ref={segment.isPlaceholder ? ref : undefined}
+                segment={segment}
+                className={({ isFocused, isPlaceholder }) => segmentStyles({ size, radius, isFocused, isPlaceholder })}
+              />
+            )}
+          </DateInput>
+        </FieldInput>
       )}
     </AriaDateField>
   );

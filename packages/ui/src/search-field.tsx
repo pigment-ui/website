@@ -1,17 +1,13 @@
 "use client";
 
-import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
+import { FieldInput, FieldInputBaseProps } from "./field";
 import { SearchIcon, XIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
 import { Button, Input, InputProps, SearchField as AriaSearchField, SearchFieldProps as AriaSearchFieldProps } from "react-aria-components";
 
 // props
 
-interface SearchFieldProps
-  extends AriaSearchFieldProps,
-    Omit<InputProps, keyof AriaSearchFieldProps | "size" | "color">,
-    FieldBaseProps,
-    FieldInputBaseProps {
+interface SearchFieldProps extends AriaSearchFieldProps, Omit<InputProps, keyof AriaSearchFieldProps | "size" | "color">, FieldInputBaseProps {
   hideClearButton?: boolean;
 }
 
@@ -23,22 +19,20 @@ function _SearchField(props: SearchFieldProps, ref: ForwardedRef<HTMLInputElemen
   return (
     <AriaSearchField {...props}>
       {(renderProps) => (
-        <Field {...renderProps} {...props}>
-          <FieldInput
-            startContent={<SearchIcon />}
-            endButton={
-              !hideClearButton && !renderProps.isEmpty ? (
-                <Button>
-                  <XIcon />
-                </Button>
-              ) : undefined
-            }
-            {...renderProps}
-            {...props}
-          >
-            <Input ref={ref} />
-          </FieldInput>
-        </Field>
+        <FieldInput
+          startContent={<SearchIcon />}
+          endButton={
+            !hideClearButton && !renderProps.isEmpty ? (
+              <Button>
+                <XIcon />
+              </Button>
+            ) : undefined
+          }
+          {...renderProps}
+          {...props}
+        >
+          <Input ref={ref} />
+        </FieldInput>
       )}
     </AriaSearchField>
   );

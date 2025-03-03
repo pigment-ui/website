@@ -191,57 +191,59 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
   const selfRef = useObjectRef<HTMLElement>(children?.ref);
 
   return (
-    <Group
-      ref={ref}
-      isInvalid={isInvalid}
-      isDisabled={isDisabled}
-      className={({ isHovered, isInvalid, isDisabled, isFocusVisible, isFocusWithin }) =>
-        styleSlots.base({
-          color: isInvalid ? "error" : color,
-          isHovered: isHovered || isFocusWithin || isFocusWithinProps,
-          isFocusWithin: isFocusWithin || isFocusWithinProps,
-          isDisabled,
-          isFocusVisible,
-          className: fieldInputClassNames?.base,
-        })
-      }
-      style={fieldInputStylesFromProps?.base}
-      onClick={() => {
-        selfRef.current?.focus();
-        selfRef.current?.click();
-      }}
-    >
-      {startButton &&
-        cloneElement(startButton, {
-          className: styleSlots.button({ className: twMerge(startButton.props?.className, fieldInputClassNames?.button) }),
-          style: mergeProps(startButton.props?.style, fieldInputStylesFromProps?.button),
-        })}
+    <Field {...props}>
+      <Group
+        ref={ref}
+        isInvalid={isInvalid}
+        isDisabled={isDisabled}
+        className={({ isHovered, isInvalid, isDisabled, isFocusVisible, isFocusWithin }) =>
+          styleSlots.base({
+            color: isInvalid ? "error" : color,
+            isHovered: isHovered || isFocusWithin || isFocusWithinProps,
+            isFocusWithin: isFocusWithin || isFocusWithinProps,
+            isDisabled,
+            isFocusVisible,
+            className: fieldInputClassNames?.base,
+          })
+        }
+        style={fieldInputStylesFromProps?.base}
+        onClick={() => {
+          selfRef.current?.focus();
+          selfRef.current?.click();
+        }}
+      >
+        {startButton &&
+          cloneElement(startButton, {
+            className: styleSlots.button({ className: twMerge(startButton.props?.className, fieldInputClassNames?.button) }),
+            style: mergeProps(startButton.props?.style, fieldInputStylesFromProps?.button),
+          })}
 
-      {startContent &&
-        cloneElement(startContent, {
-          className: styleSlots.content({ className: twMerge("mr-0", startContent.props?.className, fieldInputClassNames?.content) }),
-          style: mergeProps(startContent.props?.style, fieldInputStylesFromProps?.content),
-        })}
+        {startContent &&
+          cloneElement(startContent, {
+            className: styleSlots.content({ className: twMerge("mr-0", startContent.props?.className, fieldInputClassNames?.content) }),
+            style: mergeProps(startContent.props?.style, fieldInputStylesFromProps?.content),
+          })}
 
-      {children &&
-        cloneElement(children, {
-          ref: selfRef,
-          className: styleSlots.self({ className: twMerge(children.props?.className, fieldInputClassNames?.self) }),
-          style: mergeProps(children.props?.style, fieldInputStylesFromProps?.self),
-        })}
+        {children &&
+          cloneElement(children, {
+            ref: selfRef,
+            className: styleSlots.self({ className: twMerge(children.props?.className, fieldInputClassNames?.self) }),
+            style: mergeProps(children.props?.style, fieldInputStylesFromProps?.self),
+          })}
 
-      {endContent &&
-        cloneElement(endContent, {
-          className: styleSlots.content({ className: twMerge("ml-0", endContent.props?.className, fieldInputClassNames?.content) }),
-          style: mergeProps(endContent.props?.style, fieldInputStylesFromProps?.content),
-        })}
+        {endContent &&
+          cloneElement(endContent, {
+            className: styleSlots.content({ className: twMerge("ml-0", endContent.props?.className, fieldInputClassNames?.content) }),
+            style: mergeProps(endContent.props?.style, fieldInputStylesFromProps?.content),
+          })}
 
-      {endButton &&
-        cloneElement(endButton, {
-          className: styleSlots.button({ className: twMerge(endButton.props?.className, fieldInputClassNames?.button) }),
-          style: mergeProps(endButton.props?.style, fieldInputStylesFromProps?.button),
-        })}
-    </Group>
+        {endButton &&
+          cloneElement(endButton, {
+            className: styleSlots.button({ className: twMerge(endButton.props?.className, fieldInputClassNames?.button) }),
+            style: mergeProps(endButton.props?.style, fieldInputStylesFromProps?.button),
+          })}
+      </Group>
+    </Field>
   );
 }
 

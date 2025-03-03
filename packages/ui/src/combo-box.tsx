@@ -1,6 +1,6 @@
 "use client";
 
-import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
+import { FieldInput, FieldInputBaseProps } from "./field";
 import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
 import { Popover } from "./popover";
 import { ForwardRefType } from "./types";
@@ -16,7 +16,6 @@ interface ComboBoxProps<T extends object>
     Omit<InputProps, keyof AriaComboBoxProps<T> | "color" | "size">,
     Omit<ComponentPropsWithoutRef<typeof Popover>, keyof AriaComboBoxProps<T>>,
     ListBoxSlotsType<T>,
-    FieldBaseProps,
     FieldInputBaseProps {}
 
 // component
@@ -28,19 +27,17 @@ function _ComboBox<T extends object>(props: ComboBoxProps<T>, ref: ForwardedRef<
     <AriaComboBox ref={comboBoxRef} menuTrigger="focus" {...props}>
       {(renderProps) => (
         <>
-          <Field {...renderProps} {...props}>
-            <FieldInput
-              endButton={
-                <Button>
-                  <ChevronDownIcon />
-                </Button>
-              }
-              {...renderProps}
-              {...props}
-            >
-              <Input ref={ref} />
-            </FieldInput>
-          </Field>
+          <FieldInput
+            endButton={
+              <Button>
+                <ChevronDownIcon />
+              </Button>
+            }
+            {...renderProps}
+            {...props}
+          >
+            <Input ref={ref} />
+          </FieldInput>
 
           <Popover maxHeight={300} hideArrow {...props} className="overflow-auto p-0" style={{ width }}>
             <ListBox {...filterInlineListBoxProps(props)} className="p-2" />

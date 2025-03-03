@@ -1,6 +1,6 @@
 "use client";
 
-import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
+import { FieldInput, FieldInputBaseProps } from "./field";
 import { Popover } from "./popover";
 import { RangeCalendar } from "./range-calendar";
 import { segmentStyles } from "./styles";
@@ -24,7 +24,6 @@ interface DateRangePickerProps<T extends DateValue>
   extends AriaDateRangePickerProps<T>,
     Omit<InputProps, keyof AriaDateRangePickerProps<T> | "color" | "size">,
     Omit<ComponentPropsWithoutRef<typeof Popover>, keyof AriaDateRangePickerProps<T>>,
-    FieldBaseProps,
     FieldInputBaseProps {
   visibleMonthCount?: number;
 }
@@ -40,39 +39,37 @@ function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, r
     <AriaDateRangePicker ref={datePickerRef} {...props}>
       {(renderProps) => (
         <>
-          <Field {...renderProps} {...props}>
-            <FieldInput
-              endButton={
-                <Button>
-                  <CalendarIcon />
-                </Button>
-              }
-              {...renderProps}
-              {...props}
-            >
-              <div className="gap-2">
-                <DateInput ref={ref} slot="start" className="flex items-center">
-                  {(segment) => (
-                    <DateSegment
-                      segment={segment}
-                      className={({ isFocused, isPlaceholder }) => segmentStyles({ isFocused, isPlaceholder, size, radius })}
-                    />
-                  )}
-                </DateInput>
+          <FieldInput
+            endButton={
+              <Button>
+                <CalendarIcon />
+              </Button>
+            }
+            {...renderProps}
+            {...props}
+          >
+            <div className="gap-2">
+              <DateInput ref={ref} slot="start" className="flex items-center">
+                {(segment) => (
+                  <DateSegment
+                    segment={segment}
+                    className={({ isFocused, isPlaceholder }) => segmentStyles({ isFocused, isPlaceholder, size, radius })}
+                  />
+                )}
+              </DateInput>
 
-                <span aria-hidden="true">–</span>
+              <span aria-hidden="true">–</span>
 
-                <DateInput slot="end" className="flex items-center">
-                  {(segment) => (
-                    <DateSegment
-                      segment={segment}
-                      className={({ isFocused, isPlaceholder }) => segmentStyles({ isFocused, isPlaceholder, size, radius })}
-                    />
-                  )}
-                </DateInput>
-              </div>
-            </FieldInput>
-          </Field>
+              <DateInput slot="end" className="flex items-center">
+                {(segment) => (
+                  <DateSegment
+                    segment={segment}
+                    className={({ isFocused, isPlaceholder }) => segmentStyles({ isFocused, isPlaceholder, size, radius })}
+                  />
+                )}
+              </DateInput>
+            </div>
+          </FieldInput>
 
           <Popover hideArrow placement="bottom" {...props} className="overflow-auto p-0" style={{ maxWidth: width }}>
             <RangeCalendar

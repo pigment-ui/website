@@ -1,6 +1,6 @@
 "use client";
 
-import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
+import { FieldInput, FieldInputBaseProps } from "./field";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
 import {
@@ -14,11 +14,7 @@ import {
 
 // props
 
-interface NumberFieldProps
-  extends AriaNumberFieldProps,
-    Omit<InputProps, keyof TextFieldProps | "size" | "step" | "color">,
-    FieldBaseProps,
-    FieldInputBaseProps {
+interface NumberFieldProps extends AriaNumberFieldProps, Omit<InputProps, keyof TextFieldProps | "size" | "step" | "color">, FieldInputBaseProps {
   hideControls?: boolean;
 }
 
@@ -30,28 +26,26 @@ function _NumberField(props: NumberFieldProps, ref: ForwardedRef<HTMLInputElemen
   return (
     <AriaNumberField {...props}>
       {(renderProps) => (
-        <Field {...renderProps} {...props}>
-          <FieldInput
-            startButton={
-              !hideControls ? (
-                <Button slot="decrement">
-                  <MinusIcon />
-                </Button>
-              ) : undefined
-            }
-            endButton={
-              !hideControls ? (
-                <Button slot="increment">
-                  <PlusIcon />
-                </Button>
-              ) : undefined
-            }
-            {...renderProps}
-            {...props}
-          >
-            <Input ref={ref} />
-          </FieldInput>
-        </Field>
+        <FieldInput
+          startButton={
+            !hideControls ? (
+              <Button slot="decrement">
+                <MinusIcon />
+              </Button>
+            ) : undefined
+          }
+          endButton={
+            !hideControls ? (
+              <Button slot="increment">
+                <PlusIcon />
+              </Button>
+            ) : undefined
+          }
+          {...renderProps}
+          {...props}
+        >
+          <Input ref={ref} />
+        </FieldInput>
       )}
     </AriaNumberField>
   );

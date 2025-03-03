@@ -1,6 +1,6 @@
 "use client";
 
-import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
+import { FieldInput, FieldInputBaseProps } from "./field";
 import { segmentStyles } from "./styles";
 import { ForwardRefType } from "./types";
 import { ClockIcon } from "lucide-react";
@@ -9,7 +9,7 @@ import { DateInput, DateSegment, TimeField as AriaTimeField, TimeFieldProps as A
 
 // props
 
-interface TimeFieldProps<T extends TimeValue> extends AriaTimeFieldProps<T>, FieldBaseProps, FieldInputBaseProps {}
+interface TimeFieldProps<T extends TimeValue> extends AriaTimeFieldProps<T>, FieldInputBaseProps {}
 
 // component
 
@@ -19,18 +19,16 @@ function _TimeField<T extends TimeValue>(props: TimeFieldProps<T>, ref: Forwarde
   return (
     <AriaTimeField {...props}>
       {(renderProps) => (
-        <Field {...renderProps} {...props}>
-          <FieldInput startContent={<ClockIcon />} {...renderProps} {...props}>
-            <DateInput ref={ref}>
-              {(segment) => (
-                <DateSegment
-                  segment={segment}
-                  className={({ isFocused, isPlaceholder }) => segmentStyles({ size, radius, isFocused, isPlaceholder })}
-                />
-              )}
-            </DateInput>
-          </FieldInput>
-        </Field>
+        <FieldInput startContent={<ClockIcon />} {...renderProps} {...props}>
+          <DateInput ref={ref}>
+            {(segment) => (
+              <DateSegment
+                segment={segment}
+                className={({ isFocused, isPlaceholder }) => segmentStyles({ size, radius, isFocused, isPlaceholder })}
+              />
+            )}
+          </DateInput>
+        </FieldInput>
       )}
     </AriaTimeField>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
+import { FieldInput, FieldInputBaseProps } from "./field";
 import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
 import { Popover } from "./popover";
 import { ForwardRefType } from "./types";
@@ -16,7 +16,6 @@ interface SelectProps<T extends object>
   extends Omit<AriaSelectProps<T>, "children">,
     Omit<ComponentPropsWithoutRef<typeof Popover>, keyof AriaSelectProps<T>>,
     ListBoxSlotsType<T>,
-    FieldBaseProps,
     FieldInputBaseProps {
   renderValue?: (selectValue: Omit<SelectValueRenderProps<T>, "isPlaceholder">) => ReactNode;
 }
@@ -32,24 +31,21 @@ function _Select<T extends object>(props: SelectProps<T>, ref: ForwardedRef<HTML
     <AriaSelect ref={selectRef} placeholder="Select" {...props}>
       {(renderProps) => (
         <>
-          <Field {...renderProps} {...props}>
-            <FieldInput
-              isFocusWithin={renderProps.isOpen}
-              endContent={<ChevronDownIcon />}
-              {...renderProps}
-              {...props}
-              fieldInputClassNames={{ ...props.fieldInputClassNames, base: twMerge("cursor-pointer", props.fieldInputClassNames?.base) }}
-            >
-              <Button ref={ref} className="flex items-center">
-                <SelectValue className={({ isPlaceholder }) => (isPlaceholder ? "text-default-500" : "")}>
-                  {renderValue
-                    ? ({ selectedItem, selectedText }) =>
-                        selectedItem ? renderValue({ selectedItem: selectedItem as T, selectedText }) : placeholder
-                    : undefined}
-                </SelectValue>
-              </Button>
-            </FieldInput>
-          </Field>
+          <FieldInput
+            isFocusWithin={renderProps.isOpen}
+            endContent={<ChevronDownIcon />}
+            {...renderProps}
+            {...props}
+            fieldInputClassNames={{ ...props.fieldInputClassNames, base: twMerge("cursor-pointer", props.fieldInputClassNames?.base) }}
+          >
+            <Button ref={ref} className="flex items-center">
+              <SelectValue className={({ isPlaceholder }) => (isPlaceholder ? "text-default-500" : "")}>
+                {renderValue
+                  ? ({ selectedItem, selectedText }) => (selectedItem ? renderValue({ selectedItem: selectedItem as T, selectedText }) : placeholder)
+                  : undefined}
+              </SelectValue>
+            </Button>
+          </FieldInput>
 
           <Popover maxHeight={300} hideArrow triggerRef={selectRef} {...props} className="overflow-auto p-0" style={{ width }}>
             <ListBox {...filterInlineListBoxProps(props)} className="p-2" />

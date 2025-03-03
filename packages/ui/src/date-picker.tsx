@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar } from "./calendar";
-import { Field, FieldBaseProps, FieldInput, FieldInputBaseProps } from "./field";
+import { FieldInput, FieldInputBaseProps } from "./field";
 import { Popover } from "./popover";
 import { segmentStyles } from "./styles";
 import { ForwardRefType } from "./types";
@@ -24,7 +24,6 @@ interface DatePickerProps<T extends DateValue>
   extends AriaDatePickerProps<T>,
     Omit<InputProps, keyof AriaDatePickerProps<T> | "color" | "size">,
     Omit<ComponentPropsWithoutRef<typeof Popover>, keyof AriaDatePickerProps<T>>,
-    FieldBaseProps,
     FieldInputBaseProps {
   visibleMonthCount?: number;
 }
@@ -40,26 +39,24 @@ function _DatePicker<T extends DateValue>(props: DatePickerProps<T>, ref: Forwar
     <AriaDatePicker ref={datePickerRef} {...props}>
       {(renderProps) => (
         <>
-          <Field {...renderProps} {...props}>
-            <FieldInput
-              endButton={
-                <Button>
-                  <CalendarIcon />
-                </Button>
-              }
-              {...renderProps}
-              {...props}
-            >
-              <DateInput ref={ref}>
-                {(segment) => (
-                  <DateSegment
-                    segment={segment}
-                    className={({ isFocused, isPlaceholder }) => segmentStyles({ isFocused, isPlaceholder, size, radius })}
-                  />
-                )}
-              </DateInput>
-            </FieldInput>
-          </Field>
+          <FieldInput
+            endButton={
+              <Button>
+                <CalendarIcon />
+              </Button>
+            }
+            {...renderProps}
+            {...props}
+          >
+            <DateInput ref={ref}>
+              {(segment) => (
+                <DateSegment
+                  segment={segment}
+                  className={({ isFocused, isPlaceholder }) => segmentStyles({ isFocused, isPlaceholder, size, radius })}
+                />
+              )}
+            </DateInput>
+          </FieldInput>
 
           <Popover hideArrow placement="bottom" {...props} className="overflow-auto p-0" style={{ maxWidth: width }}>
             <Calendar
