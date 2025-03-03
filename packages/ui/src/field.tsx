@@ -58,9 +58,9 @@ const fieldInputStyles = tv({
       error: "",
     },
     size: {
-      sm: { base: "h-8 gap-2 px-2 text-xs [&_svg]:size-4", button: "h-6 [&_svg]:!size-3" },
-      md: { base: "h-10 gap-2.5 px-2.5 text-sm [&_svg]:size-5", button: "h-7 [&_svg]:!size-4" },
-      lg: { base: "h-12 gap-3 px-3 text-base [&_svg]:size-6", button: "h-8 [&_svg]:!size-5" },
+      sm: { base: "gap-2 px-2 text-xs [&_svg]:size-4", self: "h-8", button: "h-6 [&_svg]:!size-3" },
+      md: { base: "gap-2.5 px-2.5 text-sm [&_svg]:size-5", self: "h-10", button: "h-7 [&_svg]:!size-4" },
+      lg: { base: "gap-3 px-3 text-base [&_svg]:size-6", self: "h-12", button: "h-8 [&_svg]:!size-5" },
     },
     radius: {
       sm: { base: radiusVariants.sm, button: smallRadiusVariants.sm },
@@ -69,7 +69,7 @@ const fieldInputStyles = tv({
       full: { base: radiusVariants.full, button: smallRadiusVariants.full },
       none: { base: radiusVariants.none, button: smallRadiusVariants.none },
     },
-    isTextArea: { true: "h-auto items-start" },
+    isTextArea: { true: { base: "items-start", self: "h-auto" } },
     isHovered: { true: "" },
     isFocusWithin: { true: "ring-2" },
     isFocusVisible: isFocusVisibleVariants,
@@ -111,8 +111,9 @@ interface FieldProps extends FieldBaseProps {
   children?: ReactNode;
 }
 
-interface FieldInputBaseProps extends ColorProps, SizeProps, RadiusProps {
+interface FieldInputBaseProps extends ColorProps, SizeProps, RadiusProps, FieldBaseProps {
   variant?: Exclude<Variants, "solid" | "light">;
+  isLabelInside?: boolean;
   startContent?: ReactElement;
   endContent?: ReactElement;
   startButton?: ReactElement;
@@ -176,6 +177,7 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
     isDisabled,
     isTextArea = false,
     isFocusWithin: isFocusWithinProps,
+    isLabelInside = true,
     startContent,
     endContent,
     startButton,
@@ -191,7 +193,32 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
   const selfRef = useObjectRef<HTMLElement>(children?.ref);
 
   return (
-    <Field {...props}>
+    <Field
+      {...props}
+      fieldClassNames={{
+        ...props.fieldClassNames,
+        label: twMerge(
+          isLabelInside &&
+            twMerge(
+              "absolute z-10 pointer-events-none",
+              {
+                default: "text-default-1000",
+                primary: "text-primary-500",
+                info: "text-info-500",
+                success: "text-success-500",
+                warning: "text-warning-500",
+                error: "text-error-500",
+              }[color],
+              {
+                sm: "inset-x-2 top-2",
+                md: "inset-x-2.5 top-2.5",
+                lg: "inset-x-3 top-3",
+              }[size],
+            ),
+          props.fieldClassNames?.label,
+        ),
+      }}
+    >
       <Group
         ref={ref}
         isInvalid={isInvalid}
@@ -206,7 +233,14 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
             className: fieldInputClassNames?.base,
           })
         }
-        style={fieldInputStylesFromProps?.base}
+        style={mergeProps(
+          isLabelInside &&
+            props.label && {
+              // label height, input padding
+              paddingTop: { sm: 16, md: 20, lg: 24 }[size] + { sm: 8, md: 10, lg: 12 }[size] * (isTextArea ? 2 : 1),
+            },
+          fieldInputStylesFromProps?.base,
+        )}
         onClick={() => {
           selfRef.current?.focus();
           selfRef.current?.click();
