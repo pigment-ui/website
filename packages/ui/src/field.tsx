@@ -234,11 +234,12 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
           })
         }
         style={mergeProps(
-          isLabelInside &&
-            props.label && {
-              // label height, input padding
-              paddingTop: { sm: 16, md: 20, lg: 24 }[size] + { sm: 8, md: 10, lg: 12 }[size] * (isTextArea ? 2 : 1),
-            },
+          isLabelInside && props.label
+            ? {
+                // label height, input padding
+                paddingTop: { sm: 16, md: 20, lg: 24 }[size] + { sm: 8, md: 10, lg: 12 }[size] * (isTextArea ? 2 : 1),
+              }
+            : {},
           fieldInputStylesFromProps?.base,
         )}
         onClick={() => {
