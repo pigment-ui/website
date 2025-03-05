@@ -33,6 +33,7 @@ export { Tag, TagGroup } from "./tag-group";
 export { TextArea } from "./text-area";
 export { TextField } from "./text-field";
 export { TimeField } from "./time-field";
+export { GlobalToastRegion, toastQueue } from "./toast";
 export { Tooltip, TooltipTrigger, TriggerWrapperWithoutDiv } from "./tooltip";
 
 export { twConfig } from "./tw-config";

@@ -71,7 +71,7 @@ function _Alert(props: AlertProps, ref: ForwardedRef<HTMLDivElement>) {
     <div
       ref={ref}
       {...restProps}
-      className={styleSlots.base({ className: twMerge(variant === "bordered" && "bg-opacity-10", classNames?.base, className) })}
+      className={styleSlots.base({ className: twMerge(classNames?.base, className) })}
       style={mergeProps(styles?.base, style)}
     >
       {!hideIcon && (
