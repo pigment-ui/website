@@ -16,7 +16,7 @@ interface SelectProps<T extends object>
   extends Omit<AriaSelectProps<T>, "children">,
     Omit<ComponentPropsWithoutRef<typeof Popover>, keyof AriaSelectProps<T>>,
     ListBoxSlotsType<T>,
-    Omit<FieldInputBaseProps, "color"> {
+    FieldInputBaseProps {
   renderValue?: (selectValue: Omit<SelectValueRenderProps<T>, "isPlaceholder">) => ReactNode;
 }
 

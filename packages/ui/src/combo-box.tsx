@@ -16,7 +16,7 @@ interface ComboBoxProps<T extends object>
     Omit<InputProps, keyof AriaComboBoxProps<T> | "color" | "size">,
     Omit<ComponentPropsWithoutRef<typeof Popover>, keyof AriaComboBoxProps<T>>,
     ListBoxSlotsType<T>,
-    Omit<FieldInputBaseProps, "color"> {}
+    FieldInputBaseProps {}
 
 // component
 

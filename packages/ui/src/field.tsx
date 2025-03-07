@@ -34,7 +34,7 @@ const fieldInputStyles = tv({
   extend: variantColorStyles,
   base: "cursor-text",
   slots: {
-    self: "flex size-full flex-1 items-center bg-transparent outline-none data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
+    self: "flex size-full flex-1 items-center bg-transparent outline-none placeholder:text-inherit placeholder:opacity-50 data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
     content: "pointer-events-none shrink-0",
     button: [
       "flex items-center bg-opacity-10 px-1.5 outline-none duration-300",
@@ -67,22 +67,22 @@ const fieldInputStyles = tv({
     { isTextArea: true, size: "md", className: "py-2.5" },
     { isTextArea: true, size: "lg", className: "py-3" },
 
-    { color: "default", className: { self: "placeholder:text-default-1000/50", button: "bg-default-1000 text-default-1000" } },
+    { color: "default", className: { button: "bg-default-1000" } },
     { color: "default", isFocusWithin: true, className: { base: "ring-default-1000" } },
-    { color: "primary", className: { self: "placeholder:text-primary-500/50", button: "bg-primary-500 text-primary-500" } },
+    { color: "primary", className: { button: "bg-primary-500" } },
     { color: "primary", isFocusWithin: true, className: { base: "ring-primary-500" } },
-    { color: "secondary", className: { self: "placeholder:text-secondary-500/50", button: "bg-secondary-500 text-secondary-500" } },
+    { color: "secondary", className: { button: "bg-secondary-500" } },
     { color: "secondary", isFocusWithin: true, className: { base: "ring-secondary-500" } },
-    { color: "info", className: { self: "placeholder:text-info-500/50", button: "bg-info-500 text-info-500" } },
+    { color: "info", className: { button: "bg-info-500" } },
     { color: "info", isFocusWithin: true, className: { base: "ring-info-500" } },
-    { color: "success", className: { self: "placeholder:text-success-500/50", button: "bg-success-500 text-success-500" } },
+    { color: "success", className: { button: "bg-success-500" } },
     { color: "success", isFocusWithin: true, className: { base: "ring-success-500" } },
-    { color: "warning", className: { self: "placeholder:text-warning-500/50", button: "bg-warning-500 text-warning-500" } },
+    { color: "warning", className: { button: "bg-warning-500" } },
     { color: "warning", isFocusWithin: true, className: { base: "ring-warning-500" } },
-    { color: "error", className: { self: "placeholder:text-error-500/50", button: "bg-error-500 text-error-500" } },
+    { color: "error", className: { button: "bg-error-500" } },
     { color: "error", isFocusWithin: true, className: { base: "ring-error-500" } },
 
-    { variant: "solid", className: { button: "bg-default-0 text-default-0" } },
+    { variant: "solid", className: { button: "bg-default-0" } },
   ],
 });
 
@@ -178,7 +178,7 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
     fieldInputStyles: fieldInputStylesFromProps,
   } = props;
 
-  const styleSlots = fieldInputStyles({ variant, color, size, radius, isTextArea });
+  const styleSlots = fieldInputStyles({ variant, color: isInvalid ? "error" : color, size, radius, isTextArea });
 
   // @ts-ignore
   const selfRef = useObjectRef<HTMLElement>(children?.ref);
@@ -202,7 +202,7 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
                     success: "text-success-500",
                     warning: "text-warning-500",
                     error: "text-error-500",
-                  }[color],
+                  }[isInvalid ? "error" : color],
               {
                 sm: "inset-x-2 top-2",
                 md: "inset-x-2.5 top-2.5",
@@ -217,9 +217,8 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
         ref={ref}
         isInvalid={isInvalid}
         isDisabled={isDisabled}
-        className={({ isHovered, isInvalid, isDisabled, isFocusVisible, isFocusWithin }) =>
+        className={({ isHovered, isDisabled, isFocusVisible, isFocusWithin }) =>
           styleSlots.base({
-            color: isInvalid ? "error" : color,
             isHovered: isHovered || isFocusWithin || isFocusWithinProps,
             isFocusWithin: isFocusWithin || isFocusWithinProps,
             isDisabled,
