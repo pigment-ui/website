@@ -6,7 +6,7 @@ import { radiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, StyleProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { useFormValidationState } from "@react-stately/form";
 import React, { ComponentPropsWithoutRef } from "react";
-import { AriaFieldProps, mergeProps, useField } from "react-aria";
+import { AriaFieldProps, FileDropItem, mergeProps, useField } from "react-aria";
 import { DropZone, FieldErrorContext, FileTrigger, Provider, Text, TextContext } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
@@ -15,17 +15,17 @@ import { tv } from "tailwind-variants";
 
 const fileTriggerBlockStyles = tv({
   extend: variantColorStyles,
-  base: ["flex-col", radiusVariants.md],
+  base: ["flex-col text-center", radiusVariants.md],
   slots: {
     wrapper: "",
     button: "",
-    placeholder: "",
+    text: "",
   },
   variants: {
     size: {
-      sm: { base: "gap-4 p-4", placeholder: "text-xs" },
-      md: { base: "gap-5 p-5", placeholder: "text-sm" },
-      lg: { base: "gap-6 p-6", placeholder: "text-base" },
+      sm: { base: "gap-4 p-4", text: "text-xs" },
+      md: { base: "gap-5 p-5", text: "text-sm" },
+      lg: { base: "gap-6 p-6", text: "text-base" },
     },
   },
 });
@@ -99,9 +99,9 @@ function FileTriggerDropzone(props: FileTriggerDropzoneProps) {
       >
         <Field {...displayValidation} {...props}>
           <DropZone
-            onDrop={(e) => {
+            onDrop={async (e) => {
               if (!e) return;
-              let files = e.items.filter((file) => file.kind === "file") as File[];
+              let files = await Promise.all(e.items.filter((item) => item.kind === "file").map((item: FileDropItem) => item.getFile()));
               onChange?.(files);
             }}
             isDisabled={isDisabled || isLoading}
@@ -134,7 +134,7 @@ function FileTriggerDropzone(props: FileTriggerDropzoneProps) {
               </Button>
             </FileTrigger>
 
-            <Text slot="label" className={styleSlots.placeholder({ className: classNames?.placeholder })} style={styles?.placeholder}>
+            <Text slot="label" className={styleSlots.text({ className: classNames?.text })} style={styles?.text}>
               {value?.length > 0
                 ? value?.map((file) => file.name).join(", ")
                 : placeholder || `Drag and drop file${allowsMultiple ? "s" : ""} here or click to select`}
