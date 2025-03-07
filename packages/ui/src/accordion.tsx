@@ -31,7 +31,7 @@ const accordionStyles = tv({
     ],
     textWrapper: "flex-1 text-start",
     title: "",
-    subtitle: "text-default-500",
+    description: "text-default-500",
     content: "overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down [&>div]:!pt-0",
     chevron: "chevron duration-300",
   },
@@ -40,19 +40,19 @@ const accordionStyles = tv({
       sm: {
         trigger: "gap-x-2 p-4 [&_svg]:size-4",
         title: "text-sm",
-        subtitle: "text-xs",
+        description: "text-xs",
         content: "text-sm [&>div]:p-4",
       },
       md: {
         trigger: "gap-x-2.5 p-5 [&_svg]:size-5",
         title: "text-base",
-        subtitle: "text-sm",
+        description: "text-sm",
         content: "text-base [&>div]:p-5",
       },
       lg: {
         trigger: "gap-x-3 p-6 [&_svg]:size-6",
         title: "text-lg",
-        subtitle: "text-base",
+        description: "text-base",
         content: "text-lg [&>div]:p-6",
       },
     },
@@ -68,7 +68,7 @@ type AccordionProps = (RadixAccordionSingleProps | RadixAccordionMultipleProps) 
 type AccordionItemProps = RadixAccordionItemProps &
   ContentProps & {
     title: ReactNode;
-    subtitle?: ReactNode;
+    description?: ReactNode;
     children: ReactNode;
   };
 
@@ -102,7 +102,7 @@ function _Accordion(props: AccordionProps, ref: ForwardedRef<HTMLDivElement>) {
 const Accordion = forwardRef(_Accordion);
 
 function _AccordionItem(props: AccordionItemProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { title, subtitle, startContent, endContent, children, styleSlots, className, classNames, style, styles, ...restProps } =
+  const { title, description, startContent, endContent, children, styleSlots, className, classNames, style, styles, ...restProps } =
     useAccordionSlots(props);
 
   return (
@@ -127,14 +127,14 @@ function _AccordionItem(props: AccordionItemProps, ref: ForwardedRef<HTMLDivElem
             <div className={styleSlots.title({ className: classNames?.title })} style={styles?.title}>
               {title}
             </div>
-            {subtitle && (
+            {description && (
               <div
-                className={styleSlots.subtitle({
-                  className: classNames?.subtitle,
+                className={styleSlots.description({
+                  className: classNames?.description,
                 })}
-                style={styles?.subtitle}
+                style={styles?.description}
               >
-                {subtitle}
+                {description}
               </div>
             )}
           </div>

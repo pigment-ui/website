@@ -17,7 +17,7 @@ const cardStyles = tv({
     body: "p-4",
     footer: "p-4",
     title: "text-xl font-bold",
-    subtitle: "text-sm",
+    description: "text-sm",
     buttons: "flex justify-end gap-x-4",
   },
   variants: {
@@ -118,20 +118,20 @@ function _CardTitle(props: HTMLAttributes<HTMLHeadingElement>, ref: ForwardedRef
 
 const CardTitle = forwardRef(_CardTitle);
 
-function _CardSubtitle(props: HTMLAttributes<HTMLParagraphElement>, ref: ForwardedRef<HTMLParagraphElement>) {
+function _CardDescription(props: HTMLAttributes<HTMLParagraphElement>, ref: ForwardedRef<HTMLParagraphElement>) {
   const { styleSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
 
   return (
     <p
       ref={ref}
-      className={styleSlots.subtitle({ className: twMerge(classNames?.subtitle, className) })}
-      style={mergeProps(styles?.subtitle, style)}
+      className={styleSlots.description({ className: twMerge(classNames?.description, className) })}
+      style={mergeProps(styles?.description, style)}
       {...restProps}
     />
   );
 }
 
-const CardSubtitle = forwardRef(_CardSubtitle);
+const CardDescription = forwardRef(_CardDescription);
 
 function _CardButtons(props: HTMLAttributes<HTMLDivElement>, ref: ForwardedRef<HTMLDivElement>) {
   const { styleSlots, className, classNames, style, styles, ...restProps } = useCardSlots(props);
@@ -150,4 +150,4 @@ const CardButtons = forwardRef(_CardButtons);
 
 // exports
 
-export { Card, CardHeader, CardBody, CardFooter, CardTitle, CardSubtitle, CardButtons, cardStyles };
+export { Card, CardHeader, CardBody, CardFooter, CardTitle, CardDescription, CardButtons, cardStyles };

@@ -223,20 +223,20 @@ function _ModalTitle<T extends object>(props: HTMLAttributes<HTMLHeadingElement>
 
 const ModalTitle = forwardRef(_ModalTitle);
 
-function _ModalSubtitle<T extends object>(props: HTMLAttributes<HTMLParagraphElement>, ref: ForwardedRef<HTMLParagraphElement>) {
+function _ModalDescription<T extends object>(props: HTMLAttributes<HTMLParagraphElement>, ref: ForwardedRef<HTMLParagraphElement>) {
   const { headerId, bodyId, styleSlots, className, classNames, style, styles, ...restProps } = useModalSlots(props);
 
   return (
     <p
       ref={ref}
-      className={styleSlots.subtitle({ className: twMerge(classNames?.subtitle, className) })}
-      style={mergeProps(styles?.subtitle, style)}
+      className={styleSlots.description({ className: twMerge(classNames?.description, className) })}
+      style={mergeProps(styles?.description, style)}
       {...restProps}
     />
   );
 }
 
-const ModalSubtitle = forwardRef(_ModalSubtitle);
+const ModalDescription = forwardRef(_ModalDescription);
 
 function _ModalButtons<T extends object>(props: HTMLAttributes<HTMLDivElement>, ref: ForwardedRef<HTMLDivElement>) {
   const { headerId, bodyId, styleSlots, className, classNames, style, styles, ...restProps } = useModalSlots(props);
@@ -255,4 +255,4 @@ const ModalButtons = forwardRef(_ModalButtons);
 
 // exports
 
-export { Modal, ModalHeader, ModalBody, ModalFooter, ModalTitle, ModalSubtitle, ModalButtons, DialogTrigger as ModalTrigger };
+export { Modal, ModalHeader, ModalBody, ModalFooter, ModalTitle, ModalDescription, ModalButtons, DialogTrigger as ModalTrigger };
