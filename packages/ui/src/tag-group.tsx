@@ -70,7 +70,7 @@ interface TagGroupProps<T extends object>
     Pick<TagListProps<T>, "children" | "items" | "renderEmptyState">,
     RadiusProps,
     FieldBaseProps {
-  colors?: Exclude<Colors, "inverted">;
+  color?: Exclude<Colors, "inverted">;
   itemClassNames?: TagProps["classNames"];
   itemStyles?: TagProps["styles"];
 }

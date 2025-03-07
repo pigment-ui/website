@@ -58,7 +58,7 @@ type SwitchStylesReturnType = ReturnType<typeof switchStyles>;
 // props
 
 interface SwitchProps extends AriaSwitchProps, SizeProps, StyleSlotsToStyleProps<SwitchStylesReturnType> {
-  colors?: Exclude<Colors, "inverted">;
+  color?: Exclude<Colors, "inverted">;
 }
 
 // component

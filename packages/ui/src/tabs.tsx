@@ -1,7 +1,17 @@
 "use client";
 
 import { isFocusVisibleVariants, radiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, ContentProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps, VariantProps } from "./types";
+import {
+  ColorProps,
+  ContentProps,
+  ForwardRefType,
+  RadiusProps,
+  SizeProps,
+  StyleSlotsToSlots,
+  StyleSlotsToStyleProps,
+  VariantProps,
+  Variants,
+} from "./types";
 import { createSlots } from "./utils";
 import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
@@ -34,6 +44,7 @@ const tabsStyles = tv({
     },
     color: {
       default: "",
+      inverted: { list: "bg-default-0/10", panel: "bg-default-0/10" },
       primary: "",
       secondary: "",
       info: "",
@@ -80,7 +91,7 @@ interface TabsProps extends AriaTabsProps, VariantProps, ColorProps, SizeProps, 
 
 interface TabsSlotsType extends StyleSlotsToSlots<TabsStylesReturnType> {}
 
-const [TabsSlotsProvider, useTabsSlots] = createSlots<Pick<TabsProps, "variant" | "color" | "size" | "radius"> & TabsSlotsType>();
+const [TabsSlotsProvider, useTabsSlots] = createSlots<Required<Pick<TabsProps, "variant" | "color" | "size" | "radius">> & TabsSlotsType>();
 
 // component
 
@@ -104,7 +115,7 @@ function _Tabs(props: TabsProps, ref: ForwardedRef<HTMLDivElement>) {
 const Tabs = forwardRef(_Tabs);
 
 function _Tab(props: TabProps & ContentProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { variant, color, size, radius, startContent, endContent, children } = useTabsSlots(props);
+  const { variant, color, size, radius, startContent, endContent } = useTabsSlots(props);
 
   return (
     <AriaTab
@@ -115,7 +126,16 @@ function _Tab(props: TabProps & ContentProps, ref: ForwardedRef<HTMLDivElement>)
         tabStyles({
           variant: isSelected
             ? variant
-            : { solid: "light", soft: "light", light: "soft", bordered: "outlined", outlined: "bordered", faded: "outlined" }[variant],
+            : (
+                {
+                  solid: "light",
+                  soft: "light",
+                  light: "soft",
+                  bordered: "outlined",
+                  outlined: "bordered",
+                  faded: "outlined",
+                } as Record<Variants, Variants>
+              )[variant],
           color,
           size,
           radius,
@@ -127,9 +147,13 @@ function _Tab(props: TabProps & ContentProps, ref: ForwardedRef<HTMLDivElement>)
         }),
       )}
     >
-      {startContent}
-      {children}
-      {endContent}
+      {composeRenderProps(props.children, (children) => (
+        <>
+          {startContent}
+          {children}
+          {endContent}
+        </>
+      ))}
     </AriaTab>
   );
 }

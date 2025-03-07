@@ -104,7 +104,7 @@ interface FieldProps extends FieldBaseProps {
 }
 
 interface FieldInputBaseProps extends VariantProps, SizeProps, RadiusProps, FieldBaseProps {
-  colors?: Exclude<Colors, "inverted">;
+  color?: Exclude<Colors, "inverted">;
   isLabelInside?: boolean;
   startContent?: ReactElement;
   endContent?: ReactElement;

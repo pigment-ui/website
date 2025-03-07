@@ -79,7 +79,7 @@ type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
 // props
 
 interface ListBoxProps<T extends object> extends AriaListBoxProps<T>, SizeProps {
-  colors?: Exclude<Colors, "inverted">;
+  color?: Exclude<Colors, "inverted">;
   asCard?: boolean;
   itemClassNames?: ListBoxItemProps["classNames"];
   itemStyles?: ListBoxItemProps["styles"];
