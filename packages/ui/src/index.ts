@@ -34,5 +34,6 @@ export { TextArea } from "./text-area";
 export { TextField } from "./text-field";
 export { TimeField } from "./time-field";
 export { Tooltip, TooltipTrigger, TriggerWrapperWithoutDiv } from "./tooltip";
+export { FileTriggerDropzone } from "./file-trigger-dropzone";
 
 export { twConfig } from "./tw-config";
