@@ -15,7 +15,7 @@ import {
   ListBoxItem as AriaListBoxItem,
   ListBoxItemProps as AriaListBoxItemProps,
   ListBoxProps as AriaListBoxProps,
-  Section,
+  ListBoxSection as AriaListBoxSection,
   SectionProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
@@ -165,7 +165,7 @@ function _ListBoxSection<T extends object>(props: ListBoxSectionProps<T>, ref: F
   const styleSlots = listBoxSectionStyles({ size });
 
   return (
-    <Section
+    <AriaListBoxSection
       ref={ref}
       className={styleSlots.base({ className: twMerge(sectionClassNames?.base, classNames?.base, className) })}
       style={mergeProps(sectionStyles?.base, styles?.base, style)}
@@ -177,7 +177,7 @@ function _ListBoxSection<T extends object>(props: ListBoxSectionProps<T>, ref: F
         {title}
       </Header>
       <Collection items={items}>{children}</Collection>
-    </Section>
+    </AriaListBoxSection>
   );
 }
 
