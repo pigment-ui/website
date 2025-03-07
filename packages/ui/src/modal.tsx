@@ -38,8 +38,8 @@ const modalStyles = tv({
       lg: "",
     },
     backdrop: {
-      blur: { backdrop: "bg-default-0/50 backdrop-blur-lg" },
-      opaque: { backdrop: "bg-default-0/75" },
+      blur: { backdrop: "bg-default-1000/25 backdrop-blur-lg" },
+      opaque: { backdrop: "bg-default-1000/50" },
       transparent: { backdrop: "bg-transparent" },
     },
     insideScroll: {

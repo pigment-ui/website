@@ -12,7 +12,7 @@ import { tv } from "tailwind-variants";
 
 const cardStyles = tv({
   slots: {
-    base: ["border border-default-1000/20 bg-default-0 bg-opacity-75 bg-clip-padding text-default-1000 backdrop-blur-xl", radiusVariants.md],
+    base: ["border border-default-1000/20 bg-default-0 bg-clip-padding text-default-1000", radiusVariants.md],
     header: "p-4",
     body: "p-4",
     footer: "p-4",
