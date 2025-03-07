@@ -5,7 +5,7 @@ import { isFocusVisibleVariants, smallRadiusVariants, variantColorStyles } from 
 import { ColorProps, ContentProps, ForwardRefType, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
 import { CheckIcon } from "lucide-react";
-import React, { ForwardedRef, forwardRef } from "react";
+import React, { ForwardedRef, forwardRef, ReactNode } from "react";
 import { mergeProps } from "react-aria";
 import {
   Collection,
@@ -16,7 +16,7 @@ import {
   ListBoxItemProps as AriaListBoxItemProps,
   ListBoxProps as AriaListBoxProps,
   ListBoxSection as AriaListBoxSection,
-  SectionProps,
+  ListBoxSectionProps as AriaListBoxSectionProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
@@ -35,6 +35,7 @@ const listBoxItemStyles = tv({
   base: ["!scale-100 !backdrop-blur-none", smallRadiusVariants.md],
   slots: {
     content: "flex-1",
+    icon: "transition-transform duration-300",
   },
   variants: {
     size: {
@@ -45,6 +46,9 @@ const listBoxItemStyles = tv({
     isSelectable: {
       true: "cursor-pointer",
       false: "cursor-default",
+    },
+    isSelected: {
+      false: { icon: "scale-0" },
     },
   },
 });
@@ -71,20 +75,18 @@ type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
 
 interface ListBoxProps<T extends object> extends AriaListBoxProps<T>, VariantProps, ColorProps, SizeProps {
   asCard?: boolean;
+  icon?: ReactNode;
   itemClassNames?: ListBoxItemProps["classNames"];
   itemStyles?: ListBoxItemProps["styles"];
   sectionClassNames?: ListBoxSectionProps<T>["classNames"];
   sectionStyles?: ListBoxSectionProps<T>["styles"];
 }
 
-interface ListBoxItemProps
-  extends AriaListBoxItemProps,
-    VariantProps,
-    ColorProps,
-    ContentProps,
-    StyleSlotsToStyleProps<ListBoxItemStylesReturnType> {}
+interface ListBoxItemProps extends AriaListBoxItemProps, VariantProps, ColorProps, ContentProps, StyleSlotsToStyleProps<ListBoxItemStylesReturnType> {
+  icon?: ReactNode;
+}
 
-interface ListBoxSectionProps<T extends object> extends SectionProps<T>, StyleSlotsToStyleProps<ListBoxSectionStylesReturnType> {
+interface ListBoxSectionProps<T extends object> extends AriaListBoxSectionProps<T>, StyleSlotsToStyleProps<ListBoxSectionStylesReturnType> {
   title: string;
 }
 
@@ -117,7 +119,7 @@ function _ListBox<T extends object>(props: ListBoxProps<T>, ref: ForwardedRef<HT
 const ListBox = (forwardRef as ForwardRefType)(_ListBox);
 
 function _ListBoxItem(props: ListBoxItemProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { variant, color, size, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useListBoxSlots(props);
+  const { variant, color, size, startContent, endContent, icon, classNames, itemClassNames, styles, itemStyles } = useListBoxSlots(props);
 
   const styleSlots = listBoxItemStyles({ color, size });
 
@@ -140,7 +142,7 @@ function _ListBoxItem(props: ListBoxItemProps, ref: ForwardedRef<HTMLDivElement>
       )}
       style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.base, styles?.base, style))}
     >
-      {composeRenderProps(props.children, (children, { isSelected }) => (
+      {composeRenderProps(props.children, (children, { isSelected, selectionMode }) => (
         <>
           {startContent}
           <div
@@ -149,7 +151,14 @@ function _ListBoxItem(props: ListBoxItemProps, ref: ForwardedRef<HTMLDivElement>
           >
             {children}
           </div>
-          {isSelected && <CheckIcon />}
+          {selectionMode !== "none" && (
+            <div
+              className={styleSlots.icon({ isSelected, className: twMerge(itemClassNames?.icon, classNames?.icon) })}
+              style={mergeProps(itemStyles?.icon, styles?.icon)}
+            >
+              {icon ?? <CheckIcon />}
+            </div>
+          )}
           {endContent}
         </>
       ))}
@@ -185,7 +194,7 @@ const ListBoxSection = (forwardRef as ForwardRefType)(_ListBoxSection);
 
 // exports
 
-export { ListBox, ListBoxItem, ListBoxSection, listBoxItemStyles };
+export { ListBox, ListBoxItem, ListBoxSection, listBoxItemStyles, listBoxSectionStyles };
 export type { ListBoxItemProps, ListBoxSectionProps, ListBoxSlotsType };
 
 export const filterInlineListBoxProps = (props: any) => ({

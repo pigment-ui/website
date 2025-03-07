@@ -67,6 +67,7 @@ export function Header() {
               onSelectionChange={(key) => setTheme((Array.from(key)[0] as string).toLowerCase())}
               placement="bottom end"
               className="w-32"
+              disallowEmptySelection
             >
               <MenuItem>Light</MenuItem>
               <MenuItem>Dark</MenuItem>

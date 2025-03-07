@@ -1,6 +1,6 @@
 "use client";
 
-import { ListBox, ListBoxItem, listBoxItemStyles, ListBoxSection, ListBoxSlotsType } from "./list-box";
+import { ListBox, ListBoxItem, listBoxItemStyles, ListBoxSection, listBoxSectionStyles, ListBoxSlotsType } from "./list-box";
 import { Popover } from "./popover";
 import { ForwardRefType, StyleProps } from "./types";
 import { createSlots } from "./utils";
@@ -8,11 +8,15 @@ import { CheckIcon } from "lucide-react";
 import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import {
+  Collection,
   composeRenderProps,
+  Header,
   Menu as AriaMenu,
   MenuItem as AriaMenuItem,
   MenuItemProps as AriaMenuItemProps,
   MenuProps as AriaMenuProps,
+  MenuSection as AriaMenuSection,
+  MenuSectionProps as AriaMenuSectionProps,
   MenuTrigger,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
@@ -24,6 +28,8 @@ const menuStyles = tv({ base: "p-2" });
 
 const menuItemStyles = listBoxItemStyles;
 
+const menuSectionStyles = listBoxSectionStyles;
+
 // props
 
 interface MenuProps<T extends object>
@@ -32,6 +38,10 @@ interface MenuProps<T extends object>
     Omit<ComponentPropsWithoutRef<typeof Popover>, keyof Omit<AriaMenuProps<T>, keyof StyleProps>> {}
 
 interface MenuItemProps extends AriaMenuItemProps, Omit<ComponentPropsWithoutRef<typeof ListBoxItem>, keyof AriaMenuItemProps> {}
+
+interface MenuSectionProps<T extends object>
+  extends AriaMenuSectionProps<T>,
+    Omit<ComponentPropsWithoutRef<typeof ListBoxSection>, keyof AriaMenuSectionProps<T>> {}
 
 // slots
 
@@ -54,7 +64,7 @@ function _Menu<T extends object>(props: MenuProps<T>, ref: ForwardedRef<HTMLDivE
 const Menu = (forwardRef as ForwardRefType)(_Menu);
 
 function _MenuItem(props: MenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { variant, color, size, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useMenuSlots(props);
+  const { variant, color, size, startContent, endContent, icon, classNames, itemClassNames, styles, itemStyles } = useMenuSlots(props);
 
   const styleSlots = menuItemStyles({ color, size });
 
@@ -77,7 +87,7 @@ function _MenuItem(props: MenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
       )}
       style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.base, styles?.base, style))}
     >
-      {composeRenderProps(props.children, (children, { isSelected }) => (
+      {composeRenderProps(props.children, (children, { isSelected, selectionMode }) => (
         <>
           {startContent}
           <div
@@ -86,7 +96,14 @@ function _MenuItem(props: MenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
           >
             {children}
           </div>
-          {isSelected && <CheckIcon />}
+          {selectionMode !== "none" && (
+            <div
+              className={styleSlots.icon({ isSelected, className: twMerge(itemClassNames?.icon, classNames?.icon) })}
+              style={mergeProps(itemStyles?.icon, styles?.icon)}
+            >
+              {icon ?? <CheckIcon />}
+            </div>
+          )}
           {endContent}
         </>
       ))}
@@ -96,7 +113,29 @@ function _MenuItem(props: MenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
 
 const MenuItem = forwardRef(_MenuItem);
 
-const MenuSection = ListBoxSection;
+function _MenuSection<T extends object>(props: MenuSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
+  const { title, items, size, className, classNames, sectionClassNames, style, styles, sectionStyles, children } = useMenuSlots(props);
+
+  const styleSlots = menuSectionStyles({ size });
+
+  return (
+    <AriaMenuSection
+      ref={ref}
+      className={styleSlots.base({ className: twMerge(sectionClassNames?.base, classNames?.base, className) })}
+      style={mergeProps(sectionStyles?.base, styles?.base, style)}
+    >
+      <Header
+        className={styleSlots.title({ className: twMerge(sectionClassNames?.title, classNames?.title) })}
+        style={mergeProps(sectionStyles?.title, styles?.title)}
+      >
+        {title}
+      </Header>
+      <Collection items={items}>{children}</Collection>
+    </AriaMenuSection>
+  );
+}
+
+const MenuSection = (forwardRef as ForwardRefType)(_MenuSection);
 
 // exports
 

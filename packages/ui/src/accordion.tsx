@@ -25,7 +25,7 @@ const accordionStyles = tv({
     base: "",
     item: "border-b border-default-1000/20 first:border-t",
     trigger: [
-      "flex flex-1 items-center [&[data-state=open]>.chevron]:rotate-180",
+      "flex flex-1 items-center [&[data-state=open]>.icon]:rotate-180",
       "outline-none focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-default-1000",
       "disabled:cursor-not-allowed disabled:opacity-50",
     ],
@@ -33,7 +33,7 @@ const accordionStyles = tv({
     title: "",
     description: "text-default-500",
     content: "overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down [&>div]:!pt-0",
-    chevron: "chevron duration-300",
+    icon: "icon duration-300",
   },
   variants: {
     size: {
@@ -70,6 +70,7 @@ type AccordionItemProps = RadixAccordionItemProps &
     title: ReactNode;
     description?: ReactNode;
     children: ReactNode;
+    icon?: ReactNode;
   };
 
 // slots
@@ -102,7 +103,7 @@ function _Accordion(props: AccordionProps, ref: ForwardedRef<HTMLDivElement>) {
 const Accordion = forwardRef(_Accordion);
 
 function _AccordionItem(props: AccordionItemProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { title, description, startContent, endContent, children, styleSlots, className, classNames, style, styles, ...restProps } =
+  const { title, description, startContent, endContent, children, styleSlots, className, classNames, style, styles, icon, ...restProps } =
     useAccordionSlots(props);
 
   return (
@@ -139,8 +140,10 @@ function _AccordionItem(props: AccordionItemProps, ref: ForwardedRef<HTMLDivElem
             )}
           </div>
 
-          <div aria-hidden className={styleSlots.chevron({ className: classNames?.chevron })} style={styles?.chevron}>
-            {endContent ?? <ChevronDown />}
+          {endContent}
+
+          <div aria-hidden className={styleSlots.icon({ className: classNames?.icon })} style={styles?.icon}>
+            {icon ?? <ChevronDown />}
           </div>
         </RadixAccordionTrigger>
       </RadixAccordionHeader>
