@@ -23,9 +23,9 @@ const alertStyles = tv({
   },
   variants: {
     size: {
-      sm: { base: "gap-3 p-3", title: "text-sm", description: "text-xs", icon: "[&_svg]:size-6", closeButton: "-translate-y-1.5 translate-x-1.5" },
-      md: { base: "gap-4 p-4", title: "text-base", description: "text-sm", icon: "[&_svg]:size-8", closeButton: "-translate-y-2 translate-x-2" },
-      lg: { base: "gap-5 p-5", title: "text-lg", description: "text-base", icon: "[&_svg]:size-10", closeButton: "-translate-y-2.5 translate-x-2.5" },
+      sm: { base: "gap-4 p-4", title: "text-sm", description: "text-xs", icon: "[&_svg]:size-8" },
+      md: { base: "gap-5 p-5", title: "text-base", description: "text-sm", icon: "[&_svg]:size-10" },
+      lg: { base: "gap-6 p-6", title: "text-lg", description: "text-base", icon: "[&_svg]:size-12" },
     },
   },
 });
