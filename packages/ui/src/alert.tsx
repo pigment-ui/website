@@ -2,7 +2,7 @@
 
 import { Button } from "./button";
 import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, SizeProps, StyleSlotsToStyleProps, Variants } from "./types";
+import { ColorProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { CircleAlertIcon, CircleCheckIcon, CircleXIcon, InfoIcon, XIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps } from "react-aria";
@@ -13,19 +13,19 @@ import { tv } from "tailwind-variants";
 
 const alertStyles = tv({
   extend: variantColorStyles,
+  base: ["!items-start", radiusVariants.md],
   slots: {
-    base: ["flex items-start", radiusVariants.md],
     contentWrapper: "flex-1",
     title: "font-bold",
     description: "",
     icon: "",
-    closeButton: "-translate-y-1/4 translate-x-1/4",
+    closeButton: "",
   },
   variants: {
     size: {
-      sm: { base: "gap-3 p-3", title: "text-sm", description: "text-xs", icon: "[&_svg]:size-6" },
-      md: { base: "gap-4 p-4", title: "text-base", description: "text-sm", icon: "[&_svg]:size-8" },
-      lg: { base: "gap-5 p-5", title: "text-lg", description: "text-base", icon: "[&_svg]:size-10" },
+      sm: { base: "gap-3 p-3", title: "text-sm", description: "text-xs", icon: "[&_svg]:size-6", closeButton: "-translate-y-1.5 translate-x-1.5" },
+      md: { base: "gap-4 p-4", title: "text-base", description: "text-sm", icon: "[&_svg]:size-8", closeButton: "-translate-y-2 translate-x-2" },
+      lg: { base: "gap-5 p-5", title: "text-lg", description: "text-base", icon: "[&_svg]:size-10", closeButton: "-translate-y-2.5 translate-x-2.5" },
     },
   },
 });
@@ -36,10 +36,10 @@ type AlertStylesReturnType = ReturnType<typeof alertStyles>;
 
 interface AlertProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "color">,
-    ColorProps<true>,
+    ColorProps,
+    VariantProps,
     SizeProps,
     StyleSlotsToStyleProps<AlertStylesReturnType> {
-  variant?: Exclude<Variants, "light">;
   title?: string;
   description?: string;
   hideIcon?: boolean;
@@ -94,12 +94,12 @@ function _Alert(props: AlertProps, ref: ForwardedRef<HTMLDivElement>) {
       </div>
       {!!onClose && (
         <Button
-          aria-label="Modal close button"
-          isIconOnly
+          aria-label="Alert close button"
+          isFit
           variant="light"
           radius="full"
           size={size}
-          color={variant === "solid" ? (color === "default-inverted" ? "default" : "default-inverted") : color}
+          color={variant === "solid" ? (color === "inverted" ? "default" : "inverted") : color}
           onPress={onClose}
           className={styleSlots.closeButton({ className: classNames?.closeButton })}
           style={styles?.closeButton}

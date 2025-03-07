@@ -16,7 +16,7 @@ interface ComboBoxProps<T extends object>
     Omit<InputProps, keyof AriaComboBoxProps<T> | "color" | "size">,
     Omit<ComponentPropsWithoutRef<typeof Popover>, keyof AriaComboBoxProps<T>>,
     ListBoxSlotsType<T>,
-    FieldInputBaseProps {}
+    Omit<FieldInputBaseProps, "color"> {}
 
 // component
 
@@ -39,7 +39,7 @@ function _ComboBox<T extends object>(props: ComboBoxProps<T>, ref: ForwardedRef<
             <Input ref={ref} />
           </FieldInput>
 
-          <Popover maxHeight={300} hideArrow {...props} className="overflow-auto p-0" style={{ width }}>
+          <Popover maxHeight={300} hideArrow triggerRef={comboBoxRef} {...props} className="overflow-auto p-0" style={{ width }}>
             <ListBox {...filterInlineListBoxProps(props)} className="p-2" />
           </Popover>
         </>

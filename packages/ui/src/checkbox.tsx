@@ -3,11 +3,10 @@
 import { useCheckboxGroupSlots } from "./checkbox-group";
 import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
 import { RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
-import { Slot } from "@radix-ui/react-slot";
 import { CheckIcon, MinusIcon } from "lucide-react";
-import React, { AnchorHTMLAttributes, ForwardedRef, forwardRef } from "react";
+import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
-import { Checkbox as AriaCheckbox, CheckboxProps as AriaCheckboxProps, composeRenderProps } from "react-aria-components";
+import { Checkbox as AriaCheckbox, CheckboxProps as AriaCheckboxProps, composeRenderProps, Link } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
@@ -87,17 +86,20 @@ function _Checkbox(props: CheckboxProps, ref: ForwardedRef<HTMLLabelElement>) {
 
 const Checkbox = forwardRef(_Checkbox);
 
-function _CheckboxLink(props: AnchorHTMLAttributes<HTMLAnchorElement> & { asChild?: boolean }, ref: ForwardedRef<HTMLAnchorElement>) {
-  const Component = props.asChild ? Slot : "a";
-
+function _CheckboxLink(props: ComponentPropsWithoutRef<typeof Link>, ref: ForwardedRef<HTMLAnchorElement>) {
   return (
-    <Component
+    <Link
       ref={ref}
-      tabIndex={-1}
       target="_blank"
-      onClick={(e) => e.stopPropagation()}
       {...props}
-      className={twMerge("text-primary hover:underline", props.className)}
+      className={(renderProps) =>
+        twMerge(
+          "underline",
+          renderProps.isHovered && "decoration-double",
+          renderProps.isFocusVisible ? isFocusVisibleVariants.true : isFocusVisibleVariants.false,
+          typeof props.className === "string" ? props.className : props.className?.(renderProps),
+        )
+      }
     />
   );
 }

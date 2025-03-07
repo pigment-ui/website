@@ -1,7 +1,7 @@
 "use client";
 
 import { isDisabledVariants, isFocusVisibleVariants } from "./styles";
-import { ColorProps, SizeProps, StyleSlotsToStyleProps } from "./types";
+import { Colors, SizeProps, StyleSlotsToStyleProps } from "./types";
 import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import { composeRenderProps, Switch as AriaSwitch, SwitchProps as AriaSwitchProps } from "react-aria-components";
@@ -21,6 +21,7 @@ const switchStyles = tv({
     color: {
       default: { self: "bg-default-1000" },
       primary: { self: "bg-primary-500" },
+      secondary: { self: "bg-secondary-500" },
       info: { self: "bg-info-500" },
       success: { self: "bg-success-500" },
       warning: { self: "bg-warning-500" },
@@ -56,7 +57,9 @@ type SwitchStylesReturnType = ReturnType<typeof switchStyles>;
 
 // props
 
-interface SwitchProps extends AriaSwitchProps, SizeProps, ColorProps, StyleSlotsToStyleProps<SwitchStylesReturnType> {}
+interface SwitchProps extends AriaSwitchProps, SizeProps, StyleSlotsToStyleProps<SwitchStylesReturnType> {
+  colors?: Exclude<Colors, "inverted">;
+}
 
 // component
 

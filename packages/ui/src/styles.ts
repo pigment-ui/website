@@ -26,19 +26,21 @@ export const smallRadiusVariants = {
 } as const;
 
 export const variantColorStyles = tv({
-  base: "relative flex min-w-max items-center justify-center overflow-hidden whitespace-nowrap duration-300",
+  base: "relative flex items-center justify-center overflow-hidden backdrop-blur-xl duration-300",
   variants: {
     variant: {
       solid: "text-default-0",
       soft: "bg-opacity-10",
       light: "bg-opacity-0",
-      bordered: "border border-opacity-50 bg-opacity-0",
+      bordered: "border border-opacity-50 bg-opacity-10",
+      outlined: "border border-opacity-50 bg-opacity-0",
       faded: "border border-default-300 bg-default-100",
     },
     color: {
       default: "",
-      "default-inverted": "text-default-1000",
+      inverted: "text-default-1000",
       primary: "",
+      secondary: "",
       info: "",
       success: "",
       warning: "",
@@ -50,44 +52,43 @@ export const variantColorStyles = tv({
     isFocusVisible: isFocusVisibleVariants,
   },
   compoundVariants: [
-    // solid & soft & light & bordered
-    { variant: ["solid", "soft", "light", "bordered"], color: "default", className: "bg-default-1000" },
-    { variant: ["solid", "soft", "light", "bordered"], color: "default-inverted", className: "bg-default-0" },
-    { variant: ["solid", "soft", "light", "bordered"], color: "primary", className: "bg-primary-500" },
-    { variant: ["solid", "soft", "light", "bordered"], color: "info", className: "bg-info-500" },
-    { variant: ["solid", "soft", "light", "bordered"], color: "success", className: "bg-success-500" },
-    { variant: ["solid", "soft", "light", "bordered"], color: "warning", className: "bg-warning-500" },
-    { variant: ["solid", "soft", "light", "bordered"], color: "error", className: "bg-error-500" },
+    { variant: ["solid", "soft", "light", "bordered", "outlined"], color: "default", className: "bg-default-1000" },
+    { variant: ["solid", "soft", "light", "bordered", "outlined"], color: "inverted", className: "bg-default-0" },
+    { variant: ["solid", "soft", "light", "bordered", "outlined"], color: "primary", className: "bg-primary-500" },
+    { variant: ["solid", "soft", "light", "bordered", "outlined"], color: "secondary", className: "bg-secondary-500" },
+    { variant: ["solid", "soft", "light", "bordered", "outlined"], color: "info", className: "bg-info-500" },
+    { variant: ["solid", "soft", "light", "bordered", "outlined"], color: "success", className: "bg-success-500" },
+    { variant: ["solid", "soft", "light", "bordered", "outlined"], color: "warning", className: "bg-warning-500" },
+    { variant: ["solid", "soft", "light", "bordered", "outlined"], color: "error", className: "bg-error-500" },
 
-    // soft & light & bordered & faded
-    { variant: ["soft", "light", "bordered", "faded"], color: "default", className: "text-default-1000" },
-    { variant: ["soft", "light", "bordered", "faded"], color: "default-inverted", className: "text-default-0" },
-    { variant: ["soft", "light", "bordered", "faded"], color: "primary", className: "text-primary-500" },
-    { variant: ["soft", "light", "bordered", "faded"], color: "info", className: "text-info-500" },
-    { variant: ["soft", "light", "bordered", "faded"], color: "success", className: "text-success-500" },
-    { variant: ["soft", "light", "bordered", "faded"], color: "warning", className: "text-warning-500" },
-    { variant: ["soft", "light", "bordered", "faded"], color: "error", className: "text-error-500" },
+    { variant: ["soft", "light", "bordered", "outlined", "faded"], color: "default", className: "text-default-1000" },
+    { variant: ["soft", "light", "bordered", "outlined", "faded"], color: "inverted", className: "text-default-0" },
+    { variant: ["soft", "light", "bordered", "outlined", "faded"], color: "primary", className: "text-primary-500" },
+    { variant: ["soft", "light", "bordered", "outlined", "faded"], color: "secondary", className: "text-secondary-500" },
+    { variant: ["soft", "light", "bordered", "outlined", "faded"], color: "info", className: "text-info-500" },
+    { variant: ["soft", "light", "bordered", "outlined", "faded"], color: "success", className: "text-success-500" },
+    { variant: ["soft", "light", "bordered", "outlined", "faded"], color: "warning", className: "text-warning-500" },
+    { variant: ["soft", "light", "bordered", "outlined", "faded"], color: "error", className: "text-error-500" },
 
-    // bordered
-    { variant: ["bordered"], color: "default", className: "border-default-1000" },
-    { variant: ["bordered"], color: "default-inverted", className: "border-default-0" },
-    { variant: ["bordered"], color: "primary", className: "border-primary-500" },
-    { variant: ["bordered"], color: "info", className: "border-info-500" },
-    { variant: ["bordered"], color: "success", className: "border-success-500" },
-    { variant: ["bordered"], color: "warning", className: "border-warning-500" },
-    { variant: ["bordered"], color: "error", className: "border-error-500" },
+    { variant: ["bordered", "outlined"], color: "default", className: "border-default-1000" },
+    { variant: ["bordered", "outlined"], color: "inverted", className: "border-default-0" },
+    { variant: ["bordered", "outlined"], color: "primary", className: "border-primary-500" },
+    { variant: ["bordered", "outlined"], color: "secondary", className: "border-secondary-500" },
+    { variant: ["bordered", "outlined"], color: "info", className: "border-info-500" },
+    { variant: ["bordered", "outlined"], color: "success", className: "border-success-500" },
+    { variant: ["bordered", "outlined"], color: "warning", className: "border-warning-500" },
+    { variant: ["bordered", "outlined"], color: "error", className: "border-error-500" },
 
-    // is hovered
-    { variant: "solid", isHovered: true, className: "bg-opacity-90" },
-    { variant: "soft", isHovered: true, className: "bg-opacity-20" },
-    { variant: "light", isHovered: true, className: "bg-opacity-10" },
-    { variant: "bordered", isHovered: true, className: "bg-opacity-10" },
-    { variant: "faded", isHovered: true, className: "bg-default-200" },
+    { isHovered: true, variant: "solid", className: "bg-opacity-90" },
+    { isHovered: true, variant: "soft", className: "bg-opacity-20" },
+    { isHovered: true, variant: "light", className: "bg-opacity-10" },
+    { isHovered: true, variant: "bordered", className: "bg-opacity-20" },
+    { isHovered: true, variant: "outlined", className: "bg-opacity-10" },
+    { isHovered: true, variant: "faded", className: "bg-default-200" },
 
-    // default-inverted
-    { color: "default-inverted", variant: "faded", className: "border border-default-700 bg-default-900" },
-    { color: "default-inverted", variant: "faded", isHovered: true, className: "bg-default-800" },
-    { color: "default-inverted", isFocusVisible: true, className: "outline-default-0" },
+    { color: "inverted", variant: "faded", className: "border border-default-700 bg-default-900" },
+    { color: "inverted", variant: "faded", isHovered: true, className: "bg-default-800" },
+    { color: "inverted", isFocusVisible: true, className: "outline-default-0" },
   ],
 });
 

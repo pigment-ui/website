@@ -1,7 +1,7 @@
 "use client";
 
-import { variantColorStyles } from "./styles";
-import { ColorProps, ContentProps, SizeProps, StyleSlotsToStyleProps, Variants } from "./types";
+import { radiusVariants, variantColorStyles } from "./styles";
+import { ColorProps, ContentProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import React, { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { mergeProps } from "react-aria";
 import { twMerge } from "tailwind-merge";
@@ -11,9 +11,9 @@ import { tv } from "tailwind-variants";
 
 const badgeStyles = tv({
   extend: variantColorStyles,
+  base: ["!absolute min-w-max whitespace-nowrap", radiusVariants.full],
   slots: {
-    base: "absolute flex items-center justify-center rounded-full duration-300",
-    wrapper: "relative",
+    wrapper: "relative inline-block",
   },
   variants: {
     size: {
@@ -27,7 +27,7 @@ const badgeStyles = tv({
       "bottom-right": "bottom-0 right-0 translate-x-1/2 translate-y-1/2",
       "bottom-left": "bottom-0 left-0 -translate-x-1/2 translate-y-1/2",
     },
-    isIconOnly: { true: "px-0" },
+    isFit: { true: "px-0" },
   },
 });
 
@@ -37,13 +37,13 @@ type BadgeStylesReturnType = ReturnType<typeof badgeStyles>;
 
 interface BadgeProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "color" | "content">,
-    ColorProps<true>,
+    VariantProps,
+    ColorProps,
     SizeProps,
     ContentProps,
     StyleSlotsToStyleProps<BadgeStylesReturnType> {
-  variant?: Exclude<Variants, "light" | "bordered">;
   content?: ReactNode;
-  isIconOnly?: boolean;
+  isFit?: boolean;
   placement?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
 }
 
@@ -55,7 +55,7 @@ function _Badge(props: BadgeProps, ref: ForwardedRef<HTMLDivElement>) {
     color = "default",
     size = "md",
     placement = "top-right",
-    isIconOnly,
+    isFit,
     content,
     startContent,
     endContent,
@@ -67,7 +67,7 @@ function _Badge(props: BadgeProps, ref: ForwardedRef<HTMLDivElement>) {
     ...restProps
   } = props;
 
-  const styleSlots = badgeStyles({ placement, variant, color, size, isIconOnly, className });
+  const styleSlots = badgeStyles({ placement, variant, color, size, isFit, className });
 
   return (
     <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>

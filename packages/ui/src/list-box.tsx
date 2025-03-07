@@ -2,7 +2,7 @@
 
 import { cardStyles } from "./card";
 import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
-import { ColorProps, ContentProps, ForwardRefType, SizeProps, StyleSlotsToStyleProps } from "./types";
+import { ColorProps, Colors, ContentProps, ForwardRefType, SizeProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 import { CheckIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -39,6 +39,7 @@ const listBoxItemStyles = tv({
     color: {
       default: "bg-default-1000 text-default-1000",
       primary: "bg-primary-500 text-primary-500",
+      secondary: "bg-secondary-500 text-secondary-500",
       info: "bg-info-500 text-info-500",
       success: "bg-success-500 text-success-500",
       warning: "bg-warning-500 text-warning-500",
@@ -77,7 +78,8 @@ type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
 
 // props
 
-interface ListBoxProps<T extends object> extends AriaListBoxProps<T>, ColorProps, SizeProps {
+interface ListBoxProps<T extends object> extends AriaListBoxProps<T>, SizeProps {
+  colors?: Exclude<Colors, "inverted">;
   asCard?: boolean;
   itemClassNames?: ListBoxItemProps["classNames"];
   itemStyles?: ListBoxItemProps["styles"];

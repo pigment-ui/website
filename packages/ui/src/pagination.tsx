@@ -28,7 +28,9 @@ const paginationStyles = tv({
   },
   compoundVariants: [
     { isSelected: true, color: "default", className: "!border-default-1000 !bg-default-1000" },
+    { isSelected: true, color: "inverted", className: "!border-default-0 !bg-default-0 !text-default-1000" },
     { isSelected: true, color: "primary", className: "!border-primary-500 !bg-primary-500" },
+    { isSelected: true, color: "secondary", className: "!border-secondary-500 !bg-secondary-500" },
     { isSelected: true, color: "info", className: "!border-info-500 !bg-info-500" },
     { isSelected: true, color: "success", className: "!border-success-500 !bg-success-500" },
     { isSelected: true, color: "warning", className: "!border-warning-500 !bg-warning-500" },

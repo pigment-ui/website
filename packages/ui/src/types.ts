@@ -6,11 +6,11 @@ export type StyleProps = { className?: string; style?: CSSProperties };
 export type StyleSlotsToStyleProps<T> = { classNames?: { [slot in keyof T]?: string }; styles?: { [slot in keyof T]?: CSSProperties } };
 export type StyleSlotsToSlots<T> = { styleSlots: T } & StyleSlotsToStyleProps<T>;
 
-export type Variants = "solid" | "soft" | "light" | "bordered" | "faded";
+export type Variants = "solid" | "soft" | "light" | "bordered" | "outlined" | "faded";
 export type VariantProps = { variant?: Variants };
 
-export type Colors = "default" | "primary" | "info" | "success" | "warning" | "error";
-export type ColorProps<T extends boolean = false> = { color?: Colors | (T extends true ? "default-inverted" : never) };
+export type Colors = "default" | "inverted" | "primary" | "secondary" | "info" | "success" | "warning" | "error";
+export type ColorProps = { color?: Colors };
 
 export type Sizes = "sm" | "md" | "lg";
 export type SizeProps = { size?: Sizes };

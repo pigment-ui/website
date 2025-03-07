@@ -1,7 +1,7 @@
 "use client";
 
 import { isFocusVisibleVariants, radiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { ColorProps, ContentProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
 import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
@@ -35,6 +35,7 @@ const tabsStyles = tv({
     color: {
       default: "",
       primary: "",
+      secondary: "",
       info: "",
       success: "",
       warning: "",
@@ -60,20 +61,15 @@ type TabsStylesReturnType = ReturnType<typeof tabsStyles>;
 
 const tabStyles = tv({
   extend: variantColorStyles,
-  base: "cursor-pointer",
+  base: "cursor-pointer !backdrop-blur-none",
   variants: {
     size: {
       sm: "h-8 gap-x-2 px-4 text-xs [&_svg]:size-4",
       md: "h-10 gap-x-2.5 px-5 text-sm [&_svg]:size-5",
       lg: "h-12 gap-x-3 px-6 text-base [&_svg]:size-6",
     },
-    isSelected: { false: "!border-none !bg-transparent !text-default-500" },
     radius: radiusVariants,
   },
-  compoundVariants: [
-    { isSelected: false, isHovered: true, className: "!text-default-1000" },
-    { isSelected: false, isHovered: true, color: "default-inverted", className: "!text-default-0" },
-  ],
 });
 
 // props
@@ -107,8 +103,8 @@ function _Tabs(props: TabsProps, ref: ForwardedRef<HTMLDivElement>) {
 
 const Tabs = forwardRef(_Tabs);
 
-function _Tab(props: TabProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { variant, color, size, radius } = useTabsSlots(props);
+function _Tab(props: TabProps & ContentProps, ref: ForwardedRef<HTMLDivElement>) {
+  const { variant, color, size, radius, startContent, endContent, children } = useTabsSlots(props);
 
   return (
     <AriaTab
@@ -117,11 +113,12 @@ function _Tab(props: TabProps, ref: ForwardedRef<HTMLDivElement>) {
       {...props}
       className={composeRenderProps(props.className, (className, { isSelected, isHovered, isPressed, isDisabled, isFocusVisible }) =>
         tabStyles({
-          variant,
+          variant: isSelected
+            ? variant
+            : { solid: "light", soft: "light", light: "soft", bordered: "outlined", outlined: "bordered", faded: "outlined" }[variant],
           color,
           size,
           radius,
-          isSelected,
           isHovered: !isSelected && isHovered,
           isPressed,
           isDisabled,
@@ -129,7 +126,11 @@ function _Tab(props: TabProps, ref: ForwardedRef<HTMLDivElement>) {
           className,
         }),
       )}
-    />
+    >
+      {startContent}
+      {children}
+      {endContent}
+    </AriaTab>
   );
 }
 

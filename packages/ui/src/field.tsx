@@ -1,7 +1,7 @@
 "use client";
 
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, RadiusProps, SizeProps, StyleSlotsToStyleProps, Variants } from "./types";
+import { Colors, RadiusProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { useObjectRef } from "@react-aria/utils";
 import { ValidationResult } from "@react-types/shared";
 import React, { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
@@ -32,31 +32,18 @@ type FieldStylesReturnType = ReturnType<typeof fieldStyles>;
 
 const fieldInputStyles = tv({
   extend: variantColorStyles,
+  base: "cursor-text",
   slots: {
-    base: "flex cursor-text items-center overflow-hidden duration-300",
     self: "flex size-full flex-1 items-center bg-transparent outline-none data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
     content: "pointer-events-none shrink-0",
     button: [
-      "flex items-center bg-opacity-10 px-1.5 text-default-1000 outline-none duration-300",
+      "flex items-center bg-opacity-10 px-1.5 outline-none duration-300",
       "data-[pressed]:scale-90 data-[hovered]:bg-opacity-20",
       "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
       "data-[focus-visible]:z-10 data-[focus-visible]:outline data-[focus-visible]:outline-default-1000",
     ],
   },
   variants: {
-    variant: {
-      soft: "",
-      bordered: "",
-      faded: "",
-    },
-    color: {
-      default: "",
-      primary: "",
-      info: "",
-      success: "",
-      warning: "",
-      error: "",
-    },
     size: {
       sm: { base: "gap-2 px-2 text-xs [&_svg]:size-4", self: "h-8", button: "h-6 [&_svg]:!size-3" },
       md: { base: "gap-2.5 px-2.5 text-sm [&_svg]:size-5", self: "h-10", button: "h-7 [&_svg]:!size-4" },
@@ -79,18 +66,23 @@ const fieldInputStyles = tv({
     { isTextArea: true, size: "sm", className: "py-2" },
     { isTextArea: true, size: "md", className: "py-2.5" },
     { isTextArea: true, size: "lg", className: "py-3" },
+
     { color: "default", className: { self: "placeholder:text-default-1000/50", button: "bg-default-1000 text-default-1000" } },
-    { color: "primary", className: { self: "placeholder:text-primary-500/50", button: "bg-primary-500 text-primary-500" } },
-    { color: "info", className: { self: "placeholder:text-info-500/50", button: "bg-info-500 text-info-500" } },
-    { color: "success", className: { self: "placeholder:text-success-500/50", button: "bg-success-500 text-success-500" } },
-    { color: "warning", className: { self: "placeholder:text-warning-500/50", button: "bg-warning-500 text-warning-500" } },
-    { color: "error", className: { self: "placeholder:text-error-500/50", button: "bg-error-500 text-error-500" } },
     { color: "default", isFocusWithin: true, className: { base: "ring-default-1000" } },
+    { color: "primary", className: { self: "placeholder:text-primary-500/50", button: "bg-primary-500 text-primary-500" } },
     { color: "primary", isFocusWithin: true, className: { base: "ring-primary-500" } },
+    { color: "secondary", className: { self: "placeholder:text-secondary-500/50", button: "bg-secondary-500 text-secondary-500" } },
+    { color: "secondary", isFocusWithin: true, className: { base: "ring-secondary-500" } },
+    { color: "info", className: { self: "placeholder:text-info-500/50", button: "bg-info-500 text-info-500" } },
     { color: "info", isFocusWithin: true, className: { base: "ring-info-500" } },
+    { color: "success", className: { self: "placeholder:text-success-500/50", button: "bg-success-500 text-success-500" } },
     { color: "success", isFocusWithin: true, className: { base: "ring-success-500" } },
+    { color: "warning", className: { self: "placeholder:text-warning-500/50", button: "bg-warning-500 text-warning-500" } },
     { color: "warning", isFocusWithin: true, className: { base: "ring-warning-500" } },
+    { color: "error", className: { self: "placeholder:text-error-500/50", button: "bg-error-500 text-error-500" } },
     { color: "error", isFocusWithin: true, className: { base: "ring-error-500" } },
+
+    { variant: "solid", className: { button: "bg-default-0 text-default-0" } },
   ],
 });
 
@@ -111,8 +103,8 @@ interface FieldProps extends FieldBaseProps {
   children?: ReactNode;
 }
 
-interface FieldInputBaseProps extends ColorProps, SizeProps, RadiusProps, FieldBaseProps {
-  variant?: Exclude<Variants, "solid" | "light">;
+interface FieldInputBaseProps extends VariantProps, SizeProps, RadiusProps, FieldBaseProps {
+  colors?: Exclude<Colors, "inverted">;
   isLabelInside?: boolean;
   startContent?: ReactElement;
   endContent?: ReactElement;
@@ -201,14 +193,17 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
           isLabelInside &&
             twMerge(
               "absolute z-20 pointer-events-none",
-              {
-                default: "text-default-1000",
-                primary: "text-primary-500",
-                info: "text-info-500",
-                success: "text-success-500",
-                warning: "text-warning-500",
-                error: "text-error-500",
-              }[color],
+              variant === "solid"
+                ? "text-default-0"
+                : {
+                    default: "text-default-1000",
+                    primary: "text-primary-500",
+                    secondary: "text-secondary-500",
+                    info: "text-info-500",
+                    success: "text-success-500",
+                    warning: "text-warning-500",
+                    error: "text-error-500",
+                  }[color],
               {
                 sm: "inset-x-2 top-2",
                 md: "inset-x-2.5 top-2.5",

@@ -25,6 +25,18 @@
   --primary-900: 124 45 18;
   --primary-950: 67 20 7;
 
+  --secondary-50: 235 253 255;
+  --secondary-100: 206 250 254;
+  --secondary-200: 161 244 253;
+  --secondary-300: 82 234 253;
+  --secondary-400: 0 211 242;
+  --secondary-500: 0 184 219;
+  --secondary-600: 0 146 184;
+  --secondary-700: 0 117 149;
+  --secondary-800: 1 94 120;
+  --secondary-900: 15 78 100;
+  --secondary-950: 7 51 69;
+
   --info-50: 239 246 255;
   --info-100: 219 234 254;
   --info-200: 191 219 254;
@@ -100,6 +112,18 @@
   --primary-800: 254 215 170;
   --primary-900: 255 237 213;
   --primary-950: 255 247 237;
+
+  --secondary-50: 7 51 69;
+  --secondary-100: 15 78 100;
+  --secondary-200: 1 94 120;
+  --secondary-300: 0 117 149;
+  --secondary-400: 0 146 184;
+  --secondary-500: 0 184 219;
+  --secondary-600: 0 211 242;
+  --secondary-700: 82 234 253;
+  --secondary-800: 161 244 253;
+  --secondary-900: 206 250 254;
+  --secondary-950: 235 253 255;
 
   --info-50: 23 37 84;
   --info-100: 30 58 138;

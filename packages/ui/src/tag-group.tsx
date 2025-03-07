@@ -2,7 +2,7 @@
 
 import { Field, FieldBaseProps } from "./field";
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
-import { ColorProps, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps } from "./types";
+import { ColorProps, Colors, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 import { XIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -38,6 +38,7 @@ const tagStyles = tv({
     color: {
       default: { base: "bg-default-1000", removeButton: "bg-default-1000" },
       primary: { base: "bg-primary-500", removeButton: "bg-primary-500" },
+      secondary: { base: "bg-secondary-500", removeButton: "bg-secondary-500" },
       info: { base: "bg-info-500", removeButton: "bg-info-500" },
       success: { base: "bg-success-500", removeButton: "bg-success-500" },
       warning: { base: "bg-warning-500", removeButton: "bg-warning-500" },
@@ -67,9 +68,9 @@ type TagStylesReturnType = ReturnType<typeof tagStyles>;
 interface TagGroupProps<T extends object>
   extends Omit<AriaTagGroupProps, "children">,
     Pick<TagListProps<T>, "children" | "items" | "renderEmptyState">,
-    ColorProps,
     RadiusProps,
     FieldBaseProps {
+  colors?: Exclude<Colors, "inverted">;
   itemClassNames?: TagProps["classNames"];
   itemStyles?: TagProps["styles"];
 }

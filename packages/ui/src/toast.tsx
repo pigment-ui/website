@@ -103,11 +103,11 @@ function Toast<T extends ReactNode>({ state, ...props }: ToastProps<T>) {
       <Button
         {...closeButtonProps}
         aria-label="Modal close button"
-        isIconOnly
+        isFit
         variant="light"
         radius="full"
         size={size}
-        color={variant === "solid" ? "default-inverted" : color}
+        color={variant === "solid" ? "inverted" : color}
         className={styleSlots.closeButton({ className: classNames?.closeButton })}
         style={styles?.closeButton}
       >

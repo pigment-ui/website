@@ -33,6 +33,19 @@ export const twConfig: Config = {
           900: "rgb(var(--primary-900) / <alpha-value>)",
           950: "rgb(var(--primary-950) / <alpha-value>)",
         },
+        secondary: {
+          50: "rgb(var(--secondary-50) / <alpha-value>)",
+          100: "rgb(var(--secondary-100) / <alpha-value>)",
+          200: "rgb(var(--secondary-200) / <alpha-value>)",
+          300: "rgb(var(--secondary-300) / <alpha-value>)",
+          400: "rgb(var(--secondary-400) / <alpha-value>)",
+          500: "rgb(var(--secondary-500) / <alpha-value>)",
+          600: "rgb(var(--secondary-600) / <alpha-value>)",
+          700: "rgb(var(--secondary-700) / <alpha-value>)",
+          800: "rgb(var(--secondary-800) / <alpha-value>)",
+          900: "rgb(var(--secondary-900) / <alpha-value>)",
+          950: "rgb(var(--secondary-950) / <alpha-value>)",
+        },
         info: {
           50: "rgb(var(--info-50) / <alpha-value>)",
           100: "rgb(var(--info-100) / <alpha-value>)",
@@ -88,14 +101,8 @@ export const twConfig: Config = {
       },
 
       keyframes: {
-        "accordion-down": {
-          from: { height: "0px" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0px" },
-        },
+        "accordion-down": { from: { height: "0px" }, to: { height: "var(--radix-accordion-content-height)" } },
+        "accordion-up": { from: { height: "var(--radix-accordion-content-height)" }, to: { height: "0px" } },
       },
 
       animation: {

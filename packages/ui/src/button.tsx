@@ -13,28 +13,28 @@ import { tv } from "tailwind-variants";
 
 const buttonStyles = tv({
   extend: variantColorStyles,
-  base: "",
+  base: "min-w-max whitespace-nowrap",
   variants: {
     size: {
       sm: "h-8 gap-x-2 px-4 text-xs [&_svg]:size-4",
       md: "h-10 gap-x-2.5 px-5 text-sm [&_svg]:size-5",
       lg: "h-12 gap-x-3 px-6 text-base [&_svg]:size-6",
     },
-    isIconOnly: { true: "" },
+    isFit: { true: "" },
     isLoading: { true: "!text-transparent" },
     radius: radiusVariants,
   },
   compoundVariants: [
-    { size: "sm", isIconOnly: true, className: "px-2" },
-    { size: "md", isIconOnly: true, className: "px-2.5" },
-    { size: "lg", isIconOnly: true, className: "px-3" },
+    { size: "sm", isFit: true, className: "px-2" },
+    { size: "md", isFit: true, className: "px-2.5" },
+    { size: "lg", isFit: true, className: "px-3" },
   ],
 });
 
 // props
 
-interface ButtonProps extends AriaButtonProps, HoverProps, VariantProps, ColorProps<true>, SizeProps, RadiusProps, ContentProps, StyleProps {
-  isIconOnly?: boolean;
+interface ButtonProps extends AriaButtonProps, HoverProps, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps, StyleProps {
+  isFit?: boolean;
   isLoading?: boolean;
   asChild?: boolean;
 }
@@ -51,7 +51,7 @@ function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
     endContent,
     isLoading,
     isDisabled: disabled,
-    isIconOnly,
+    isFit,
     asChild,
     children,
     className,
@@ -79,7 +79,7 @@ function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
         color,
         size,
         radius,
-        isIconOnly,
+        isFit,
         isLoading,
         isHovered,
         isPressed,
@@ -91,7 +91,7 @@ function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
     >
       {isLoading && (
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <Spinner size={size} color={variant === "solid" ? (color === "default-inverted" ? "default" : "default-inverted") : color} />
+          <Spinner size={size} color={variant === "solid" ? (color === "inverted" ? "default" : "inverted") : color} />
         </div>
       )}
 
