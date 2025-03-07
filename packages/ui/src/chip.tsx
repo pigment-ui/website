@@ -1,7 +1,7 @@
 "use client";
 
 import { smallRadiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, ContentProps, RadiusProps, SizeProps, VariantProps } from "./types";
+import { ColorExtendedProps, ContentProps, RadiusProps, SizeProps, VariantProps } from "./types";
 import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { tv } from "tailwind-variants";
 
@@ -28,7 +28,7 @@ const chipStyles = tv({
 
 // props
 
-interface ChipProps extends Omit<HTMLAttributes<HTMLDivElement>, "color">, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps {
+interface ChipProps extends Omit<HTMLAttributes<HTMLDivElement>, "color">, VariantProps, ColorExtendedProps, SizeProps, RadiusProps, ContentProps {
   isFit?: boolean;
 }
 

@@ -2,7 +2,7 @@
 
 import { isFocusVisibleVariants, radiusVariants, variantColorStyles } from "./styles";
 import {
-  ColorProps,
+  ColorExtendedProps,
   ContentProps,
   ForwardRefType,
   RadiusProps,
@@ -10,7 +10,6 @@ import {
   StyleSlotsToSlots,
   StyleSlotsToStyleProps,
   VariantProps,
-  Variants,
 } from "./types";
 import { createSlots } from "./utils";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -43,14 +42,14 @@ const tabsStyles = tv({
       horizontal: { list: "flex-col" },
     },
     color: {
-      default: "",
-      inverted: { list: "bg-default-0/10", panel: "bg-default-0/10" },
-      primary: "",
-      secondary: "",
-      info: "",
-      success: "",
-      warning: "",
-      error: "",
+      default: { list: "bg-default-1000/10", panel: "bg-default-1000/10 text-default-1000" },
+      inverted: { list: "bg-default-0/10", panel: "bg-default-0/10 text-default-0" },
+      primary: { list: "bg-primary-500/10", panel: "bg-primary-500/10 text-primary-500" },
+      secondary: { list: "bg-secondary-500/10", panel: "bg-secondary-500/10 text-secondary-500" },
+      info: { list: "bg-info-500/10", panel: "bg-info-500/10 text-info-500" },
+      success: { list: "bg-success-500/10", panel: "bg-success-500/10 text-success-500" },
+      warning: { list: "bg-warning-500/10", panel: "bg-warning-500/10 text-warning-500" },
+      error: { list: "bg-error-500/10", panel: "bg-error-500/10 text-error-500" },
     },
     size: {
       sm: { base: "gap-2", list: "gap-2 p-1", panel: "p-2" },
@@ -85,7 +84,7 @@ const tabStyles = tv({
 
 // props
 
-interface TabsProps extends AriaTabsProps, VariantProps, ColorProps, SizeProps, RadiusProps, StyleSlotsToStyleProps<TabsStylesReturnType> {}
+interface TabsProps extends AriaTabsProps, VariantProps, ColorExtendedProps, SizeProps, RadiusProps, StyleSlotsToStyleProps<TabsStylesReturnType> {}
 
 // slots
 
@@ -124,18 +123,7 @@ function _Tab(props: TabProps & ContentProps, ref: ForwardedRef<HTMLDivElement>)
       {...props}
       className={composeRenderProps(props.className, (className, { isSelected, isHovered, isPressed, isDisabled, isFocusVisible }) =>
         tabStyles({
-          variant: isSelected
-            ? variant
-            : (
-                {
-                  solid: "light",
-                  soft: "light",
-                  light: "soft",
-                  bordered: "outlined",
-                  outlined: "bordered",
-                  faded: "outlined",
-                } as Record<Variants, Variants>
-              )[variant],
+          variant: isSelected ? variant : "light",
           color,
           size,
           radius,

@@ -1,6 +1,6 @@
 "use client";
 
-import { ColorProps, SizeProps, StyleProps } from "./types";
+import { ColorExtendedProps, SizeProps, StyleProps } from "./types";
 import React, { ForwardedRef, forwardRef } from "react";
 import { tv } from "tailwind-variants";
 
@@ -25,7 +25,7 @@ const spinnerStyles = tv({
 
 // props
 
-interface SpinnerProps extends ColorProps, SizeProps, StyleProps {}
+interface SpinnerProps extends ColorExtendedProps, SizeProps, StyleProps {}
 
 // component
 

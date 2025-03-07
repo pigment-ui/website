@@ -26,15 +26,15 @@ export const smallRadiusVariants = {
 } as const;
 
 export const variantColorStyles = tv({
-  base: "relative flex items-center justify-center overflow-hidden backdrop-blur-xl duration-300",
+  base: "relative flex items-center justify-center overflow-hidden border border-transparent backdrop-blur-xl duration-300",
   variants: {
     variant: {
       solid: "text-default-0",
       soft: "bg-opacity-10",
       light: "bg-opacity-0",
-      bordered: "border border-opacity-50 bg-opacity-10",
-      outlined: "border border-opacity-50 bg-opacity-0",
-      faded: "border border-default-300 bg-default-100",
+      bordered: "border-opacity-50 bg-opacity-10",
+      outlined: "border-opacity-50 bg-opacity-0",
+      faded: "border-default-300 bg-default-100",
     },
     color: {
       default: "",

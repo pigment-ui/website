@@ -2,7 +2,7 @@
 
 import { Button } from "./button";
 import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { ColorExtendedProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { CircleAlertIcon, CircleCheckIcon, CircleXIcon, InfoIcon, XIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps } from "react-aria";
@@ -36,7 +36,7 @@ type AlertStylesReturnType = ReturnType<typeof alertStyles>;
 
 interface AlertProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "color">,
-    ColorProps,
+    ColorExtendedProps,
     VariantProps,
     SizeProps,
     StyleSlotsToStyleProps<AlertStylesReturnType> {

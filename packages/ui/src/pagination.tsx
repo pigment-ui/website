@@ -1,7 +1,7 @@
 "use client";
 
 import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps, Variants } from "./types";
+import { ColorExtendedProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon } from "lucide-react";
 import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef, KeyboardEvent, useMemo } from "react";
 import { FocusScope, mergeProps, useFocusManager } from "react-aria";
@@ -23,27 +23,21 @@ const paginationStyles = tv({
       md: { wrapper: "gap-2.5", base: "size-10 text-sm [&_svg]:size-5" },
       lg: { wrapper: "gap-3", base: "size-12 text-base [&_svg]:size-6" },
     },
-    isSelected: { true: "!text-default-0" },
     radius: radiusVariants,
   },
-  compoundVariants: [
-    { isSelected: true, color: "default", className: "!border-default-1000 !bg-default-1000" },
-    { isSelected: true, color: "inverted", className: "!border-default-0 !bg-default-0 !text-default-1000" },
-    { isSelected: true, color: "primary", className: "!border-primary-500 !bg-primary-500" },
-    { isSelected: true, color: "secondary", className: "!border-secondary-500 !bg-secondary-500" },
-    { isSelected: true, color: "info", className: "!border-info-500 !bg-info-500" },
-    { isSelected: true, color: "success", className: "!border-success-500 !bg-success-500" },
-    { isSelected: true, color: "warning", className: "!border-warning-500 !bg-warning-500" },
-    { isSelected: true, color: "error", className: "!border-error-500 !bg-error-500" },
-  ],
 });
 
 type PaginationStylesReturnType = ReturnType<typeof paginationStyles>;
 
 // props
 
-interface PaginationProps extends ColorProps, SizeProps, RadiusProps, StyleProps, StyleSlotsToStyleProps<PaginationStylesReturnType> {
-  variant?: Exclude<Variants, "solid">;
+interface PaginationProps
+  extends ColorExtendedProps,
+    VariantProps,
+    SizeProps,
+    RadiusProps,
+    StyleProps,
+    StyleSlotsToStyleProps<PaginationStylesReturnType> {
   total: number;
   page: number;
   onChange: (page: number) => void;
@@ -128,7 +122,12 @@ function _Pagination(props: PaginationProps, ref: ForwardedRef<HTMLUListElement>
               <PaginationButton
                 aria-label={`Page ${pageNumber}`}
                 onPress={() => onChange(pageNumber)}
-                className={(renderProps) => styleSlots.base({ ...renderProps, isSelected: pageNumber === page })}
+                className={(renderProps) =>
+                  styleSlots.base({
+                    ...renderProps,
+                    variant: pageNumber === page ? "solid" : variant,
+                  })
+                }
               >
                 {pageNumber}
               </PaginationButton>

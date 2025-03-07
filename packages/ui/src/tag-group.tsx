@@ -1,8 +1,8 @@
 "use client";
 
 import { Field, FieldBaseProps } from "./field";
-import { isDisabledVariants, isFocusVisibleVariants, radiusVariants } from "./styles";
-import { ColorProps, Colors, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps } from "./types";
+import { radiusVariants, variantColorStyles } from "./styles";
+import { ColorProps, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
 import { XIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -30,35 +30,20 @@ const tagGroupStyles = tv({
 });
 
 const tagStyles = tv({
+  extend: variantColorStyles,
+  base: "",
   slots: {
-    base: "flex items-center overflow-hidden bg-opacity-10 duration-300",
-    removeButton: "grid place-items-center rounded-[inherit] bg-opacity-20 outline-none data-[pressed]:scale-90 data-[hovered]:bg-opacity-30",
+    removeButton: "outline-none",
   },
   variants: {
-    color: {
-      default: { base: "bg-default-1000", removeButton: "bg-default-1000" },
-      primary: { base: "bg-primary-500", removeButton: "bg-primary-500" },
-      secondary: { base: "bg-secondary-500", removeButton: "bg-secondary-500" },
-      info: { base: "bg-info-500", removeButton: "bg-info-500" },
-      success: { base: "bg-success-500", removeButton: "bg-success-500" },
-      warning: { base: "bg-warning-500", removeButton: "bg-warning-500" },
-      error: { base: "bg-error-500", removeButton: "bg-error-500" },
-    },
     size: {
-      sm: { base: "h-6 gap-x-2 px-2 text-xs", removeButton: "size-4 [&_svg]:size-3" },
-      md: { base: "h-8 gap-x-2.5 px-2.5 text-sm", removeButton: "size-5 [&_svg]:size-3.5" },
-      lg: { base: "h-10 gap-x-3 px-3 text-base", removeButton: "size-6 [&_svg]:size-4" },
+      sm: { base: "h-6 gap-x-2 px-2 text-xs", removeButton: "[&_svg]:size-3" },
+      md: { base: "h-8 gap-x-2.5 px-2.5 text-sm", removeButton: "[&_svg]:size-3.5" },
+      lg: { base: "h-10 gap-x-3 px-3 text-base", removeButton: "[&_svg]:size-4" },
     },
     isSelectable: { true: "cursor-pointer", false: "cursor-default" },
-    isSelected: { true: { base: "bg-opacity-100 text-default-0", removeButton: "bg-default-0" } },
-    isHovered: { true: "bg-opacity-20" },
-    isPressed: { true: "scale-95" },
-    isFocusWithin: { true: "bg-opacity-30" },
-    isFocusVisible: isFocusVisibleVariants,
-    isDisabled: isDisabledVariants,
     radius: radiusVariants,
   },
-  compoundVariants: [{ isSelected: true, isHovered: true, className: { base: "bg-opacity-90" } }],
 });
 
 type TagStylesReturnType = ReturnType<typeof tagStyles>;
@@ -68,9 +53,10 @@ type TagStylesReturnType = ReturnType<typeof tagStyles>;
 interface TagGroupProps<T extends object>
   extends Omit<AriaTagGroupProps, "children">,
     Pick<TagListProps<T>, "children" | "items" | "renderEmptyState">,
+    VariantProps,
+    ColorProps,
     RadiusProps,
     FieldBaseProps {
-  color?: Exclude<Colors, "inverted">;
   itemClassNames?: TagProps["classNames"];
   itemStyles?: TagProps["styles"];
 }
@@ -79,17 +65,17 @@ interface TagProps extends AriaTagProps, ColorProps, ContentProps, StyleSlotsToS
 
 // slots
 
-interface TagGroupSlotsType extends Pick<TagGroupProps<any>, "color" | "size" | "radius" | "itemClassNames" | "itemStyles"> {}
+interface TagGroupSlotsType extends Pick<TagGroupProps<any>, "variant" | "color" | "size" | "radius" | "itemClassNames" | "itemStyles"> {}
 
 const [TagGroupSlotsProvider, useTagGroupSlots] = createSlots<TagGroupSlotsType>();
 
 // component
 
 function _TagGroup<T extends object>(props: TagGroupProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { color = "default", size = "md", radius = size, items, renderEmptyState, children, itemClassNames, itemStyles } = props;
+  const { variant = "soft", color = "default", size = "md", radius = size, items, renderEmptyState, children, itemClassNames, itemStyles } = props;
 
   return (
-    <TagGroupSlotsProvider value={{ color, size, radius, itemClassNames, itemStyles }}>
+    <TagGroupSlotsProvider value={{ variant, color, size, radius, itemClassNames, itemStyles }}>
       <AriaTagGroup ref={ref} {...props}>
         <Field {...props}>
           <TagList items={items} renderEmptyState={renderEmptyState} className={tagGroupStyles({ size })}>
@@ -104,9 +90,9 @@ function _TagGroup<T extends object>(props: TagGroupProps<T>, ref: ForwardedRef<
 const TagGroup = (forwardRef as ForwardRefType)(_TagGroup);
 
 function _Tag(props: TagProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, size, radius, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useTagGroupSlots(props);
+  const { variant, color, size, radius, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useTagGroupSlots(props);
 
-  const styleSlots = tagStyles({ color, size, radius });
+  const styleSlots = tagStyles({ variant, color, size, radius });
 
   return (
     <AriaTag
@@ -116,7 +102,7 @@ function _Tag(props: TagProps, ref: ForwardedRef<HTMLDivElement>) {
       {...props}
       className={composeRenderProps(props.className, (className, { isSelected, isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         styleSlots.base({
-          isSelected,
+          variant: isSelected ? "solid" : variant,
           isHovered,
           isPressed,
           isDisabled,
@@ -127,15 +113,15 @@ function _Tag(props: TagProps, ref: ForwardedRef<HTMLDivElement>) {
       )}
       style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.base, styles?.base, style))}
     >
-      {composeRenderProps(props.children, (children, { allowsRemoving, isSelected }) => (
+      {composeRenderProps(props.children, (children, { allowsRemoving }) => (
         <>
           {startContent}
-          <span>{children}</span>
+          {children}
           {endContent}
           {allowsRemoving && (
             <Button
               slot="remove"
-              className={styleSlots.removeButton({ isSelected, className: twMerge(itemClassNames?.removeButton, classNames?.removeButton) })}
+              className={styleSlots.removeButton({ className: twMerge(itemClassNames?.removeButton, classNames?.removeButton) })}
               style={mergeProps(itemStyles?.removeButton, styles?.removeButton)}
             >
               <XIcon />

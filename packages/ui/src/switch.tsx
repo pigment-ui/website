@@ -1,7 +1,7 @@
 "use client";
 
 import { isDisabledVariants, isFocusVisibleVariants } from "./styles";
-import { Colors, SizeProps, StyleSlotsToStyleProps } from "./types";
+import { ColorProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
 import { composeRenderProps, Switch as AriaSwitch, SwitchProps as AriaSwitchProps } from "react-aria-components";
@@ -57,9 +57,7 @@ type SwitchStylesReturnType = ReturnType<typeof switchStyles>;
 
 // props
 
-interface SwitchProps extends AriaSwitchProps, SizeProps, StyleSlotsToStyleProps<SwitchStylesReturnType> {
-  color?: Exclude<Colors, "inverted">;
-}
+interface SwitchProps extends AriaSwitchProps, ColorProps, SizeProps, StyleSlotsToStyleProps<SwitchStylesReturnType> {}
 
 // component
 

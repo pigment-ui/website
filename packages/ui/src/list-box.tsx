@@ -1,8 +1,8 @@
 "use client";
 
 import { cardStyles } from "./card";
-import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
-import { ColorProps, Colors, ContentProps, ForwardRefType, SizeProps, StyleSlotsToStyleProps } from "./types";
+import { isFocusVisibleVariants, smallRadiusVariants, variantColorStyles } from "./styles";
+import { ColorProps, ContentProps, ForwardRefType, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
 import { CheckIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -31,30 +31,21 @@ const listBoxStyles = tv({
 });
 
 const listBoxItemStyles = tv({
+  extend: variantColorStyles,
+  base: ["!scale-100 !backdrop-blur-none", smallRadiusVariants.md],
   slots: {
-    base: ["flex items-center bg-opacity-0", smallRadiusVariants.md],
     content: "flex-1",
   },
   variants: {
-    color: {
-      default: "bg-default-1000 text-default-1000",
-      primary: "bg-primary-500 text-primary-500",
-      secondary: "bg-secondary-500 text-secondary-500",
-      info: "bg-info-500 text-info-500",
-      success: "bg-success-500 text-success-500",
-      warning: "bg-warning-500 text-warning-500",
-      error: "bg-error-500 text-error-500",
-    },
     size: {
-      sm: "gap-x-1 p-1 text-xs [&_svg]:size-3",
-      md: "gap-x-2 p-2 text-sm [&_svg]:size-4",
-      lg: "gap-x-3 p-3 text-base [&_svg]:size-5",
+      sm: "mt-0.5 gap-x-1 p-1 text-xs [&_svg]:size-3",
+      md: "mt-1 gap-x-2 p-2 text-sm [&_svg]:size-4",
+      lg: "mt-1.5 gap-x-3 p-3 text-base [&_svg]:size-5",
     },
-    isSelectable: { true: "cursor-pointer", false: "cursor-default" },
-    isHovered: { true: "bg-opacity-10" },
-    isPressed: { true: "bg-opacity-20" },
-    isDisabled: isDisabledVariants,
-    isFocusVisible: isFocusVisibleVariants,
+    isSelectable: {
+      true: "cursor-pointer",
+      false: "cursor-default",
+    },
   },
 });
 
@@ -78,8 +69,7 @@ type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
 
 // props
 
-interface ListBoxProps<T extends object> extends AriaListBoxProps<T>, SizeProps {
-  color?: Exclude<Colors, "inverted">;
+interface ListBoxProps<T extends object> extends AriaListBoxProps<T>, VariantProps, ColorProps, SizeProps {
   asCard?: boolean;
   itemClassNames?: ListBoxItemProps["classNames"];
   itemStyles?: ListBoxItemProps["styles"];
@@ -87,7 +77,12 @@ interface ListBoxProps<T extends object> extends AriaListBoxProps<T>, SizeProps 
   sectionStyles?: ListBoxSectionProps<T>["styles"];
 }
 
-interface ListBoxItemProps extends AriaListBoxItemProps, ColorProps, ContentProps, StyleSlotsToStyleProps<ListBoxItemStylesReturnType> {}
+interface ListBoxItemProps
+  extends AriaListBoxItemProps,
+    VariantProps,
+    ColorProps,
+    ContentProps,
+    StyleSlotsToStyleProps<ListBoxItemStylesReturnType> {}
 
 interface ListBoxSectionProps<T extends object> extends SectionProps<T>, StyleSlotsToStyleProps<ListBoxSectionStylesReturnType> {
   title: string;
@@ -96,17 +91,20 @@ interface ListBoxSectionProps<T extends object> extends SectionProps<T>, StyleSl
 // slots
 
 interface ListBoxSlotsType<T extends object>
-  extends Pick<ListBoxProps<T>, "color" | "size" | "itemClassNames" | "itemStyles" | "sectionClassNames" | "sectionStyles" | "items" | "children"> {}
+  extends Pick<
+    ListBoxProps<T>,
+    "variant" | "color" | "size" | "itemClassNames" | "itemStyles" | "sectionClassNames" | "sectionStyles" | "items" | "children"
+  > {}
 
 const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType<object>>();
 
 // component
 
 function _ListBox<T extends object>(props: ListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { asCard = true, color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
+  const { asCard = true, variant = "solid", color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
 
   return (
-    <ListBoxSlotsProvider value={{ color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
+    <ListBoxSlotsProvider value={{ variant, color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
       <AriaListBox
         ref={ref}
         {...props}
@@ -119,7 +117,7 @@ function _ListBox<T extends object>(props: ListBoxProps<T>, ref: ForwardedRef<HT
 const ListBox = (forwardRef as ForwardRefType)(_ListBox);
 
 function _ListBoxItem(props: ListBoxItemProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, size, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useListBoxSlots(props);
+  const { variant, color, size, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useListBoxSlots(props);
 
   const styleSlots = listBoxItemStyles({ color, size });
 
@@ -129,8 +127,9 @@ function _ListBoxItem(props: ListBoxItemProps, ref: ForwardedRef<HTMLDivElement>
       id={typeof props.children === "string" ? props.children : undefined}
       textValue={typeof props.children === "string" ? props.children : undefined}
       {...props}
-      className={composeRenderProps(props.className, (className, { isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
+      className={composeRenderProps(props.className, (className, { isHovered, isPressed, isDisabled, isFocusVisible, selectionMode, isSelected }) =>
         styleSlots.base({
+          variant: isSelected ? variant : "light",
           isHovered,
           isPressed,
           isDisabled,

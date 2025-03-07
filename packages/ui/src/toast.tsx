@@ -1,7 +1,7 @@
 // // Reuse the Button from your component library. See below for details.
 // import { Button } from "./button";
 // import { variantColorStyles } from "./styles";
-// import { ColorProps, RadiusProps, SizeProps, StyleSlotsToSlots, Variants } from "./types";
+// import { ColorExtendedProps, RadiusProps, SizeProps, StyleSlotsToSlots, Variants } from "./types";
 // import { createSlots } from "./utils";
 // import type { AriaToastProps, AriaToastRegionProps } from "@react-aria/toast";
 // import { useToast, useToastRegion } from "@react-aria/toast";
@@ -30,8 +30,7 @@
 //
 // // props
 //
-// interface MyToastProps extends ColorProps, SizeProps, RadiusProps, StyleSlotsToSlots<ToastStylesReturnType> {
-//   variant?: Exclude<Variants, "light">;
+// interface MyToastProps extends ColorExtendedProps, SizeProps, RadiusProps, StyleSlotsToSlots<ToastStylesReturnType> {
 //   title?: string;
 //   description?: string;
 //   hideIcon?: boolean;

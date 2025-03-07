@@ -1,7 +1,7 @@
 "use client";
 
 import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, ContentProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { ColorExtendedProps, ContentProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import React, { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { mergeProps } from "react-aria";
 import { twMerge } from "tailwind-merge";
@@ -38,7 +38,7 @@ type BadgeStylesReturnType = ReturnType<typeof badgeStyles>;
 interface BadgeProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "color" | "content">,
     VariantProps,
-    ColorProps,
+    ColorExtendedProps,
     SizeProps,
     ContentProps,
     StyleSlotsToStyleProps<BadgeStylesReturnType> {

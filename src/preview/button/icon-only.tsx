@@ -7,19 +7,19 @@ import { PinIcon } from "lucide-react";
 function ButtonIconOnly() {
   return (
     <div className="flex flex-wrap gap-4">
-      <Button isIconOnly variant="solid">
+      <Button isFit variant="solid">
         <PinIcon />
       </Button>
-      <Button isIconOnly variant="soft">
+      <Button isFit variant="soft">
         <PinIcon />
       </Button>
-      <Button isIconOnly variant="light">
+      <Button isFit variant="light">
         <PinIcon />
       </Button>
-      <Button isIconOnly variant="bordered">
+      <Button isFit variant="bordered">
         <PinIcon />
       </Button>
-      <Button isIconOnly variant="faded">
+      <Button isFit variant="faded">
         <PinIcon />
       </Button>
     </div>

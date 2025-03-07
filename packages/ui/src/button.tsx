@@ -2,7 +2,7 @@
 
 import { Spinner } from "./spinner";
 import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, ContentProps, RadiusProps, SizeProps, StyleProps, VariantProps } from "./types";
+import { ColorExtendedProps, ContentProps, RadiusProps, SizeProps, StyleProps, VariantProps } from "./types";
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import { useObjectRef } from "@react-aria/utils";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -33,7 +33,7 @@ const buttonStyles = tv({
 
 // props
 
-interface ButtonProps extends AriaButtonProps, HoverProps, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps, StyleProps {
+interface ButtonProps extends AriaButtonProps, HoverProps, VariantProps, ColorExtendedProps, SizeProps, RadiusProps, ContentProps, StyleProps {
   isFit?: boolean;
   isLoading?: boolean;
   asChild?: boolean;

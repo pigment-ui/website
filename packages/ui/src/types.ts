@@ -9,8 +9,9 @@ export type StyleSlotsToSlots<T> = { styleSlots: T } & StyleSlotsToStyleProps<T>
 export type Variants = "solid" | "soft" | "light" | "bordered" | "outlined" | "faded";
 export type VariantProps = { variant?: Variants };
 
-export type Colors = "default" | "inverted" | "primary" | "secondary" | "info" | "success" | "warning" | "error";
+export type Colors = "default" | "primary" | "secondary" | "info" | "success" | "warning" | "error";
 export type ColorProps = { color?: Colors };
+export type ColorExtendedProps = { color?: Colors | "inverted" };
 
 export type Sizes = "sm" | "md" | "lg";
 export type SizeProps = { size?: Sizes };

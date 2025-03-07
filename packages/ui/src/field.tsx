@@ -1,7 +1,7 @@
 "use client";
 
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants, variantColorStyles } from "./styles";
-import { Colors, RadiusProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { ColorProps, RadiusProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { useObjectRef } from "@react-aria/utils";
 import { ValidationResult } from "@react-types/shared";
 import React, { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
@@ -103,8 +103,7 @@ interface FieldProps extends FieldBaseProps {
   children?: ReactNode;
 }
 
-interface FieldInputBaseProps extends VariantProps, SizeProps, RadiusProps, FieldBaseProps {
-  color?: Exclude<Colors, "inverted">;
+interface FieldInputBaseProps extends VariantProps, ColorProps, SizeProps, RadiusProps, FieldBaseProps {
   isLabelInside?: boolean;
   startContent?: ReactElement;
   endContent?: ReactElement;
