@@ -96,7 +96,7 @@ function _Alert(props: AlertProps, ref: ForwardedRef<HTMLDivElement>) {
         <Button
           aria-label="Alert close button"
           isFit
-          variant="light"
+          variant="soft"
           radius="full"
           size={size}
           color={variant === "solid" ? (color === "inverted" ? "default" : "inverted") : color}
