@@ -19,18 +19,17 @@ const modalStyles = tv({
   slots: {
     base: "relative duration-300",
     header: "pr-16",
-    body: "",
     dialog: "relative flex flex-col outline-none",
-    backdrop: "fixed inset-0 z-[999] grid duration-300",
+    backdrop: "fixed inset-0 z-[999] grid place-items-center duration-300",
     closeButton: "absolute right-2 top-2",
   },
   variants: {
     placement: {
-      top: { base: "rounded-t-none", backdrop: "items-start pb-16" },
-      bottom: { base: "rounded-b-none", backdrop: "items-end pt-16" },
-      left: { base: "rounded-l-none", backdrop: "justify-start pr-4" },
-      right: { base: "rounded-r-none", backdrop: "justify-end pl-4" },
-      center: { base: "", backdrop: "place-items-center px-4 py-16" },
+      top: { backdrop: "items-start pb-16", base: "rounded-t-none" },
+      bottom: { backdrop: "items-end pt-16", base: "rounded-b-none" },
+      left: { backdrop: "justify-start pr-4", base: "rounded-l-none" },
+      right: { backdrop: "justify-end pl-4", base: "rounded-r-none" },
+      center: { backdrop: "px-4 py-16" },
     },
     size: {
       sm: "",
@@ -43,7 +42,7 @@ const modalStyles = tv({
       transparent: { backdrop: "bg-transparent" },
     },
     insideScroll: {
-      true: { body: "overflow-y-auto" },
+      true: { body: "flex-1 overflow-y-auto" },
       false: { backdrop: "overflow-auto" },
     },
   },
@@ -51,9 +50,12 @@ const modalStyles = tv({
     { size: "sm", placement: ["left", "right", "center"], className: { base: "max-w-[600px]" } },
     { size: "md", placement: ["left", "right", "center"], className: { base: "max-w-[900px]" } },
     { size: "lg", placement: ["left", "right", "center"], className: { base: "max-w-[1200px]" } },
-    { insideScroll: true, placement: ["left", "right"], className: { base: "max-h-screen" } },
-    { insideScroll: true, placement: ["top", "bottom"], className: { base: "max-h-[calc(100vh-4rem)]" } },
-    { insideScroll: true, placement: ["center"], className: { base: "max-h-[calc(100vh-8rem)]" } },
+    { size: "sm", insideScroll: true, placement: ["top", "bottom"], className: { dialog: "h-[600px]" } },
+    { size: "md", insideScroll: true, placement: ["top", "bottom"], className: { dialog: "h-[900px]" } },
+    { size: "lg", insideScroll: true, placement: ["top", "bottom"], className: { dialog: "h-[1200px]" } },
+    { insideScroll: true, placement: ["left", "right"], className: { dialog: "max-h-screen" } },
+    { insideScroll: true, placement: ["top", "bottom"], className: { dialog: "max-h-[calc(100vh-4rem)]" } },
+    { insideScroll: true, placement: ["center"], className: { dialog: "max-h-[calc(100vh-8rem)]" } },
   ],
 });
 
@@ -226,7 +228,7 @@ function _ModalSubtitle<T extends object>(props: HTMLAttributes<HTMLParagraphEle
   return (
     <p
       ref={ref}
-      className={styleSlots.title({ className: twMerge(classNames?.subtitle, className) })}
+      className={styleSlots.subtitle({ className: twMerge(classNames?.subtitle, className) })}
       style={mergeProps(styles?.subtitle, style)}
       {...restProps}
     />

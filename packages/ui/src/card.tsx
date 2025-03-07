@@ -124,7 +124,7 @@ function _CardSubtitle(props: HTMLAttributes<HTMLParagraphElement>, ref: Forward
   return (
     <p
       ref={ref}
-      className={styleSlots.title({ className: twMerge(classNames?.subtitle, className) })}
+      className={styleSlots.subtitle({ className: twMerge(classNames?.subtitle, className) })}
       style={mergeProps(styles?.subtitle, style)}
       {...restProps}
     />
