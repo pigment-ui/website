@@ -1,5 +1,6 @@
 "use client";
 
+import { capitalize } from "inflection";
 import { GithubIcon, MenuIcon, MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import NextLink from "next/link";
@@ -60,7 +61,13 @@ export function Header() {
             <Button aria-label="theme menu" isCompact variant="faded">
               {mounted ? theme === "light" ? <SunIcon /> : theme === "dark" ? <MoonIcon /> : <MonitorIcon /> : <MonitorIcon />}
             </Button>
-            <Menu onAction={(key) => setTheme((key as string).toLowerCase())} placement="bottom end" className="w-32">
+            <Menu
+              selectionMode="single"
+              selectedKeys={new Set([capitalize(theme ?? "system")])}
+              onSelectionChange={(key) => setTheme((Array.from(key)[0] as string).toLowerCase())}
+              placement="bottom end"
+              className="w-32"
+            >
               <MenuItem>Light</MenuItem>
               <MenuItem>Dark</MenuItem>
               <MenuItem>System</MenuItem>

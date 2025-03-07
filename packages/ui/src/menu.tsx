@@ -40,10 +40,10 @@ const [MenuSlotsProvider, useMenuSlots] = createSlots<ListBoxSlotsType<object>>(
 // component
 
 function _Menu<T extends object>(props: MenuProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
+  const { variant = "solid", color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
 
   return (
-    <MenuSlotsProvider value={{ color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
+    <MenuSlotsProvider value={{ variant, color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
       <Popover maxHeight={300} hideArrow {...props} className={composeRenderProps(props.className, (className) => menuStyles({ className }))}>
         <AriaMenu ref={ref} {...props} className="outline-none" style={{}} />
       </Popover>
@@ -54,7 +54,7 @@ function _Menu<T extends object>(props: MenuProps<T>, ref: ForwardedRef<HTMLDivE
 const Menu = (forwardRef as ForwardRefType)(_Menu);
 
 function _MenuItem(props: MenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { color, size, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useMenuSlots(props);
+  const { variant, color, size, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useMenuSlots(props);
 
   const styleSlots = menuItemStyles({ color, size });
 
@@ -64,8 +64,9 @@ function _MenuItem(props: MenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
       id={typeof props.children === "string" ? props.children : undefined}
       textValue={typeof props.children === "string" ? props.children : undefined}
       {...props}
-      className={composeRenderProps(props.className, (className, { isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
+      className={composeRenderProps(props.className, (className, { isHovered, isPressed, isDisabled, isFocusVisible, selectionMode, isSelected }) =>
         styleSlots.base({
+          variant: isSelected ? variant : "light",
           isHovered,
           isPressed,
           isDisabled,
