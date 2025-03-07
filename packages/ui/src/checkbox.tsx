@@ -92,14 +92,14 @@ function _CheckboxLink(props: ComponentPropsWithoutRef<typeof Link>, ref: Forwar
       ref={ref}
       target="_blank"
       {...props}
-      className={(renderProps) =>
+      className={composeRenderProps(props.className, (className, { isHovered, isFocusVisible }) =>
         twMerge(
           "underline",
-          renderProps.isHovered && "decoration-double",
-          renderProps.isFocusVisible ? isFocusVisibleVariants.true : isFocusVisibleVariants.false,
-          typeof props.className === "string" ? props.className : props.className?.(renderProps),
-        )
-      }
+          isHovered && "decoration-double",
+          isFocusVisible ? isFocusVisibleVariants.true : isFocusVisibleVariants.false,
+          className,
+        ),
+      )}
     />
   );
 }
