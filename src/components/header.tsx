@@ -41,7 +41,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 h-16 w-full border-b border-default-1000/20 bg-default-0/75 backdrop-blur-lg">
       <div className="container flex h-full items-center gap-x-8">
-        <Button asChild variant={segment === null ? "soft" : "light"} isFit>
+        <Button asChild variant={segment === null ? "soft" : "light"} isCompact>
           <NextLink href="/" prefetch>
             <img src="/logo.png" alt="logo" className="size-16 invert dark:invert-0" />
           </NextLink>
@@ -50,14 +50,14 @@ export function Header() {
         <div className="flex gap-x-2 max-lg:hidden">{routes}</div>
 
         <div className="ml-auto flex gap-x-2">
-          <Button aria-label="github repo" asChild isFit variant="faded">
+          <Button aria-label="github repo" asChild isCompact variant="faded">
             <a href="https://github.com/pigment-ui" target="_blank">
               <GithubIcon />
             </a>
           </Button>
 
           <MenuTrigger>
-            <Button aria-label="theme menu" isFit variant="faded">
+            <Button aria-label="theme menu" isCompact variant="faded">
               {mounted ? theme === "light" ? <SunIcon /> : theme === "dark" ? <MoonIcon /> : <MonitorIcon /> : <MonitorIcon />}
             </Button>
             <Menu onAction={(key) => setTheme((key as string).toLowerCase())} placement="bottom end" className="w-32">
@@ -68,7 +68,7 @@ export function Header() {
           </MenuTrigger>
 
           <PopoverTrigger isOpen={isOpened} onOpenChange={setIsOpened}>
-            <Button aria-label="header menu toggle" isFit variant="faded" className="lg:hidden">
+            <Button aria-label="header menu toggle" isCompact variant="faded" className="lg:hidden">
               <MenuIcon />
             </Button>
             <Popover className="flex w-48 flex-col gap-y-2">{routes}</Popover>

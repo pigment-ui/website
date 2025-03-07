@@ -20,21 +20,21 @@ const buttonStyles = tv({
       md: "h-10 gap-x-2.5 px-5 text-sm [&_svg]:size-5",
       lg: "h-12 gap-x-3 px-6 text-base [&_svg]:size-6",
     },
-    isFit: { true: "" },
+    isCompact: { true: "" },
     isLoading: { true: "!text-transparent" },
     radius: radiusVariants,
   },
   compoundVariants: [
-    { size: "sm", isFit: true, className: "px-2" },
-    { size: "md", isFit: true, className: "px-2.5" },
-    { size: "lg", isFit: true, className: "px-3" },
+    { size: "sm", isCompact: true, className: "px-2" },
+    { size: "md", isCompact: true, className: "px-2.5" },
+    { size: "lg", isCompact: true, className: "px-3" },
   ],
 });
 
 // props
 
 interface ButtonProps extends AriaButtonProps, HoverProps, VariantProps, ColorExtendedProps, SizeProps, RadiusProps, ContentProps, StyleProps {
-  isFit?: boolean;
+  isCompact?: boolean;
   isLoading?: boolean;
   asChild?: boolean;
 }
@@ -51,7 +51,7 @@ function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
     endContent,
     isLoading,
     isDisabled: disabled,
-    isFit,
+    isCompact,
     asChild,
     children,
     className,
@@ -79,7 +79,7 @@ function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
         color,
         size,
         radius,
-        isFit,
+        isCompact,
         isLoading,
         isHovered,
         isPressed,

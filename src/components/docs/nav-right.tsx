@@ -42,7 +42,7 @@ export function NavRight({ doc }: { doc: Doc }) {
             <li key={heading.id} className={twMerge(heading.level === 3 && "pl-4")}>
               <Button
                 asChild
-                isFit
+                isCompact
                 variant={heading.id === activeSlug ? "soft" : "light"}
                 className={twMerge("w-full", heading.id !== activeSlug && "text-default-500", "justify-start")}
               >

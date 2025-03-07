@@ -16,20 +16,20 @@ const chipStyles = tv({
       md: "h-8 gap-x-2 px-4 text-sm [&_svg]:size-4",
       lg: "h-10 gap-x-2.5 px-5 text-base [&_svg]:size-5",
     },
-    isFit: { true: "" },
+    isCompact: { true: "" },
     radius: smallRadiusVariants,
   },
   compoundVariants: [
-    { size: "sm", isFit: true, className: "px-1.5" },
-    { size: "md", isFit: true, className: "px-2" },
-    { size: "lg", isFit: true, className: "px-2.5" },
+    { size: "sm", isCompact: true, className: "px-1.5" },
+    { size: "md", isCompact: true, className: "px-2" },
+    { size: "lg", isCompact: true, className: "px-2.5" },
   ],
 });
 
 // props
 
 interface ChipProps extends Omit<HTMLAttributes<HTMLDivElement>, "color">, VariantProps, ColorExtendedProps, SizeProps, RadiusProps, ContentProps {
-  isFit?: boolean;
+  isCompact?: boolean;
 }
 
 // component
@@ -40,7 +40,7 @@ function _Chip(props: ChipProps, ref: ForwardedRef<HTMLDivElement>) {
     color = "default",
     size = "md",
     radius = size,
-    isFit,
+    isCompact,
     startContent,
     endContent,
     className,
@@ -50,7 +50,7 @@ function _Chip(props: ChipProps, ref: ForwardedRef<HTMLDivElement>) {
   } = props;
 
   return (
-    <div ref={ref} {...restProps} className={chipStyles({ variant, color, size, radius, isFit, className })} style={style}>
+    <div ref={ref} {...restProps} className={chipStyles({ variant, color, size, radius, isCompact, className })} style={style}>
       {startContent}
       {children}
       {endContent}

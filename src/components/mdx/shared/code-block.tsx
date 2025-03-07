@@ -65,7 +65,7 @@ export function CodeBlock({
       </div>
 
       <Button
-        isFit
+        isCompact
         variant="light"
         size="sm"
         className="absolute right-2.5 top-2.5 hidden backdrop-blur-lg group-hover:block"

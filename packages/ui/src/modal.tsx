@@ -141,7 +141,7 @@ function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
             {!hideCloseButton && (
               <Button
                 aria-label="Modal close button"
-                isFit
+                isCompact
                 variant="soft"
                 radius="full"
                 size="sm"

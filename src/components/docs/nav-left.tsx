@@ -41,7 +41,7 @@ export function NavLeft({ doc: docProps, allDocs }: { doc: Doc; allDocs: Doc[] }
                   <li key={doc.slug}>
                     <Button
                       asChild
-                      isFit
+                      isCompact
                       variant={doc.slug === docProps.slug ? "soft" : "light"}
                       className={twMerge("w-full", doc.slug !== docProps.slug && "text-default-500", "justify-start")}
                     >

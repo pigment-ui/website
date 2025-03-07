@@ -27,7 +27,7 @@ const badgeStyles = tv({
       "bottom-right": "bottom-0 right-0 translate-x-1/2 translate-y-1/2",
       "bottom-left": "bottom-0 left-0 -translate-x-1/2 translate-y-1/2",
     },
-    isFit: { true: "px-0" },
+    isCompact: { true: "px-0" },
   },
 });
 
@@ -43,7 +43,7 @@ interface BadgeProps
     ContentProps,
     StyleSlotsToStyleProps<BadgeStylesReturnType> {
   content?: ReactNode;
-  isFit?: boolean;
+  isCompact?: boolean;
   placement?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
 }
 
@@ -55,7 +55,7 @@ function _Badge(props: BadgeProps, ref: ForwardedRef<HTMLDivElement>) {
     color = "default",
     size = "md",
     placement = "top-right",
-    isFit,
+    isCompact,
     content,
     startContent,
     endContent,
@@ -67,7 +67,7 @@ function _Badge(props: BadgeProps, ref: ForwardedRef<HTMLDivElement>) {
     ...restProps
   } = props;
 
-  const styleSlots = badgeStyles({ placement, variant, color, size, isFit, className });
+  const styleSlots = badgeStyles({ placement, variant, color, size, isCompact, className });
 
   return (
     <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>

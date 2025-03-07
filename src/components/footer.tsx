@@ -9,7 +9,7 @@ export function Footer() {
       <div className="container flex items-center justify-between">
         <p className="text-sm text-default-500">&copy; 2024 Pigment UI</p>
 
-        <Button aria-label="linkedin url" asChild isFit variant="light" radius="full" className="[&:not(:hover)]:text-default-500">
+        <Button aria-label="linkedin url" asChild isCompact variant="light" radius="full" className="[&:not(:hover)]:text-default-500">
           <a href="https://www.linkedin.com/company/pigment-ui" target="_blank">
             <LinkedinIcon />
           </a>

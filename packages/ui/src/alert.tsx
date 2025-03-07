@@ -95,7 +95,7 @@ function _Alert(props: AlertProps, ref: ForwardedRef<HTMLDivElement>) {
       {!!onClose && (
         <Button
           aria-label="Alert close button"
-          isFit
+          isCompact
           variant="soft"
           radius="full"
           size={size}
