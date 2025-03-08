@@ -2,7 +2,7 @@
 
 import { Field, FieldBaseProps } from "./field";
 import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { ColorProps, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps, VariantProps, Variants } from "./types";
 import { createSlots } from "./utils";
 import { XIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -57,25 +57,40 @@ interface TagGroupProps<T extends object>
     ColorProps,
     RadiusProps,
     FieldBaseProps {
+  variantActive?: Variants;
   itemClassNames?: TagProps["classNames"];
   itemStyles?: TagProps["styles"];
 }
 
-interface TagProps extends AriaTagProps, ColorProps, ContentProps, StyleSlotsToStyleProps<TagStylesReturnType> {}
+interface TagProps extends AriaTagProps, VariantProps, ColorProps, ContentProps, StyleSlotsToStyleProps<TagStylesReturnType> {
+  variantActive?: Variants;
+}
 
 // slots
 
-interface TagGroupSlotsType extends Pick<TagGroupProps<any>, "variant" | "color" | "size" | "radius" | "itemClassNames" | "itemStyles"> {}
+interface TagGroupSlotsType
+  extends Pick<TagGroupProps<any>, "variant" | "variantActive" | "color" | "size" | "radius" | "itemClassNames" | "itemStyles"> {}
 
 const [TagGroupSlotsProvider, useTagGroupSlots] = createSlots<TagGroupSlotsType>();
 
 // component
 
 function _TagGroup<T extends object>(props: TagGroupProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { variant = "soft", color = "default", size = "md", radius = size, items, renderEmptyState, children, itemClassNames, itemStyles } = props;
+  const {
+    variant = "soft",
+    variantActive = "solid",
+    color = "default",
+    size = "md",
+    radius = size,
+    items,
+    renderEmptyState,
+    children,
+    itemClassNames,
+    itemStyles,
+  } = props;
 
   return (
-    <TagGroupSlotsProvider value={{ variant, color, size, radius, itemClassNames, itemStyles }}>
+    <TagGroupSlotsProvider value={{ variant, variantActive, color, size, radius, itemClassNames, itemStyles }}>
       <AriaTagGroup ref={ref} {...props}>
         <Field {...props}>
           <TagList items={items} renderEmptyState={renderEmptyState} className={tagGroupStyles({ size })}>
@@ -90,7 +105,8 @@ function _TagGroup<T extends object>(props: TagGroupProps<T>, ref: ForwardedRef<
 const TagGroup = (forwardRef as ForwardRefType)(_TagGroup);
 
 function _Tag(props: TagProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { variant, color, size, radius, startContent, endContent, classNames, itemClassNames, styles, itemStyles } = useTagGroupSlots(props);
+  const { variant, variantActive, color, size, radius, startContent, endContent, classNames, itemClassNames, styles, itemStyles } =
+    useTagGroupSlots(props);
 
   const styleSlots = tagStyles({ variant, color, size, radius });
 
@@ -102,7 +118,7 @@ function _Tag(props: TagProps, ref: ForwardedRef<HTMLDivElement>) {
       {...props}
       className={composeRenderProps(props.className, (className, { isSelected, isHovered, isPressed, isDisabled, isFocusVisible, selectionMode }) =>
         styleSlots.base({
-          variant: isSelected ? "solid" : variant,
+          variant: isSelected ? variantActive : variant,
           isHovered,
           isPressed,
           isDisabled,

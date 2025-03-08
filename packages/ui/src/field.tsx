@@ -17,7 +17,7 @@ const fieldStyles = tv({
     base: "relative flex size-full flex-col",
     label: "cursor-default",
     description: "",
-    errorMessage: "text-error-500",
+    errorMessage: "text-error",
   },
   variants: {
     size: {
@@ -69,18 +69,18 @@ const fieldInputStyles = tv({
 
     { color: "default", className: { button: "bg-default-1000" } },
     { color: "default", isFocusWithin: true, className: { base: "ring-default-1000" } },
-    { color: "primary", className: { button: "bg-primary-500" } },
-    { color: "primary", isFocusWithin: true, className: { base: "ring-primary-500" } },
-    { color: "secondary", className: { button: "bg-secondary-500" } },
-    { color: "secondary", isFocusWithin: true, className: { base: "ring-secondary-500" } },
-    { color: "info", className: { button: "bg-info-500" } },
-    { color: "info", isFocusWithin: true, className: { base: "ring-info-500" } },
-    { color: "success", className: { button: "bg-success-500" } },
-    { color: "success", isFocusWithin: true, className: { base: "ring-success-500" } },
-    { color: "warning", className: { button: "bg-warning-500" } },
-    { color: "warning", isFocusWithin: true, className: { base: "ring-warning-500" } },
-    { color: "error", className: { button: "bg-error-500" } },
-    { color: "error", isFocusWithin: true, className: { base: "ring-error-500" } },
+    { color: "primary", className: { button: "bg-primary" } },
+    { color: "primary", isFocusWithin: true, className: { base: "ring-primary" } },
+    { color: "secondary", className: { button: "bg-secondary" } },
+    { color: "secondary", isFocusWithin: true, className: { base: "ring-secondary" } },
+    { color: "info", className: { button: "bg-info" } },
+    { color: "info", isFocusWithin: true, className: { base: "ring-info" } },
+    { color: "success", className: { button: "bg-success" } },
+    { color: "success", isFocusWithin: true, className: { base: "ring-success" } },
+    { color: "warning", className: { button: "bg-warning" } },
+    { color: "warning", isFocusWithin: true, className: { base: "ring-warning" } },
+    { color: "error", className: { button: "bg-error" } },
+    { color: "error", isFocusWithin: true, className: { base: "ring-error" } },
 
     { variant: "solid", className: { button: "bg-default-0" } },
   ],
@@ -192,17 +192,15 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
           isLabelInside &&
             twMerge(
               "absolute z-20 pointer-events-none",
-              variant === "solid"
-                ? "text-default-0"
-                : {
-                    default: "text-default-1000",
-                    primary: "text-primary-500",
-                    secondary: "text-secondary-500",
-                    info: "text-info-500",
-                    success: "text-success-500",
-                    warning: "text-warning-500",
-                    error: "text-error-500",
-                  }[isInvalid ? "error" : color],
+              {
+                default: variant === "solid" ? "text-default-0" : "text-default-1000",
+                primary: variant === "solid" ? "text-primary-foreground" : "text-primary",
+                secondary: variant === "solid" ? "text-secondary-foreground" : "text-secondary",
+                info: variant === "solid" ? "text-info-foreground" : "text-info",
+                success: variant === "solid" ? "text-success-foreground" : "text-success",
+                warning: variant === "solid" ? "text-warning-foreground" : "text-warning",
+                error: variant === "solid" ? "text-error-foreground" : "text-error",
+              }[isInvalid ? "error" : color],
               {
                 sm: "inset-x-2 top-2",
                 md: "inset-x-2.5 top-2.5",

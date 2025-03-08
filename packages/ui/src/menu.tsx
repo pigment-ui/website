@@ -50,7 +50,7 @@ const [MenuSlotsProvider, useMenuSlots] = createSlots<ListBoxSlotsType<object>>(
 // component
 
 function _Menu<T extends object>(props: MenuProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { variant = "solid", color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
+  const { variant = "light", color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
 
   return (
     <MenuSlotsProvider value={{ variant, color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>

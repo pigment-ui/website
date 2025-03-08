@@ -3,7 +3,7 @@
 import { Button } from "./button";
 import { Field, FieldBaseProps } from "./field";
 import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, StyleProps, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { ColorProps, StyleProps, StyleSlotsToStyleProps, VariantProps, Variants } from "./types";
 import { useFormValidationState } from "@react-stately/form";
 import React, { ComponentPropsWithoutRef } from "react";
 import { AriaFieldProps, FileDropItem, mergeProps, useField } from "react-aria";
@@ -15,7 +15,7 @@ import { tv } from "tailwind-variants";
 
 const fileTriggerBlockStyles = tv({
   extend: variantColorStyles,
-  base: ["flex-col text-center", radiusVariants.md],
+  base: "flex-col text-center",
   slots: {
     wrapper: "",
     button: "",
@@ -23,9 +23,9 @@ const fileTriggerBlockStyles = tv({
   },
   variants: {
     size: {
-      sm: { base: "gap-4 p-4", text: "text-xs" },
-      md: { base: "gap-5 p-5", text: "text-sm" },
-      lg: { base: "gap-6 p-6", text: "text-base" },
+      sm: { base: ["gap-4 p-4", radiusVariants.sm], text: "text-xs" },
+      md: { base: ["gap-5 p-5", radiusVariants.md], text: "text-sm" },
+      lg: { base: ["gap-6 p-6", radiusVariants.lg], text: "text-base" },
     },
   },
 });
@@ -42,6 +42,7 @@ interface FileTriggerDropzoneProps
     FieldBaseProps,
     StyleProps,
     StyleSlotsToStyleProps<FileTriggerDropzoneStylesReturnType> {
+  variantButton?: Variants;
   value: File[];
   onChange: (files: File[]) => void;
   isDisabled?: boolean;
@@ -56,6 +57,7 @@ interface FileTriggerDropzoneProps
 function FileTriggerDropzone(props: FileTriggerDropzoneProps) {
   const {
     variant = "soft",
+    variantButton = "solid",
     color = "default",
     size = "md",
     placeholder,
@@ -122,7 +124,7 @@ function FileTriggerDropzone(props: FileTriggerDropzoneProps) {
               defaultCamera={defaultCamera}
             >
               <Button
-                variant={variant}
+                variant={variantButton}
                 color={isInvalid || displayValidation.isInvalid ? "error" : color}
                 size={size}
                 isLoading={isLoading}

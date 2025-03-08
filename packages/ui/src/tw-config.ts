@@ -21,6 +21,8 @@ export const twConfig: Config = {
           1000: "rgb(var(--default-1000) / <alpha-value>)",
         },
         primary: {
+          DEFAULT: "rgb(var(--primary-500) / <alpha-value>)",
+          foreground: "rgb(var(--default-0) / <alpha-value>)",
           50: "rgb(var(--primary-50) / <alpha-value>)",
           100: "rgb(var(--primary-100) / <alpha-value>)",
           200: "rgb(var(--primary-200) / <alpha-value>)",
@@ -34,6 +36,8 @@ export const twConfig: Config = {
           950: "rgb(var(--primary-950) / <alpha-value>)",
         },
         secondary: {
+          DEFAULT: "rgb(var(--secondary-500) / <alpha-value>)",
+          foreground: "rgb(var(--default-0) / <alpha-value>)",
           50: "rgb(var(--secondary-50) / <alpha-value>)",
           100: "rgb(var(--secondary-100) / <alpha-value>)",
           200: "rgb(var(--secondary-200) / <alpha-value>)",
@@ -47,6 +51,8 @@ export const twConfig: Config = {
           950: "rgb(var(--secondary-950) / <alpha-value>)",
         },
         info: {
+          DEFAULT: "rgb(var(--info-500) / <alpha-value>)",
+          foreground: "rgb(var(--default-0) / <alpha-value>)",
           50: "rgb(var(--info-50) / <alpha-value>)",
           100: "rgb(var(--info-100) / <alpha-value>)",
           200: "rgb(var(--info-200) / <alpha-value>)",
@@ -60,6 +66,8 @@ export const twConfig: Config = {
           950: "rgb(var(--info-950) / <alpha-value>)",
         },
         success: {
+          DEFAULT: "rgb(var(--success-500) / <alpha-value>)",
+          foreground: "rgb(var(--default-0) / <alpha-value>)",
           50: "rgb(var(--success-50) / <alpha-value>)",
           100: "rgb(var(--success-100) / <alpha-value>)",
           200: "rgb(var(--success-200) / <alpha-value>)",
@@ -73,6 +81,8 @@ export const twConfig: Config = {
           950: "rgb(var(--success-950) / <alpha-value>)",
         },
         warning: {
+          DEFAULT: "rgb(var(--warning-500) / <alpha-value>)",
+          foreground: "rgb(var(--default-0) / <alpha-value>)",
           50: "rgb(var(--warning-50) / <alpha-value>)",
           100: "rgb(var(--warning-100) / <alpha-value>)",
           200: "rgb(var(--warning-200) / <alpha-value>)",
@@ -86,6 +96,8 @@ export const twConfig: Config = {
           950: "rgb(var(--warning-950) / <alpha-value>)",
         },
         error: {
+          DEFAULT: "rgb(var(--error-500) / <alpha-value>)",
+          foreground: "rgb(var(--default-0) / <alpha-value>)",
           50: "rgb(var(--error-50) / <alpha-value>)",
           100: "rgb(var(--error-100) / <alpha-value>)",
           200: "rgb(var(--error-200) / <alpha-value>)",

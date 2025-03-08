@@ -1,7 +1,7 @@
 "use client";
 
 import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorExtendedProps, ContentProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { ColorExtendedProps, ContentProps, RadiusProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import React, { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { mergeProps } from "react-aria";
 import { twMerge } from "tailwind-merge";
@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 
 const badgeStyles = tv({
   extend: variantColorStyles,
-  base: ["!absolute min-w-max whitespace-nowrap", radiusVariants.full],
+  base: "!absolute min-w-max whitespace-nowrap",
   slots: {
     wrapper: "relative inline-block",
   },
@@ -28,6 +28,7 @@ const badgeStyles = tv({
       "bottom-left": "bottom-0 left-0 -translate-x-1/2 translate-y-1/2",
     },
     isCompact: { true: "px-0" },
+    radius: radiusVariants,
   },
 });
 
@@ -40,6 +41,7 @@ interface BadgeProps
     VariantProps,
     ColorExtendedProps,
     SizeProps,
+    RadiusProps,
     ContentProps,
     StyleSlotsToStyleProps<BadgeStylesReturnType> {
   content?: ReactNode;
@@ -54,6 +56,7 @@ function _Badge(props: BadgeProps, ref: ForwardedRef<HTMLDivElement>) {
     variant = "solid",
     color = "default",
     size = "md",
+    radius = "full",
     placement = "top-right",
     isCompact,
     content,
@@ -67,7 +70,7 @@ function _Badge(props: BadgeProps, ref: ForwardedRef<HTMLDivElement>) {
     ...restProps
   } = props;
 
-  const styleSlots = badgeStyles({ placement, variant, color, size, isCompact, className });
+  const styleSlots = badgeStyles({ placement, variant, color, size, radius, isCompact, className });
 
   return (
     <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>

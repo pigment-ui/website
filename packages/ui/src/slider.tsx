@@ -77,7 +77,7 @@ const sliderStyles = tv({
       full: { track: smallRadiusVariants.full, thumb: smallRadiusVariants.full, filler: smallRadiusVariants.full },
       none: { track: smallRadiusVariants.none, thumb: smallRadiusVariants.none, filler: smallRadiusVariants.none },
     },
-    isInvalid: { true: { track: "bg-error-500/20", thumb: "border-error-500", filler: "bg-error-500" } },
+    isInvalid: { true: { track: "bg-error/20", thumb: "border-error", filler: "bg-error" } },
     isDisabled: { true: { track: isDisabledVariants.true } },
     isHovered: { true: { thumb: "cursor-grab" } },
     isDragging: { true: { thumb: "cursor-grabbing" } },

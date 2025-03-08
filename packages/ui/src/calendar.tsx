@@ -2,8 +2,8 @@
 
 import { cardStyles } from "./card";
 import { Field, FieldBaseProps } from "./field";
-import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
-import { StyleSlotsToStyleProps } from "./types";
+import { smallRadiusVariants, variantColorStyles } from "./styles";
+import { ColorProps, RadiusProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { FormValidationProps, useFormValidationState } from "@react-stately/form";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef, ReactNode } from "react";
@@ -27,50 +27,56 @@ import { tv } from "tailwind-variants";
 // styles
 
 const calendarStyles = tv({
+  extend: variantColorStyles,
+  base: "transition-transform",
   slots: {
-    base: "",
-    wrapper: "w-fit max-w-full overflow-auto p-4",
+    wrapper: "",
+    calendarWrapper: "w-fit max-w-full overflow-auto p-4",
     header: "flex items-center justify-between gap-4",
     heading: "font-medium",
-    button: ["grid place-items-center duration-300", smallRadiusVariants.md],
+    button: [
+      "grid place-items-center outline-none duration-300",
+      "data-[pressed]:scale-90 data-[hovered]:bg-default-1000/10",
+      "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
+      "data-[focus-visible]:z-10 data-[focus-visible]:outline data-[focus-visible]:outline-default-1000",
+    ],
     gridWrapper: "flex gap-4",
-    grid: "size-fit border-separate border-spacing-1 [&_td]:p-0 [&_th]:p-0 [&_th]:font-light [&_th]:text-default-700",
-    cell: ["relative z-0 grid place-items-center transition-transform duration-300", smallRadiusVariants.md],
+    grid: "size-fit border-separate border-spacing-x-0 border-spacing-y-1 [&_td]:p-0 [&_th]:p-0 [&_th]:font-light [&_th]:text-default-700",
   },
   variants: {
+    color: {
+      default: "",
+      primary: "",
+      secondary: "",
+      info: "",
+      success: "",
+      warning: "",
+      error: "",
+    },
     size: {
-      sm: { heading: "text-sm", button: "size-6 [&>svg]:size-3", grid: "mt-3 [&_th]:size-7 [&_th]:text-xs", cell: "size-7 text-xs" },
-      md: { heading: "text-base", button: "size-7 [&>svg]:size-4", grid: "mt-4 [&_th]:size-8 [&_th]:text-sm", cell: "size-8 text-sm" },
-      lg: { heading: "text-lg", button: "size-8 [&>svg]:size-5", grid: "mt-5 [&_th]:size-9 [&_th]:text-base", cell: "size-9 text-base" },
+      sm: {
+        base: "size-7 text-xs",
+        heading: "text-sm",
+        button: ["size-6 [&>svg]:size-3", smallRadiusVariants.sm],
+        grid: "mt-3 [&_th]:size-7 [&_th]:text-xs",
+      },
+      md: {
+        base: "size-8 text-sm",
+        heading: "text-base",
+        button: ["size-7 [&>svg]:size-4", smallRadiusVariants.md],
+        grid: "mt-4 [&_th]:size-8 [&_th]:text-sm",
+      },
+      lg: {
+        base: "size-9 text-base",
+        heading: "text-lg",
+        button: ["size-8 [&>svg]:size-5", smallRadiusVariants.lg],
+        grid: "mt-5 [&_th]:size-9 [&_th]:text-base",
+      },
     },
-    asCard: {
-      true: { wrapper: cardStyles().base({ hasShadow: false }) },
-    },
-    isHovered: {
-      true: { button: "bg-default-200", cell: "bg-default-200" },
-    },
-    isSelected: {
-      true: { cell: "bg-default-1000 text-default-0" },
-    },
-    isUnavailable: {
-      true: { cell: "text-error-500 line-through" },
-    },
-    isInvalid: {
-      true: { cell: "bg-error-500 text-default-0" },
-    },
-    isOutsideMonth: {
-      true: { cell: "hidden" },
-    },
-    isPressed: {
-      true: { button: "scale-90", cell: "scale-90" },
-    },
-    isDisabled: {
-      true: { button: isDisabledVariants.true, cell: isDisabledVariants.true },
-    },
-    isFocusVisible: {
-      true: { button: isFocusVisibleVariants.true, cell: isFocusVisibleVariants.true },
-      false: { button: isFocusVisibleVariants.false, cell: isFocusVisibleVariants.false },
-    },
+    radius: smallRadiusVariants,
+    asCard: { true: { calendarWrapper: cardStyles().base({ hasShadow: false }) } },
+    isUnavailable: { true: { base: "text-error line-through" } },
+    isOutsideMonth: { true: { base: "hidden" } },
   },
 });
 
@@ -81,6 +87,9 @@ type CalendarStylesReturnType = ReturnType<typeof calendarStyles>;
 interface CalendarProps<T extends DateValue>
   extends Omit<AriaCalendarProps<T>, "visibleDuration">,
     Omit<FormValidationProps<T | null | undefined>, "value" | "builtinValidation">,
+    VariantProps,
+    ColorProps,
+    RadiusProps,
     FieldBaseProps,
     StyleSlotsToStyleProps<CalendarStylesReturnType> {
   visibleMonthCount?: number;
@@ -90,12 +99,12 @@ interface CalendarProps<T extends DateValue>
 // component
 
 function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { visibleMonthCount = 1, asCard = true, value, size = "md", classNames, styles } = props;
+  const { variant = "solid", color = "default", visibleMonthCount = 1, asCard = true, value, size = "md", radius = size, classNames, styles } = props;
 
   const { displayValidation } = useFormValidationState({ ...props, value });
   const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
 
-  const styleSlots = calendarStyles({ asCard, size });
+  const styleSlots = calendarStyles({ asCard, size, radius });
 
   return (
     <Provider
@@ -110,8 +119,8 @@ function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedR
         aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
         aria-describedby={props["aria-describedby"] ?? (typeof props.description === "string" ? props.description : undefined)}
         visibleDuration={{ months: visibleMonthCount }}
-        className={composeRenderProps(props.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
-        style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
+        className={composeRenderProps(props.className, (className) => styleSlots.wrapper({ className: twMerge(classNames?.wrapper, className) }))}
+        style={composeRenderProps(props.style, (style) => mergeProps(styles?.wrapper, style))}
       >
         <Field {...displayValidation} {...props}>
           <CalendarWrapper styleSlots={styleSlots} classNames={classNames} styles={styles}>
@@ -121,19 +130,19 @@ function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedR
                   <CalendarCell
                     date={date}
                     className={({ isHovered, isPressed, isDisabled, isFocusVisible, isSelected, isInvalid, isUnavailable, isOutsideMonth }) =>
-                      styleSlots.cell({
+                      styleSlots.base({
+                        color: isSelected ? (isInvalid ? "error" : color) : "default",
+                        variant: isSelected ? variant : "light",
                         isHovered,
                         isPressed,
                         isDisabled,
                         isFocusVisible,
-                        isSelected,
-                        isInvalid,
                         isUnavailable,
                         isOutsideMonth,
-                        className: classNames?.cell,
+                        className: classNames?.base,
                       })
                     }
-                    style={styles?.cell}
+                    style={styles?.base}
                   />
                 )}
               </CalendarGrid>
@@ -159,7 +168,7 @@ function CalendarWrapper({
   children: ReactNode;
 }) {
   return (
-    <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>
+    <div className={styleSlots.calendarWrapper({ className: classNames?.calendarWrapper })} style={styles?.calendarWrapper}>
       <div className="flex min-w-fit flex-col">
         <header className={styleSlots.header({ className: classNames?.header })} style={styles?.header}>
           <Button

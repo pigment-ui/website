@@ -14,7 +14,7 @@ interface DateFieldProps<T extends DateValue> extends AriaDateFieldProps<T>, Fie
 // component
 
 function _DateField<T extends DateValue>(props: DateFieldProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { size, radius = size } = props;
+  const { size, radius = size, color, variant } = props;
 
   return (
     <AriaDateField {...props}>
@@ -25,7 +25,9 @@ function _DateField<T extends DateValue>(props: DateFieldProps<T>, ref: Forwarde
               <DateSegment
                 ref={segment.isPlaceholder ? ref : undefined}
                 segment={segment}
-                className={({ isFocused, isPlaceholder }) => segmentStyles({ size, radius, isFocused, isPlaceholder })}
+                className={({ isFocused, isPlaceholder }) =>
+                  segmentStyles({ isFocused, isPlaceholder, color: renderProps.isInvalid ? "error" : color, variant, size, radius })
+                }
               />
             )}
           </DateInput>

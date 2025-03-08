@@ -1,7 +1,7 @@
 "use client";
 
 import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorExtendedProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { ColorExtendedProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps, VariantProps, Variants } from "./types";
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon } from "lucide-react";
 import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef, KeyboardEvent, useMemo } from "react";
 import { FocusScope, mergeProps, useFocusManager } from "react-aria";
@@ -38,6 +38,7 @@ interface PaginationProps
     RadiusProps,
     StyleProps,
     StyleSlotsToStyleProps<PaginationStylesReturnType> {
+  variantActive?: Variants;
   total: number;
   page: number;
   onChange: (page: number) => void;
@@ -50,6 +51,7 @@ interface PaginationProps
 function _Pagination(props: PaginationProps, ref: ForwardedRef<HTMLUListElement>) {
   const {
     variant = "soft",
+    variantActive = "solid",
     color = "default",
     size = "md",
     radius = size,
@@ -125,7 +127,7 @@ function _Pagination(props: PaginationProps, ref: ForwardedRef<HTMLUListElement>
                 className={(renderProps) =>
                   styleSlots.base({
                     ...renderProps,
-                    variant: pageNumber === page ? "solid" : variant,
+                    variant: pageNumber === page ? variantActive : variant,
                   })
                 }
               >

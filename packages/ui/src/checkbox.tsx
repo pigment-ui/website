@@ -1,8 +1,8 @@
 "use client";
 
 import { useCheckboxGroupSlots } from "./checkbox-group";
-import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
-import { RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
+import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants, variantColorStyles } from "./styles";
+import { ColorProps, RadiusProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { CheckIcon, MinusIcon } from "lucide-react";
 import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
@@ -13,42 +13,49 @@ import { tv } from "tailwind-variants";
 // styles
 
 const checkboxStyles = tv({
+  extend: variantColorStyles,
+  base: "[&>svg]:absolute [&>svg]:transition-transform [&>svg]:duration-150",
   slots: {
-    base: "grid cursor-pointer grid-cols-[auto_1fr] items-start duration-300",
-    self: "grid place-items-center rounded-[inherit] border border-default-1000 border-opacity-50 bg-default-1000 bg-opacity-0 text-default-0 duration-300",
+    wrapper: "grid cursor-pointer grid-cols-[auto_1fr] items-start duration-300",
   },
   variants: {
     size: {
-      sm: { base: "gap-x-1.5 text-sm", self: "size-5 [&>svg]:size-4" },
-      md: { base: "gap-x-2 text-base", self: "size-6 [&>svg]:size-5" },
-      lg: { base: "gap-x-2.5 text-lg", self: "size-7 [&>svg]:size-6" },
+      sm: { base: "size-5 [&>svg]:size-4", wrapper: "gap-x-1.5 text-sm" },
+      md: { base: "size-6 [&>svg]:size-5", wrapper: "gap-x-2 text-base" },
+      lg: { base: "size-7 [&>svg]:size-6", wrapper: "gap-x-2.5 text-lg" },
     },
-    isSelected: { true: { self: "border-none bg-opacity-100" } },
-    isIndeterminate: { true: { self: "border-none bg-opacity-100" } },
-    isInvalid: { true: { base: "text-error-500", self: "border-error-500" } },
-    isHovered: { true: { self: "border-opacity-100" } },
-    isPressed: { true: { self: "scale-90" } },
-    isFocusVisible: { true: { self: isFocusVisibleVariants.true } },
-    isDisabled: isDisabledVariants,
+    isInvalid: { true: { wrapper: "text-error" } },
+    isDisabled: { true: { wrapper: isDisabledVariants.true } },
+    isPressed: { true: "scale-90" },
     radius: smallRadiusVariants,
   },
-  compoundVariants: [
-    { isSelected: true, isHovered: true, className: { self: "bg-opacity-90" } },
-    { isSelected: true, isInvalid: true, className: { self: "bg-error-500" } },
-    { isIndeterminate: true, isInvalid: true, className: { self: "bg-error-500" } },
-  ],
 });
 
 type CheckboxStylesReturnType = ReturnType<typeof checkboxStyles>;
 
 // props
 
-interface CheckboxProps extends AriaCheckboxProps, SizeProps, RadiusProps, StyleSlotsToStyleProps<CheckboxStylesReturnType> {}
+interface CheckboxProps
+  extends AriaCheckboxProps,
+    VariantProps,
+    ColorProps,
+    SizeProps,
+    RadiusProps,
+    StyleSlotsToStyleProps<CheckboxStylesReturnType> {}
 
 // component
 
 function _Checkbox(props: CheckboxProps, ref: ForwardedRef<HTMLLabelElement>) {
-  const { size = "md", radius = size, classNames, itemClassNames, styles, itemStyles } = useCheckboxGroupSlots(props);
+  const {
+    variant = "solid",
+    color = "default",
+    size = "md",
+    radius = size,
+    classNames,
+    itemClassNames,
+    styles,
+    itemStyles,
+  } = useCheckboxGroupSlots(props);
 
   const styleSlots = checkboxStyles({ size, radius });
 
@@ -57,25 +64,25 @@ function _Checkbox(props: CheckboxProps, ref: ForwardedRef<HTMLLabelElement>) {
       ref={ref}
       {...props}
       className={composeRenderProps(props.className, (className, { isInvalid, isDisabled }) =>
-        styleSlots.base({ isInvalid, isDisabled, className: twMerge(itemClassNames?.base, classNames?.base, className) }),
+        styleSlots.wrapper({ isInvalid, isDisabled, className: twMerge(itemClassNames?.wrapper, classNames?.wrapper, className) }),
       )}
       style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.base, styles?.base, style))}
     >
       {composeRenderProps(props.children, (children, { isSelected, isIndeterminate, isInvalid, isHovered, isPressed, isFocusVisible }) => (
         <>
           <div
-            className={styleSlots.self({
-              isSelected,
-              isIndeterminate,
-              isInvalid,
+            className={styleSlots.base({
+              variant: isSelected || isIndeterminate ? variant : "outlined",
+              color: isInvalid ? "error" : color,
               isHovered,
               isPressed,
               isFocusVisible,
-              className: twMerge(itemClassNames?.self, classNames?.self),
+              className: twMerge(itemClassNames?.base, classNames?.base),
             })}
-            style={mergeProps(itemStyles?.self, styles?.self)}
+            style={mergeProps(itemStyles?.base, styles?.base)}
           >
-            {isSelected ? <CheckIcon /> : isIndeterminate ? <MinusIcon /> : null}
+            <CheckIcon aria-hidden={!isSelected} className={twMerge(!isSelected && "scale-0")} />
+            <MinusIcon aria-hidden={!isSelected} className={twMerge(!isIndeterminate && "scale-0")} />
           </div>
           <div>{children}</div>
         </>
@@ -108,4 +115,5 @@ const CheckboxLink = forwardRef(_CheckboxLink);
 
 // exports
 
-export { Checkbox, CheckboxLink };
+export { Checkbox, CheckboxLink, checkboxStyles };
+export type { CheckboxStylesReturnType };

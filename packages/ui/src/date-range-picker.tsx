@@ -31,7 +31,7 @@ interface DateRangePickerProps<T extends DateValue>
 // component
 
 function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, ref: ForwardedRef<HTMLInputElement>) {
-  const { size, radius = size, visibleMonthCount } = props;
+  const { size, radius = size, color, variant, visibleMonthCount } = props;
 
   const [width, datePickerRef] = useObserveElementWidth<HTMLDivElement>();
 
@@ -53,7 +53,9 @@ function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, r
                 {(segment) => (
                   <DateSegment
                     segment={segment}
-                    className={({ isFocused, isPlaceholder }) => segmentStyles({ isFocused, isPlaceholder, size, radius })}
+                    className={({ isFocused, isPlaceholder }) =>
+                      segmentStyles({ isFocused, isPlaceholder, color: renderProps.isInvalid ? "error" : color, variant, size, radius })
+                    }
                   />
                 )}
               </DateInput>
@@ -64,7 +66,9 @@ function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, r
                 {(segment) => (
                   <DateSegment
                     segment={segment}
-                    className={({ isFocused, isPlaceholder }) => segmentStyles({ isFocused, isPlaceholder, size, radius })}
+                    className={({ isFocused, isPlaceholder }) =>
+                      segmentStyles({ isFocused, isPlaceholder, color: renderProps.isInvalid ? "error" : color, variant, size, radius })
+                    }
                   />
                 )}
               </DateInput>

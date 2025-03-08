@@ -33,8 +33,8 @@ import { tv } from "tailwind-variants";
 const tabsStyles = tv({
   slots: {
     base: "flex",
-    list: "flex h-fit w-fit bg-default-1000/10 backdrop-blur-lg",
-    panel: ["h-fit w-full bg-default-1000/10 backdrop-blur-lg", radiusVariants.md],
+    list: "flex h-fit w-fit backdrop-blur-lg",
+    panel: "h-fit w-full backdrop-blur-lg",
   },
   variants: {
     orientation: {
@@ -44,17 +44,17 @@ const tabsStyles = tv({
     color: {
       default: { list: "bg-default-1000/10", panel: "bg-default-1000/10 text-default-1000" },
       inverted: { list: "bg-default-0/10", panel: "bg-default-0/10 text-default-0" },
-      primary: { list: "bg-primary-500/10", panel: "bg-primary-500/10 text-primary-500" },
-      secondary: { list: "bg-secondary-500/10", panel: "bg-secondary-500/10 text-secondary-500" },
-      info: { list: "bg-info-500/10", panel: "bg-info-500/10 text-info-500" },
-      success: { list: "bg-success-500/10", panel: "bg-success-500/10 text-success-500" },
-      warning: { list: "bg-warning-500/10", panel: "bg-warning-500/10 text-warning-500" },
-      error: { list: "bg-error-500/10", panel: "bg-error-500/10 text-error-500" },
+      primary: { list: "bg-primary/10", panel: "bg-primary/10 text-primary" },
+      secondary: { list: "bg-secondary/10", panel: "bg-secondary/10 text-secondary" },
+      info: { list: "bg-info/10", panel: "bg-info/10 text-info" },
+      success: { list: "bg-success/10", panel: "bg-success/10 text-success" },
+      warning: { list: "bg-warning/10", panel: "bg-warning/10 text-warning" },
+      error: { list: "bg-error/10", panel: "bg-error/10 text-error" },
     },
     size: {
-      sm: { base: "gap-2", list: "gap-2 p-1", panel: "p-2" },
-      md: { base: "gap-2.5", list: "gap-2.5 p-1.5", panel: "p-2.5" },
-      lg: { base: "gap-3", list: "gap-3 p-2", panel: "p-3" },
+      sm: { base: "gap-2", list: "gap-2 p-1", panel: ["p-2", radiusVariants.sm] },
+      md: { base: "gap-2.5", list: "gap-2.5 p-1.5", panel: ["p-2.5", radiusVariants.md] },
+      lg: { base: "gap-3", list: "gap-3 p-2", panel: ["p-3", radiusVariants.lg] },
     },
     radius: {
       sm: { list: radiusVariants.sm },
@@ -95,7 +95,7 @@ const [TabsSlotsProvider, useTabsSlots] = createSlots<Required<Pick<TabsProps, "
 // component
 
 function _Tabs(props: TabsProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { orientation = "vertical", variant = "solid", color = "default", size = "md", radius = size, classNames, styles } = props;
+  const { orientation = "vertical", variant = "light", color = "default", size = "md", radius = size, classNames, styles } = props;
 
   const styleSlots = tabsStyles({ orientation, color, size, radius });
 

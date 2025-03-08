@@ -2,7 +2,7 @@
 
 import { Checkbox } from "./checkbox";
 import { Field, FieldBaseProps } from "./field";
-import { RadiusProps } from "./types";
+import { ColorProps, RadiusProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
 import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
 import { Orientation } from "react-aria";
@@ -28,7 +28,7 @@ const checkboxGroupStyles = tv({
 
 // props
 
-interface CheckboxGroupProps extends AriaCheckboxGroupProps, FieldBaseProps, RadiusProps {
+interface CheckboxGroupProps extends AriaCheckboxGroupProps, FieldBaseProps, VariantProps, ColorProps, RadiusProps {
   orientation?: Orientation;
   itemClassNames?: ComponentPropsWithoutRef<typeof Checkbox>["classNames"];
   itemStyles?: ComponentPropsWithoutRef<typeof Checkbox>["styles"];
@@ -36,17 +36,17 @@ interface CheckboxGroupProps extends AriaCheckboxGroupProps, FieldBaseProps, Rad
 
 // slots
 
-interface CheckboxGroupSlotsType extends Pick<CheckboxGroupProps, "size" | "radius" | "itemClassNames" | "itemStyles"> {}
+interface CheckboxGroupSlotsType extends Pick<CheckboxGroupProps, "variant" | "color" | "size" | "radius" | "itemClassNames" | "itemStyles"> {}
 
 const [CheckboxGroupSlotsProvider, useCheckboxGroupSlots] = createSlots<CheckboxGroupSlotsType>();
 
 // component
 
 function _CheckboxGroup(props: CheckboxGroupProps, ref: ForwardedRef<HTMLInputElement>) {
-  const { size = "md", radius = size, orientation = "vertical", itemClassNames, itemStyles } = props;
+  const { variant = "soft", color = "default", size = "md", radius = size, orientation = "vertical", itemClassNames, itemStyles } = props;
 
   return (
-    <CheckboxGroupSlotsProvider value={{ size, radius, itemClassNames, itemStyles }}>
+    <CheckboxGroupSlotsProvider value={{ variant, color, size, radius, itemClassNames, itemStyles }}>
       <AriaCheckboxGroup ref={ref} {...props}>
         {composeRenderProps(props.children, (children, renderProps) => (
           <Field {...renderProps} {...props}>
@@ -63,3 +63,4 @@ const CheckboxGroup = forwardRef(_CheckboxGroup);
 // exports
 
 export { CheckboxGroup, checkboxGroupStyles, useCheckboxGroupSlots };
+export type { CheckboxGroupSlotsType };

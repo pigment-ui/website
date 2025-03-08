@@ -14,7 +14,7 @@ interface TimeFieldProps<T extends TimeValue> extends AriaTimeFieldProps<T>, Fie
 // component
 
 function _TimeField<T extends TimeValue>(props: TimeFieldProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { size, radius = size } = props;
+  const { size, radius = size, color, variant } = props;
 
   return (
     <AriaTimeField {...props}>
@@ -24,7 +24,9 @@ function _TimeField<T extends TimeValue>(props: TimeFieldProps<T>, ref: Forwarde
             {(segment) => (
               <DateSegment
                 segment={segment}
-                className={({ isFocused, isPlaceholder }) => segmentStyles({ size, radius, isFocused, isPlaceholder })}
+                className={({ isFocused, isPlaceholder }) =>
+                  segmentStyles({ isFocused, isPlaceholder, color: renderProps.isInvalid ? "error" : color, variant, size, radius })
+                }
               />
             )}
           </DateInput>

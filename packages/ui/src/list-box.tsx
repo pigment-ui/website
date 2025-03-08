@@ -32,16 +32,16 @@ const listBoxStyles = tv({
 
 const listBoxItemStyles = tv({
   extend: variantColorStyles,
-  base: ["!scale-100 !backdrop-blur-none", smallRadiusVariants.md],
+  base: "!scale-100 !backdrop-blur-none",
   slots: {
     content: "flex-1",
     icon: "transition-transform duration-300",
   },
   variants: {
     size: {
-      sm: "mt-0.5 gap-x-1 p-1 text-xs [&_svg]:size-3",
-      md: "mt-1 gap-x-2 p-2 text-sm [&_svg]:size-4",
-      lg: "mt-1.5 gap-x-3 p-3 text-base [&_svg]:size-5",
+      sm: { base: ["mt-0.5 gap-x-1 p-1 text-xs [&_svg]:size-3", smallRadiusVariants.sm] },
+      md: { base: ["mt-1 gap-x-2 p-2 text-sm [&_svg]:size-4", smallRadiusVariants.md] },
+      lg: { base: ["mt-1.5 gap-x-3 p-3 text-base [&_svg]:size-5", smallRadiusVariants.lg] },
     },
     isSelectable: {
       true: "cursor-pointer",
@@ -103,7 +103,7 @@ const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType<obj
 // component
 
 function _ListBox<T extends object>(props: ListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { asCard = true, variant = "solid", color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
+  const { asCard = true, variant = "light", color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
 
   return (
     <ListBoxSlotsProvider value={{ variant, color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
@@ -201,7 +201,8 @@ export const filterInlineListBoxProps = (props: any) => ({
   asCard: false,
   children: props.children,
   items: props.items,
-  color: props.color,
+  variant: props.variant,
+  // color: props.color,
   size: props.size,
   itemStartContent: props.itemStartContent,
   itemEndContent: props.itemEndContent,

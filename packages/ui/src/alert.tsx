@@ -13,7 +13,7 @@ import { tv } from "tailwind-variants";
 
 const alertStyles = tv({
   extend: variantColorStyles,
-  base: ["!items-start", radiusVariants.md],
+  base: "!items-start",
   slots: {
     contentWrapper: "flex-1",
     title: "font-bold",
@@ -23,9 +23,9 @@ const alertStyles = tv({
   },
   variants: {
     size: {
-      sm: { base: "gap-4 p-4", title: "text-sm", description: "text-xs", icon: "[&_svg]:size-8" },
-      md: { base: "gap-5 p-5", title: "text-base", description: "text-sm", icon: "[&_svg]:size-10" },
-      lg: { base: "gap-6 p-6", title: "text-lg", description: "text-base", icon: "[&_svg]:size-12" },
+      sm: { base: ["gap-4 p-4", radiusVariants.sm], title: "text-sm", description: "text-xs", icon: "[&_svg]:size-8" },
+      md: { base: ["gap-5 p-5", radiusVariants.md], title: "text-base", description: "text-sm", icon: "[&_svg]:size-10" },
+      lg: { base: ["gap-6 p-6", radiusVariants.lg], title: "text-lg", description: "text-base", icon: "[&_svg]:size-12" },
     },
   },
 });
