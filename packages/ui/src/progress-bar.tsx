@@ -1,6 +1,6 @@
 "use client";
 
-import { ColorExtendedProps, SizeProps, StyleSlotsToStyleProps } from "./types";
+import { ColorProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import React, { ForwardedRef, forwardRef, ReactNode } from "react";
 import { mergeProps } from "react-aria";
 import { composeRenderProps, Label, ProgressBar as AriaProgressBar, ProgressBarProps as AriaProgressBarProps } from "react-aria-components";
@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 
 const progressBarStyles = tv({
   slots: {
-    base: "",
+    base: "text-default-1000",
     wrapper: "flex flex-col",
     labelWrapper: "",
     label: "",
@@ -22,14 +22,13 @@ const progressBarStyles = tv({
   },
   variants: {
     color: {
-      default: "text-default-1000",
-      inverted: "text-default-0",
-      primary: "text-primary-500",
-      secondary: "text-secondary-500",
-      info: "text-info-500",
-      success: "text-success-500",
-      warning: "text-warning-500",
-      error: "text-error-500",
+      default: "",
+      primary: "",
+      secondary: "",
+      info: "",
+      success: "",
+      warning: "",
+      error: "",
     },
     size: {
       sm: { label: "text-xs", valueText: "text-xs", wrapper: "gap-y-0.5" },
@@ -55,7 +54,6 @@ const progressBarStyles = tv({
   },
   compoundVariants: [
     { isCircular: false, color: "default", className: { track: "bg-default-1000/10", filler: "bg-default-1000" } },
-    { isCircular: false, color: "inverted", className: { track: "bg-default-0/10", filler: "bg-default-0" } },
     { isCircular: false, color: "primary", className: { track: "bg-primary-500/10", filler: "bg-primary-500" } },
     { isCircular: false, color: "secondary", className: { track: "bg-secondary-500/10", filler: "bg-secondary-500" } },
     { isCircular: false, color: "info", className: { track: "bg-info-500/10", filler: "bg-info-500" } },
@@ -67,7 +65,6 @@ const progressBarStyles = tv({
     { isCircular: true, size: "lg", className: { track: "size-20" } },
 
     { isCircular: true, color: "default", className: { track: "stroke-default-1000/10", filler: "stroke-default-1000" } },
-    { isCircular: true, color: "inverted", className: { track: "stroke-default-0/10", filler: "stroke-default-0" } },
     { isCircular: true, color: "primary", className: { track: "stroke-primary-500/10", filler: "stroke-primary-500" } },
     { isCircular: true, color: "secondary", className: { track: "stroke-secondary-500/10", filler: "stroke-secondary-500" } },
     { isCircular: true, color: "info", className: { track: "stroke-info-500/10", filler: "stroke-info-500" } },
@@ -95,7 +92,7 @@ type ProgressBarStylesReturnType = ReturnType<typeof progressBarStyles>;
 
 // props
 
-interface ProgressBarProps extends AriaProgressBarProps, ColorExtendedProps, SizeProps, StyleSlotsToStyleProps<ProgressBarStylesReturnType> {
+interface ProgressBarProps extends AriaProgressBarProps, ColorProps, SizeProps, StyleSlotsToStyleProps<ProgressBarStylesReturnType> {
   label?: ReactNode;
   hideValueText?: boolean;
   isCircular?: boolean;
