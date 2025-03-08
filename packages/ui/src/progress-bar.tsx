@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 
 const progressBarStyles = tv({
   slots: {
-    base: "text-default-1000",
+    base: "",
     wrapper: "flex flex-col",
     labelWrapper: "",
     label: "",
