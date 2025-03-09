@@ -233,6 +233,7 @@ export { ListBox, ListBoxItem, ListBoxSection, listBoxItemStyles, listBoxSection
 export type { ListBoxItemProps, ListBoxSectionProps, ListBoxSlotsType };
 
 export const filterInlineListBoxProps = (props: any) => ({
+  "aria-label": props["aria-label"] || props.label,
   asCard: false,
   children: props.children,
   items: props.items,

@@ -1,9 +1,9 @@
-export { Accordion, AccordionItem } from "./accordion";
 export { Alert } from "./alert";
 export { Badge } from "./badge";
 export { Button } from "./button";
 export { Calendar } from "./calendar";
 export { Card, CardHeader, CardBody, CardFooter, CardTitle, CardDescription, CardButtons } from "./card";
+export { Disclosure, DisclosureGroup } from "./disclosure";
 export { Checkbox, CheckboxLink, CheckboxGroup } from "./checkbox";
 export { Chip } from "./chip";
 export { ColorField } from "./color-field";

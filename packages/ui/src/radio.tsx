@@ -67,7 +67,7 @@ function _Radio(props: RadioProps, ref: ForwardedRef<HTMLLabelElement>) {
       className={composeRenderProps(props.className, (className, { isInvalid, isDisabled }) =>
         styleSlots.wrapper({ isInvalid, isDisabled, className: twMerge(itemClassNames?.wrapper, classNames?.wrapper, className) }),
       )}
-      style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.base, styles?.base, style))}
+      style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.wrapper, styles?.wrapper, style))}
     >
       {composeRenderProps(props.children, (children, { isSelected, isInvalid, isHovered, isPressed, isFocusVisible }) => (
         <>

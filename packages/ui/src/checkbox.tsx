@@ -119,7 +119,7 @@ function _Checkbox(props: CheckboxProps, ref: ForwardedRef<HTMLLabelElement>) {
       className={composeRenderProps(props.className, (className, { isInvalid, isDisabled }) =>
         styleSlots.wrapper({ isInvalid, isDisabled, className: twMerge(itemClassNames?.wrapper, classNames?.wrapper, className) }),
       )}
-      style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.base, styles?.base, style))}
+      style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.wrapper, styles?.wrapper, style))}
     >
       {composeRenderProps(props.children, (children, { isSelected, isIndeterminate, isInvalid, isHovered, isPressed, isFocusVisible }) => (
         <>
@@ -168,4 +168,5 @@ const CheckboxLink = forwardRef(_CheckboxLink);
 
 // exports
 
-export { CheckboxGroup, Checkbox, CheckboxLink, checkboxGroupStyles, checkboxStyles, CheckboxStylesReturnType, CheckboxGroupSlotsType };
+export { CheckboxGroup, Checkbox, CheckboxLink, checkboxGroupStyles, checkboxStyles };
+export type { CheckboxStylesReturnType, CheckboxGroupSlotsType };
