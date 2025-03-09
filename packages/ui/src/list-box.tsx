@@ -1,15 +1,18 @@
 "use client";
 
 import { cardStyles } from "./card";
+import { Field, FieldBaseProps } from "./field";
 import { isFocusVisibleVariants, smallRadiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, ContentProps, ForwardRefType, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
+import { FormValidationProps, useFormValidationState } from "@react-stately/form";
 import { CheckIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef, ReactNode } from "react";
-import { mergeProps } from "react-aria";
+import { Key, mergeProps, useField } from "react-aria";
 import {
   Collection,
   composeRenderProps,
+  FieldErrorContext,
   Header,
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,
@@ -17,6 +20,8 @@ import {
   ListBoxProps as AriaListBoxProps,
   ListBoxSection as AriaListBoxSection,
   ListBoxSectionProps as AriaListBoxSectionProps,
+  Provider,
+  TextContext,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
@@ -73,7 +78,13 @@ type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
 
 // props
 
-interface ListBoxProps<T extends object> extends AriaListBoxProps<T>, VariantProps, ColorProps, SizeProps {
+interface ListBoxProps<T extends object>
+  extends AriaListBoxProps<T>,
+    Omit<FormValidationProps<"all" | Iterable<Key> | undefined>, "value" | "builtinValidation">,
+    FieldBaseProps,
+    VariantProps,
+    ColorProps,
+    SizeProps {
   asCard?: boolean;
   icon?: ReactNode;
   itemClassNames?: ListBoxItemProps["classNames"];
@@ -103,16 +114,40 @@ const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType<obj
 // component
 
 function _ListBox<T extends object>(props: ListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { asCard = true, variant = "light", color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
+  const {
+    selectedKeys,
+    asCard = true,
+    variant = "light",
+    color = "default",
+    size = "md",
+    itemClassNames,
+    itemStyles,
+    sectionClassNames,
+    sectionStyles,
+  } = props;
+
+  const { displayValidation } = useFormValidationState({ ...props, value: selectedKeys });
+  const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
 
   return (
-    <ListBoxSlotsProvider value={{ variant, color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
-      <AriaListBox
-        ref={ref}
-        {...props}
-        className={composeRenderProps(props.className, (className, { isFocusVisible }) => listBoxStyles({ asCard, isFocusVisible, className }))}
-      />
-    </ListBoxSlotsProvider>
+    <Provider
+      values={[
+        [TextContext, { slots: { description: descriptionProps, errorMessage: errorMessageProps } }],
+        [FieldErrorContext, displayValidation],
+      ]}
+    >
+      <ListBoxSlotsProvider
+        value={{ variant, color: displayValidation.isInvalid ? "error" : color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}
+      >
+        <Field {...displayValidation} {...props}>
+          <AriaListBox
+            ref={ref}
+            {...mergeProps(props, fieldProps)}
+            className={composeRenderProps(props.className, (className, { isFocusVisible }) => listBoxStyles({ asCard, isFocusVisible, className }))}
+          />
+        </Field>
+      </ListBoxSlotsProvider>
+    </Provider>
   );
 }
 

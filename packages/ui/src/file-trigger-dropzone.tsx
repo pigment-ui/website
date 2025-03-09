@@ -46,6 +46,7 @@ interface FileTriggerDropzoneProps
   value: File[];
   onChange: (files: File[]) => void;
   isLoading?: boolean;
+  isDisabled?: boolean;
   placeholder?: string;
   buttonLabel?: string;
 }
