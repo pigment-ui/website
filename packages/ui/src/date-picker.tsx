@@ -65,6 +65,9 @@ function _DatePicker<T extends DateValue>(props: DatePickerProps<T>, ref: Forwar
               aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
               aria-describedby={props["aria-describedby"] ?? (typeof props.description === "string" ? props.description : undefined)}
               asCard={false}
+              color={color}
+              size={size}
+              radius={radius}
               visibleMonthCount={visibleMonthCount}
             />
           </Popover>

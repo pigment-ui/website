@@ -80,6 +80,9 @@ function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, r
               aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
               aria-describedby={props["aria-describedby"] ?? (typeof props.description === "string" ? props.description : undefined)}
               asCard={false}
+              color={color}
+              size={size}
+              radius={radius}
               visibleMonthCount={visibleMonthCount}
             />
           </Popover>

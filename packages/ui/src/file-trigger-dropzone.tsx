@@ -45,8 +45,6 @@ interface FileTriggerDropzoneProps
   variantButton?: Variants;
   value: File[];
   onChange: (files: File[]) => void;
-  isDisabled?: boolean;
-  isInvalid?: boolean;
   isLoading?: boolean;
   placeholder?: string;
   buttonLabel?: string;

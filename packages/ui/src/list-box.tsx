@@ -202,7 +202,7 @@ export const filterInlineListBoxProps = (props: any) => ({
   children: props.children,
   items: props.items,
   variant: props.variant,
-  // color: props.color,
+  color: props.isInvalid ? "error" : props.color,
   size: props.size,
   itemStartContent: props.itemStartContent,
   itemEndContent: props.itemEndContent,

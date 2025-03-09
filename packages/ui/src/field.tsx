@@ -95,6 +95,8 @@ interface FieldBaseProps extends SizeProps {
   description?: ReactNode;
   errorMessage?: ReactNode | ((validationResult: ValidationResult) => ReactNode);
   isRequired?: boolean;
+  isInvalid?: boolean;
+  isDisabled?: boolean;
   fieldClassNames?: StyleSlotsToStyleProps<FieldStylesReturnType>["classNames"];
   fieldStyles?: StyleSlotsToStyleProps<FieldStylesReturnType>["styles"];
 }

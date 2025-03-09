@@ -7,6 +7,7 @@ import { ForwardRefType } from "./types";
 import { useObserveElementWidth } from "./utils";
 import { ChevronDownIcon } from "lucide-react";
 import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef, ReactNode } from "react";
+import { mergeProps } from "react-aria";
 import { Button, Select as AriaSelect, SelectProps as AriaSelectProps, SelectValue, SelectValueRenderProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 
@@ -48,7 +49,7 @@ function _Select<T extends object>(props: SelectProps<T>, ref: ForwardedRef<HTML
           </FieldInput>
 
           <Popover maxHeight={300} hideArrow triggerRef={selectRef} {...props} className="overflow-auto p-0" style={{ width }}>
-            <ListBox {...filterInlineListBoxProps(props)} className="p-2" />
+            <ListBox {...filterInlineListBoxProps(mergeProps(props, renderProps))} className="p-2" />
           </Popover>
         </>
       )}

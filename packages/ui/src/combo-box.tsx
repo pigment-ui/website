@@ -7,6 +7,7 @@ import { ForwardRefType } from "./types";
 import { useObserveElementWidth } from "./utils";
 import { ChevronDownIcon } from "lucide-react";
 import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
+import { mergeProps } from "react-aria";
 import { Button, ComboBox as AriaComboBox, ComboBoxProps as AriaComboBoxProps, Input, InputProps } from "react-aria-components";
 
 // props
@@ -40,7 +41,7 @@ function _ComboBox<T extends object>(props: ComboBoxProps<T>, ref: ForwardedRef<
           </FieldInput>
 
           <Popover maxHeight={300} hideArrow triggerRef={comboBoxRef} {...props} className="overflow-auto p-0" style={{ width }}>
-            <ListBox {...filterInlineListBoxProps(props)} className="p-2" />
+            <ListBox {...filterInlineListBoxProps(mergeProps(props, renderProps))} className="p-2" />
           </Popover>
         </>
       )}

@@ -2,7 +2,7 @@
 
 import { calendarStyles, CalendarWrapper } from "./calendar";
 import { Field, FieldBaseProps } from "./field";
-import { ColorProps, RadiusProps, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { ColorProps, RadiusProps, StyleSlotsToStyleProps } from "./types";
 import { getDayOfWeek } from "@internationalized/date";
 import { useLocale } from "@react-aria/i18n";
 import { FormValidationProps, useFormValidationState } from "@react-stately/form";
@@ -27,6 +27,7 @@ import { tv } from "tailwind-variants";
 
 const rangeCalendarStyles = tv({
   extend: calendarStyles,
+  base: "",
   variants: {
     isSelectedRange: { true: {} },
     isSelectionStart: { true: {} },
@@ -48,7 +49,6 @@ type RangeCalendarStylesReturnType = ReturnType<typeof rangeCalendarStyles>;
 interface RangeCalendarProps<T extends DateValue>
   extends Omit<AriaRangeCalendarProps<T>, "visibleDuration">,
     Omit<FormValidationProps<RangeValue<T> | null | undefined>, "value" | "builtinValidation">,
-    VariantProps,
     ColorProps,
     RadiusProps,
     FieldBaseProps,
@@ -60,7 +60,7 @@ interface RangeCalendarProps<T extends DateValue>
 // component
 
 function _RangeCalendar<T extends DateValue>(props: RangeCalendarProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { variant = "solid", color = "default", visibleMonthCount = 1, asCard = true, value, size = "md", radius = size, classNames, styles } = props;
+  const { color = "default", visibleMonthCount = 1, asCard = true, value, size = "md", radius = size, classNames, styles } = props;
 
   const { displayValidation } = useFormValidationState({ ...props, value });
   const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
@@ -106,12 +106,11 @@ function _RangeCalendar<T extends DateValue>(props: RangeCalendarProps<T>, ref: 
                     }) =>
                       styleSlots.base({
                         color: isSelected ? (isInvalid ? "error" : color) : "default",
-                        variant: isSelected ? (isSelectionStart || isSelectionEnd ? variant : "soft") : "light",
+                        variant: isSelected ? (isSelectionStart || isSelectionEnd ? "solid" : "soft") : "light",
                         isHovered,
                         isPressed,
                         isDisabled,
                         isFocusVisible,
-                        isSelected,
                         isUnavailable,
                         isOutsideMonth,
                         isSelectionStart,

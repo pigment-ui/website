@@ -95,7 +95,7 @@ const [TabsSlotsProvider, useTabsSlots] = createSlots<Required<Pick<TabsProps, "
 // component
 
 function _Tabs(props: TabsProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { orientation = "vertical", variant = "light", color = "default", size = "md", radius = size, classNames, styles } = props;
+  const { orientation = "vertical", variant = "solid", color = "default", size = "md", radius = size, classNames, styles } = props;
 
   const styleSlots = tabsStyles({ orientation, color, size, radius });
 

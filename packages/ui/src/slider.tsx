@@ -2,7 +2,7 @@
 
 import { Field, FieldBaseProps } from "./field";
 import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
-import { ContentProps, RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
+import { ColorProps, ContentProps, RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import { FormValidationProps, useFormValidationState } from "@react-stately/form";
 import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps, useField } from "react-aria";
@@ -29,12 +29,12 @@ const sliderStyles = tv({
     sliderWrapper: "relative size-full",
     contentWrapper: "flex items-center",
     trackWrapper: "relative flex-1",
-    track: "cursor-pointer bg-default-1000/20 duration-300",
+    track: "cursor-pointer duration-300",
     thumbWrapper: "absolute",
-    thumb: "z-20 border-2 border-default-1000 bg-default-0 [transition:width_300ms,height_300ms,border-color_300ms;]",
-    filler: "absolute bg-default-1000 [transition:background-color_300ms;]",
+    thumb: "z-20 border-2 [transition:width_300ms,height_300ms,border-color_300ms;]",
+    filler: "absolute [transition:background-color_300ms;]",
     stepsWrapper: "pointer-events-none absolute flex items-center justify-between",
-    step: "z-10 bg-default-0",
+    step: "z-10",
     marksWrapper: "absolute",
     mark: "absolute",
   },
@@ -65,6 +65,50 @@ const sliderStyles = tv({
         mark: "translate-y-1/2",
       },
     },
+    color: {
+      default: {
+        track: "bg-default-1000/20",
+        thumb: "border-default-1000 bg-default-0",
+        filler: "bg-default-1000",
+        step: "bg-default-1000",
+      },
+      primary: {
+        track: "bg-primary/20",
+        thumb: "border-primary bg-primary-foreground",
+        filler: "bg-primary",
+        step: "bg-primary-foreground",
+      },
+      secondary: {
+        track: "bg-secondary/20",
+        thumb: "border-secondary bg-secondary-foreground",
+        filler: "bg-secondary",
+        step: "bg-secondary-foreground",
+      },
+      info: {
+        track: "bg-info/20",
+        thumb: "border-info bg-info-foreground",
+        filler: "bg-info",
+        step: "bg-info-foreground",
+      },
+      success: {
+        track: "bg-success/20",
+        thumb: "border-success bg-success-foreground",
+        filler: "bg-success",
+        step: "bg-success-foreground",
+      },
+      warning: {
+        track: "bg-warning/20",
+        thumb: "border-warning bg-warning-foreground",
+        filler: "bg-warning",
+        step: "bg-warning-foreground",
+      },
+      error: {
+        track: "bg-error/20",
+        thumb: "border-error bg-error-foreground",
+        filler: "bg-error",
+        step: "bg-error-foreground",
+      },
+    },
     size: {
       sm: { output: "text-xs", mark: "text-xs", contentWrapper: "gap-2 [&_svg]:size-4", thumb: "size-4" },
       md: { output: "text-sm", mark: "text-sm", contentWrapper: "gap-2.5 [&_svg]:size-5", thumb: "size-5" },
@@ -77,7 +121,6 @@ const sliderStyles = tv({
       full: { track: smallRadiusVariants.full, thumb: smallRadiusVariants.full, filler: smallRadiusVariants.full },
       none: { track: smallRadiusVariants.none, thumb: smallRadiusVariants.none, filler: smallRadiusVariants.none },
     },
-    isInvalid: { true: { track: "bg-error/20", thumb: "border-error", filler: "bg-error" } },
     isDisabled: { true: { track: isDisabledVariants.true } },
     isHovered: { true: { thumb: "cursor-grab" } },
     isDragging: { true: { thumb: "cursor-grabbing" } },
@@ -180,6 +223,7 @@ interface SliderProps
   extends AriaSliderProps,
     Omit<FormValidationProps<number | number[] | undefined>, "value" | "builtinValidation">,
     FieldBaseProps,
+    ColorProps,
     SizeProps,
     RadiusProps,
     ContentProps,
@@ -200,6 +244,7 @@ function _Slider(props: SliderProps, ref: ForwardedRef<HTMLDivElement>) {
     showSteps = false,
     marks,
     orientation = "horizontal",
+    color = "default",
     size = "md",
     radius = "full",
     startContent,
@@ -211,7 +256,7 @@ function _Slider(props: SliderProps, ref: ForwardedRef<HTMLDivElement>) {
   const { displayValidation } = useFormValidationState({ ...props, value });
   const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
 
-  const styleSlots = sliderStyles({ orientation, hideThumb, size, radius, hasMarks: !!marks, isInvalid: displayValidation.isInvalid });
+  const styleSlots = sliderStyles({ orientation, hideThumb, size, radius, hasMarks: !!marks });
 
   return (
     <Provider
@@ -239,7 +284,12 @@ function _Slider(props: SliderProps, ref: ForwardedRef<HTMLDivElement>) {
                 {startContent}
 
                 <div className={styleSlots.trackWrapper({ className: classNames?.trackWrapper })} style={styles?.trackWrapper}>
-                  <SliderTrack className={({ isDisabled }) => styleSlots.track({ isDisabled, className: classNames?.track })} style={styles?.track}>
+                  <SliderTrack
+                    className={({ isDisabled }) =>
+                      styleSlots.track({ color: displayValidation.isInvalid ? "error" : color, isDisabled, className: classNames?.track })
+                    }
+                    style={styles?.track}
+                  >
                     {({ state }) => (
                       <div className={styleSlots.thumbWrapper({ className: classNames?.thumbWrapper })} style={styles?.thumbWrapper}>
                         {state.values.map((_, i) => (
@@ -248,14 +298,20 @@ function _Slider(props: SliderProps, ref: ForwardedRef<HTMLDivElement>) {
                             index={i}
                             aria-label={thumbLabels?.[i]}
                             className={({ isHovered, isDragging, isFocusVisible }) =>
-                              styleSlots.thumb({ isHovered, isDragging, isFocusVisible, className: classNames?.thumb })
+                              styleSlots.thumb({
+                                color: displayValidation.isInvalid ? "error" : color,
+                                isHovered,
+                                isDragging,
+                                isFocusVisible,
+                                className: classNames?.thumb,
+                              })
                             }
                             style={styles?.thumb}
                           />
                         ))}
 
                         <div
-                          className={styleSlots.filler({ className: classNames?.filler })}
+                          className={styleSlots.filler({ color: displayValidation.isInvalid ? "error" : color, className: classNames?.filler })}
                           style={mergeProps(
                             {
                               [orientation === "horizontal" ? "left" : "bottom"]:
@@ -278,7 +334,11 @@ function _Slider(props: SliderProps, ref: ForwardedRef<HTMLDivElement>) {
                             state.step +
                           1,
                       }).map((_, i) => (
-                        <div key={i} className={styleSlots.step({ className: classNames?.step })} style={styles?.step} />
+                        <div
+                          key={i}
+                          className={styleSlots.step({ color: displayValidation.isInvalid ? "error" : color, className: classNames?.step })}
+                          style={styles?.step}
+                        />
                       ))}
                     </div>
                   )}

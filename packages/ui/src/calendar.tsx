@@ -3,7 +3,7 @@
 import { cardStyles } from "./card";
 import { Field, FieldBaseProps } from "./field";
 import { smallRadiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, RadiusProps, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { ColorProps, RadiusProps, StyleSlotsToStyleProps } from "./types";
 import { FormValidationProps, useFormValidationState } from "@react-stately/form";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef, ReactNode } from "react";
@@ -33,9 +33,9 @@ const calendarStyles = tv({
     wrapper: "",
     calendarWrapper: "w-fit max-w-full overflow-auto p-4",
     header: "flex items-center justify-between gap-4",
-    heading: "font-medium",
+    heading: "font-medium text-default-1000",
     button: [
-      "grid place-items-center outline-none duration-300",
+      "grid place-items-center text-default-1000 outline-none duration-300",
       "data-[pressed]:scale-90 data-[hovered]:bg-default-1000/10",
       "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
       "data-[focus-visible]:z-10 data-[focus-visible]:outline data-[focus-visible]:outline-default-1000",
@@ -44,6 +44,14 @@ const calendarStyles = tv({
     grid: "size-fit border-separate border-spacing-x-0 border-spacing-y-1 [&_td]:p-0 [&_th]:p-0 [&_th]:font-light [&_th]:text-default-700",
   },
   variants: {
+    variant: {
+      solid: "",
+      soft: "",
+      light: "",
+      bordered: "",
+      outlined: "",
+      faded: "",
+    },
     color: {
       default: "",
       primary: "",
@@ -77,6 +85,10 @@ const calendarStyles = tv({
     asCard: { true: { calendarWrapper: cardStyles().base({ hasShadow: false }) } },
     isUnavailable: { true: { base: "text-error line-through" } },
     isOutsideMonth: { true: { base: "hidden" } },
+    isHovered: { true: {} },
+    isPressed: { true: {} },
+    isDisabled: { true: {} },
+    isFocusVisible: { true: {} },
   },
 });
 
@@ -87,7 +99,6 @@ type CalendarStylesReturnType = ReturnType<typeof calendarStyles>;
 interface CalendarProps<T extends DateValue>
   extends Omit<AriaCalendarProps<T>, "visibleDuration">,
     Omit<FormValidationProps<T | null | undefined>, "value" | "builtinValidation">,
-    VariantProps,
     ColorProps,
     RadiusProps,
     FieldBaseProps,
@@ -99,7 +110,7 @@ interface CalendarProps<T extends DateValue>
 // component
 
 function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { variant = "solid", color = "default", visibleMonthCount = 1, asCard = true, value, size = "md", radius = size, classNames, styles } = props;
+  const { color = "default", visibleMonthCount = 1, asCard = true, value, size = "md", radius = size, classNames, styles } = props;
 
   const { displayValidation } = useFormValidationState({ ...props, value });
   const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
@@ -132,7 +143,7 @@ function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedR
                     className={({ isHovered, isPressed, isDisabled, isFocusVisible, isSelected, isInvalid, isUnavailable, isOutsideMonth }) =>
                       styleSlots.base({
                         color: isSelected ? (isInvalid ? "error" : color) : "default",
-                        variant: isSelected ? variant : "light",
+                        variant: isSelected ? "solid" : "light",
                         isHovered,
                         isPressed,
                         isDisabled,
@@ -162,7 +173,7 @@ function CalendarWrapper({
   styles,
   children,
 }: {
-  styleSlots: CalendarStylesReturnType;
+  styleSlots: any;
   classNames: CalendarProps<DateValue>["classNames"];
   styles: CalendarProps<DateValue>["styles"];
   children: ReactNode;
