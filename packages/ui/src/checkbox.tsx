@@ -9,6 +9,7 @@ import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react
 import { mergeProps, Orientation } from "react-aria";
 import {
   Checkbox as AriaCheckbox,
+  CheckboxGroup as AriaCheckboxGroup,
   CheckboxGroupProps as AriaCheckboxGroupProps,
   CheckboxProps as AriaCheckboxProps,
   composeRenderProps,
@@ -167,4 +168,4 @@ const CheckboxLink = forwardRef(_CheckboxLink);
 
 // exports
 
-export { CheckboxGroup, Checkbox, CheckboxLink };
+export { CheckboxGroup, Checkbox, CheckboxLink, checkboxGroupStyles, checkboxStyles, CheckboxStylesReturnType, CheckboxGroupSlotsType };

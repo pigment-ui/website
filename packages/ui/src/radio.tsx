@@ -1,7 +1,6 @@
 "use client";
 
-import { checkboxStyles, CheckboxStylesReturnType } from "./checkbox";
-import { CheckboxGroupSlotsType, checkboxGroupStyles } from "./checkbox-group";
+import { CheckboxGroupSlotsType, checkboxGroupStyles, checkboxStyles, CheckboxStylesReturnType } from "./checkbox";
 import { Field, FieldBaseProps } from "./field";
 import { ColorProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
