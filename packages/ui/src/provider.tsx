@@ -10,7 +10,7 @@ type PigmentSlotsType = Record<
 
 const [PigmentSlots, usePigmentSlots] = createSlots<PigmentSlotsType>();
 
-function PigmentProvider({ color = "default", variant = "solid", variant2 = "soft", children }: PigmentSlotsType & ChildrenProps) {
+function PigmentProvider({ children }: ChildrenProps) {
   return <>{children}</>;
 }
 

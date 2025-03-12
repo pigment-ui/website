@@ -1,7 +1,6 @@
 "use client";
 
-import { FieldInput, FieldInputBaseProps } from "./field";
-import { segmentStyles } from "./styles";
+import { FieldInput, FieldInputBaseProps, fieldSegmentStyles } from "./field";
 import { ForwardRefType } from "./types";
 import { ClockIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -21,14 +20,7 @@ function _TimeField<T extends TimeValue>(props: TimeFieldProps<T>, ref: Forwarde
       {(renderProps) => (
         <FieldInput startContent={<ClockIcon />} {...renderProps} {...props}>
           <DateInput ref={ref}>
-            {(segment) => (
-              <DateSegment
-                segment={segment}
-                className={({ isFocused, isPlaceholder }) =>
-                  segmentStyles({ isFocused, isPlaceholder, color: renderProps.isInvalid ? "error" : color, variant, size, radius })
-                }
-              />
-            )}
+            {(segment) => <DateSegment segment={segment} className={({ isPlaceholder }) => fieldSegmentStyles({ isPlaceholder })} />}
           </DateInput>
         </FieldInput>
       )}

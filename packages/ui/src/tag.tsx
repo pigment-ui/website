@@ -1,6 +1,6 @@
 "use client";
 
-import { Field, FieldBaseProps } from "./field";
+import { Field, FieldBaseProps, fieldButtonStyles } from "./field";
 import { radiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps, VariantProps, Variants } from "./types";
 import { createSlots } from "./utils";
@@ -33,7 +33,7 @@ const tagStyles = tv({
   extend: variantColorStyles,
   base: "",
   slots: {
-    removeButton: "outline-none",
+    removeButton: fieldButtonStyles({ variant: "light", className: "rounded-full p-1 transition-transform" }),
   },
   variants: {
     size: {

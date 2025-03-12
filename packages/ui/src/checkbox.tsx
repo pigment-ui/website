@@ -39,7 +39,7 @@ const checkboxStyles = tv({
   extend: variantColorStyles,
   base: "[&>svg]:absolute [&>svg]:transition-transform [&>svg]:duration-150",
   slots: {
-    wrapper: "grid cursor-pointer grid-cols-[auto_1fr] items-start duration-300",
+    wrapper: "text-default grid cursor-pointer grid-cols-[auto_1fr] items-start duration-300",
   },
   variants: {
     size: {
@@ -153,12 +153,7 @@ function _CheckboxLink(props: ComponentPropsWithoutRef<typeof Link>, ref: Forwar
       target="_blank"
       {...props}
       className={composeRenderProps(props.className, (className, { isHovered, isFocusVisible }) =>
-        twMerge(
-          "underline",
-          isHovered && "decoration-double",
-          isFocusVisible ? isFocusVisibleVariants.true : isFocusVisibleVariants.false,
-          className,
-        ),
+        twMerge("underline outline-none", isHovered && "decoration-double", isFocusVisible && isFocusVisibleVariants.true, className),
       )}
     />
   );

@@ -15,8 +15,8 @@ import { tv } from "tailwind-variants";
 const fieldStyles = tv({
   slots: {
     base: "relative flex size-full flex-col",
-    label: "cursor-default",
-    description: "",
+    label: "text-default cursor-default",
+    description: "text-default",
     errorMessage: "text-error",
   },
   variants: {
@@ -30,18 +30,33 @@ const fieldStyles = tv({
 
 type FieldStylesReturnType = ReturnType<typeof fieldStyles>;
 
+const fieldButtonStyles = tv({
+  base: [
+    "relative flex items-center justify-center overflow-hidden outline-none duration-300",
+    "before:absolute before:inset-0 before:bg-current before:duration-300 data-[pressed]:scale-90",
+    "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[focus-visible]:outline-offset-0 data-[focus-visible]:outline-current",
+  ],
+  variants: {
+    variant: {
+      soft: "before:opacity-10 data-[hovered]:before:opacity-20",
+      light: "before:opacity-0 data-[hovered]:before:opacity-10",
+    },
+  },
+  defaultVariants: { variant: "soft" },
+});
+
+export const fieldSegmentStyles = tv({
+  base: fieldButtonStyles({ variant: "light", className: ["p-1", smallRadiusVariants.md] }),
+  variants: { isPlaceholder: { true: "opacity-50 data-[focused]:opacity-100 data-[focused]:before:opacity-20" } },
+});
+
 const fieldInputStyles = tv({
   extend: variantColorStyles,
   base: "cursor-text",
   slots: {
     self: "flex size-full flex-1 items-center bg-transparent outline-none placeholder:text-inherit placeholder:opacity-50 data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
     content: "pointer-events-none shrink-0",
-    button: [
-      "flex items-center bg-opacity-10 px-1.5 outline-none duration-300",
-      "data-[pressed]:scale-90 data-[hovered]:bg-opacity-20",
-      "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
-      "data-[focus-visible]:z-10 data-[focus-visible]:outline data-[focus-visible]:outline-default-1000",
-    ],
+    button: fieldButtonStyles({ className: "px-1.5" }),
   },
   variants: {
     size: {
@@ -67,22 +82,13 @@ const fieldInputStyles = tv({
     { isTextArea: true, size: "md", className: "py-2.5" },
     { isTextArea: true, size: "lg", className: "py-3" },
 
-    { color: "default", className: { button: "bg-default-1000" } },
-    { color: "default", isFocusWithin: true, className: { base: "ring-default-1000" } },
-    { color: "primary", className: { button: "bg-primary" } },
+    { color: "default", isFocusWithin: true, className: { base: "ring-default" } },
     { color: "primary", isFocusWithin: true, className: { base: "ring-primary" } },
-    { color: "secondary", className: { button: "bg-secondary" } },
     { color: "secondary", isFocusWithin: true, className: { base: "ring-secondary" } },
-    { color: "info", className: { button: "bg-info" } },
     { color: "info", isFocusWithin: true, className: { base: "ring-info" } },
-    { color: "success", className: { button: "bg-success" } },
     { color: "success", isFocusWithin: true, className: { base: "ring-success" } },
-    { color: "warning", className: { button: "bg-warning" } },
     { color: "warning", isFocusWithin: true, className: { base: "ring-warning" } },
-    { color: "error", className: { button: "bg-error" } },
     { color: "error", isFocusWithin: true, className: { base: "ring-error" } },
-
-    { variant: "solid", className: { button: "bg-default-0" } },
   ],
 });
 
@@ -108,8 +114,6 @@ interface FieldInputBaseProps extends VariantProps, ColorProps, SizeProps, Radiu
   isLabelInside?: boolean;
   startContent?: ReactElement;
   endContent?: ReactElement;
-  startButton?: ReactElement;
-  endButton?: ReactElement;
   fieldInputClassNames?: StyleSlotsToStyleProps<FieldInputStylesReturnType>["classNames"];
   fieldInputStyles?: StyleSlotsToStyleProps<FieldInputStylesReturnType>["styles"];
 }
@@ -120,6 +124,8 @@ interface FieldInputProps extends FieldInputBaseProps {
   isInvalid?: boolean;
   isDisabled?: boolean;
   children?: ReactElement;
+  startButton?: ReactElement;
+  endButton?: ReactElement;
 }
 
 // component
@@ -192,21 +198,13 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
         label: twMerge(
           isLabelInside &&
             twMerge(
-              "absolute z-20 pointer-events-none",
-              {
-                default: variant === "solid" ? "text-default-0" : "text-default-1000",
-                primary: variant === "solid" ? "text-primary-foreground" : "text-primary",
-                secondary: variant === "solid" ? "text-secondary-foreground" : "text-secondary",
-                info: variant === "solid" ? "text-info-foreground" : "text-info",
-                success: variant === "solid" ? "text-success-foreground" : "text-success",
-                warning: variant === "solid" ? "text-warning-foreground" : "text-warning",
-                error: variant === "solid" ? "text-error-foreground" : "text-error",
-              }[isInvalid ? "error" : color],
-              {
-                sm: "inset-x-2 top-2",
-                md: "inset-x-2.5 top-2.5",
-                lg: "inset-x-3 top-3",
-              }[size],
+              variantColorStyles({
+                variant,
+                color: isInvalid ? "error" : color,
+                className: "bg-transparent z-10 pointer-events-none w-fit absolute border-none backdrop-blur-none",
+              }),
+              { sm: "inset-x-2 top-2", md: "inset-x-2.5 top-2.5", lg: "inset-x-3 top-3" }[size],
+              isDisabled && isDisabledVariants.true,
             ),
           props.fieldClassNames?.label,
         ),
@@ -278,5 +276,5 @@ const FieldInput = forwardRef(_FieldInput);
 
 // exports
 
-export { Field, FieldInput, fieldStyles, fieldInputStyles };
+export { Field, FieldInput, fieldStyles, fieldInputStyles, fieldButtonStyles };
 export type { FieldBaseProps, FieldInputBaseProps };

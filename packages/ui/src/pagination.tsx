@@ -1,7 +1,7 @@
 "use client";
 
 import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorExtendedProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps, VariantProps, Variants } from "./types";
+import { ColorProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps, VariantProps, Variants } from "./types";
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon } from "lucide-react";
 import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef, KeyboardEvent, useMemo } from "react";
 import { FocusScope, mergeProps, useFocusManager } from "react-aria";
@@ -31,13 +31,7 @@ type PaginationStylesReturnType = ReturnType<typeof paginationStyles>;
 
 // props
 
-interface PaginationProps
-  extends ColorExtendedProps,
-    VariantProps,
-    SizeProps,
-    RadiusProps,
-    StyleProps,
-    StyleSlotsToStyleProps<PaginationStylesReturnType> {
+interface PaginationProps extends ColorProps, VariantProps, SizeProps, RadiusProps, StyleProps, StyleSlotsToStyleProps<PaginationStylesReturnType> {
   variantActive?: Variants;
   total: number;
   page: number;

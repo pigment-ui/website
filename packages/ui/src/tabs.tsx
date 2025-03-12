@@ -1,16 +1,7 @@
 "use client";
 
 import { isFocusVisibleVariants, radiusVariants, variantColorStyles } from "./styles";
-import {
-  ColorExtendedProps,
-  ContentProps,
-  ForwardRefType,
-  RadiusProps,
-  SizeProps,
-  StyleSlotsToSlots,
-  StyleSlotsToStyleProps,
-  VariantProps,
-} from "./types";
+import { ColorProps, ContentProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
 import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps } from "react-aria";
@@ -34,7 +25,7 @@ const tabsStyles = tv({
   slots: {
     base: "flex",
     list: "flex h-fit w-fit backdrop-blur-lg",
-    panel: "h-fit w-full backdrop-blur-lg",
+    panel: "h-fit w-full outline-none backdrop-blur-lg",
   },
   variants: {
     orientation: {
@@ -42,8 +33,7 @@ const tabsStyles = tv({
       horizontal: { list: "flex-col" },
     },
     color: {
-      default: { list: "bg-default-1000/10", panel: "bg-default-1000/10 text-default-1000" },
-      inverted: { list: "bg-default-0/10", panel: "bg-default-0/10 text-default-0" },
+      default: { list: "bg-default/10", panel: "bg-default/10 text-default" },
       primary: { list: "bg-primary/10", panel: "bg-primary/10 text-primary" },
       secondary: { list: "bg-secondary/10", panel: "bg-secondary/10 text-secondary" },
       info: { list: "bg-info/10", panel: "bg-info/10 text-info" },
@@ -51,6 +41,7 @@ const tabsStyles = tv({
       warning: { list: "bg-warning/10", panel: "bg-warning/10 text-warning" },
       error: { list: "bg-error/10", panel: "bg-error/10 text-error" },
     },
+
     size: {
       sm: { base: "gap-2", list: "gap-2 p-1", panel: ["p-2", radiusVariants.sm] },
       md: { base: "gap-2.5", list: "gap-2.5 p-1.5", panel: ["p-2.5", radiusVariants.md] },
@@ -84,7 +75,7 @@ const tabStyles = tv({
 
 // props
 
-interface TabsProps extends AriaTabsProps, VariantProps, ColorExtendedProps, SizeProps, RadiusProps, StyleSlotsToStyleProps<TabsStylesReturnType> {}
+interface TabsProps extends AriaTabsProps, VariantProps, ColorProps, SizeProps, RadiusProps, StyleSlotsToStyleProps<TabsStylesReturnType> {}
 
 // slots
 

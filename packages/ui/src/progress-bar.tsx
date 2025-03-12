@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 
 const progressBarStyles = tv({
   slots: {
-    base: "",
+    base: "text-default",
     wrapper: "flex flex-col",
     labelWrapper: "",
     label: "",
@@ -53,7 +53,7 @@ const progressBarStyles = tv({
     isIndeterminate: { true: {}, false: { filler: "duration-1000" } },
   },
   compoundVariants: [
-    { isCircular: false, color: "default", className: { track: "bg-default-1000/10", filler: "bg-default-1000" } },
+    { isCircular: false, color: "default", className: { track: "bg-default/10", filler: "bg-default" } },
     { isCircular: false, color: "primary", className: { track: "bg-primary/10", filler: "bg-primary" } },
     { isCircular: false, color: "secondary", className: { track: "bg-secondary/10", filler: "bg-secondary" } },
     { isCircular: false, color: "info", className: { track: "bg-info/10", filler: "bg-info" } },
@@ -64,7 +64,7 @@ const progressBarStyles = tv({
     { isCircular: true, size: "md", className: { track: "size-16" } },
     { isCircular: true, size: "lg", className: { track: "size-20" } },
 
-    { isCircular: true, color: "default", className: { track: "stroke-default-1000/10", filler: "stroke-default-1000" } },
+    { isCircular: true, color: "default", className: { track: "stroke-default/10", filler: "stroke-default" } },
     { isCircular: true, color: "primary", className: { track: "stroke-primary/10", filler: "stroke-primary" } },
     { isCircular: true, color: "secondary", className: { track: "stroke-secondary/10", filler: "stroke-secondary" } },
     { isCircular: true, color: "info", className: { track: "stroke-info/10", filler: "stroke-info" } },

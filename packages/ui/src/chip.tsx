@@ -1,7 +1,7 @@
 "use client";
 
 import { smallRadiusVariants, variantColorStyles } from "./styles";
-import { ColorExtendedProps, ContentProps, RadiusProps, SizeProps, VariantProps } from "./types";
+import { ColorProps, ContentProps, RadiusProps, SizeProps, VariantProps } from "./types";
 import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { tv } from "tailwind-variants";
 
@@ -28,7 +28,7 @@ const chipStyles = tv({
 
 // props
 
-interface ChipProps extends Omit<HTMLAttributes<HTMLDivElement>, "color">, VariantProps, ColorExtendedProps, SizeProps, RadiusProps, ContentProps {
+interface ChipProps extends Omit<HTMLAttributes<HTMLDivElement>, "color">, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps {
   isCompact?: boolean;
 }
 
@@ -51,9 +51,9 @@ function _Chip(props: ChipProps, ref: ForwardedRef<HTMLDivElement>) {
 
   return (
     <div ref={ref} {...restProps} className={chipStyles({ variant, color, size, radius, isCompact, className })} style={style}>
-      {startContent}
-      {children}
-      {endContent}
+      <div>{startContent}</div>
+      <div>{children}</div>
+      <div>{endContent}</div>
     </div>
   );
 }

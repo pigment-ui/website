@@ -1,7 +1,7 @@
 "use client";
 
 import { cardStyles } from "./card";
-import { Field, FieldBaseProps } from "./field";
+import { Field, FieldBaseProps, fieldButtonStyles } from "./field";
 import { smallRadiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, RadiusProps, StyleSlotsToStyleProps } from "./types";
 import { FormValidationProps, useFormValidationState } from "@react-stately/form";
@@ -28,39 +28,17 @@ import { tv } from "tailwind-variants";
 
 const calendarStyles = tv({
   extend: variantColorStyles,
-  base: "transition-transform",
+  base: "!backdrop-blur-none transition-transform",
   slots: {
     wrapper: "",
-    calendarWrapper: "w-fit max-w-full overflow-auto p-4",
+    calendarWrapper: "text-default w-fit max-w-full overflow-auto p-4",
     header: "flex items-center justify-between gap-4",
-    heading: "font-medium text-default-1000",
-    button: [
-      "grid place-items-center text-default-1000 outline-none duration-300",
-      "data-[pressed]:scale-90 data-[hovered]:bg-default-1000/10",
-      "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
-      "data-[focus-visible]:z-10 data-[focus-visible]:outline data-[focus-visible]:outline-default-1000",
-    ],
+    heading: "font-medium",
+    button: fieldButtonStyles(),
     gridWrapper: "flex gap-4",
-    grid: "size-fit border-separate border-spacing-x-0 border-spacing-y-1 [&_td]:p-0 [&_th]:p-0 [&_th]:font-light [&_th]:text-default-700",
+    grid: "size-fit border-separate border-spacing-x-0 border-spacing-y-1 [&_td]:p-0 [&_th]:p-0 [&_th]:font-light",
   },
   variants: {
-    variant: {
-      solid: "",
-      soft: "",
-      light: "",
-      bordered: "",
-      outlined: "",
-      faded: "",
-    },
-    color: {
-      default: "",
-      primary: "",
-      secondary: "",
-      info: "",
-      success: "",
-      warning: "",
-      error: "",
-    },
     size: {
       sm: {
         base: "size-7 text-xs",
@@ -82,13 +60,9 @@ const calendarStyles = tv({
       },
     },
     radius: smallRadiusVariants,
-    asCard: { true: { calendarWrapper: cardStyles().base({ hasShadow: false }) } },
-    isUnavailable: { true: { base: "text-error line-through" } },
+    asCard: { true: { calendarWrapper: cardStyles().base() } },
+    isUnavailable: { true: { base: "line-through" } },
     isOutsideMonth: { true: { base: "hidden" } },
-    isHovered: { true: {} },
-    isPressed: { true: {} },
-    isDisabled: { true: {} },
-    isFocusVisible: { true: {} },
   },
 });
 
@@ -142,11 +116,11 @@ function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedR
                     date={date}
                     className={({ isHovered, isPressed, isDisabled, isFocusVisible, isSelected, isInvalid, isUnavailable, isOutsideMonth }) =>
                       styleSlots.base({
-                        color: isSelected ? (isInvalid ? "error" : color) : "default",
+                        color: isUnavailable ? "error" : isSelected ? (isInvalid ? "error" : color) : "default",
                         variant: isSelected ? "solid" : "light",
                         isHovered,
                         isPressed,
-                        isDisabled,
+                        isDisabled: isDisabled || isUnavailable,
                         isFocusVisible,
                         isUnavailable,
                         isOutsideMonth,

@@ -22,10 +22,6 @@ export const twConfig: Config = {
           950: "rgb(var(--pigment-default-950) / <alpha-value>)",
           1000: "rgb(var(--pigment-default-1000) / <alpha-value>)",
         },
-        inverted: {
-          DEFAULT: "rgb(var(--pigment-default-0) / <alpha-value>)",
-          foreground: "rgb(var(--pigment-default-10000) / <alpha-value>)",
-        },
         primary: {
           DEFAULT: "rgb(var(--pigment-primary-500) / <alpha-value>)",
           foreground: "rgb(var(--pigment-default-0) / <alpha-value>)",
@@ -116,6 +112,7 @@ export const twConfig: Config = {
           900: "rgb(var(--pigment-error-900) / <alpha-value>)",
           950: "rgb(var(--pigment-error-950) / <alpha-value>)",
         },
+        focus: "rgb(var(--pigment-default-1000) / <alpha-value>)",
       },
 
       keyframes: {

@@ -7,7 +7,7 @@ import { tv } from "tailwind-variants";
 // styles
 
 const skeletonStyles = tv({
-  base: "bg-default-1000/10",
+  base: "bg-default/10",
   variants: {
     animation: { pulse: "animate-pulse", none: "animate-none" },
   },

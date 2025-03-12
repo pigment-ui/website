@@ -1,38 +1,56 @@
 "use client";
 
-import { ColorExtendedProps, SizeProps, StyleProps } from "./types";
-import React, { ForwardedRef, forwardRef } from "react";
+import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { tv } from "tailwind-variants";
 
 // styles
 
 const spinnerStyles = tv({
-  base: "animate-spin rounded-full border border-r-transparent border-t-transparent",
-  variants: {
-    color: {
-      default: "border-b-default-1000 border-l-default-1000",
-      inverted: "border-b-default-0 border-l-default-0",
-      primary: "border-b-primary border-l-primary",
-      secondary: "border-b-secondary border-l-secondary",
-      info: "border-b-info border-l-info",
-      success: "border-b-success border-l-success",
-      warning: "border-b-warning border-l-warning",
-      error: "border-b-error border-l-error",
-    },
-    size: { sm: "size-4", md: "size-5", lg: "size-6" },
-  },
+  base: "inline-block size-fit animate-spin",
 });
-
-// props
-
-interface SpinnerProps extends ColorExtendedProps, SizeProps, StyleProps {}
 
 // component
 
-function _Spinner(props: SpinnerProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { color = "default", size = "md", className, style } = props;
+function _Spinner(props: HTMLAttributes<HTMLDivElement>, ref: ForwardedRef<HTMLDivElement>) {
+  return (
+    <div ref={ref} {...props} className={spinnerStyles({ className: props.className })}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="size-full"
+      >
+        <circle cx="12" cy="12" r="9" className="animateCircle" />
+      </svg>
 
-  return <div ref={ref} className={spinnerStyles({ color, size, className })} style={style} />;
+      <style jsx>{`
+        @keyframes circleAnimation {
+          0% {
+            stroke-dasharray: 0 56.5487;
+            stroke-dashoffset: 56.5487;
+          }
+          50% {
+            stroke-dasharray: 56.5487 0;
+            stroke-dashoffset: 0;
+          }
+          100% {
+            stroke-dasharray: 0 56.5487;
+            stroke-dashoffset: -56.5487;
+          }
+        }
+
+        .animateCircle {
+          animation: circleAnimation 3s linear infinite;
+        }
+      `}</style>
+    </div>
+  );
 }
 
 const Spinner = forwardRef(_Spinner);

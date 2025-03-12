@@ -30,7 +30,7 @@ import { tv } from "tailwind-variants";
 
 const listBoxStyles = tv({
   variants: {
-    asCard: { true: cardStyles().base({ className: "p-2", hasShadow: false }) },
+    asCard: { true: cardStyles().base({ className: "p-2" }) },
     isFocusVisible: isFocusVisibleVariants,
   },
 });
@@ -61,9 +61,10 @@ const listBoxItemStyles = tv({
 type ListBoxItemStylesReturnType = ReturnType<typeof listBoxItemStyles>;
 
 const listBoxSectionStyles = tv({
+  extend: variantColorStyles,
   slots: {
     base: "first:pt-0 last:pb-0",
-    title: "border-b border-b-default-1000/20 font-bold text-default-500",
+    title: "font-bold",
   },
   variants: {
     size: {
@@ -72,6 +73,7 @@ const listBoxSectionStyles = tv({
       lg: { base: "py-3", title: "mb-3 p-3 text-base" },
     },
   },
+  defaultVariants: { variant: "light" },
 });
 
 type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
@@ -204,9 +206,9 @@ function _ListBoxItem(props: ListBoxItemProps, ref: ForwardedRef<HTMLDivElement>
 const ListBoxItem = forwardRef(_ListBoxItem);
 
 function _ListBoxSection<T extends object>(props: ListBoxSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { title, items, size, className, classNames, sectionClassNames, style, styles, sectionStyles, children } = useListBoxSlots(props);
+  const { title, items, color, size, className, classNames, sectionClassNames, style, styles, sectionStyles, children } = useListBoxSlots(props);
 
-  const styleSlots = listBoxSectionStyles({ size });
+  const styleSlots = listBoxSectionStyles({ color, size });
 
   return (
     <AriaListBoxSection

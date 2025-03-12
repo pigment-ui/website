@@ -1,11 +1,12 @@
 "use client";
 
-import { Button } from "./button";
+import { fieldButtonStyles } from "./field";
 import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorExtendedProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { ColorProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { CircleAlertIcon, CircleCheckIcon, CircleXIcon, InfoIcon, XIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps } from "react-aria";
+import { Button as AriaButton } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
@@ -19,13 +20,31 @@ const alertStyles = tv({
     title: "font-bold",
     description: "",
     icon: "",
-    closeButton: "",
+    closeButton: fieldButtonStyles({ variant: "light", className: "absolute right-2 top-2 z-10 rounded-full p-2" }),
   },
   variants: {
     size: {
-      sm: { base: ["gap-4 p-4", radiusVariants.sm], title: "text-sm", description: "text-xs", icon: "[&_svg]:size-8" },
-      md: { base: ["gap-5 p-5", radiusVariants.md], title: "text-base", description: "text-sm", icon: "[&_svg]:size-10" },
-      lg: { base: ["gap-6 p-6", radiusVariants.lg], title: "text-lg", description: "text-base", icon: "[&_svg]:size-12" },
+      sm: {
+        base: ["gap-3 p-3", radiusVariants.sm],
+        title: "text-sm",
+        description: "text-xs",
+        icon: "[&>svg]:size-6",
+        closeButton: "[&>svg]:size-3",
+      },
+      md: {
+        base: ["gap-4 p-4", radiusVariants.md],
+        title: "text-base",
+        description: "text-sm",
+        icon: "[&>svg]:size-8",
+        closeButton: "[&>svg]:size-4",
+      },
+      lg: {
+        base: ["gap-5 p-5", radiusVariants.lg],
+        title: "text-lg",
+        description: "text-base",
+        icon: "[&>svg]:size-10",
+        closeButton: "[&>svg]:size-5",
+      },
     },
   },
 });
@@ -36,7 +55,7 @@ type AlertStylesReturnType = ReturnType<typeof alertStyles>;
 
 interface AlertProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "color">,
-    ColorExtendedProps,
+    ColorProps,
     VariantProps,
     SizeProps,
     StyleSlotsToStyleProps<AlertStylesReturnType> {
@@ -93,19 +112,14 @@ function _Alert(props: AlertProps, ref: ForwardedRef<HTMLDivElement>) {
         {children}
       </div>
       {!!onClose && (
-        <Button
+        <AriaButton
           aria-label="Alert close button"
-          isCompact
-          variant="soft"
-          radius="full"
-          size={size}
-          color={variant === "solid" ? (color === "inverted" ? "default" : "inverted") : color}
           onPress={onClose}
           className={styleSlots.closeButton({ className: classNames?.closeButton })}
           style={styles?.closeButton}
         >
           <XIcon />
-        </Button>
+        </AriaButton>
       )}
     </div>
   );

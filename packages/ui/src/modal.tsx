@@ -1,14 +1,22 @@
 "use client";
 
-import { Button } from "./button";
 import { cardStyles } from "./card";
+import { fieldButtonStyles } from "./field";
 import { SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 import { PlacementAxis } from "@react-types/overlays";
 import { XIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps, useId } from "react-aria";
-import { composeRenderProps, Dialog, DialogTrigger, Modal as AriaModal, ModalOverlay, ModalOverlayProps } from "react-aria-components";
+import {
+  Button as AriaButton,
+  composeRenderProps,
+  Dialog,
+  DialogTrigger,
+  Modal as AriaModal,
+  ModalOverlay,
+  ModalOverlayProps,
+} from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
@@ -18,11 +26,11 @@ const modalStyles = tv({
   extend: cardStyles,
   slots: {
     base: "relative duration-300",
-    header: "pr-16",
+    header: "",
     body: "",
     dialog: "relative flex flex-col outline-none",
     backdrop: "fixed inset-0 z-[999] grid place-items-center duration-300",
-    closeButton: "absolute right-2 top-2",
+    closeButton: fieldButtonStyles({ variant: "light", className: "absolute right-2 top-2 z-10 rounded-full p-2" }),
   },
   variants: {
     placement: {
@@ -33,13 +41,13 @@ const modalStyles = tv({
       center: { backdrop: "px-4 py-16" },
     },
     size: {
-      sm: "",
-      md: "",
-      lg: "",
+      sm: { closeButton: "[&>svg]:size-3" },
+      md: { closeButton: "[&>svg]:size-4" },
+      lg: { closeButton: "[&>svg]:size-5" },
     },
     backdrop: {
-      blur: { backdrop: "bg-default-1000/25 backdrop-blur-lg" },
-      opaque: { backdrop: "bg-default-1000/50" },
+      blur: { backdrop: "bg-default/25 backdrop-blur-lg" },
+      opaque: { backdrop: "bg-default/50" },
       transparent: { backdrop: "bg-transparent" },
     },
     insideScroll: {
@@ -139,18 +147,14 @@ function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
               {children}
             </Dialog>
             {!hideCloseButton && (
-              <Button
+              <AriaButton
                 aria-label="Modal close button"
-                isCompact
-                variant="soft"
-                radius="full"
-                size="sm"
                 onPress={() => state.close()}
                 className={styleSlots.closeButton({ className: classNames?.closeButton })}
                 style={styles?.closeButton}
               >
                 <XIcon />
-              </Button>
+              </AriaButton>
             )}
           </AriaModal>
         ))}

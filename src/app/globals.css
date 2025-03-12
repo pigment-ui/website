@@ -21,7 +21,7 @@
   }
 
   body {
-    @apply bg-default-0 text-default-1000;
+    @apply bg-default-0 text-pink-500;
   }
 }
 

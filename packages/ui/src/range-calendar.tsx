@@ -29,9 +29,16 @@ const rangeCalendarStyles = tv({
   extend: calendarStyles,
   base: "",
   variants: {
-    isSelectedRange: { true: {} },
-    isSelectionStart: { true: {} },
-    isSelectionEnd: { true: {} },
+    color: { default: "", primary: "", secondary: "", info: "", success: "", warning: "", error: "" },
+    variant: { solid: "", soft: "", light: "", bordered: "", outlined: "", ghost: "", faded: "", card: "" },
+    isHovered: { true: "" },
+    isPressed: { true: "" },
+    isDisabled: { true: "" },
+    isFocusVisible: { true: "" },
+
+    isSelectedRange: { true: "" },
+    isSelectionStart: { true: "" },
+    isSelectionEnd: { true: "" },
     isSelectedFirstDay: { true: "!rounded-r-none" },
     isSelectedLastDay: { true: "!rounded-l-none" },
   },
@@ -105,11 +112,11 @@ function _RangeCalendar<T extends DateValue>(props: RangeCalendarProps<T>, ref: 
                       isSelectionEnd,
                     }) =>
                       styleSlots.base({
-                        color: isSelected ? (isInvalid ? "error" : color) : "default",
+                        color: isUnavailable ? "error" : isSelected ? (isInvalid ? "error" : color) : "default",
                         variant: isSelected ? (isSelectionStart || isSelectionEnd ? "solid" : "soft") : "light",
                         isHovered,
                         isPressed,
-                        isDisabled,
+                        isDisabled: isDisabled || isUnavailable,
                         isFocusVisible,
                         isUnavailable,
                         isOutsideMonth,

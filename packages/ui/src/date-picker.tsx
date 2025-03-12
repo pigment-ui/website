@@ -1,9 +1,8 @@
 "use client";
 
 import { Calendar } from "./calendar";
-import { FieldInput, FieldInputBaseProps } from "./field";
+import { FieldInput, FieldInputBaseProps, fieldSegmentStyles } from "./field";
 import { Popover } from "./popover";
-import { segmentStyles } from "./styles";
 import { ForwardRefType } from "./types";
 import { useObserveElementWidth } from "./utils";
 import { CalendarIcon } from "lucide-react";
@@ -49,14 +48,7 @@ function _DatePicker<T extends DateValue>(props: DatePickerProps<T>, ref: Forwar
             {...props}
           >
             <DateInput ref={ref}>
-              {(segment) => (
-                <DateSegment
-                  segment={segment}
-                  className={({ isFocused, isPlaceholder }) =>
-                    segmentStyles({ isFocused, isPlaceholder, color: renderProps.isInvalid ? "error" : color, variant, size, radius })
-                  }
-                />
-              )}
+              {(segment) => <DateSegment segment={segment} className={({ isPlaceholder }) => fieldSegmentStyles({ isPlaceholder })} />}
             </DateInput>
           </FieldInput>
 

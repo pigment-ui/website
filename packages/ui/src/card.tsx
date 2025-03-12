@@ -1,7 +1,7 @@
 "use client";
 
-import { radiusVariants } from "./styles";
-import { ChildrenProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
+import { radiusVariants, variantColorStyles } from "./styles";
+import { ChildrenProps, SizeProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { mergeProps } from "react-aria";
@@ -12,27 +12,28 @@ import { tv } from "tailwind-variants";
 
 const cardStyles = tv({
   slots: {
-    base: ["border border-default-1000/20 bg-default-0 bg-clip-padding", radiusVariants.md],
-    header: "p-4",
-    body: "p-4",
-    footer: "p-4",
-    title: "text-xl font-bold",
-    description: "text-sm",
-    buttons: "flex justify-end gap-x-4",
+    base: variantColorStyles({ color: "default", variant: "card", className: ["!block", radiusVariants.md] }),
+    header: "",
+    body: "",
+    footer: "",
+    title: "font-bold",
+    description: "",
+    buttons: "flex flex-wrap justify-end",
   },
   variants: {
-    hasShadow: { true: "[box-shadow:0_5px_20px_rgba(0,0,0,.1)] dark:[box-shadow:0_5px_20px_rgba(255,255,255,.1)]", false: "shadow-none" },
+    size: {
+      sm: { header: "p-4", body: "p-4", footer: "p-4", title: "text-lg", description: "text-xs", buttons: "gap-4" },
+      md: { header: "p-6", body: "p-6", footer: "p-6", title: "text-xl", description: "text-sm", buttons: "gap-6" },
+      lg: { header: "p-8", body: "p-8", footer: "p-8", title: "text-2xl", description: "text-base", buttons: "gap-8" },
+    },
   },
-  defaultVariants: { hasShadow: true },
 });
 
 type CardStylesReturnType = ReturnType<typeof cardStyles>;
 
 // props
 
-interface CardProps extends HTMLAttributes<HTMLDivElement>, ChildrenProps, StyleProps, StyleSlotsToStyleProps<CardStylesReturnType> {
-  hasShadow?: boolean;
-}
+interface CardProps extends HTMLAttributes<HTMLDivElement>, ChildrenProps, SizeProps, StyleProps, StyleSlotsToStyleProps<CardStylesReturnType> {}
 
 // slots
 
@@ -43,9 +44,9 @@ const [CardSlotsProvider, useCardSlots] = createSlots<CardSlotsType>();
 // component
 
 function _Card(props: CardProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { hasShadow = true, children, className, classNames, style, styles } = props;
+  const { size = "md", children, className, classNames, style, styles } = props;
 
-  const styleSlots = cardStyles({ hasShadow });
+  const styleSlots = cardStyles({ size });
 
   return (
     <CardSlotsProvider value={{ styleSlots, classNames, styles }}>

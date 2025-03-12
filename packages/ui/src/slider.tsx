@@ -25,18 +25,18 @@ import { tv } from "tailwind-variants";
 const sliderStyles = tv({
   slots: {
     base: "",
-    output: "absolute right-0 top-0",
+    output: "text-default absolute right-0 top-0",
     sliderWrapper: "relative size-full",
     contentWrapper: "flex items-center",
     trackWrapper: "relative flex-1",
     track: "cursor-pointer duration-300",
     thumbWrapper: "absolute",
-    thumb: "z-20 border-2 [transition:width_300ms,height_300ms,border-color_300ms;]",
+    thumb: "z-20 border-2 outline-none [transition:width_300ms,height_300ms,border-color_300ms;]",
     filler: "absolute [transition:background-color_300ms;]",
     stepsWrapper: "pointer-events-none absolute flex items-center justify-between",
-    step: "z-10",
+    step: "z-10 opacity-50",
     marksWrapper: "absolute",
-    mark: "absolute",
+    mark: "text-default absolute",
   },
   variants: {
     orientation: {
@@ -67,10 +67,10 @@ const sliderStyles = tv({
     },
     color: {
       default: {
-        track: "bg-default-1000/20",
-        thumb: "border-default-1000 bg-default-0",
-        filler: "bg-default-1000",
-        step: "bg-default-1000",
+        track: "bg-default/20",
+        thumb: "border-default bg-default-foreground",
+        filler: "bg-default",
+        step: "bg-default-foreground",
       },
       primary: {
         track: "bg-primary/20",
@@ -124,7 +124,7 @@ const sliderStyles = tv({
     isDisabled: { true: { track: isDisabledVariants.true } },
     isHovered: { true: { thumb: "cursor-grab" } },
     isDragging: { true: { thumb: "cursor-grabbing" } },
-    isFocusVisible: { true: { thumb: isFocusVisibleVariants.true }, false: { thumb: isFocusVisibleVariants.false } },
+    isFocusVisible: { true: { thumb: isFocusVisibleVariants.true } },
     hideThumb: { true: { track: "overflow-hidden", thumb: "opacity-0", filler: "rounded-none" } },
     hasMarks: { true: "" },
   },

@@ -2,7 +2,7 @@
 
 import { Spinner } from "./spinner";
 import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorExtendedProps, ContentProps, RadiusProps, SizeProps, StyleProps, VariantProps } from "./types";
+import { ColorProps, ContentProps, RadiusProps, SizeProps, StyleProps, VariantProps } from "./types";
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import { useObjectRef } from "@react-aria/utils";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -21,7 +21,7 @@ const buttonStyles = tv({
       lg: "h-12 gap-x-3 px-6 text-base [&_svg]:size-6",
     },
     isCompact: { true: "" },
-    isLoading: { true: "!text-transparent" },
+    isLoading: { true: "[&>*:not(:first-child)]:!text-transparent" },
     radius: radiusVariants,
   },
   compoundVariants: [
@@ -33,7 +33,7 @@ const buttonStyles = tv({
 
 // props
 
-interface ButtonProps extends AriaButtonProps, HoverProps, VariantProps, ColorExtendedProps, SizeProps, RadiusProps, ContentProps, StyleProps {
+interface ButtonProps extends AriaButtonProps, HoverProps, VariantProps, ColorProps, SizeProps, RadiusProps, ContentProps, StyleProps {
   isCompact?: boolean;
   isLoading?: boolean;
   asChild?: boolean;
@@ -90,14 +90,18 @@ function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
       style={style}
     >
       {isLoading && (
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <Spinner size={size} color={variant === "solid" ? (color === "inverted" ? "default" : "inverted") : color} />
+        <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2">
+          <Spinner />
         </div>
       )}
 
-      {startContent}
-      <Slottable>{children}</Slottable>
-      {endContent}
+      <div>{startContent}</div>
+
+      <div>
+        <Slottable>{children}</Slottable>
+      </div>
+
+      <div>{endContent}</div>
     </Component>
   );
 }

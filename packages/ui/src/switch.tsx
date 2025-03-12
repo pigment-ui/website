@@ -12,14 +12,14 @@ import { tv } from "tailwind-variants";
 
 const switchStyles = tv({
   slots: {
-    base: "flex cursor-pointer items-center",
-    self: "relative flex items-center rounded-full duration-300",
+    base: "text-default flex cursor-pointer items-center",
+    self: "relative flex items-center rounded-full outline-none duration-300",
     thumb: "absolute left-1 rounded-full duration-300",
     content: "",
   },
   variants: {
     color: {
-      default: { self: "bg-default-1000", thumb: "bg-default-0" },
+      default: { self: "bg-default", thumb: "bg-default-foreground" },
       primary: { self: "bg-primary", thumb: "bg-primary-foreground" },
       secondary: { self: "bg-secondary", thumb: "bg-secondary-foreground" },
       info: { self: "bg-info", thumb: "bg-info-foreground" },
@@ -34,7 +34,7 @@ const switchStyles = tv({
     },
     isHovered: { true: "" },
     isPressed: { true: { self: "scale-95" } },
-    isSelected: { false: { self: "bg-default-1000 bg-opacity-40", thumb: "bg-default-0" }, true: { self: "bg-opacity-100" } },
+    isSelected: { false: { self: "bg-default bg-opacity-40", thumb: "bg-default-foreground" }, true: { self: "bg-opacity-100" } },
     isFocusVisible: { true: { self: isFocusVisibleVariants.true } },
     isDisabled: isDisabledVariants,
   },

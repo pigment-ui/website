@@ -1,9 +1,8 @@
 "use client";
 
-import { FieldInput, FieldInputBaseProps } from "./field";
+import { FieldInput, FieldInputBaseProps, fieldSegmentStyles } from "./field";
 import { Popover } from "./popover";
 import { RangeCalendar } from "./range-calendar";
-import { segmentStyles } from "./styles";
 import { ForwardRefType } from "./types";
 import { useObserveElementWidth } from "./utils";
 import { CalendarIcon } from "lucide-react";
@@ -50,27 +49,13 @@ function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, r
           >
             <div className="gap-2">
               <DateInput ref={ref} slot="start" className="flex items-center">
-                {(segment) => (
-                  <DateSegment
-                    segment={segment}
-                    className={({ isFocused, isPlaceholder }) =>
-                      segmentStyles({ isFocused, isPlaceholder, color: renderProps.isInvalid ? "error" : color, variant, size, radius })
-                    }
-                  />
-                )}
+                {(segment) => <DateSegment segment={segment} className={({ isPlaceholder }) => fieldSegmentStyles({ isPlaceholder })} />}
               </DateInput>
 
               <span aria-hidden="true">–</span>
 
               <DateInput slot="end" className="flex items-center">
-                {(segment) => (
-                  <DateSegment
-                    segment={segment}
-                    className={({ isFocused, isPlaceholder }) =>
-                      segmentStyles({ isFocused, isPlaceholder, color: renderProps.isInvalid ? "error" : color, variant, size, radius })
-                    }
-                  />
-                )}
+                {(segment) => <DateSegment segment={segment} className={({ isPlaceholder }) => fieldSegmentStyles({ isPlaceholder })} />}
               </DateInput>
             </div>
           </FieldInput>

@@ -8,7 +8,7 @@ import { tv } from "tailwind-variants";
 // styles
 
 const separatorStyles = tv({
-  base: "rounded-full border-none bg-default-1000/20",
+  base: "bg-default/20 rounded-full border-none",
   variants: {
     orientation: { horizontal: "w-full", vertical: "h-full" },
     size: { sm: "", md: "", lg: "" },

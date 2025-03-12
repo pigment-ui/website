@@ -1,5 +1,5 @@
 import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorExtendedProps, ContentProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { ColorProps, ContentProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
 import { ChevronDown } from "lucide-react";
 import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef, ReactNode, useState } from "react";
@@ -73,7 +73,7 @@ type DisclosureStylesReturnType = ReturnType<typeof disclosureStyles>;
 
 // props
 
-interface DisclosureGroupProps extends AriaDisclosureGroupProps, VariantProps, ColorExtendedProps, SizeProps {
+interface DisclosureGroupProps extends AriaDisclosureGroupProps, VariantProps, ColorProps, SizeProps {
   icon?: ReactNode;
   itemClassNames?: ComponentPropsWithoutRef<typeof Disclosure>["classNames"];
   itemStyles?: ComponentPropsWithoutRef<typeof Disclosure>["styles"];
@@ -83,7 +83,7 @@ interface DisclosureProps
   extends AriaDisclosureProps,
     ContentProps,
     VariantProps,
-    ColorExtendedProps,
+    ColorProps,
     SizeProps,
     StyleSlotsToStyleProps<DisclosureStylesReturnType> {
   title: ReactNode;
