@@ -1,6 +1,6 @@
 "use client";
 
-import { ListBox, ListBoxItem, listBoxItemStyles, ListBoxSection, listBoxSectionStyles, ListBoxSlotsType } from "./list-box";
+import { ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType, useListBoxItemStyles, useListBoxSectionStyles } from "./list-box";
 import { Popover } from "./popover";
 import { useGlobalProps } from "./provider";
 import { ForwardRefType, StyleProps } from "./types";
@@ -25,11 +25,11 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const menuStyles = tv({ base: "p-2" });
+const useMenuStyles = () => tv({ base: "p-2" });
 
-const menuItemStyles = listBoxItemStyles;
+const useMenuItemStyles = useListBoxItemStyles;
 
-const menuSectionStyles = listBoxSectionStyles;
+const useMenuSectionStyles = useListBoxSectionStyles;
 
 // props
 
@@ -61,7 +61,7 @@ function _Menu<T extends object>(props: MenuProps<T>, ref: ForwardedRef<HTMLDivE
         maxHeight={300}
         hideArrow
         {...globalProps}
-        className={composeRenderProps(globalProps.className, (className) => menuStyles({ className }))}
+        className={composeRenderProps(globalProps.className, (className) => useMenuStyles()({ className }))}
       >
         <AriaMenu ref={ref} {...globalProps} className="outline-none" style={{}} />
       </Popover>
@@ -74,7 +74,7 @@ const Menu = (forwardRef as ForwardRefType)(_Menu);
 function _MenuItem(props: MenuItemProps, ref: ForwardedRef<HTMLDivElement>) {
   const { variant, color, size, startContent, endContent, icon, classNames, itemClassNames, styles, itemStyles } = useMenuSlots(props);
 
-  const styleSlots = menuItemStyles({ color, size });
+  const styleSlots = useMenuItemStyles()({ color, size });
 
   return (
     <AriaMenuItem
@@ -124,7 +124,7 @@ const MenuItem = forwardRef(_MenuItem);
 function _MenuSection<T extends object>(props: MenuSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
   const { title, items, size, className, classNames, sectionClassNames, style, styles, sectionStyles, children } = useMenuSlots(props);
 
-  const styleSlots = menuSectionStyles({ size });
+  const styleSlots = useMenuSectionStyles()({ size });
 
   return (
     <AriaMenuSection

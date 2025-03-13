@@ -1,7 +1,7 @@
 "use client";
 
 import { useGlobalProps } from "./provider";
-import { radiusVariants, variantColorStyles } from "./styles";
+import { radiusVariants, useVariantAndColorStyles } from "./styles";
 import { ColorProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps, VariantProps, Variants } from "./types";
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon } from "lucide-react";
 import React, { ComponentPropsWithoutRef, ForwardedRef, forwardRef, KeyboardEvent, useMemo } from "react";
@@ -12,23 +12,24 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const paginationStyles = tv({
-  extend: variantColorStyles,
-  slots: {
-    base: "grid place-items-center duration-300",
-    wrapper: "flex overflow-auto p-1 [&::-webkit-scrollbar]:hidden",
-  },
-  variants: {
-    size: {
-      sm: { wrapper: "gap-2", base: "size-8 text-xs [&_svg]:size-4" },
-      md: { wrapper: "gap-2.5", base: "size-10 text-sm [&_svg]:size-5" },
-      lg: { wrapper: "gap-3", base: "size-12 text-base [&_svg]:size-6" },
+const usePaginationStyles = () =>
+  tv({
+    extend: useVariantAndColorStyles(),
+    slots: {
+      base: "grid place-items-center duration-300",
+      wrapper: "flex overflow-auto p-1 [&::-webkit-scrollbar]:hidden",
     },
-    radius: radiusVariants,
-  },
-});
+    variants: {
+      size: {
+        sm: { wrapper: "gap-2", base: "size-8 text-xs [&_svg]:size-4" },
+        md: { wrapper: "gap-2.5", base: "size-10 text-sm [&_svg]:size-5" },
+        lg: { wrapper: "gap-3", base: "size-12 text-base [&_svg]:size-6" },
+      },
+      radius: radiusVariants,
+    },
+  });
 
-type PaginationStylesReturnType = ReturnType<typeof paginationStyles>;
+type PaginationStylesReturnType = ReturnType<ReturnType<typeof usePaginationStyles>>;
 
 // props
 
@@ -57,7 +58,7 @@ function _Pagination(props: PaginationProps, ref: ForwardedRef<HTMLUListElement>
   const { variant, variantActive, color, size, radius, total, page, onChange, siblingCount, dotsJump, className, classNames, style, styles } =
     globalProps;
 
-  const styleSlots = paginationStyles({ variant, color, size, radius });
+  const styleSlots = usePaginationStyles()({ variant, color, size, radius });
 
   const paginationRange = usePagination({ total, page, siblingCount });
 

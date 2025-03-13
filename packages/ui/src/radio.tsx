@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckboxGroupSlotsProvider, checkboxGroupStyles, checkboxStyles, CheckboxStylesReturnType, useCheckboxGroupSlots } from "./checkbox";
+import { CheckboxGroupSlotsProvider, CheckboxStylesReturnType, useCheckboxGroupSlots, useCheckboxGroupStyles, useCheckboxStyles } from "./checkbox";
 import { Field, FieldBaseProps } from "./field";
 import { useGlobalProps } from "./provider";
 import { ColorProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
@@ -17,9 +17,9 @@ import { twMerge } from "tailwind-merge";
 
 // styles
 
-const radioGroupStyles = checkboxGroupStyles;
+const useRadioGroupStyles = useCheckboxGroupStyles;
 
-const radioStyles = checkboxStyles;
+const useRadioStyles = useCheckboxStyles;
 
 // props
 
@@ -43,7 +43,7 @@ function _RadioGroup(props: RadioGroupProps, ref: ForwardedRef<HTMLInputElement>
       <AriaRadioGroup ref={ref} {...globalProps}>
         {composeRenderProps(globalProps.children, (children, renderProps) => (
           <Field {...renderProps} {...globalProps}>
-            <div className={radioGroupStyles({ size, orientation })}>{children}</div>
+            <div className={useRadioGroupStyles()({ size, orientation })}>{children}</div>
           </Field>
         ))}
       </AriaRadioGroup>
@@ -56,7 +56,7 @@ const RadioGroup = forwardRef(_RadioGroup);
 function _Radio(props: RadioProps, ref: ForwardedRef<HTMLLabelElement>) {
   const { variant = "solid", color = "default", size = "md", classNames, itemClassNames, styles, itemStyles } = useCheckboxGroupSlots(props);
 
-  const styleSlots = radioStyles({ size, radius: "full" });
+  const styleSlots = useRadioStyles()({ size, radius: "full" });
 
   return (
     <AriaRadio

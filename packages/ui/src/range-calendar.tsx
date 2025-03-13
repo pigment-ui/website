@@ -1,6 +1,6 @@
 "use client";
 
-import { calendarStyles, CalendarWrapper } from "./calendar";
+import { CalendarWrapper, useCalendarStyles } from "./calendar";
 import { Field, FieldBaseProps } from "./field";
 import { useGlobalProps } from "./provider";
 import { ColorProps, RadiusProps, StyleSlotsToStyleProps } from "./types";
@@ -26,31 +26,32 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const rangeCalendarStyles = tv({
-  extend: calendarStyles,
-  base: "",
-  variants: {
-    color: { default: "", primary: "", secondary: "", info: "", success: "", warning: "", error: "" },
-    variant: { solid: "", soft: "", light: "", bordered: "", outlined: "", ghost: "", faded: "", card: "" },
-    isHovered: { true: "" },
-    isPressed: { true: "" },
-    isDisabled: { true: "" },
-    isFocusVisible: { true: "" },
+const useRangeCalendarStyles = () =>
+  tv({
+    extend: useCalendarStyles(),
+    base: "",
+    variants: {
+      color: { default: "", primary: "", secondary: "", info: "", success: "", warning: "", error: "" },
+      variant: { solid: "", soft: "", light: "", bordered: "", outlined: "", ghost: "", faded: "", card: "" },
+      isHovered: { true: "" },
+      isPressed: { true: "" },
+      isDisabled: { true: "" },
+      isFocusVisible: { true: "" },
 
-    isSelectedRange: { true: "" },
-    isSelectionStart: { true: "" },
-    isSelectionEnd: { true: "" },
-    isSelectedFirstDay: { true: "!rounded-r-none" },
-    isSelectedLastDay: { true: "!rounded-l-none" },
-  },
-  compoundVariants: [
-    { isSelectionStart: true, isSelectionEnd: false, className: "!rounded-r-none" },
-    { isSelectionStart: false, isSelectionEnd: true, className: "!rounded-l-none" },
-    { isSelectedRange: true, isSelectedFirstDay: false, isSelectedLastDay: false, className: "!rounded-none" },
-  ],
-});
+      isSelectedRange: { true: "" },
+      isSelectionStart: { true: "" },
+      isSelectionEnd: { true: "" },
+      isSelectedFirstDay: { true: "!rounded-r-none" },
+      isSelectedLastDay: { true: "!rounded-l-none" },
+    },
+    compoundVariants: [
+      { isSelectionStart: true, isSelectionEnd: false, className: "!rounded-r-none" },
+      { isSelectionStart: false, isSelectionEnd: true, className: "!rounded-l-none" },
+      { isSelectedRange: true, isSelectedFirstDay: false, isSelectedLastDay: false, className: "!rounded-none" },
+    ],
+  });
 
-type RangeCalendarStylesReturnType = ReturnType<typeof rangeCalendarStyles>;
+type RangeCalendarStylesReturnType = ReturnType<typeof useRangeCalendarStyles>;
 
 // props
 
@@ -81,7 +82,7 @@ function _RangeCalendar<T extends DateValue>(props: RangeCalendarProps<T>, ref: 
   const { displayValidation } = useFormValidationState({ ...globalProps, value });
   const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...globalProps });
 
-  const styleSlots = rangeCalendarStyles({ asCard, size, radius });
+  const styleSlots = useRangeCalendarStyles()({ asCard, size, radius });
 
   const { locale } = useLocale();
 

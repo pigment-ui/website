@@ -10,86 +10,87 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const progressBarStyles = tv({
-  slots: {
-    base: "text-default",
-    wrapper: "flex flex-col",
-    labelWrapper: "",
-    label: "",
-    valueText: "duration-300",
-    trackWrapper: "relative",
-    track: "",
-    filler: "",
-  },
-  variants: {
-    color: {
-      default: "",
-      primary: "",
-      secondary: "",
-      info: "",
-      success: "",
-      warning: "",
-      error: "",
+const useProgressBarStyles = () =>
+  tv({
+    slots: {
+      base: "text-default",
+      wrapper: "flex flex-col",
+      labelWrapper: "",
+      label: "",
+      valueText: "duration-300",
+      trackWrapper: "relative",
+      track: "",
+      filler: "",
     },
-    size: {
-      sm: { label: "text-xs", valueText: "text-xs", wrapper: "gap-y-0.5" },
-      md: { label: "text-sm", valueText: "text-sm", wrapper: "gap-y-1" },
-      lg: { label: "text-base", valueText: "text-base", wrapper: "gap-y-1.5" },
-    },
-    isCircular: {
-      false: {
-        labelWrapper: "flex justify-between",
-        valueText: "",
-        track: "relative overflow-hidden rounded-full",
-        filler: "absolute inset-y-0 left-0 rounded-full",
+    variants: {
+      color: {
+        default: "",
+        primary: "",
+        secondary: "",
+        info: "",
+        success: "",
+        warning: "",
+        error: "",
       },
-      true: {
-        wrapper: "size-fit items-center",
-        labelWrapper: "order-last",
-        valueText: "absolute",
-        trackWrapper: "grid place-items-center text-center",
-        track: "fill-none stroke-2",
+      size: {
+        sm: { label: "text-xs", valueText: "text-xs", wrapper: "gap-y-0.5" },
+        md: { label: "text-sm", valueText: "text-sm", wrapper: "gap-y-1" },
+        lg: { label: "text-base", valueText: "text-base", wrapper: "gap-y-1.5" },
       },
+      isCircular: {
+        false: {
+          labelWrapper: "flex justify-between",
+          valueText: "",
+          track: "relative overflow-hidden rounded-full",
+          filler: "absolute inset-y-0 left-0 rounded-full",
+        },
+        true: {
+          wrapper: "size-fit items-center",
+          labelWrapper: "order-last",
+          valueText: "absolute",
+          trackWrapper: "grid place-items-center text-center",
+          track: "fill-none stroke-2",
+        },
+      },
+      isIndeterminate: { true: {}, false: { filler: "duration-1000" } },
     },
-    isIndeterminate: { true: {}, false: { filler: "duration-1000" } },
-  },
-  compoundVariants: [
-    { isCircular: false, color: "default", className: { track: "bg-default/10", filler: "bg-default" } },
-    { isCircular: false, color: "primary", className: { track: "bg-primary/10", filler: "bg-primary" } },
-    { isCircular: false, color: "secondary", className: { track: "bg-secondary/10", filler: "bg-secondary" } },
-    { isCircular: false, color: "info", className: { track: "bg-info/10", filler: "bg-info" } },
-    { isCircular: false, color: "success", className: { track: "bg-success/10", filler: "bg-success" } },
-    { isCircular: false, color: "warning", className: { track: "bg-warning/10", filler: "bg-warning" } },
-    { isCircular: false, color: "error", className: { track: "bg-error/10", filler: "bg-error" } },
-    { isCircular: true, size: "sm", className: { track: "size-12" } },
-    { isCircular: true, size: "md", className: { track: "size-16" } },
-    { isCircular: true, size: "lg", className: { track: "size-20" } },
+    compoundVariants: [
+      { isCircular: false, color: "default", className: { track: "bg-default/10", filler: "bg-default" } },
+      { isCircular: false, color: "primary", className: { track: "bg-primary/10", filler: "bg-primary" } },
+      { isCircular: false, color: "secondary", className: { track: "bg-secondary/10", filler: "bg-secondary" } },
+      { isCircular: false, color: "info", className: { track: "bg-info/10", filler: "bg-info" } },
+      { isCircular: false, color: "success", className: { track: "bg-success/10", filler: "bg-success" } },
+      { isCircular: false, color: "warning", className: { track: "bg-warning/10", filler: "bg-warning" } },
+      { isCircular: false, color: "error", className: { track: "bg-error/10", filler: "bg-error" } },
+      { isCircular: true, size: "sm", className: { track: "size-12" } },
+      { isCircular: true, size: "md", className: { track: "size-16" } },
+      { isCircular: true, size: "lg", className: { track: "size-20" } },
 
-    { isCircular: true, color: "default", className: { track: "stroke-default/10", filler: "stroke-default" } },
-    { isCircular: true, color: "primary", className: { track: "stroke-primary/10", filler: "stroke-primary" } },
-    { isCircular: true, color: "secondary", className: { track: "stroke-secondary/10", filler: "stroke-secondary" } },
-    { isCircular: true, color: "info", className: { track: "stroke-info/10", filler: "stroke-info" } },
-    { isCircular: true, color: "success", className: { track: "stroke-success/10", filler: "stroke-success" } },
-    { isCircular: true, color: "warning", className: { track: "stroke-warning/10", filler: "stroke-warning" } },
-    { isCircular: true, color: "error", className: { track: "stroke-error/10", filler: "stroke-error" } },
-    { isCircular: false, size: "sm", className: { track: "h-1" } },
-    { isCircular: false, size: "md", className: { track: "h-2" } },
-    { isCircular: false, size: "lg", className: { track: "h-3" } },
+      { isCircular: true, color: "default", className: { track: "stroke-default/10", filler: "stroke-default" } },
+      { isCircular: true, color: "primary", className: { track: "stroke-primary/10", filler: "stroke-primary" } },
+      { isCircular: true, color: "secondary", className: { track: "stroke-secondary/10", filler: "stroke-secondary" } },
+      { isCircular: true, color: "info", className: { track: "stroke-info/10", filler: "stroke-info" } },
+      { isCircular: true, color: "success", className: { track: "stroke-success/10", filler: "stroke-success" } },
+      { isCircular: true, color: "warning", className: { track: "stroke-warning/10", filler: "stroke-warning" } },
+      { isCircular: true, color: "error", className: { track: "stroke-error/10", filler: "stroke-error" } },
+      { isCircular: false, size: "sm", className: { track: "h-1" } },
+      { isCircular: false, size: "md", className: { track: "h-2" } },
+      { isCircular: false, size: "lg", className: { track: "h-3" } },
 
-    {
-      isIndeterminate: true,
-      isCircular: false,
-      className: { filler: "-left-1/4 ease-linear animate-out slide-out-to-right-[500%] repeat-infinite [animation-duration:2s]" },
-    },
-    {
-      isIndeterminate: true,
-      isCircular: true,
-      className: { trackWrapper: "animate-spin ease-linear [animation-duration:1s]" },
-    },
-  ],
-});
+      {
+        isIndeterminate: true,
+        isCircular: false,
+        className: { filler: "-left-1/4 ease-linear animate-out slide-out-to-right-[500%] repeat-infinite [animation-duration:2s]" },
+      },
+      {
+        isIndeterminate: true,
+        isCircular: true,
+        className: { trackWrapper: "animate-spin ease-linear [animation-duration:1s]" },
+      },
+    ],
+  });
 
-type ProgressBarStylesReturnType = ReturnType<typeof progressBarStyles>;
+type ProgressBarStylesReturnType = ReturnType<ReturnType<typeof useProgressBarStyles>>;
 
 // props
 
@@ -111,7 +112,7 @@ function _ProgressBar(props: ProgressBarProps, ref: ForwardedRef<HTMLDivElement>
 
   const { color, size, label, hideValueText, isCircular, isIndeterminate, classNames, styles } = globalProps;
 
-  const styleSlots = progressBarStyles({ color, size, isCircular, isIndeterminate });
+  const styleSlots = useProgressBarStyles()({ color, size, isCircular, isIndeterminate });
 
   const renderValueText = (valueText?: string) =>
     !hideValueText && (

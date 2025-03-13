@@ -1,8 +1,8 @@
 "use client";
 
-import { Field, FieldBaseProps, fieldButtonStyles } from "./field";
+import { Field, FieldBaseProps, useFieldButtonStyles } from "./field";
 import { useGlobalProps } from "./provider";
-import { radiusVariants, variantColorStyles } from "./styles";
+import { radiusVariants, useVariantAndColorStyles } from "./styles";
 import { ColorProps, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps, VariantProps, Variants } from "./types";
 import { createSlots } from "./utils";
 import { XIcon } from "lucide-react";
@@ -23,31 +23,33 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const tagGroupStyles = tv({
-  base: "flex flex-wrap outline-none",
-  variants: {
-    size: { sm: "gap-2 text-xs", md: "gap-2.5 text-sm", lg: "gap-3 text-base" },
-  },
-});
-
-const tagStyles = tv({
-  extend: variantColorStyles,
-  base: "",
-  slots: {
-    removeButton: fieldButtonStyles({ variant: "light", className: "rounded-full p-1 transition-transform" }),
-  },
-  variants: {
-    size: {
-      sm: { base: "h-6 gap-x-2 px-2 text-xs", removeButton: "[&_svg]:size-3" },
-      md: { base: "h-8 gap-x-2.5 px-2.5 text-sm", removeButton: "[&_svg]:size-3.5" },
-      lg: { base: "h-10 gap-x-3 px-3 text-base", removeButton: "[&_svg]:size-4" },
+const useTagGroupStyles = () =>
+  tv({
+    base: "flex flex-wrap outline-none",
+    variants: {
+      size: { sm: "gap-2 text-xs", md: "gap-2.5 text-sm", lg: "gap-3 text-base" },
     },
-    isSelectable: { true: "cursor-pointer", false: "cursor-default" },
-    radius: radiusVariants,
-  },
-});
+  });
 
-type TagStylesReturnType = ReturnType<typeof tagStyles>;
+const useTagStyles = () =>
+  tv({
+    extend: useVariantAndColorStyles(),
+    base: "",
+    slots: {
+      removeButton: useFieldButtonStyles()({ variant: "light", className: "rounded-full p-1 transition-transform" }),
+    },
+    variants: {
+      size: {
+        sm: { base: "h-6 gap-x-2 px-2 text-xs", removeButton: "[&_svg]:size-3" },
+        md: { base: "h-8 gap-x-2.5 px-2.5 text-sm", removeButton: "[&_svg]:size-3.5" },
+        lg: { base: "h-10 gap-x-3 px-3 text-base", removeButton: "[&_svg]:size-4" },
+      },
+      isSelectable: { true: "cursor-pointer", false: "cursor-default" },
+      radius: radiusVariants,
+    },
+  });
+
+type TagStylesReturnType = ReturnType<typeof useTagStyles>;
 
 // props
 
@@ -91,7 +93,7 @@ function _TagGroup<T extends object>(props: TagGroupProps<T>, ref: ForwardedRef<
     <TagGroupSlotsProvider value={{ variant, variantActive, color, size, radius, itemClassNames, itemStyles }}>
       <AriaTagGroup ref={ref} {...globalProps}>
         <Field {...globalProps}>
-          <TagList items={items} renderEmptyState={renderEmptyState} className={tagGroupStyles({ size })}>
+          <TagList items={items} renderEmptyState={renderEmptyState} className={useTagGroupStyles()({ size })}>
             {children}
           </TagList>
         </Field>
@@ -106,7 +108,7 @@ function _Tag(props: TagProps, ref: ForwardedRef<HTMLDivElement>) {
   const { variant, variantActive, color, size, radius, startContent, endContent, classNames, itemClassNames, styles, itemStyles } =
     useTagGroupSlots(props);
 
-  const styleSlots = tagStyles({ variant, color, size, radius });
+  const styleSlots = useTagStyles()({ variant, color, size, radius });
 
   return (
     <AriaTag

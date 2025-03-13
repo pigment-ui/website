@@ -1,6 +1,6 @@
 "use client";
 
-import { cardStyles } from "./card";
+import { useCardStyles } from "./card";
 import { useGlobalProps } from "./provider";
 import React, { cloneElement, ForwardedRef, forwardRef, ReactElement, useRef } from "react";
 import { mergeProps, useButton } from "react-aria";
@@ -10,9 +10,10 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const tooltipStyles = tv({
-  base: cardStyles().base({ className: "p-2" }),
-});
+const useTooltipStyles = () =>
+  tv({
+    base: useCardStyles()().base({ className: "p-2" }),
+  });
 
 // props
 
@@ -34,7 +35,7 @@ function _Tooltip(props: TooltipProps, ref: ForwardedRef<HTMLDivElement>) {
       offset={16}
       {...globalProps}
       className={composeRenderProps(globalProps.className, (className, { isEntering, isExiting, placement }) =>
-        tooltipStyles({
+        useTooltipStyles()({
           className: twMerge(
             "duration-300 [transition-duration:0ms]",
             isEntering && "animate-in fade-in",

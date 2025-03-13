@@ -1,6 +1,6 @@
 "use client";
 
-import { FieldInput, FieldInputBaseProps, fieldSegmentStyles } from "./field";
+import { FieldInput, FieldInputBaseProps, useFieldSegmentStyles } from "./field";
 import { Popover } from "./popover";
 import { useGlobalProps } from "./provider";
 import { RangeCalendar } from "./range-calendar";
@@ -31,9 +31,9 @@ interface DateRangePickerProps<T extends DateValue>
 // component
 
 function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, ref: ForwardedRef<HTMLInputElement>) {
-  const globalProps = useGlobalProps("DateRangePicker", props, { radius: props.size });
+  const globalProps = useGlobalProps("DateRangePicker", props);
 
-  const { size, radius, color, visibleMonthCount } = props;
+  const { size, radius, color, visibleMonthCount } = globalProps;
 
   const [width, datePickerRef] = useObserveElementWidth<HTMLDivElement>();
 
@@ -52,13 +52,13 @@ function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, r
           >
             <div className="gap-2">
               <DateInput ref={ref} slot="start" className="flex items-center">
-                {(segment) => <DateSegment segment={segment} className={({ isPlaceholder }) => fieldSegmentStyles({ isPlaceholder })} />}
+                {(segment) => <DateSegment segment={segment} className={({ isPlaceholder }) => useFieldSegmentStyles()({ isPlaceholder })} />}
               </DateInput>
 
               <span aria-hidden="true">–</span>
 
               <DateInput slot="end" className="flex items-center">
-                {(segment) => <DateSegment segment={segment} className={({ isPlaceholder }) => fieldSegmentStyles({ isPlaceholder })} />}
+                {(segment) => <DateSegment segment={segment} className={({ isPlaceholder }) => useFieldSegmentStyles()({ isPlaceholder })} />}
               </DateInput>
             </div>
           </FieldInput>

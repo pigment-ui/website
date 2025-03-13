@@ -11,50 +11,51 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const switchStyles = tv({
-  slots: {
-    base: "text-default flex cursor-pointer items-center",
-    self: "relative flex items-center rounded-full outline-none duration-300",
-    thumb: "absolute left-1 rounded-full duration-300",
-    content: "",
-  },
-  variants: {
-    color: {
-      default: { self: "bg-default", thumb: "bg-default-foreground" },
-      primary: { self: "bg-primary", thumb: "bg-primary-foreground" },
-      secondary: { self: "bg-secondary", thumb: "bg-secondary-foreground" },
-      info: { self: "bg-info", thumb: "bg-info-foreground" },
-      success: { self: "bg-success", thumb: "bg-success-foreground" },
-      warning: { self: "bg-warning", thumb: "bg-warning-foreground" },
-      error: { self: "bg-error", thumb: "bg-error-foreground" },
+const useSwitchStyles = () =>
+  tv({
+    slots: {
+      base: "text-default flex cursor-pointer items-center",
+      self: "relative flex items-center rounded-full outline-none duration-300",
+      thumb: "absolute left-1 rounded-full duration-300",
+      content: "",
     },
-    size: {
-      sm: { base: "gap-x-2", self: "h-6 w-10", thumb: "size-4", content: "text-sm" },
-      md: { base: "gap-x-2.5", self: "h-8 w-16", thumb: "size-6", content: "text-base" },
-      lg: { base: "gap-x-3", self: "h-10 w-20", thumb: "size-8", content: "text-lg" },
+    variants: {
+      color: {
+        default: { self: "bg-default", thumb: "bg-default-foreground" },
+        primary: { self: "bg-primary", thumb: "bg-primary-foreground" },
+        secondary: { self: "bg-secondary", thumb: "bg-secondary-foreground" },
+        info: { self: "bg-info", thumb: "bg-info-foreground" },
+        success: { self: "bg-success", thumb: "bg-success-foreground" },
+        warning: { self: "bg-warning", thumb: "bg-warning-foreground" },
+        error: { self: "bg-error", thumb: "bg-error-foreground" },
+      },
+      size: {
+        sm: { base: "gap-x-2", self: "h-6 w-10", thumb: "size-4", content: "text-sm" },
+        md: { base: "gap-x-2.5", self: "h-8 w-16", thumb: "size-6", content: "text-base" },
+        lg: { base: "gap-x-3", self: "h-10 w-20", thumb: "size-8", content: "text-lg" },
+      },
+      isHovered: { true: "" },
+      isPressed: { true: { self: "scale-95" } },
+      isSelected: { false: { self: "bg-default bg-opacity-40", thumb: "bg-default-foreground" }, true: { self: "bg-opacity-100" } },
+      isFocusVisible: { true: { self: isFocusVisibleVariants.true } },
+      isDisabled: isDisabledVariants,
     },
-    isHovered: { true: "" },
-    isPressed: { true: { self: "scale-95" } },
-    isSelected: { false: { self: "bg-default bg-opacity-40", thumb: "bg-default-foreground" }, true: { self: "bg-opacity-100" } },
-    isFocusVisible: { true: { self: isFocusVisibleVariants.true } },
-    isDisabled: isDisabledVariants,
-  },
-  compoundVariants: [
-    { isSelected: true, size: "sm", className: { thumb: "translate-x-4" } },
-    { isSelected: true, size: "md", className: { thumb: "translate-x-8" } },
-    { isSelected: true, size: "lg", className: { thumb: "translate-x-10" } },
-    { isSelected: true, isPressed: true, size: "sm", className: { thumb: "translate-x-3" } },
-    { isSelected: true, isPressed: true, size: "md", className: { thumb: "translate-x-7" } },
-    { isSelected: true, isPressed: true, size: "lg", className: { thumb: "translate-x-9" } },
-    { isPressed: true, size: "sm", className: { thumb: "w-5" } },
-    { isPressed: true, size: "md", className: { thumb: "w-7" } },
-    { isPressed: true, size: "lg", className: { thumb: "w-9" } },
-    { isSelected: false, isHovered: true, className: { self: "bg-opacity-50" } },
-    { isSelected: true, isHovered: true, className: { self: "bg-opacity-90" } },
-  ],
-});
+    compoundVariants: [
+      { isSelected: true, size: "sm", className: { thumb: "translate-x-4" } },
+      { isSelected: true, size: "md", className: { thumb: "translate-x-8" } },
+      { isSelected: true, size: "lg", className: { thumb: "translate-x-10" } },
+      { isSelected: true, isPressed: true, size: "sm", className: { thumb: "translate-x-3" } },
+      { isSelected: true, isPressed: true, size: "md", className: { thumb: "translate-x-7" } },
+      { isSelected: true, isPressed: true, size: "lg", className: { thumb: "translate-x-9" } },
+      { isPressed: true, size: "sm", className: { thumb: "w-5" } },
+      { isPressed: true, size: "md", className: { thumb: "w-7" } },
+      { isPressed: true, size: "lg", className: { thumb: "w-9" } },
+      { isSelected: false, isHovered: true, className: { self: "bg-opacity-50" } },
+      { isSelected: true, isHovered: true, className: { self: "bg-opacity-90" } },
+    ],
+  });
 
-type SwitchStylesReturnType = ReturnType<typeof switchStyles>;
+type SwitchStylesReturnType = ReturnType<ReturnType<typeof useSwitchStyles>>;
 
 // props
 
@@ -67,7 +68,7 @@ function _Switch(props: SwitchProps, ref: ForwardedRef<HTMLLabelElement>) {
 
   const { color, size, classNames, styles } = globalProps;
 
-  const styleSlots = switchStyles({ color, size });
+  const styleSlots = useSwitchStyles()({ color, size });
 
   return (
     <AriaSwitch

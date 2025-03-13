@@ -1,6 +1,6 @@
 "use client";
 
-import { FieldInput, FieldInputBaseProps, fieldSegmentStyles } from "./field";
+import { FieldInput, FieldInputBaseProps, useFieldSegmentStyles } from "./field";
 import { useGlobalProps } from "./provider";
 import { ForwardRefType } from "./types";
 import { CalendarIcon } from "lucide-react";
@@ -25,7 +25,7 @@ function _DateField<T extends DateValue>(props: DateFieldProps<T>, ref: Forwarde
               <DateSegment
                 ref={segment.isPlaceholder ? ref : undefined}
                 segment={segment}
-                className={({ isPlaceholder }) => fieldSegmentStyles({ isPlaceholder })}
+                className={({ isPlaceholder }) => useFieldSegmentStyles()({ isPlaceholder })}
               />
             )}
           </DateInput>

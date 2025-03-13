@@ -1,6 +1,6 @@
 "use client";
 
-import { cardStyles } from "./card";
+import { useCardStyles } from "./card";
 import { useGlobalProps } from "./provider";
 import React, { ForwardedRef, forwardRef } from "react";
 import { composeRenderProps, DialogTrigger, OverlayArrow, Popover as AriaPopover, PopoverProps as AriaPopoverProps } from "react-aria-components";
@@ -9,9 +9,10 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const popoverStyles = tv({
-  base: cardStyles().base({ className: "p-4" }),
-});
+const usePopoverStyles = () =>
+  tv({
+    base: useCardStyles()().base({ className: "p-4" }),
+  });
 
 // props
 
@@ -33,7 +34,7 @@ function _Popover(props: PopoverProps, ref: ForwardedRef<HTMLDivElement>) {
       offset={16}
       {...globalProps}
       className={composeRenderProps(globalProps.className, (className, { isEntering, isExiting, placement }) =>
-        popoverStyles({
+        usePopoverStyles()({
           className: twMerge(
             "duration-300 [transition-duration:0ms]",
             isEntering && "animate-in fade-in",

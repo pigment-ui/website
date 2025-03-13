@@ -1,7 +1,7 @@
 "use client";
 
-import { cardStyles } from "./card";
-import { fieldButtonStyles } from "./field";
+import { useCardStyles } from "./card";
+import { useFieldButtonStyles } from "./field";
 import { useGlobalProps } from "./provider";
 import { SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
@@ -23,53 +23,54 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const modalStyles = tv({
-  extend: cardStyles,
-  slots: {
-    base: "relative duration-300",
-    header: "",
-    body: "",
-    dialog: "relative flex flex-col outline-none",
-    backdrop: "fixed inset-0 z-[999] grid place-items-center duration-300",
-    closeButton: fieldButtonStyles({ variant: "light", className: "absolute right-2 top-2 z-10 rounded-full p-2" }),
-  },
-  variants: {
-    placement: {
-      top: { backdrop: "items-start pb-16", base: "rounded-t-none" },
-      bottom: { backdrop: "items-end pt-16", base: "rounded-b-none" },
-      left: { backdrop: "justify-start pr-4", base: "rounded-l-none" },
-      right: { backdrop: "justify-end pl-4", base: "rounded-r-none" },
-      center: { backdrop: "px-4 py-16" },
+const useModalStyles = () =>
+  tv({
+    extend: useCardStyles(),
+    slots: {
+      base: "relative duration-300",
+      header: "",
+      body: "",
+      dialog: "relative flex flex-col outline-none",
+      backdrop: "fixed inset-0 z-[999] grid place-items-center duration-300",
+      closeButton: useFieldButtonStyles()({ variant: "light", className: "absolute right-2 top-2 z-10 rounded-full p-2" }),
     },
-    size: {
-      sm: { closeButton: "[&>svg]:size-3" },
-      md: { closeButton: "[&>svg]:size-4" },
-      lg: { closeButton: "[&>svg]:size-5" },
+    variants: {
+      placement: {
+        top: { backdrop: "items-start pb-16", base: "rounded-t-none" },
+        bottom: { backdrop: "items-end pt-16", base: "rounded-b-none" },
+        left: { backdrop: "justify-start pr-4", base: "rounded-l-none" },
+        right: { backdrop: "justify-end pl-4", base: "rounded-r-none" },
+        center: { backdrop: "px-4 py-16" },
+      },
+      size: {
+        sm: { closeButton: "[&>svg]:size-3" },
+        md: { closeButton: "[&>svg]:size-4" },
+        lg: { closeButton: "[&>svg]:size-5" },
+      },
+      backdrop: {
+        blur: { backdrop: "bg-default/25 backdrop-blur-lg" },
+        opaque: { backdrop: "bg-default/50" },
+        transparent: { backdrop: "bg-transparent" },
+      },
+      insideScroll: {
+        true: { body: "flex-1 overflow-y-auto" },
+        false: { backdrop: "overflow-auto" },
+      },
     },
-    backdrop: {
-      blur: { backdrop: "bg-default/25 backdrop-blur-lg" },
-      opaque: { backdrop: "bg-default/50" },
-      transparent: { backdrop: "bg-transparent" },
-    },
-    insideScroll: {
-      true: { body: "flex-1 overflow-y-auto" },
-      false: { backdrop: "overflow-auto" },
-    },
-  },
-  compoundVariants: [
-    { size: "sm", placement: ["left", "right", "center"], className: { base: "max-w-[600px]" } },
-    { size: "md", placement: ["left", "right", "center"], className: { base: "max-w-[900px]" } },
-    { size: "lg", placement: ["left", "right", "center"], className: { base: "max-w-[1200px]" } },
-    { size: "sm", insideScroll: true, placement: ["top", "bottom"], className: { dialog: "h-[600px]" } },
-    { size: "md", insideScroll: true, placement: ["top", "bottom"], className: { dialog: "h-[900px]" } },
-    { size: "lg", insideScroll: true, placement: ["top", "bottom"], className: { dialog: "h-[1200px]" } },
-    { insideScroll: true, placement: ["left", "right"], className: { dialog: "max-h-screen" } },
-    { insideScroll: true, placement: ["top", "bottom"], className: { dialog: "max-h-[calc(100vh-4rem)]" } },
-    { insideScroll: true, placement: ["center"], className: { dialog: "max-h-[calc(100vh-8rem)]" } },
-  ],
-});
+    compoundVariants: [
+      { size: "sm", placement: ["left", "right", "center"], className: { base: "max-w-[600px]" } },
+      { size: "md", placement: ["left", "right", "center"], className: { base: "max-w-[900px]" } },
+      { size: "lg", placement: ["left", "right", "center"], className: { base: "max-w-[1200px]" } },
+      { size: "sm", insideScroll: true, placement: ["top", "bottom"], className: { dialog: "h-[600px]" } },
+      { size: "md", insideScroll: true, placement: ["top", "bottom"], className: { dialog: "h-[900px]" } },
+      { size: "lg", insideScroll: true, placement: ["top", "bottom"], className: { dialog: "h-[1200px]" } },
+      { insideScroll: true, placement: ["left", "right"], className: { dialog: "max-h-screen" } },
+      { insideScroll: true, placement: ["top", "bottom"], className: { dialog: "max-h-[calc(100vh-4rem)]" } },
+      { insideScroll: true, placement: ["center"], className: { dialog: "max-h-[calc(100vh-8rem)]" } },
+    ],
+  });
 
-type ModalStylesReturnType = ReturnType<typeof modalStyles>;
+type ModalStylesReturnType = ReturnType<ReturnType<typeof useModalStyles>>;
 
 // props
 
@@ -96,7 +97,7 @@ function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
   const headerId = useId();
   const bodyId = useId();
 
-  const styleSlots = modalStyles({ placement, size, backdrop, insideScroll });
+  const styleSlots = useModalStyles()({ placement, size, backdrop, insideScroll });
 
   return (
     <ModalSlotsProvider value={{ headerId, bodyId, styleSlots, classNames, styles }}>
@@ -123,7 +124,7 @@ function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
                     top: isEntering ? "slide-in-from-top" : isExiting ? "slide-out-to-top" : "",
                     bottom: isEntering ? "slide-in-from-bottom" : isExiting ? "slide-out-to-bottom" : "",
                     center: isEntering ? "zoom-in-95" : isExiting ? "zoom-out-95" : "",
-                  }[placement],
+                  }[placement || "center"],
                   classNames?.base,
                   className,
                 ),

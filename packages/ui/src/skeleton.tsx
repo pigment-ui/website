@@ -7,12 +7,13 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const skeletonStyles = tv({
-  base: "bg-default/10",
-  variants: {
-    animation: { pulse: "animate-pulse", none: "animate-none" },
-  },
-});
+const useSkeletonStyles = () =>
+  tv({
+    base: "bg-default/10",
+    variants: {
+      animation: { pulse: "animate-pulse", none: "animate-none" },
+    },
+  });
 
 // props
 
@@ -27,7 +28,7 @@ function _Skeleton(props: SkeletonProps, ref: ForwardedRef<HTMLDivElement>) {
 
   const { animation, className, style } = globalProps;
 
-  return <div ref={ref} className={skeletonStyles({ animation, className })} style={style} />;
+  return <div ref={ref} className={useSkeletonStyles()({ animation, className })} style={style} />;
 }
 
 const Skeleton = forwardRef(_Skeleton);

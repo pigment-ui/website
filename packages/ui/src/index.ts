@@ -19,7 +19,7 @@ export { NumberField } from "./number-field";
 export { Pagination } from "./pagination";
 export { Popover, PopoverTrigger } from "./popover";
 export { ProgressBar } from "./progress-bar";
-export { Provider } from "./provider";
+// export { Provider } from "./provider";
 export { RadioGroup, Radio } from "./radio";
 export { RangeCalendar } from "./range-calendar";
 export { SearchField } from "./search-field";

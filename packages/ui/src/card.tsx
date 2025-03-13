@@ -1,7 +1,7 @@
 "use client";
 
 import { useGlobalProps } from "./provider";
-import { radiusVariants, variantColorStyles } from "./styles";
+import { radiusVariants, useVariantAndColorStyles } from "./styles";
 import { ChildrenProps, SizeProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
@@ -11,26 +11,29 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const cardStyles = tv({
-  slots: {
-    base: variantColorStyles({ color: "default", variant: "card", className: ["!block", radiusVariants.md] }),
-    header: "",
-    body: "",
-    footer: "",
-    title: "font-bold",
-    description: "",
-    buttons: "flex flex-wrap justify-end",
-  },
-  variants: {
-    size: {
-      sm: { header: "p-4", body: "p-4", footer: "p-4", title: "text-lg", description: "text-xs", buttons: "gap-4" },
-      md: { header: "p-6", body: "p-6", footer: "p-6", title: "text-xl", description: "text-sm", buttons: "gap-6" },
-      lg: { header: "p-8", body: "p-8", footer: "p-8", title: "text-2xl", description: "text-base", buttons: "gap-8" },
+const useCardStyles = () =>
+  tv({
+    extend: useVariantAndColorStyles(),
+    base: ["!block", radiusVariants.md],
+    slots: {
+      header: "",
+      body: "",
+      footer: "",
+      title: "font-bold",
+      description: "",
+      buttons: "flex flex-wrap justify-end",
     },
-  },
-});
+    variants: {
+      size: {
+        sm: { header: "p-4", body: "p-4", footer: "p-4", title: "text-lg", description: "text-xs", buttons: "gap-4" },
+        md: { header: "p-6", body: "p-6", footer: "p-6", title: "text-xl", description: "text-sm", buttons: "gap-6" },
+        lg: { header: "p-8", body: "p-8", footer: "p-8", title: "text-2xl", description: "text-base", buttons: "gap-8" },
+      },
+    },
+    defaultVariants: { color: "default", variant: "card" },
+  });
 
-type CardStylesReturnType = ReturnType<typeof cardStyles>;
+type CardStylesReturnType = ReturnType<ReturnType<typeof useCardStyles>>;
 
 // props
 
@@ -49,7 +52,7 @@ function _Card(props: CardProps, ref: ForwardedRef<HTMLDivElement>) {
 
   const { size, children, className, classNames, style, styles } = globalProps;
 
-  const styleSlots = cardStyles({ size });
+  const styleSlots = useCardStyles()({ size });
 
   return (
     <CardSlotsProvider value={{ styleSlots, classNames, styles }}>
@@ -154,4 +157,4 @@ const CardButtons = forwardRef(_CardButtons);
 
 // exports
 
-export { Card, CardHeader, CardBody, CardFooter, CardTitle, CardDescription, CardButtons, cardStyles };
+export { Card, CardHeader, CardBody, CardFooter, CardTitle, CardDescription, CardButtons, useCardStyles };

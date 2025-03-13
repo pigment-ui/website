@@ -1,7 +1,7 @@
 "use client";
 
 import { useGlobalProps } from "./provider";
-import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants, variantColorStyles } from "./styles";
+import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants, useVariantAndColorStyles } from "./styles";
 import { ChildrenProps, ColorProps, RadiusProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { useObjectRef } from "@react-aria/utils";
 import { ValidationResult } from "@react-types/shared";
@@ -13,87 +13,92 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const fieldStyles = tv({
-  slots: {
-    base: "relative flex size-full flex-col",
-    label: "text-default cursor-default",
-    description: "text-default",
-    errorMessage: "text-error",
-  },
-  variants: {
-    size: {
-      sm: { base: "gap-y-0.5", label: "text-xs", description: "text-xs", errorMessage: "text-xs" },
-      md: { base: "gap-y-1", label: "text-sm", description: "text-sm", errorMessage: "text-sm" },
-      lg: { base: "gap-y-1.5", label: "text-base", description: "text-base", errorMessage: "text-base" },
+const useFieldStyles = () =>
+  tv({
+    slots: {
+      base: "relative flex size-full flex-col",
+      label: "text-default cursor-default",
+      description: "text-default",
+      errorMessage: "text-error",
     },
-  },
-});
-
-type FieldStylesReturnType = ReturnType<typeof fieldStyles>;
-
-const fieldButtonStyles = tv({
-  base: [
-    "relative flex min-w-max items-center justify-center overflow-hidden whitespace-nowrap outline-none duration-300",
-    "before:absolute before:inset-0 before:bg-current before:duration-300 data-[pressed]:scale-90",
-    "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[focus-visible]:outline-offset-0 data-[focus-visible]:outline-current",
-  ],
-  variants: {
-    variant: {
-      soft: "before:opacity-10 data-[hovered]:before:opacity-20",
-      light: "before:opacity-0 data-[hovered]:before:opacity-10",
+    variants: {
+      size: {
+        sm: { label: "pb-0.5 text-xs", description: "pt-0.5 text-xs", errorMessage: "pt-0.5 text-xs" },
+        md: { label: "pb-1 text-sm", description: "pt-1 text-sm", errorMessage: "pt-1 text-sm" },
+        lg: { label: "pb-1.5 text-base", description: "pt-1.5 text-base", errorMessage: "pt-1.5 text-base" },
+      },
     },
-  },
-  defaultVariants: { variant: "soft" },
-});
+  });
 
-export const fieldSegmentStyles = tv({
-  base: fieldButtonStyles({ variant: "light", className: ["p-1", smallRadiusVariants.md] }),
-  variants: { isPlaceholder: { true: "opacity-50 data-[focused]:opacity-100 data-[focused]:before:opacity-20" } },
-});
+type FieldStylesReturnType = ReturnType<ReturnType<typeof useFieldStyles>>;
 
-const fieldInputStyles = tv({
-  extend: variantColorStyles,
-  base: "cursor-text",
-  slots: {
-    self: "flex size-full flex-1 items-center bg-transparent outline-none placeholder:text-inherit placeholder:opacity-50 data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
-    content: "pointer-events-none shrink-0",
-    button: fieldButtonStyles({ className: "px-1.5" }),
-  },
-  variants: {
-    size: {
-      sm: { base: "gap-2 px-2 text-xs [&_svg]:size-4", self: "h-8", button: "h-6 [&_svg]:!size-3" },
-      md: { base: "gap-2.5 px-2.5 text-sm [&_svg]:size-5", self: "h-10", button: "h-7 [&_svg]:!size-4" },
-      lg: { base: "gap-3 px-3 text-base [&_svg]:size-6", self: "h-12", button: "h-8 [&_svg]:!size-5" },
+const useFieldButtonStyles = () =>
+  tv({
+    base: [
+      "relative flex min-w-max items-center justify-center overflow-hidden whitespace-nowrap outline-none duration-300",
+      "before:absolute before:inset-0 before:bg-current before:duration-300 data-[pressed]:scale-90",
+      "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[focus-visible]:outline-offset-0 data-[focus-visible]:outline-current",
+    ],
+    variants: {
+      variant: {
+        soft: "before:opacity-10 data-[hovered]:before:opacity-20",
+        light: "before:opacity-0 data-[hovered]:before:opacity-10",
+      },
     },
-    radius: {
-      sm: { base: radiusVariants.sm, button: smallRadiusVariants.sm },
-      md: { base: radiusVariants.md, button: smallRadiusVariants.md },
-      lg: { base: radiusVariants.lg, button: smallRadiusVariants.lg },
-      full: { base: radiusVariants.full, button: smallRadiusVariants.full },
-      none: { base: radiusVariants.none, button: smallRadiusVariants.none },
+    defaultVariants: { variant: "soft" },
+  });
+
+export const useFieldSegmentStyles = () =>
+  tv({
+    base: useFieldButtonStyles()({ variant: "light", className: ["p-1", smallRadiusVariants.md] }),
+    variants: { isPlaceholder: { true: "opacity-50 data-[focused]:opacity-100 data-[focused]:before:opacity-20" } },
+  });
+
+const useFieldInputStyles = () =>
+  tv({
+    extend: useVariantAndColorStyles(),
+    base: "cursor-text",
+    slots: {
+      wrapper: "flex size-full flex-1 flex-col",
+      self: "flex size-full flex-1 items-center bg-transparent outline-none placeholder:text-inherit placeholder:opacity-50 data-[disabled]:pointer-events-none [&[aria-disabled]]:pointer-events-none",
+      content: "pointer-events-none shrink-0",
+      button: useFieldButtonStyles()({ className: "px-1.5" }),
     },
-    isAutoHeight: { true: { base: "items-start", self: "h-auto" } },
-    isHovered: { true: "" },
-    isFocusWithin: { true: "ring-2" },
-    isFocusVisible: isFocusVisibleVariants,
-    isDisabled: isDisabledVariants,
-  },
-  compoundVariants: [
-    { isAutoHeight: true, size: "sm", className: "py-2" },
-    { isAutoHeight: true, size: "md", className: "py-2.5" },
-    { isAutoHeight: true, size: "lg", className: "py-3" },
+    variants: {
+      size: {
+        sm: { base: "gap-2 px-2 text-xs [&_svg]:size-4", self: "h-8", button: "h-6 [&_svg]:!size-3" },
+        md: { base: "gap-2.5 px-2.5 text-sm [&_svg]:size-5", self: "h-10", button: "h-7 [&_svg]:!size-4" },
+        lg: { base: "gap-3 px-3 text-base [&_svg]:size-6", self: "h-12", button: "h-8 [&_svg]:!size-5" },
+      },
+      radius: {
+        sm: { base: radiusVariants.sm, button: smallRadiusVariants.sm },
+        md: { base: radiusVariants.md, button: smallRadiusVariants.md },
+        lg: { base: radiusVariants.lg, button: smallRadiusVariants.lg },
+        full: { base: radiusVariants.full, button: smallRadiusVariants.full },
+        none: { base: radiusVariants.none, button: smallRadiusVariants.none },
+      },
+      isAutoHeight: { true: { self: "h-auto" } },
+      isHovered: { true: "" },
+      isFocusWithin: { true: "ring-2" },
+      isFocusVisible: isFocusVisibleVariants,
+      isDisabled: isDisabledVariants,
+    },
+    compoundVariants: [
+      { isAutoHeight: true, size: "sm", className: "py-2" },
+      { isAutoHeight: true, size: "md", className: "py-2.5" },
+      { isAutoHeight: true, size: "lg", className: "py-3" },
 
-    { color: "default", isFocusWithin: true, className: { base: "ring-default" } },
-    { color: "primary", isFocusWithin: true, className: { base: "ring-primary" } },
-    { color: "secondary", isFocusWithin: true, className: { base: "ring-secondary" } },
-    { color: "info", isFocusWithin: true, className: { base: "ring-info" } },
-    { color: "success", isFocusWithin: true, className: { base: "ring-success" } },
-    { color: "warning", isFocusWithin: true, className: { base: "ring-warning" } },
-    { color: "error", isFocusWithin: true, className: { base: "ring-error" } },
-  ],
-});
+      { color: "default", isFocusWithin: true, className: { base: "ring-default" } },
+      { color: "primary", isFocusWithin: true, className: { base: "ring-primary" } },
+      { color: "secondary", isFocusWithin: true, className: { base: "ring-secondary" } },
+      { color: "info", isFocusWithin: true, className: { base: "ring-info" } },
+      { color: "success", isFocusWithin: true, className: { base: "ring-success" } },
+      { color: "warning", isFocusWithin: true, className: { base: "ring-warning" } },
+      { color: "error", isFocusWithin: true, className: { base: "ring-error" } },
+    ],
+  });
 
-type FieldInputStylesReturnType = ReturnType<typeof fieldInputStyles>;
+type FieldInputStylesReturnType = ReturnType<ReturnType<typeof useFieldInputStyles>>;
 
 // props
 
@@ -134,7 +139,7 @@ function _Field(props: FieldProps, ref: ForwardedRef<HTMLDivElement>) {
 
   const { label, description, errorMessage, isRequired, size, children, fieldClassNames, fieldStyles: fieldStylesFromProps } = globalProps;
 
-  const styleSlots = fieldStyles({ size });
+  const styleSlots = useFieldStyles()({ size });
 
   return (
     <div ref={ref} className={styleSlots.base({ className: fieldClassNames?.base })} style={fieldStylesFromProps?.base}>
@@ -191,34 +196,22 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
     endButton,
     children,
     fieldInputClassNames,
-    fieldInputStyles: fieldInputStylesFromProps,
+    fieldInputStyles,
   } = globalProps;
 
-  const styleSlots = fieldInputStyles({ variant, color: isInvalid ? "error" : color, size, radius, isAutoHeight });
+  const styleSlots = useFieldInputStyles()({
+    variant,
+    color: isInvalid ? "error" : color,
+    size,
+    radius,
+    isAutoHeight: isAutoHeight || isLabelInside,
+  });
 
   // @ts-ignore
   const selfRef = useObjectRef<HTMLElement>(children?.ref);
 
   return (
-    <Field
-      {...globalProps}
-      fieldClassNames={{
-        ...globalProps.fieldClassNames,
-        label: twMerge(
-          isLabelInside &&
-            twMerge(
-              variantColorStyles({
-                variant,
-                color: isInvalid ? "error" : color,
-                className: "bg-transparent z-10 pointer-events-none w-fit absolute border-none backdrop-blur-none",
-              }),
-              { sm: "inset-x-2 top-2", md: "inset-x-2.5 top-2.5", lg: "inset-x-3 top-3" }[size],
-              isDisabled && isDisabledVariants.true,
-            ),
-          globalProps.fieldClassNames?.label,
-        ),
-      }}
-    >
+    <Field {...globalProps} label={isLabelInside ? "" : globalProps.label}>
       <Group
         ref={ref}
         isInvalid={isInvalid}
@@ -232,15 +225,7 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
             className: fieldInputClassNames?.base,
           })
         }
-        style={mergeProps(
-          isLabelInside && globalProps.label
-            ? {
-                // label height, input padding
-                paddingTop: { sm: 16, md: 20, lg: 24 }[size] + { sm: 8, md: 10, lg: 12 }[size] * (isAutoHeight ? 2 : 1),
-              }
-            : {},
-          fieldInputStylesFromProps?.base,
-        )}
+        style={fieldInputStyles?.base}
         onClick={() => {
           selfRef.current?.focus();
           selfRef.current?.click();
@@ -249,32 +234,45 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
         {startButton &&
           cloneElement(startButton, {
             className: styleSlots.button({ className: twMerge(startButton.props?.className, fieldInputClassNames?.button) }),
-            style: mergeProps(startButton.props?.style, fieldInputStylesFromProps?.button),
+            style: mergeProps(startButton.props?.style, fieldInputStyles?.button),
           })}
 
         {startContent &&
           cloneElement(startContent, {
             className: styleSlots.content({ className: twMerge("mr-0", startContent.props?.className, fieldInputClassNames?.content) }),
-            style: mergeProps(startContent.props?.style, fieldInputStylesFromProps?.content),
+            style: mergeProps(startContent.props?.style, fieldInputStyles?.content),
           })}
 
-        {children &&
-          cloneElement(children, {
-            ref: selfRef,
-            className: styleSlots.self({ className: twMerge(children.props?.className, fieldInputClassNames?.self) }),
-            style: mergeProps(children.props?.style, fieldInputStylesFromProps?.self),
-          })}
+        <div className={styleSlots.wrapper({ className: fieldInputClassNames?.wrapper })} style={fieldInputStyles?.wrapper}>
+          {isLabelInside && (
+            <Label
+              className={useFieldStyles()({ size }).label({
+                className: twMerge("pointer-events-none text-inherit", globalProps.fieldClassNames?.label),
+              })}
+              style={globalProps.fieldStyles?.label}
+            >
+              {globalProps.label}
+              {globalProps.isRequired && <span> *</span>}
+            </Label>
+          )}
+          {children &&
+            cloneElement(children, {
+              ref: selfRef,
+              className: styleSlots.self({ className: twMerge(children.props?.className, fieldInputClassNames?.self) }),
+              style: mergeProps(children.props?.style, fieldInputStyles?.self),
+            })}
+        </div>
 
         {endContent &&
           cloneElement(endContent, {
             className: styleSlots.content({ className: twMerge("ml-0", endContent.props?.className, fieldInputClassNames?.content) }),
-            style: mergeProps(endContent.props?.style, fieldInputStylesFromProps?.content),
+            style: mergeProps(endContent.props?.style, fieldInputStyles?.content),
           })}
 
         {endButton &&
           cloneElement(endButton, {
             className: styleSlots.button({ className: twMerge(endButton.props?.className, fieldInputClassNames?.button) }),
-            style: mergeProps(endButton.props?.style, fieldInputStylesFromProps?.button),
+            style: mergeProps(endButton.props?.style, fieldInputStyles?.button),
           })}
       </Group>
     </Field>
@@ -285,5 +283,5 @@ const FieldInput = forwardRef(_FieldInput);
 
 // exports
 
-export { Field, FieldInput, fieldStyles, fieldInputStyles, fieldButtonStyles };
+export { Field, FieldInput, useFieldStyles, useFieldInputStyles, useFieldButtonStyles };
 export type { FieldBaseProps, FieldInputBaseProps };

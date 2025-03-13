@@ -85,18 +85,23 @@ type GlobalSlotsType = {
     TimeField: MyProps<typeof TimeField>;
     Tooltip: MyProps<typeof Tooltip>;
   }>;
+  extendVariantAndColorStyles?: any;
 };
 
 const [GlobalSlots, useGlobalSlots] = createSlots<GlobalSlotsType>();
 
-function Provider({ defaultComponentProps, children }: GlobalSlotsType & ChildrenProps) {
-  return <GlobalSlots value={{ defaultComponentProps }}>{children}</GlobalSlots>;
+function Provider<V extends string, C extends string>({
+  defaultComponentProps,
+  extendVariantAndColorStyles,
+  children,
+}: GlobalSlotsType & ChildrenProps) {
+  return <GlobalSlots value={{ defaultComponentProps, extendVariantAndColorStyles }}>{children}</GlobalSlots>;
 }
 
-function useGlobalProps<T, D extends T>(componentName: keyof GlobalSlotsType["defaultComponentProps"], props: T, defaultProps?: Partial<D>) {
-  const newProps = useGlobalSlots()?.defaultComponentProps?.[componentName]?.({ ...defaultProps, ...props });
+function useGlobalProps<T, D>(componentName: keyof GlobalSlotsType["defaultComponentProps"], props: T, defaultProps?: D) {
+  const newProps = useGlobalSlots()?.defaultComponentProps?.[componentName]?.({ ...defaultProps, ...props } as any);
 
-  return { ...defaultProps, ...newProps, ...props } as Omit<T, keyof D> & Required<D>;
+  return { ...defaultProps, ...newProps, ...props } as T & D;
 }
 
-export { Provider, useGlobalSlots, useGlobalProps };
+export { Provider, useGlobalProps, useGlobalSlots };

@@ -1,6 +1,6 @@
 "use client";
 
-import { FieldBaseProps, fieldButtonStyles, FieldInput, FieldInputBaseProps } from "./field";
+import { FieldBaseProps, FieldInput, FieldInputBaseProps, useFieldButtonStyles } from "./field";
 import { useGlobalProps } from "./provider";
 import { radiusVariants } from "./styles";
 import { ColorProps, StyleProps, StyleSlotsToStyleProps, VariantProps } from "./types";
@@ -13,23 +13,24 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const fileTriggerBlockStyles = tv({
-  slots: {
-    base: "",
-    zone: "flex w-full flex-col items-center text-center",
-    button: fieldButtonStyles({ className: "data-[pressed]:scale-95" }),
-    text: "",
-  },
-  variants: {
-    size: {
-      sm: { base: radiusVariants.sm, zone: "gap-4 p-4", button: ["h-8 px-4 text-sm", radiusVariants.sm], text: "text-xs" },
-      md: { base: radiusVariants.md, zone: "gap-5 p-5", button: ["h-10 px-5 text-base", radiusVariants.md], text: "text-sm" },
-      lg: { base: radiusVariants.lg, zone: "gap-6 p-6", button: ["h-12 px-6 text-lg", radiusVariants.lg], text: "text-base" },
+const useFileTriggerBlockStyles = () =>
+  tv({
+    slots: {
+      base: "",
+      zone: "flex w-full flex-col items-center text-center",
+      button: useFieldButtonStyles()({ className: "data-[pressed]:scale-95" }),
+      text: "",
     },
-  },
-});
+    variants: {
+      size: {
+        sm: { base: radiusVariants.sm, zone: "gap-4 p-4", button: ["h-8 px-4 text-sm", radiusVariants.sm], text: "text-xs" },
+        md: { base: radiusVariants.md, zone: "gap-5 p-5", button: ["h-10 px-5 text-base", radiusVariants.md], text: "text-sm" },
+        lg: { base: radiusVariants.lg, zone: "gap-6 p-6", button: ["h-12 px-6 text-lg", radiusVariants.lg], text: "text-base" },
+      },
+    },
+  });
 
-type FileTriggerDropzoneStylesReturnType = ReturnType<typeof fileTriggerBlockStyles>;
+type FileTriggerDropzoneStylesReturnType = ReturnType<ReturnType<typeof useFileTriggerBlockStyles>>;
 
 // props
 
@@ -77,7 +78,7 @@ function FileTriggerDropzone(props: FileTriggerDropzoneProps) {
   const { displayValidation } = useFormValidationState({ ...globalProps, value });
   const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...globalProps });
 
-  const styleSlots = fileTriggerBlockStyles({ variant, color: isInvalid || displayValidation.isInvalid ? "error" : color, size, isDisabled });
+  const styleSlots = useFileTriggerBlockStyles()({ variant, color: isInvalid || displayValidation.isInvalid ? "error" : color, size, isDisabled });
 
   return (
     <Provider

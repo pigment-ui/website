@@ -6,9 +6,10 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const spinnerStyles = tv({
-  base: "inline-block size-fit animate-spin",
-});
+const useSpinnerStyles = () =>
+  tv({
+    base: "inline-block size-fit animate-spin",
+  });
 
 // component
 
@@ -16,7 +17,7 @@ function _Spinner(props: HTMLAttributes<HTMLDivElement>, ref: ForwardedRef<HTMLD
   const globalProps = useGlobalProps("Spinner", props, {});
 
   return (
-    <div ref={ref} {...globalProps} className={spinnerStyles({ className: globalProps.className })}>
+    <div ref={ref} {...globalProps} className={useSpinnerStyles()({ className: globalProps.className })}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

@@ -1,5 +1,5 @@
 import { useGlobalProps } from "./provider";
-import { radiusVariants, variantColorStyles } from "./styles";
+import { radiusVariants, useVariantAndColorStyles } from "./styles";
 import { ColorProps, ContentProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
 import { ChevronDown } from "lucide-react";
@@ -20,57 +20,41 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const disclosureGroupStyles = tv({
-  base: "flex flex-col",
-  variants: {
-    size: { sm: "gap-2", md: "gap-2.5", lg: "gap-3" },
-  },
-});
+const useDisclosureGroupStyles = () =>
+  tv({
+    base: "flex flex-col",
+    variants: {
+      size: { sm: "gap-2", md: "gap-2.5", lg: "gap-3" },
+    },
+  });
 
-const disclosureStyles = tv({
-  extend: variantColorStyles,
-  base: "flex-col !backdrop-blur-none",
-  slots: {
-    heading: "w-full",
-    trigger: "flex w-full items-center outline-none",
-    textWrapper: "flex-1 text-start",
-    title: "font-bold",
-    description: "",
-    panel: "w-full !pt-0",
-    icon: "transition-transform duration-300",
-  },
-  variants: {
-    size: {
-      sm: {
-        base: radiusVariants.sm,
-        trigger: "gap-x-2 p-4 [&_svg]:size-4",
-        title: "text-sm",
-        description: "text-xs",
-        panel: "p-4 text-sm",
+const useDisclosureStyles = () =>
+  tv({
+    extend: useVariantAndColorStyles(),
+    base: "flex-col !backdrop-blur-none",
+    slots: {
+      heading: "w-full",
+      trigger: "flex w-full items-center outline-none",
+      textWrapper: "flex-1 text-start",
+      title: "font-bold",
+      description: "",
+      panel: "w-full !pt-0",
+      icon: "transition-transform duration-300",
+    },
+    variants: {
+      size: {
+        sm: { base: radiusVariants.sm, trigger: "gap-x-2 p-4 [&_svg]:size-4", title: "text-sm", description: "text-xs", panel: "p-4 text-sm" },
+        md: { base: radiusVariants.md, trigger: "gap-x-2.5 p-5 [&_svg]:size-5", title: "text-base", description: "text-sm", panel: "p-5 text-base" },
+        lg: { base: radiusVariants.lg, trigger: "gap-x-3 p-6 [&_svg]:size-6", title: "text-lg", description: "text-base", panel: "p-6 text-lg" },
       },
-      md: {
-        base: radiusVariants.md,
-        trigger: "gap-x-2.5 p-5 [&_svg]:size-5",
-        title: "text-base",
-        description: "text-sm",
-        panel: "p-5 text-base",
-      },
-      lg: {
-        base: radiusVariants.lg,
-        trigger: "gap-x-3 p-6 [&_svg]:size-6",
-        title: "text-lg",
-        description: "text-base",
-        panel: "p-6 text-lg",
+      isExpanded: {
+        true: { icon: "rotate-180" },
+        false: { panel: "pb-0" },
       },
     },
-    isExpanded: {
-      true: { icon: "rotate-180" },
-      false: { panel: "pb-0" },
-    },
-  },
-});
+  });
 
-type DisclosureStylesReturnType = ReturnType<typeof disclosureStyles>;
+type DisclosureStylesReturnType = ReturnType<ReturnType<typeof useDisclosureStyles>>;
 
 // props
 
@@ -103,14 +87,14 @@ const [DisclosureGroupSlotsProvider, useDisclosureGroupSlots] = createSlots<Disc
 function _DisclosureGroup(props: DisclosureGroupProps, ref: ForwardedRef<HTMLDivElement>) {
   const globalProps = useGlobalProps("DisclosureGroup", props, { variant: "soft", color: "default", size: "md" });
 
-  const { variant, color, size, icon, itemClassNames, itemStyles } = props;
+  const { variant, color, size, icon, itemClassNames, itemStyles } = globalProps;
 
   return (
     <DisclosureGroupSlotsProvider value={{ variant, color, size, icon, itemClassNames, itemStyles }}>
       <AriaDisclosureGroup
         ref={ref}
         {...globalProps}
-        className={({ defaultClassName }) => disclosureGroupStyles({ size, className: defaultClassName })}
+        className={composeRenderProps(props.className, (className) => useDisclosureGroupStyles()({ size, className }))}
       />
     </DisclosureGroupSlotsProvider>
   );
@@ -123,7 +107,7 @@ function _Disclosure(props: DisclosureProps, ref: ForwardedRef<HTMLDivElement>) 
 
   const { variant, color, size, title, description, startContent, endContent, classNames, styles, icon } = globalProps;
 
-  const styleSlots = disclosureStyles({ size, color });
+  const styleSlots = useDisclosureStyles()({ size, color });
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
@@ -131,7 +115,7 @@ function _Disclosure(props: DisclosureProps, ref: ForwardedRef<HTMLDivElement>) 
     <AriaDisclosure
       ref={ref}
       {...globalProps}
-      className={composeRenderProps(globalProps.className, (className, { isExpanded, isDisabled, isFocusVisibleWithin }) =>
+      className={composeRenderProps(props.className, (className, { isExpanded, isDisabled, isFocusVisibleWithin }) =>
         styleSlots.base({
           isDisabled,
           variant: isExpanded ? variant : "light",
@@ -141,9 +125,9 @@ function _Disclosure(props: DisclosureProps, ref: ForwardedRef<HTMLDivElement>) 
           className: twMerge(classNames?.base, className),
         }),
       )}
-      style={composeRenderProps(globalProps.style, (style) => mergeProps(styles?.base, style))}
+      style={({ defaultStyle }) => mergeProps(styles?.base, defaultStyle)}
     >
-      {({ isExpanded, defaultChildren }) => (
+      {composeRenderProps(globalProps.children, (children, { isExpanded }) => (
         <>
           <Heading className={styleSlots.heading({ className: classNames?.heading })} style={styles?.heading}>
             <Button
@@ -183,10 +167,10 @@ function _Disclosure(props: DisclosureProps, ref: ForwardedRef<HTMLDivElement>) 
             </Button>
           </Heading>
           <DisclosurePanel className={styleSlots.panel({ isExpanded, className: classNames?.panel })} style={styles?.panel}>
-            {defaultChildren}
+            {children}
           </DisclosurePanel>
         </>
-      )}
+      ))}
     </AriaDisclosure>
   );
 }

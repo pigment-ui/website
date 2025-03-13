@@ -23,200 +23,201 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const sliderStyles = tv({
-  slots: {
-    base: "",
-    output: "text-default absolute right-0 top-0",
-    sliderWrapper: "relative size-full",
-    contentWrapper: "flex items-center",
-    trackWrapper: "relative flex-1",
-    track: "cursor-pointer duration-300",
-    thumbWrapper: "absolute",
-    thumb: "z-20 border-2 outline-none [transition:width_300ms,height_300ms,border-color_300ms;]",
-    filler: "absolute [transition:background-color_300ms;]",
-    stepsWrapper: "pointer-events-none absolute flex items-center justify-between",
-    step: "z-10 opacity-50",
-    marksWrapper: "absolute",
-    mark: "text-default absolute",
-  },
-  variants: {
-    orientation: {
-      horizontal: {
-        base: "w-full",
-        track: "w-full",
-        thumbWrapper: "inset-y-0",
-        thumb: "top-1/2 -translate-y-1/2",
-        filler: "inset-y-0",
-        contentWrapper: "w-full flex-row",
-        stepsWrapper: "inset-y-0 flex-row",
-        step: "w-px",
-        marksWrapper: "top-full",
-        mark: "-translate-x-1/2",
-      },
-      vertical: {
-        base: "h-full",
-        track: "h-full",
-        thumbWrapper: "inset-x-0",
-        thumb: "left-1/2 -translate-x-1/2",
-        filler: "inset-x-0",
-        contentWrapper: "h-full flex-col",
-        stepsWrapper: "inset-x-0 flex-col",
-        step: "h-px",
-        marksWrapper: "left-full",
-        mark: "translate-y-1/2",
-      },
+const useSliderStyles = () =>
+  tv({
+    slots: {
+      base: "",
+      output: "text-default absolute right-0 top-0",
+      sliderWrapper: "relative size-full",
+      contentWrapper: "flex items-center",
+      trackWrapper: "relative flex-1",
+      track: "cursor-pointer duration-300",
+      thumbWrapper: "absolute",
+      thumb: "z-20 border-2 outline-none [transition:width_300ms,height_300ms,border-color_300ms;]",
+      filler: "absolute [transition:background-color_300ms;]",
+      stepsWrapper: "pointer-events-none absolute flex items-center justify-between",
+      step: "z-10 opacity-50",
+      marksWrapper: "absolute",
+      mark: "text-default absolute",
     },
-    color: {
-      default: {
-        track: "bg-default/20",
-        thumb: "border-default bg-default-foreground",
-        filler: "bg-default",
-        step: "bg-default-foreground",
+    variants: {
+      orientation: {
+        horizontal: {
+          base: "w-full",
+          track: "w-full",
+          thumbWrapper: "inset-y-0",
+          thumb: "top-1/2 -translate-y-1/2",
+          filler: "inset-y-0",
+          contentWrapper: "w-full flex-row",
+          stepsWrapper: "inset-y-0 flex-row",
+          step: "w-px",
+          marksWrapper: "top-full",
+          mark: "-translate-x-1/2",
+        },
+        vertical: {
+          base: "h-full",
+          track: "h-full",
+          thumbWrapper: "inset-x-0",
+          thumb: "left-1/2 -translate-x-1/2",
+          filler: "inset-x-0",
+          contentWrapper: "h-full flex-col",
+          stepsWrapper: "inset-x-0 flex-col",
+          step: "h-px",
+          marksWrapper: "left-full",
+          mark: "translate-y-1/2",
+        },
       },
-      primary: {
-        track: "bg-primary/20",
-        thumb: "border-primary bg-primary-foreground",
-        filler: "bg-primary",
-        step: "bg-primary-foreground",
+      color: {
+        default: {
+          track: "bg-default/20",
+          thumb: "border-default bg-default-foreground",
+          filler: "bg-default",
+          step: "bg-default-foreground",
+        },
+        primary: {
+          track: "bg-primary/20",
+          thumb: "border-primary bg-primary-foreground",
+          filler: "bg-primary",
+          step: "bg-primary-foreground",
+        },
+        secondary: {
+          track: "bg-secondary/20",
+          thumb: "border-secondary bg-secondary-foreground",
+          filler: "bg-secondary",
+          step: "bg-secondary-foreground",
+        },
+        info: {
+          track: "bg-info/20",
+          thumb: "border-info bg-info-foreground",
+          filler: "bg-info",
+          step: "bg-info-foreground",
+        },
+        success: {
+          track: "bg-success/20",
+          thumb: "border-success bg-success-foreground",
+          filler: "bg-success",
+          step: "bg-success-foreground",
+        },
+        warning: {
+          track: "bg-warning/20",
+          thumb: "border-warning bg-warning-foreground",
+          filler: "bg-warning",
+          step: "bg-warning-foreground",
+        },
+        error: {
+          track: "bg-error/20",
+          thumb: "border-error bg-error-foreground",
+          filler: "bg-error",
+          step: "bg-error-foreground",
+        },
       },
-      secondary: {
-        track: "bg-secondary/20",
-        thumb: "border-secondary bg-secondary-foreground",
-        filler: "bg-secondary",
-        step: "bg-secondary-foreground",
+      size: {
+        sm: { output: "text-xs", mark: "text-xs", contentWrapper: "gap-2 [&_svg]:size-4", thumb: "size-4" },
+        md: { output: "text-sm", mark: "text-sm", contentWrapper: "gap-2.5 [&_svg]:size-5", thumb: "size-5" },
+        lg: { output: "text-base", mark: "text-base", contentWrapper: "gap-3 [&_svg]:size-6", thumb: "size-6" },
       },
-      info: {
-        track: "bg-info/20",
-        thumb: "border-info bg-info-foreground",
-        filler: "bg-info",
-        step: "bg-info-foreground",
+      radius: {
+        sm: { track: smallRadiusVariants.sm, thumb: smallRadiusVariants.sm, filler: smallRadiusVariants.sm },
+        md: { track: smallRadiusVariants.md, thumb: smallRadiusVariants.md, filler: smallRadiusVariants.md },
+        lg: { track: smallRadiusVariants.lg, thumb: smallRadiusVariants.lg, filler: smallRadiusVariants.lg },
+        full: { track: smallRadiusVariants.full, thumb: smallRadiusVariants.full, filler: smallRadiusVariants.full },
+        none: { track: smallRadiusVariants.none, thumb: smallRadiusVariants.none, filler: smallRadiusVariants.none },
       },
-      success: {
-        track: "bg-success/20",
-        thumb: "border-success bg-success-foreground",
-        filler: "bg-success",
-        step: "bg-success-foreground",
-      },
-      warning: {
-        track: "bg-warning/20",
-        thumb: "border-warning bg-warning-foreground",
-        filler: "bg-warning",
-        step: "bg-warning-foreground",
-      },
-      error: {
-        track: "bg-error/20",
-        thumb: "border-error bg-error-foreground",
-        filler: "bg-error",
-        step: "bg-error-foreground",
-      },
+      isDisabled: { true: { track: isDisabledVariants.true } },
+      isHovered: { true: { thumb: "cursor-grab" } },
+      isDragging: { true: { thumb: "cursor-grabbing" } },
+      isFocusVisible: { true: { thumb: isFocusVisibleVariants.true } },
+      hideThumb: { true: { track: "overflow-hidden", thumb: "opacity-0", filler: "rounded-none" } },
+      hasMarks: { true: "" },
     },
-    size: {
-      sm: { output: "text-xs", mark: "text-xs", contentWrapper: "gap-2 [&_svg]:size-4", thumb: "size-4" },
-      md: { output: "text-sm", mark: "text-sm", contentWrapper: "gap-2.5 [&_svg]:size-5", thumb: "size-5" },
-      lg: { output: "text-base", mark: "text-base", contentWrapper: "gap-3 [&_svg]:size-6", thumb: "size-6" },
-    },
-    radius: {
-      sm: { track: smallRadiusVariants.sm, thumb: smallRadiusVariants.sm, filler: smallRadiusVariants.sm },
-      md: { track: smallRadiusVariants.md, thumb: smallRadiusVariants.md, filler: smallRadiusVariants.md },
-      lg: { track: smallRadiusVariants.lg, thumb: smallRadiusVariants.lg, filler: smallRadiusVariants.lg },
-      full: { track: smallRadiusVariants.full, thumb: smallRadiusVariants.full, filler: smallRadiusVariants.full },
-      none: { track: smallRadiusVariants.none, thumb: smallRadiusVariants.none, filler: smallRadiusVariants.none },
-    },
-    isDisabled: { true: { track: isDisabledVariants.true } },
-    isHovered: { true: { thumb: "cursor-grab" } },
-    isDragging: { true: { thumb: "cursor-grabbing" } },
-    isFocusVisible: { true: { thumb: isFocusVisibleVariants.true } },
-    hideThumb: { true: { track: "overflow-hidden", thumb: "opacity-0", filler: "rounded-none" } },
-    hasMarks: { true: "" },
-  },
-  compoundVariants: [
-    {
-      orientation: "horizontal",
-      size: "sm",
-      className: {
-        trackWrapper: "py-2",
-        track: "h-1",
-        step: "h-1",
-        thumbWrapper: "inset-x-2",
-        stepsWrapper: "inset-x-2",
-        marksWrapper: "inset-x-2",
+    compoundVariants: [
+      {
+        orientation: "horizontal",
+        size: "sm",
+        className: {
+          trackWrapper: "py-2",
+          track: "h-1",
+          step: "h-1",
+          thumbWrapper: "inset-x-2",
+          stepsWrapper: "inset-x-2",
+          marksWrapper: "inset-x-2",
+        },
       },
-    },
-    {
-      orientation: "horizontal",
-      size: "md",
-      className: {
-        trackWrapper: "py-3",
-        track: "h-2",
-        step: "h-2",
-        thumbWrapper: "inset-x-2.5",
-        stepsWrapper: "inset-x-2.5",
-        marksWrapper: "inset-x-2.5",
+      {
+        orientation: "horizontal",
+        size: "md",
+        className: {
+          trackWrapper: "py-3",
+          track: "h-2",
+          step: "h-2",
+          thumbWrapper: "inset-x-2.5",
+          stepsWrapper: "inset-x-2.5",
+          marksWrapper: "inset-x-2.5",
+        },
       },
-    },
-    {
-      orientation: "horizontal",
-      size: "lg",
-      className: {
-        trackWrapper: "py-4",
-        track: "h-3",
-        step: "h-3",
-        thumbWrapper: "inset-x-3",
-        stepsWrapper: "inset-x-3",
-        marksWrapper: "inset-x-3",
+      {
+        orientation: "horizontal",
+        size: "lg",
+        className: {
+          trackWrapper: "py-4",
+          track: "h-3",
+          step: "h-3",
+          thumbWrapper: "inset-x-3",
+          stepsWrapper: "inset-x-3",
+          marksWrapper: "inset-x-3",
+        },
       },
-    },
-    {
-      orientation: "vertical",
-      size: "sm",
-      className: {
-        trackWrapper: "px-2",
-        track: "w-1",
-        step: "w-1",
-        thumbWrapper: "inset-y-2",
-        stepsWrapper: "inset-y-2",
-        marksWrapper: "inset-y-2",
+      {
+        orientation: "vertical",
+        size: "sm",
+        className: {
+          trackWrapper: "px-2",
+          track: "w-1",
+          step: "w-1",
+          thumbWrapper: "inset-y-2",
+          stepsWrapper: "inset-y-2",
+          marksWrapper: "inset-y-2",
+        },
       },
-    },
-    {
-      orientation: "vertical",
-      size: "md",
-      className: {
-        trackWrapper: "px-3",
-        track: "w-2",
-        step: "w-2",
-        thumbWrapper: "inset-y-2.5",
-        stepsWrapper: "inset-y-2.5",
-        marksWrapper: "inset-y-2.5",
+      {
+        orientation: "vertical",
+        size: "md",
+        className: {
+          trackWrapper: "px-3",
+          track: "w-2",
+          step: "w-2",
+          thumbWrapper: "inset-y-2.5",
+          stepsWrapper: "inset-y-2.5",
+          marksWrapper: "inset-y-2.5",
+        },
       },
-    },
-    {
-      orientation: "vertical",
-      size: "lg",
-      className: {
-        trackWrapper: "px-4",
-        track: "w-3",
-        step: "w-3",
-        thumbWrapper: "inset-y-3",
-        stepsWrapper: "inset-y-3",
-        marksWrapper: "inset-y-3",
+      {
+        orientation: "vertical",
+        size: "lg",
+        className: {
+          trackWrapper: "px-4",
+          track: "w-3",
+          step: "w-3",
+          thumbWrapper: "inset-y-3",
+          stepsWrapper: "inset-y-3",
+          marksWrapper: "inset-y-3",
+        },
       },
-    },
 
-    { orientation: "horizontal", hasMarks: true, size: "sm", className: { sliderWrapper: "pb-4" } },
-    { orientation: "horizontal", hasMarks: true, size: "md", className: { sliderWrapper: "pb-5" } },
-    { orientation: "horizontal", hasMarks: true, size: "lg", className: { sliderWrapper: "pb-6" } },
+      { orientation: "horizontal", hasMarks: true, size: "sm", className: { sliderWrapper: "pb-4" } },
+      { orientation: "horizontal", hasMarks: true, size: "md", className: { sliderWrapper: "pb-5" } },
+      { orientation: "horizontal", hasMarks: true, size: "lg", className: { sliderWrapper: "pb-6" } },
 
-    { orientation: "horizontal", hideThumb: true, className: { thumbWrapper: "inset-x-0" } },
-    { orientation: "vertical", hideThumb: true, className: { thumbWrapper: "inset-y-0" } },
+      { orientation: "horizontal", hideThumb: true, className: { thumbWrapper: "inset-x-0" } },
+      { orientation: "vertical", hideThumb: true, className: { thumbWrapper: "inset-y-0" } },
 
-    { size: "sm", isDragging: true, className: { thumb: "size-5" } },
-    { size: "md", isDragging: true, className: { thumb: "size-6" } },
-    { size: "lg", isDragging: true, className: { thumb: "size-7" } },
-  ],
-});
+      { size: "sm", isDragging: true, className: { thumb: "size-5" } },
+      { size: "md", isDragging: true, className: { thumb: "size-6" } },
+      { size: "lg", isDragging: true, className: { thumb: "size-7" } },
+    ],
+  });
 
-type SliderStylesReturnType = ReturnType<typeof sliderStyles>;
+type SliderStylesReturnType = ReturnType<typeof useSliderStyles>;
 
 // props
 
@@ -246,7 +247,7 @@ function _Slider(props: SliderProps, ref: ForwardedRef<HTMLDivElement>) {
   const { displayValidation } = useFormValidationState({ ...globalProps, value });
   const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...globalProps });
 
-  const styleSlots = sliderStyles({ orientation, hideThumb, size, radius, hasMarks: !!marks });
+  const styleSlots = useSliderStyles()({ orientation, hideThumb, size, radius, hasMarks: !!marks });
 
   return (
     <Provider

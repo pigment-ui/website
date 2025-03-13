@@ -1,9 +1,9 @@
 "use client";
 
-import { cardStyles } from "./card";
+import { useCardStyles } from "./card";
 import { Field, FieldBaseProps } from "./field";
 import { useGlobalProps } from "./provider";
-import { isFocusVisibleVariants, smallRadiusVariants, variantColorStyles } from "./styles";
+import { isFocusVisibleVariants, smallRadiusVariants, useVariantAndColorStyles } from "./styles";
 import { ColorProps, ContentProps, ForwardRefType, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
 import { FormValidationProps, useFormValidationState } from "@react-stately/form";
@@ -29,55 +29,58 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const listBoxStyles = tv({
-  variants: {
-    asCard: { true: cardStyles().base({ className: "p-2" }) },
-    isFocusVisible: isFocusVisibleVariants,
-  },
-});
-
-const listBoxItemStyles = tv({
-  extend: variantColorStyles,
-  base: "!scale-100 !backdrop-blur-none",
-  slots: {
-    content: "flex-1",
-    icon: "transition-transform duration-300",
-  },
-  variants: {
-    size: {
-      sm: { base: ["mt-0.5 gap-x-1 p-1 text-xs [&_svg]:size-3", smallRadiusVariants.sm] },
-      md: { base: ["mt-1 gap-x-2 p-2 text-sm [&_svg]:size-4", smallRadiusVariants.md] },
-      lg: { base: ["mt-1.5 gap-x-3 p-3 text-base [&_svg]:size-5", smallRadiusVariants.lg] },
+const useListBoxStyles = () =>
+  tv({
+    variants: {
+      asCard: { true: useCardStyles()().base({ className: "p-2" }) },
+      isFocusVisible: isFocusVisibleVariants,
     },
-    isSelectable: {
-      true: "cursor-pointer",
-      false: "cursor-default",
-    },
-    isSelected: {
-      false: { icon: "scale-0" },
-    },
-  },
-});
+  });
 
-type ListBoxItemStylesReturnType = ReturnType<typeof listBoxItemStyles>;
-
-const listBoxSectionStyles = tv({
-  extend: variantColorStyles,
-  slots: {
-    base: "first:pt-0 last:pb-0",
-    title: "font-bold",
-  },
-  variants: {
-    size: {
-      sm: { base: "py-1", title: "mb-1 p-1 text-xs" },
-      md: { base: "py-2", title: "mb-2 p-2 text-sm" },
-      lg: { base: "py-3", title: "mb-3 p-3 text-base" },
+const useListBoxItemStyles = () =>
+  tv({
+    extend: useVariantAndColorStyles(),
+    base: "!scale-100 !backdrop-blur-none",
+    slots: {
+      content: "flex-1",
+      icon: "transition-transform duration-300",
     },
-  },
-  defaultVariants: { variant: "light" },
-});
+    variants: {
+      size: {
+        sm: { base: ["mt-0.5 gap-x-1 p-1 text-xs [&_svg]:size-3", smallRadiusVariants.sm] },
+        md: { base: ["mt-1 gap-x-2 p-2 text-sm [&_svg]:size-4", smallRadiusVariants.md] },
+        lg: { base: ["mt-1.5 gap-x-3 p-3 text-base [&_svg]:size-5", smallRadiusVariants.lg] },
+      },
+      isSelectable: {
+        true: "cursor-pointer",
+        false: "cursor-default",
+      },
+      isSelected: {
+        false: { icon: "scale-0" },
+      },
+    },
+  });
 
-type ListBoxSectionStylesReturnType = ReturnType<typeof listBoxSectionStyles>;
+type ListBoxItemStylesReturnType = ReturnType<ReturnType<typeof useListBoxItemStyles>>;
+
+const useListBoxSectionStyles = () =>
+  tv({
+    extend: useVariantAndColorStyles(),
+    slots: {
+      base: "first:pt-0 last:pb-0",
+      title: "font-bold",
+    },
+    variants: {
+      size: {
+        sm: { base: "py-1", title: "mb-1 p-1 text-xs" },
+        md: { base: "py-2", title: "mb-2 p-2 text-sm" },
+        lg: { base: "py-3", title: "mb-3 p-3 text-base" },
+      },
+    },
+    defaultVariants: { variant: "light" },
+  });
+
+type ListBoxSectionStylesReturnType = ReturnType<ReturnType<typeof useListBoxSectionStyles>>;
 
 // props
 
@@ -139,7 +142,7 @@ function _ListBox<T extends object>(props: ListBoxProps<T>, ref: ForwardedRef<HT
             ref={ref}
             {...mergeProps(globalProps, fieldProps)}
             className={composeRenderProps(globalProps.className, (className, { isFocusVisible }) =>
-              listBoxStyles({ asCard, isFocusVisible, className }),
+              useListBoxStyles()({ asCard, isFocusVisible, className }),
             )}
           />
         </Field>
@@ -153,7 +156,7 @@ const ListBox = (forwardRef as ForwardRefType)(_ListBox);
 function _ListBoxItem(props: ListBoxItemProps, ref: ForwardedRef<HTMLDivElement>) {
   const { variant, color, size, startContent, endContent, icon, classNames, itemClassNames, styles, itemStyles } = useListBoxSlots(props);
 
-  const styleSlots = listBoxItemStyles({ color, size });
+  const styleSlots = useListBoxItemStyles()({ color, size });
 
   return (
     <AriaListBoxItem
@@ -203,7 +206,7 @@ const ListBoxItem = forwardRef(_ListBoxItem);
 function _ListBoxSection<T extends object>(props: ListBoxSectionProps<T>, ref: ForwardedRef<HTMLDivElement>) {
   const { title, items, color, size, className, classNames, sectionClassNames, style, styles, sectionStyles, children } = useListBoxSlots(props);
 
-  const styleSlots = listBoxSectionStyles({ color, size });
+  const styleSlots = useListBoxSectionStyles()({ color, size });
 
   return (
     <AriaListBoxSection
@@ -226,21 +229,34 @@ const ListBoxSection = (forwardRef as ForwardRefType)(_ListBoxSection);
 
 // exports
 
-export { ListBox, ListBoxItem, ListBoxSection, listBoxItemStyles, listBoxSectionStyles };
+export { ListBox, ListBoxItem, ListBoxSection, useListBoxItemStyles, useListBoxSectionStyles };
 export type { ListBoxItemProps, ListBoxSectionProps, ListBoxSlotsType };
 
-export const filterInlineListBoxProps = (props: any) => ({
-  "aria-label": props["aria-label"] || props.label,
-  asCard: false,
-  children: props.children,
-  items: props.items,
-  variant: props.variant,
-  color: props.isInvalid ? "error" : props.color,
-  size: props.size,
-  itemStartContent: props.itemStartContent,
-  itemEndContent: props.itemEndContent,
-  itemClassNames: props.itemClassNames,
-  itemStyles: props.itemStyles,
-  sectionClassNames: props.sectionClassNames,
-  sectionStyles: props.sectionStyles,
-});
+export const filterInlineListBoxProps = (props: any) => {
+  const filteredProps: { [key: string]: any } = {
+    "aria-label": props["aria-label"] || props.label,
+    asCard: false,
+    children: props.children,
+    items: props.items,
+    variant: props.variant,
+    color: props.isInvalid ? "error" : props.color,
+    size: props.size,
+    itemStartContent: props.itemStartContent,
+    itemEndContent: props.itemEndContent,
+    itemClassNames: props.itemClassNames,
+    itemStyles: props.itemStyles,
+    sectionClassNames: props.sectionClassNames,
+    sectionStyles: props.sectionStyles,
+  };
+
+  // Remove undefined keys
+  return Object.keys(filteredProps).reduce(
+    (acc, key) => {
+      if (filteredProps[key] !== undefined) {
+        acc[key] = filteredProps[key];
+      }
+      return acc;
+    },
+    {} as Record<string, any>,
+  );
+};

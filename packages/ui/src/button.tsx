@@ -2,7 +2,7 @@
 
 import { useGlobalProps } from "./provider";
 import { Spinner } from "./spinner";
-import { radiusVariants, variantColorStyles } from "./styles";
+import { radiusVariants, useVariantAndColorStyles } from "./styles";
 import { ColorProps, ContentProps, RadiusProps, SizeProps, StyleProps, VariantProps } from "./types";
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import { useObjectRef } from "@react-aria/utils";
@@ -12,25 +12,26 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const buttonStyles = tv({
-  extend: variantColorStyles,
-  base: "min-w-max whitespace-nowrap",
-  variants: {
-    size: {
-      sm: "h-8 gap-x-2 px-4 text-xs [&_svg]:size-4",
-      md: "h-10 gap-x-2.5 px-5 text-sm [&_svg]:size-5",
-      lg: "h-12 gap-x-3 px-6 text-base [&_svg]:size-6",
+const useButtonStyles = () =>
+  tv({
+    extend: useVariantAndColorStyles(),
+    base: "min-w-max whitespace-nowrap",
+    variants: {
+      size: {
+        sm: "h-8 gap-x-2 px-4 text-xs [&_svg]:size-4",
+        md: "h-10 gap-x-2.5 px-5 text-sm [&_svg]:size-5",
+        lg: "h-12 gap-x-3 px-6 text-base [&_svg]:size-6",
+      },
+      isCompact: { true: "" },
+      isLoading: { true: "[&>*:not(:first-child)]:!text-transparent" },
+      radius: radiusVariants,
     },
-    isCompact: { true: "" },
-    isLoading: { true: "[&>*:not(:first-child)]:!text-transparent" },
-    radius: radiusVariants,
-  },
-  compoundVariants: [
-    { size: "sm", isCompact: true, className: "px-2" },
-    { size: "md", isCompact: true, className: "px-2.5" },
-    { size: "lg", isCompact: true, className: "px-3" },
-  ],
-});
+    compoundVariants: [
+      { size: "sm", isCompact: true, className: "px-2" },
+      { size: "md", isCompact: true, className: "px-2.5" },
+      { size: "lg", isCompact: true, className: "px-3" },
+    ],
+  });
 
 // props
 
@@ -77,7 +78,7 @@ function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
       {...mergeProps(buttonProps, hoverProps, focusProps)}
       data-hovered={isHovered || undefined}
       data-pressed={isPressed || undefined}
-      className={buttonStyles({
+      className={useButtonStyles()({
         variant,
         color,
         size,

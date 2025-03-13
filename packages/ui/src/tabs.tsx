@@ -1,7 +1,7 @@
 "use client";
 
 import { useGlobalProps } from "./provider";
-import { isFocusVisibleVariants, radiusVariants, variantColorStyles } from "./styles";
+import { isFocusVisibleVariants, radiusVariants, useVariantAndColorStyles } from "./styles";
 import { ColorProps, ContentProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -22,57 +22,59 @@ import { tv } from "tailwind-variants";
 
 // styles
 
-const tabsStyles = tv({
-  slots: {
-    base: "flex",
-    list: "flex h-fit w-fit backdrop-blur-lg",
-    panel: "h-fit w-full outline-none backdrop-blur-lg",
-  },
-  variants: {
-    orientation: {
-      vertical: { base: "flex-col" },
-      horizontal: { list: "flex-col" },
+const useTabsStyles = () =>
+  tv({
+    slots: {
+      base: "flex",
+      list: "flex h-fit w-fit backdrop-blur-lg",
+      panel: "h-fit w-full outline-none backdrop-blur-lg",
     },
-    color: {
-      default: { list: "bg-default/10", panel: "bg-default/10 text-default" },
-      primary: { list: "bg-primary/10", panel: "bg-primary/10 text-primary" },
-      secondary: { list: "bg-secondary/10", panel: "bg-secondary/10 text-secondary" },
-      info: { list: "bg-info/10", panel: "bg-info/10 text-info" },
-      success: { list: "bg-success/10", panel: "bg-success/10 text-success" },
-      warning: { list: "bg-warning/10", panel: "bg-warning/10 text-warning" },
-      error: { list: "bg-error/10", panel: "bg-error/10 text-error" },
-    },
+    variants: {
+      orientation: {
+        vertical: { base: "flex-col" },
+        horizontal: { list: "flex-col" },
+      },
+      color: {
+        default: { list: "bg-default/10", panel: "bg-default/10 text-default" },
+        primary: { list: "bg-primary/10", panel: "bg-primary/10 text-primary" },
+        secondary: { list: "bg-secondary/10", panel: "bg-secondary/10 text-secondary" },
+        info: { list: "bg-info/10", panel: "bg-info/10 text-info" },
+        success: { list: "bg-success/10", panel: "bg-success/10 text-success" },
+        warning: { list: "bg-warning/10", panel: "bg-warning/10 text-warning" },
+        error: { list: "bg-error/10", panel: "bg-error/10 text-error" },
+      },
 
-    size: {
-      sm: { base: "gap-2", list: "gap-2 p-1", panel: ["p-2", radiusVariants.sm] },
-      md: { base: "gap-2.5", list: "gap-2.5 p-1.5", panel: ["p-2.5", radiusVariants.md] },
-      lg: { base: "gap-3", list: "gap-3 p-2", panel: ["p-3", radiusVariants.lg] },
+      size: {
+        sm: { base: "gap-2", list: "gap-2 p-1", panel: ["p-2", radiusVariants.sm] },
+        md: { base: "gap-2.5", list: "gap-2.5 p-1.5", panel: ["p-2.5", radiusVariants.md] },
+        lg: { base: "gap-3", list: "gap-3 p-2", panel: ["p-3", radiusVariants.lg] },
+      },
+      radius: {
+        sm: { list: radiusVariants.sm },
+        md: { list: radiusVariants.md },
+        lg: { list: radiusVariants.lg },
+        full: { list: radiusVariants.full },
+        none: { list: radiusVariants.none },
+      },
+      isFocusVisible: { true: { panel: isFocusVisibleVariants.true } },
     },
-    radius: {
-      sm: { list: radiusVariants.sm },
-      md: { list: radiusVariants.md },
-      lg: { list: radiusVariants.lg },
-      full: { list: radiusVariants.full },
-      none: { list: radiusVariants.none },
-    },
-    isFocusVisible: { true: { panel: isFocusVisibleVariants.true } },
-  },
-});
+  });
 
-type TabsStylesReturnType = ReturnType<typeof tabsStyles>;
+type TabsStylesReturnType = ReturnType<typeof useTabsStyles>;
 
-const tabStyles = tv({
-  extend: variantColorStyles,
-  base: "cursor-pointer !backdrop-blur-none",
-  variants: {
-    size: {
-      sm: "h-8 gap-x-2 px-4 text-xs [&_svg]:size-4",
-      md: "h-10 gap-x-2.5 px-5 text-sm [&_svg]:size-5",
-      lg: "h-12 gap-x-3 px-6 text-base [&_svg]:size-6",
+const tabStyles = () =>
+  tv({
+    extend: useVariantAndColorStyles(),
+    base: "cursor-pointer !backdrop-blur-none",
+    variants: {
+      size: {
+        sm: "h-8 gap-x-2 px-4 text-xs [&_svg]:size-4",
+        md: "h-10 gap-x-2.5 px-5 text-sm [&_svg]:size-5",
+        lg: "h-12 gap-x-3 px-6 text-base [&_svg]:size-6",
+      },
+      radius: radiusVariants,
     },
-    radius: radiusVariants,
-  },
-});
+  });
 
 // props
 
@@ -97,7 +99,7 @@ function _Tabs(props: TabsProps, ref: ForwardedRef<HTMLDivElement>) {
 
   const { orientation, variant, color, size, radius, classNames, styles } = globalProps;
 
-  const styleSlots = tabsStyles({ orientation, color, size, radius });
+  const styleSlots = useTabsStyles()({ orientation, color, size, radius });
 
   return (
     <TabsSlotsProvider value={{ variant, color, size, radius, styleSlots, classNames, styles }}>
@@ -122,7 +124,7 @@ function _Tab(props: TabProps & ContentProps, ref: ForwardedRef<HTMLDivElement>)
       id={typeof props.children === "string" ? props.children : undefined}
       {...props}
       className={composeRenderProps(props.className, (className, { isSelected, isHovered, isPressed, isDisabled, isFocusVisible }) =>
-        tabStyles({
+        tabStyles()({
           variant: isSelected ? variant : "light",
           color,
           size,

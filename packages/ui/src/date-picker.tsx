@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar } from "./calendar";
-import { FieldInput, FieldInputBaseProps, fieldSegmentStyles } from "./field";
+import { FieldInput, FieldInputBaseProps, useFieldSegmentStyles } from "./field";
 import { Popover } from "./popover";
 import { useGlobalProps } from "./provider";
 import { ForwardRefType } from "./types";
@@ -31,9 +31,9 @@ interface DatePickerProps<T extends DateValue>
 // component
 
 function _DatePicker<T extends DateValue>(props: DatePickerProps<T>, ref: ForwardedRef<HTMLInputElement>) {
-  const globalProps = useGlobalProps("DatePicker", props, { radius: props.size });
+  const globalProps = useGlobalProps("DatePicker", props);
 
-  const { size, radius, color, visibleMonthCount } = props;
+  const { size, radius, color, visibleMonthCount } = globalProps;
 
   const [width, datePickerRef] = useObserveElementWidth<HTMLDivElement>();
 
@@ -51,7 +51,7 @@ function _DatePicker<T extends DateValue>(props: DatePickerProps<T>, ref: Forwar
             {...globalProps}
           >
             <DateInput ref={ref}>
-              {(segment) => <DateSegment segment={segment} className={({ isPlaceholder }) => fieldSegmentStyles({ isPlaceholder })} />}
+              {(segment) => <DateSegment segment={segment} className={({ isPlaceholder }) => useFieldSegmentStyles()({ isPlaceholder })} />}
             </DateInput>
           </FieldInput>
 
