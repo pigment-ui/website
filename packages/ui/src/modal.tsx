@@ -2,6 +2,7 @@
 
 import { cardStyles } from "./card";
 import { fieldButtonStyles } from "./field";
+import { useGlobalProps } from "./provider";
 import { SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
 import { PlacementAxis } from "@react-types/overlays";
@@ -88,17 +89,9 @@ const [ModalSlotsProvider, useModalSlots] = createSlots<Record<"headerId" | "bod
 // component
 
 function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
-  const {
-    placement = "center",
-    size = "md",
-    backdrop = "blur",
-    insideScroll = true,
-    hideCloseButton = false,
-    children,
-    classNames,
-    styles,
-    ...restProps
-  } = props;
+  const globalProps = useGlobalProps("Modal", props, { placement: "center", size: "md", backdrop: "blur", insideScroll: true });
+
+  const { placement, size, backdrop, insideScroll, hideCloseButton, children, classNames, styles, ...restProps } = globalProps;
 
   const headerId = useId();
   const bodyId = useId();
@@ -115,11 +108,11 @@ function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
         }
         style={styles?.backdrop}
       >
-        {composeRenderProps(props.children, (children, { state, isEntering, isExiting }) => (
+        {composeRenderProps(globalProps.children, (children, { state, isEntering, isExiting }) => (
           <AriaModal
             ref={ref}
             {...restProps}
-            className={composeRenderProps(props.className, (className) =>
+            className={composeRenderProps(globalProps.className, (className) =>
               styleSlots.base({
                 className: twMerge(
                   isEntering && "animate-in fade-in",
@@ -136,7 +129,7 @@ function _Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
                 ),
               }),
             )}
-            style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
+            style={composeRenderProps(globalProps.style, (style) => mergeProps(styles?.base, style))}
           >
             <Dialog
               aria-labelledby={headerId}

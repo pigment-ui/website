@@ -1,6 +1,7 @@
 "use client";
 
 import { FieldInput, FieldInputBaseProps } from "./field";
+import { useGlobalProps } from "./provider";
 import React, { ForwardedRef, forwardRef } from "react";
 import { Input, InputProps, TextField as AriaTextField, TextFieldProps as AriaTextFieldProps } from "react-aria-components";
 
@@ -11,10 +12,12 @@ interface TextFieldProps extends AriaTextFieldProps, Omit<InputProps, keyof Aria
 // component
 
 function _TextField(props: TextFieldProps, ref: ForwardedRef<HTMLInputElement>) {
+  const globalProps = useGlobalProps("TextField", props, {});
+
   return (
-    <AriaTextField {...props}>
+    <AriaTextField {...globalProps}>
       {(renderProps) => (
-        <FieldInput {...renderProps} {...props}>
+        <FieldInput {...renderProps} {...globalProps}>
           <Input ref={ref} />
         </FieldInput>
       )}

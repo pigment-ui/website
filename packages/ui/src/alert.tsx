@@ -1,10 +1,11 @@
 "use client";
 
 import { fieldButtonStyles } from "./field";
+import { useGlobalProps } from "./provider";
 import { radiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { CircleAlertIcon, CircleCheckIcon, CircleXIcon, InfoIcon, XIcon } from "lucide-react";
-import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
+import React, { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { mergeProps } from "react-aria";
 import { Button as AriaButton } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
@@ -49,6 +50,8 @@ const alertStyles = tv({
   },
 });
 
+const asd = alertStyles();
+
 type AlertStylesReturnType = ReturnType<typeof alertStyles>;
 
 // props
@@ -61,6 +64,7 @@ interface AlertProps
     StyleSlotsToStyleProps<AlertStylesReturnType> {
   title?: string;
   description?: string;
+  icon?: ReactNode;
   hideIcon?: boolean;
   onClose?: () => void;
 }
@@ -68,21 +72,10 @@ interface AlertProps
 // component
 
 function _Alert(props: AlertProps, ref: ForwardedRef<HTMLDivElement>) {
-  const {
-    title,
-    description,
-    variant = "solid",
-    color = "default",
-    size = "md",
-    hideIcon,
-    onClose,
-    className,
-    classNames,
-    style,
-    styles,
-    children,
-    ...restProps
-  } = props;
+  const globalProps = useGlobalProps("Alert", props, { variant: "solid", color: "default", size: "md" });
+
+  const { title, description, variant, color, size, icon, hideIcon, onClose, className, classNames, style, styles, children, ...restProps } =
+    globalProps;
 
   const styleSlots = alertStyles({ variant, color, size });
 
@@ -95,22 +88,35 @@ function _Alert(props: AlertProps, ref: ForwardedRef<HTMLDivElement>) {
     >
       {!hideIcon && (
         <div className={styleSlots.icon({ className: classNames?.icon })} style={styles?.icon}>
-          {color === "success" ? <CircleCheckIcon /> : color === "warning" ? <CircleAlertIcon /> : color === "error" ? <CircleXIcon /> : <InfoIcon />}
+          {icon ||
+            (color === "success" ? (
+              <CircleCheckIcon />
+            ) : color === "warning" ? (
+              <CircleAlertIcon />
+            ) : color === "error" ? (
+              <CircleXIcon />
+            ) : (
+              <InfoIcon />
+            ))}
         </div>
       )}
+
       <div className={styleSlots.contentWrapper({ className: classNames?.contentWrapper })} style={styles?.contentWrapper}>
         {title && (
           <div className={styleSlots.title({ className: classNames?.title })} style={styles?.title}>
             {title}
           </div>
         )}
+
         {description && (
           <div className={styleSlots.description({ className: classNames?.description })} style={styles?.description}>
             {description}
           </div>
         )}
-        {children}
+
+        <div>{children}</div>
       </div>
+
       {!!onClose && (
         <AriaButton
           aria-label="Alert close button"
@@ -126,6 +132,7 @@ function _Alert(props: AlertProps, ref: ForwardedRef<HTMLDivElement>) {
 }
 
 const Alert = forwardRef(_Alert);
+Alert.displayName = "Alert";
 
 // exports
 

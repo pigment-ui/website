@@ -3,6 +3,7 @@
 import { Calendar } from "./calendar";
 import { FieldInput, FieldInputBaseProps, fieldSegmentStyles } from "./field";
 import { Popover } from "./popover";
+import { useGlobalProps } from "./provider";
 import { ForwardRefType } from "./types";
 import { useObserveElementWidth } from "./utils";
 import { CalendarIcon } from "lucide-react";
@@ -30,12 +31,14 @@ interface DatePickerProps<T extends DateValue>
 // component
 
 function _DatePicker<T extends DateValue>(props: DatePickerProps<T>, ref: ForwardedRef<HTMLInputElement>) {
-  const { size, radius = size, color, variant, visibleMonthCount } = props;
+  const globalProps = useGlobalProps("DatePicker", props, { radius: props.size });
+
+  const { size, radius, color, visibleMonthCount } = props;
 
   const [width, datePickerRef] = useObserveElementWidth<HTMLDivElement>();
 
   return (
-    <AriaDatePicker ref={datePickerRef} {...props}>
+    <AriaDatePicker ref={datePickerRef} {...globalProps}>
       {(renderProps) => (
         <>
           <FieldInput
@@ -45,17 +48,19 @@ function _DatePicker<T extends DateValue>(props: DatePickerProps<T>, ref: Forwar
               </Button>
             }
             {...renderProps}
-            {...props}
+            {...globalProps}
           >
             <DateInput ref={ref}>
               {(segment) => <DateSegment segment={segment} className={({ isPlaceholder }) => fieldSegmentStyles({ isPlaceholder })} />}
             </DateInput>
           </FieldInput>
 
-          <Popover hideArrow placement="bottom" {...props} className="overflow-auto p-0" style={{ maxWidth: width }}>
+          <Popover hideArrow placement="bottom" {...globalProps} className="overflow-auto p-0" style={{ maxWidth: width }}>
             <Calendar
-              aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
-              aria-describedby={props["aria-describedby"] ?? (typeof props.description === "string" ? props.description : undefined)}
+              aria-label={globalProps["aria-label"] ?? (typeof globalProps.label === "string" ? globalProps.label : undefined)}
+              aria-describedby={
+                globalProps["aria-describedby"] ?? (typeof globalProps.description === "string" ? globalProps.description : undefined)
+              }
               asCard={false}
               color={color}
               size={size}

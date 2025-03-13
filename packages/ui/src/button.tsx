@@ -1,5 +1,6 @@
 "use client";
 
+import { useGlobalProps } from "./provider";
 import { Spinner } from "./spinner";
 import { radiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, ContentProps, RadiusProps, SizeProps, StyleProps, VariantProps } from "./types";
@@ -42,11 +43,13 @@ interface ButtonProps extends AriaButtonProps, HoverProps, VariantProps, ColorPr
 // component
 
 function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
+  const globalProps = useGlobalProps("Button", props, { variant: "solid", color: "default", size: "md", radius: props.size || "md" });
+
   const {
-    variant = "solid",
-    color = "default",
-    size = "md",
-    radius = size,
+    variant,
+    color,
+    size,
+    radius,
     startContent,
     endContent,
     isLoading,
@@ -57,7 +60,7 @@ function _Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
     className,
     style,
     ...restProps
-  } = props;
+  } = globalProps;
 
   const isDisabled = disabled || isLoading;
 

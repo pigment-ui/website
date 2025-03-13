@@ -1,5 +1,6 @@
 "use client";
 
+import { useGlobalProps } from "./provider";
 import { radiusVariants, variantColorStyles } from "./styles";
 import { ChildrenProps, SizeProps, StyleProps, StyleSlotsToSlots, StyleSlotsToStyleProps } from "./types";
 import { createSlots } from "./utils";
@@ -44,7 +45,9 @@ const [CardSlotsProvider, useCardSlots] = createSlots<CardSlotsType>();
 // component
 
 function _Card(props: CardProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { size = "md", children, className, classNames, style, styles } = props;
+  const globalProps = useGlobalProps("Card", props, { size: "md" });
+
+  const { size, children, className, classNames, style, styles } = globalProps;
 
   const styleSlots = cardStyles({ size });
 

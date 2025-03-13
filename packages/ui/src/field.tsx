@@ -1,7 +1,8 @@
 "use client";
 
+import { useGlobalProps } from "./provider";
 import { isDisabledVariants, isFocusVisibleVariants, radiusVariants, smallRadiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, RadiusProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
+import { ChildrenProps, ColorProps, RadiusProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { useObjectRef } from "@react-aria/utils";
 import { ValidationResult } from "@react-types/shared";
 import React, { cloneElement, ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
@@ -32,7 +33,7 @@ type FieldStylesReturnType = ReturnType<typeof fieldStyles>;
 
 const fieldButtonStyles = tv({
   base: [
-    "relative flex items-center justify-center overflow-hidden outline-none duration-300",
+    "relative flex min-w-max items-center justify-center overflow-hidden whitespace-nowrap outline-none duration-300",
     "before:absolute before:inset-0 before:bg-current before:duration-300 data-[pressed]:scale-90",
     "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[focus-visible]:outline-offset-0 data-[focus-visible]:outline-current",
   ],
@@ -71,16 +72,16 @@ const fieldInputStyles = tv({
       full: { base: radiusVariants.full, button: smallRadiusVariants.full },
       none: { base: radiusVariants.none, button: smallRadiusVariants.none },
     },
-    isTextArea: { true: { base: "items-start", self: "h-auto" } },
+    isAutoHeight: { true: { base: "items-start", self: "h-auto" } },
     isHovered: { true: "" },
     isFocusWithin: { true: "ring-2" },
     isFocusVisible: isFocusVisibleVariants,
     isDisabled: isDisabledVariants,
   },
   compoundVariants: [
-    { isTextArea: true, size: "sm", className: "py-2" },
-    { isTextArea: true, size: "md", className: "py-2.5" },
-    { isTextArea: true, size: "lg", className: "py-3" },
+    { isAutoHeight: true, size: "sm", className: "py-2" },
+    { isAutoHeight: true, size: "md", className: "py-2.5" },
+    { isAutoHeight: true, size: "lg", className: "py-3" },
 
     { color: "default", isFocusWithin: true, className: { base: "ring-default" } },
     { color: "primary", isFocusWithin: true, className: { base: "ring-primary" } },
@@ -106,9 +107,7 @@ interface FieldBaseProps extends SizeProps {
   fieldStyles?: StyleSlotsToStyleProps<FieldStylesReturnType>["styles"];
 }
 
-interface FieldProps extends FieldBaseProps {
-  children?: ReactNode;
-}
+interface FieldProps extends FieldBaseProps, ChildrenProps {}
 
 interface FieldInputBaseProps extends VariantProps, ColorProps, SizeProps, RadiusProps, FieldBaseProps {
   isLabelInside?: boolean;
@@ -119,7 +118,7 @@ interface FieldInputBaseProps extends VariantProps, ColorProps, SizeProps, Radiu
 }
 
 interface FieldInputProps extends FieldInputBaseProps {
-  isTextArea?: boolean;
+  isAutoHeight?: boolean;
   isFocusWithin?: boolean;
   isInvalid?: boolean;
   isDisabled?: boolean;
@@ -131,7 +130,9 @@ interface FieldInputProps extends FieldInputBaseProps {
 // component
 
 function _Field(props: FieldProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { label, description, errorMessage, isRequired, size = "md", children, fieldClassNames, fieldStyles: fieldStylesFromProps } = props;
+  const globalProps = useGlobalProps("Field", props, { size: "md" });
+
+  const { label, description, errorMessage, isRequired, size, children, fieldClassNames, fieldStyles: fieldStylesFromProps } = globalProps;
 
   const styleSlots = fieldStyles({ size });
 
@@ -166,16 +167,24 @@ function _Field(props: FieldProps, ref: ForwardedRef<HTMLDivElement>) {
 const Field = forwardRef(_Field);
 
 function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) {
+  const globalProps = useGlobalProps("FieldInput", props, {
+    variant: "soft",
+    color: "default",
+    size: "md",
+    radius: props.size || "md",
+    isLabelInside: true,
+  });
+
   const {
-    variant = "soft",
-    color = "default",
-    size = "md",
-    radius = size,
+    variant,
+    color,
+    size,
+    radius,
     isInvalid,
     isDisabled,
-    isTextArea = false,
+    isAutoHeight,
     isFocusWithin: isFocusWithinProps,
-    isLabelInside = true,
+    isLabelInside,
     startContent,
     endContent,
     startButton,
@@ -183,18 +192,18 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
     children,
     fieldInputClassNames,
     fieldInputStyles: fieldInputStylesFromProps,
-  } = props;
+  } = globalProps;
 
-  const styleSlots = fieldInputStyles({ variant, color: isInvalid ? "error" : color, size, radius, isTextArea });
+  const styleSlots = fieldInputStyles({ variant, color: isInvalid ? "error" : color, size, radius, isAutoHeight });
 
   // @ts-ignore
   const selfRef = useObjectRef<HTMLElement>(children?.ref);
 
   return (
     <Field
-      {...props}
+      {...globalProps}
       fieldClassNames={{
-        ...props.fieldClassNames,
+        ...globalProps.fieldClassNames,
         label: twMerge(
           isLabelInside &&
             twMerge(
@@ -206,7 +215,7 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
               { sm: "inset-x-2 top-2", md: "inset-x-2.5 top-2.5", lg: "inset-x-3 top-3" }[size],
               isDisabled && isDisabledVariants.true,
             ),
-          props.fieldClassNames?.label,
+          globalProps.fieldClassNames?.label,
         ),
       }}
     >
@@ -224,10 +233,10 @@ function _FieldInput(props: FieldInputProps, ref: ForwardedRef<HTMLDivElement>) 
           })
         }
         style={mergeProps(
-          isLabelInside && props.label
+          isLabelInside && globalProps.label
             ? {
                 // label height, input padding
-                paddingTop: { sm: 16, md: 20, lg: 24 }[size] + { sm: 8, md: 10, lg: 12 }[size] * (isTextArea ? 2 : 1),
+                paddingTop: { sm: 16, md: 20, lg: 24 }[size] + { sm: 8, md: 10, lg: 12 }[size] * (isAutoHeight ? 2 : 1),
               }
             : {},
           fieldInputStylesFromProps?.base,

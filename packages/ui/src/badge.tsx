@@ -1,5 +1,6 @@
 "use client";
 
+import { useGlobalProps } from "./provider";
 import { radiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, ContentProps, RadiusProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import React, { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from "react";
@@ -11,15 +12,15 @@ import { tv } from "tailwind-variants";
 
 const badgeStyles = tv({
   extend: variantColorStyles,
-  base: "!absolute min-w-max whitespace-nowrap",
+  base: "!absolute min-w-max whitespace-nowrap p-1",
   slots: {
     wrapper: "relative inline-block",
   },
   variants: {
     size: {
-      sm: "h-4 min-w-4 gap-x-0.5 px-1 text-xs [&_svg]:size-2",
-      md: "h-5 min-w-5 gap-x-1 px-1.5 text-sm [&_svg]:size-3",
-      lg: "h-6 min-w-6 gap-x-1.5 px-2 text-base [&_svg]:size-4",
+      sm: "h-4 min-w-4 gap-x-2 text-xs [&_svg]:size-2",
+      md: "h-5 min-w-5 gap-x-2.5 text-sm [&_svg]:size-3",
+      lg: "h-6 min-w-6 gap-x-3 text-base [&_svg]:size-4",
     },
     placement: {
       "top right": "right-0 top-0 -translate-y-1/2 translate-x-1/2",
@@ -27,7 +28,6 @@ const badgeStyles = tv({
       "bottom right": "bottom-0 right-0 translate-x-1/2 translate-y-1/2",
       "bottom left": "bottom-0 left-0 -translate-x-1/2 translate-y-1/2",
     },
-    isCompact: { true: "px-0" },
     radius: radiusVariants,
   },
 });
@@ -45,32 +45,18 @@ interface BadgeProps
     ContentProps,
     StyleSlotsToStyleProps<BadgeStylesReturnType> {
   content?: ReactNode;
-  isCompact?: boolean;
   placement?: "top right" | "top left" | "bottom right" | "bottom left";
 }
 
 // component
 
 function _Badge(props: BadgeProps, ref: ForwardedRef<HTMLDivElement>) {
-  const {
-    variant = "solid",
-    color = "default",
-    size = "md",
-    radius = "full",
-    placement = "top right",
-    isCompact,
-    content,
-    startContent,
-    endContent,
-    classNames,
-    className,
-    styles,
-    style,
-    children,
-    ...restProps
-  } = props;
+  const globalProps = useGlobalProps("Badge", props, { variant: "solid", color: "default", size: "md", radius: "full", placement: "top right" });
 
-  const styleSlots = badgeStyles({ placement, variant, color, size, radius, isCompact, className });
+  const { variant, color, size, radius, placement, content, startContent, endContent, classNames, className, styles, style, children, ...restProps } =
+    globalProps;
+
+  const styleSlots = badgeStyles({ placement, variant, color, size, radius, className });
 
   return (
     <div className={styleSlots.wrapper({ className: twMerge(classNames?.wrapper, className) })} style={mergeProps(styles?.wrapper, style)}>

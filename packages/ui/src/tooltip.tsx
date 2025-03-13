@@ -1,6 +1,7 @@
 "use client";
 
 import { cardStyles } from "./card";
+import { useGlobalProps } from "./provider";
 import React, { cloneElement, ForwardedRef, forwardRef, ReactElement, useRef } from "react";
 import { mergeProps, useButton } from "react-aria";
 import { composeRenderProps, OverlayArrow, Tooltip as AriaTooltip, TooltipProps as AriaTooltipProps, TooltipTrigger } from "react-aria-components";
@@ -23,14 +24,16 @@ interface TooltipProps extends AriaTooltipProps {
 // component
 
 function _Tooltip(props: TooltipProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { hideArrow = false, arrowSize = 16 } = props;
+  const globalProps = useGlobalProps("Tooltip", props, { arrowSize: 16 });
+
+  const { hideArrow, arrowSize } = globalProps;
 
   return (
     <AriaTooltip
       ref={ref}
       offset={16}
-      {...props}
-      className={composeRenderProps(props.className, (className, { isEntering, isExiting, placement }) =>
+      {...globalProps}
+      className={composeRenderProps(globalProps.className, (className, { isEntering, isExiting, placement }) =>
         tooltipStyles({
           className: twMerge(
             "duration-300 [transition-duration:0ms]",
@@ -48,7 +51,7 @@ function _Tooltip(props: TooltipProps, ref: ForwardedRef<HTMLDivElement>) {
         }),
       )}
     >
-      {composeRenderProps(props.children, (children, { placement }) => (
+      {composeRenderProps(globalProps.children, (children, { placement }) => (
         <>
           {!hideArrow && (
             <OverlayArrow>

@@ -1,51 +1,18 @@
 import { tv } from "tailwind-variants";
 
-export const isDisabledVariants = {
-  true: "opacity-50 cursor-not-allowed",
-} as const;
+export const isDisabledVariants = { true: "opacity-50 cursor-not-allowed" } as const;
 
-export const isFocusVisibleVariants = {
-  true: "outline-2 outline-offset-2 outline-focus",
-} as const;
+export const isFocusVisibleVariants = { true: "outline-2 outline-offset-2 outline-focus" } as const;
 
-export const radiusVariants = {
-  sm: "rounded-lg",
-  md: "rounded-xl",
-  lg: "rounded-2xl",
-  full: "rounded-full",
-  none: "rounded-none",
-} as const;
+export const radiusVariants = { sm: "rounded-lg", md: "rounded-xl", lg: "rounded-2xl", full: "rounded-full", none: "rounded-none" } as const;
 
-export const smallRadiusVariants = {
-  sm: "rounded-md",
-  md: "rounded-lg",
-  lg: "rounded-xl",
-  full: "rounded-full",
-  none: "rounded-none",
-} as const;
+export const smallRadiusVariants = { sm: "rounded-md", md: "rounded-lg", lg: "rounded-xl", full: "rounded-full", none: "rounded-none" } as const;
 
 export const variantColorStyles = tv({
   base: "relative flex items-center justify-center overflow-hidden border bg-clip-padding outline-none backdrop-blur-lg duration-300",
   variants: {
-    variant: {
-      solid: "",
-      soft: "",
-      light: "",
-      bordered: "",
-      outlined: "",
-      ghost: "",
-      faded: "",
-      card: "",
-    },
-    color: {
-      default: "",
-      primary: "",
-      secondary: "",
-      info: "",
-      success: "",
-      warning: "",
-      error: "",
-    },
+    variant: { solid: "", soft: "", light: "", bordered: "", outlined: "", ghost: "", faded: "", card: "" },
+    color: { default: "", primary: "", secondary: "", info: "", success: "", warning: "", error: "" },
     isHovered: { true: "" },
     isPressed: { true: "scale-95" },
     isDisabled: isDisabledVariants,

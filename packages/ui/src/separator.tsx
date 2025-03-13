@@ -1,5 +1,6 @@
 "use client";
 
+import { useGlobalProps } from "./provider";
 import { SizeProps } from "./types";
 import React, { ForwardedRef, forwardRef } from "react";
 import { Separator as AriaSeparator, SeparatorProps as AriaSeparatorProps } from "react-aria-components";
@@ -30,7 +31,9 @@ interface SeparatorProps extends AriaSeparatorProps, SizeProps {}
 // component
 
 function _Separator(props: SeparatorProps, ref: ForwardedRef<HTMLElement>) {
-  const { orientation = "horizontal", size = "sm", className, style, ...restProps } = props;
+  const globalProps = useGlobalProps("Separator", props, { orientation: "horizontal", size: "sm" });
+
+  const { orientation, size, className, style, ...restProps } = globalProps;
 
   return (
     <AriaSeparator ref={ref} {...restProps} orientation={orientation} className={separatorStyles({ orientation, size, className })} style={style} />

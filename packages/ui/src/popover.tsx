@@ -1,6 +1,7 @@
 "use client";
 
 import { cardStyles } from "./card";
+import { useGlobalProps } from "./provider";
 import React, { ForwardedRef, forwardRef } from "react";
 import { composeRenderProps, DialogTrigger, OverlayArrow, Popover as AriaPopover, PopoverProps as AriaPopoverProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
@@ -22,14 +23,16 @@ interface PopoverProps extends AriaPopoverProps {
 // component
 
 function _Popover(props: PopoverProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { hideArrow = false, arrowSize = 16 } = props;
+  const globalProps = useGlobalProps("Popover", props, { arrowSize: 16 });
+
+  const { hideArrow, arrowSize } = globalProps;
 
   return (
     <AriaPopover
       ref={ref}
       offset={16}
-      {...props}
-      className={composeRenderProps(props.className, (className, { isEntering, isExiting, placement }) =>
+      {...globalProps}
+      className={composeRenderProps(globalProps.className, (className, { isEntering, isExiting, placement }) =>
         popoverStyles({
           className: twMerge(
             "duration-300 [transition-duration:0ms]",
@@ -47,7 +50,7 @@ function _Popover(props: PopoverProps, ref: ForwardedRef<HTMLDivElement>) {
         }),
       )}
     >
-      {composeRenderProps(props.children, (children, { placement }) => (
+      {composeRenderProps(globalProps.children, (children, { placement }) => (
         <>
           {!hideArrow && (
             <OverlayArrow>

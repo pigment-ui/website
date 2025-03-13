@@ -1,5 +1,6 @@
 "use client";
 
+import { useGlobalProps } from "./provider";
 import { isFocusVisibleVariants, radiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, ContentProps, ForwardRefType, RadiusProps, SizeProps, StyleSlotsToSlots, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
@@ -86,7 +87,15 @@ const [TabsSlotsProvider, useTabsSlots] = createSlots<Required<Pick<TabsProps, "
 // component
 
 function _Tabs(props: TabsProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { orientation = "vertical", variant = "solid", color = "default", size = "md", radius = size, classNames, styles } = props;
+  const globalProps = useGlobalProps("Tabs", props, {
+    orientation: "vertical",
+    variant: "solid",
+    color: "default",
+    size: "md",
+    radius: props.size || "md",
+  });
+
+  const { orientation, variant, color, size, radius, classNames, styles } = globalProps;
 
   const styleSlots = tabsStyles({ orientation, color, size, radius });
 
@@ -94,9 +103,9 @@ function _Tabs(props: TabsProps, ref: ForwardedRef<HTMLDivElement>) {
     <TabsSlotsProvider value={{ variant, color, size, radius, styleSlots, classNames, styles }}>
       <AriaTabs
         ref={ref}
-        {...props}
-        className={composeRenderProps(props.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
-        style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
+        {...globalProps}
+        className={composeRenderProps(globalProps.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
+        style={composeRenderProps(globalProps.style, (style) => mergeProps(styles?.base, style))}
       />
     </TabsSlotsProvider>
   );

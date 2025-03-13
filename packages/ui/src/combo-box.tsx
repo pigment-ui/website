@@ -3,6 +3,7 @@
 import { FieldInput, FieldInputBaseProps } from "./field";
 import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
 import { Popover } from "./popover";
+import { useGlobalProps } from "./provider";
 import { ForwardRefType } from "./types";
 import { useObserveElementWidth } from "./utils";
 import { ChevronDownIcon } from "lucide-react";
@@ -22,10 +23,12 @@ interface ComboBoxProps<T extends object>
 // component
 
 function _ComboBox<T extends object>(props: ComboBoxProps<T>, ref: ForwardedRef<HTMLInputElement>) {
+  const globalProps = useGlobalProps("ComboBox", props);
+
   const [width, comboBoxRef] = useObserveElementWidth<HTMLDivElement>();
 
   return (
-    <AriaComboBox ref={comboBoxRef} menuTrigger="focus" {...props}>
+    <AriaComboBox ref={comboBoxRef} menuTrigger="focus" {...globalProps}>
       {(renderProps) => (
         <>
           <FieldInput
@@ -35,13 +38,13 @@ function _ComboBox<T extends object>(props: ComboBoxProps<T>, ref: ForwardedRef<
               </Button>
             }
             {...renderProps}
-            {...props}
+            {...globalProps}
           >
             <Input ref={ref} />
           </FieldInput>
 
-          <Popover maxHeight={300} hideArrow triggerRef={comboBoxRef} {...props} className="overflow-auto p-0" style={{ width }}>
-            <ListBox {...filterInlineListBoxProps(mergeProps(props, renderProps))} className="p-2" />
+          <Popover maxHeight={300} hideArrow triggerRef={comboBoxRef} {...globalProps} className="overflow-auto p-0" style={{ width }}>
+            <ListBox {...filterInlineListBoxProps(mergeProps(globalProps, renderProps))} className="p-2" />
           </Popover>
         </>
       )}

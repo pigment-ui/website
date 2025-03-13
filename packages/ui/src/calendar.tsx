@@ -2,6 +2,7 @@
 
 import { cardStyles } from "./card";
 import { Field, FieldBaseProps, fieldButtonStyles } from "./field";
+import { useGlobalProps } from "./provider";
 import { smallRadiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, RadiusProps, StyleSlotsToStyleProps } from "./types";
 import { FormValidationProps, useFormValidationState } from "@react-stately/form";
@@ -84,10 +85,18 @@ interface CalendarProps<T extends DateValue>
 // component
 
 function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { color = "default", visibleMonthCount = 1, asCard = true, value, size = "md", radius = size, classNames, styles } = props;
+  const globalProps = useGlobalProps("Calendar", props, {
+    color: "default",
+    visibleMonthCount: 1,
+    asCard: true,
+    size: "md",
+    radius: props.size || "md",
+  });
 
-  const { displayValidation } = useFormValidationState({ ...props, value });
-  const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
+  const { color, visibleMonthCount, asCard, value, size, radius, classNames, styles } = globalProps;
+
+  const { displayValidation } = useFormValidationState({ ...globalProps, value });
+  const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...globalProps });
 
   const styleSlots = calendarStyles({ asCard, size, radius });
 
@@ -100,16 +109,18 @@ function _Calendar<T extends DateValue>(props: CalendarProps<T>, ref: ForwardedR
     >
       <AriaCalendar
         ref={ref}
-        {...mergeProps(props, fieldProps)}
-        aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
-        aria-describedby={props["aria-describedby"] ?? (typeof props.description === "string" ? props.description : undefined)}
+        {...mergeProps(globalProps, fieldProps)}
+        aria-label={globalProps["aria-label"] ?? (typeof globalProps.label === "string" ? globalProps.label : undefined)}
+        aria-describedby={globalProps["aria-describedby"] ?? (typeof globalProps.description === "string" ? globalProps.description : undefined)}
         visibleDuration={{ months: visibleMonthCount }}
-        className={composeRenderProps(props.className, (className) => styleSlots.wrapper({ className: twMerge(classNames?.wrapper, className) }))}
-        style={composeRenderProps(props.style, (style) => mergeProps(styles?.wrapper, style))}
+        className={composeRenderProps(globalProps.className, (className) =>
+          styleSlots.wrapper({ className: twMerge(classNames?.wrapper, className) }),
+        )}
+        style={composeRenderProps(globalProps.style, (style) => mergeProps(styles?.wrapper, style))}
       >
-        <Field {...displayValidation} {...props}>
+        <Field {...displayValidation} {...globalProps}>
           <CalendarWrapper styleSlots={styleSlots} classNames={classNames} styles={styles}>
-            {Array.from({ length: visibleMonthCount }).map((_, index) => (
+            {Array.from({ length: visibleMonthCount as number }).map((_, index) => (
               <CalendarGrid key={index} offset={{ months: index }} className={styleSlots.grid({ className: classNames?.grid })} style={styles?.grid}>
                 {(date) => (
                   <CalendarCell

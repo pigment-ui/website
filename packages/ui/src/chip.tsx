@@ -1,5 +1,6 @@
 "use client";
 
+import { useGlobalProps } from "./provider";
 import { smallRadiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, ContentProps, RadiusProps, SizeProps, VariantProps } from "./types";
 import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
@@ -35,19 +36,9 @@ interface ChipProps extends Omit<HTMLAttributes<HTMLDivElement>, "color">, Varia
 // component
 
 function _Chip(props: ChipProps, ref: ForwardedRef<HTMLDivElement>) {
-  const {
-    variant = "solid",
-    color = "default",
-    size = "md",
-    radius = size,
-    isCompact,
-    startContent,
-    endContent,
-    className,
-    style,
-    children,
-    ...restProps
-  } = props;
+  const globalProps = useGlobalProps("Chip", props, { variant: "solid", color: "default", size: "md", radius: props.size || "md" });
+
+  const { variant, color, size, radius, isCompact, startContent, endContent, className, style, children, ...restProps } = globalProps;
 
   return (
     <div ref={ref} {...restProps} className={chipStyles({ variant, color, size, radius, isCompact, className })} style={style}>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useGlobalProps } from "./provider";
 import { ColorProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import React, { ForwardedRef, forwardRef, ReactNode } from "react";
 import { mergeProps } from "react-aria";
@@ -106,7 +107,9 @@ const r = 16 - strokeWidth;
 const c = 2 * r * Math.PI;
 
 function _ProgressBar(props: ProgressBarProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { color = "default", size = "md", label, hideValueText, isCircular = false, isIndeterminate = false, classNames, styles } = props;
+  const globalProps = useGlobalProps("ProgressBar", props, { color: "default", size: "md" });
+
+  const { color, size, label, hideValueText, isCircular, isIndeterminate, classNames, styles } = globalProps;
 
   const styleSlots = progressBarStyles({ color, size, isCircular, isIndeterminate });
 
@@ -120,9 +123,9 @@ function _ProgressBar(props: ProgressBarProps, ref: ForwardedRef<HTMLDivElement>
   return (
     <AriaProgressBar
       ref={ref}
-      {...props}
-      className={composeRenderProps(props.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
-      style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
+      {...globalProps}
+      className={composeRenderProps(globalProps.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
+      style={composeRenderProps(globalProps.style, (style) => mergeProps(styles?.base, style))}
     >
       {({ percentage = 0, valueText, isIndeterminate: isIndeterminateInline }) => (
         <div className={styleSlots.wrapper({ className: classNames?.wrapper })} style={styles?.wrapper}>

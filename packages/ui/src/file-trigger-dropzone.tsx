@@ -1,31 +1,30 @@
 "use client";
 
-import { Button } from "./button";
-import { Field, FieldBaseProps } from "./field";
-import { radiusVariants, variantColorStyles } from "./styles";
-import { ColorProps, StyleProps, StyleSlotsToStyleProps, VariantProps, Variants } from "./types";
+import { FieldBaseProps, fieldButtonStyles, FieldInput, FieldInputBaseProps } from "./field";
+import { useGlobalProps } from "./provider";
+import { radiusVariants } from "./styles";
+import { ColorProps, StyleProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { useFormValidationState } from "@react-stately/form";
 import React, { ComponentPropsWithoutRef } from "react";
 import { AriaFieldProps, FileDropItem, mergeProps, useField } from "react-aria";
-import { DropZone, FieldErrorContext, FileTrigger, Provider, Text, TextContext } from "react-aria-components";
+import { Button, DropZone, FieldErrorContext, FileTrigger, Provider, Text, TextContext } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
 // styles
 
 const fileTriggerBlockStyles = tv({
-  extend: variantColorStyles,
-  base: "flex-col text-center",
   slots: {
-    wrapper: "",
-    button: "",
+    base: "",
+    zone: "flex w-full flex-col items-center text-center",
+    button: fieldButtonStyles({ className: "data-[pressed]:scale-95" }),
     text: "",
   },
   variants: {
     size: {
-      sm: { base: ["gap-4 p-4", radiusVariants.sm], text: "text-xs" },
-      md: { base: ["gap-5 p-5", radiusVariants.md], text: "text-sm" },
-      lg: { base: ["gap-6 p-6", radiusVariants.lg], text: "text-base" },
+      sm: { base: radiusVariants.sm, zone: "gap-4 p-4", button: ["h-8 px-4 text-sm", radiusVariants.sm], text: "text-xs" },
+      md: { base: radiusVariants.md, zone: "gap-5 p-5", button: ["h-10 px-5 text-base", radiusVariants.md], text: "text-sm" },
+      lg: { base: radiusVariants.lg, zone: "gap-6 p-6", button: ["h-12 px-6 text-lg", radiusVariants.lg], text: "text-base" },
     },
   },
 });
@@ -40,12 +39,11 @@ interface FileTriggerDropzoneProps
     VariantProps,
     ColorProps,
     FieldBaseProps,
+    FieldInputBaseProps,
     StyleProps,
     StyleSlotsToStyleProps<FileTriggerDropzoneStylesReturnType> {
-  variantButton?: Variants;
   value: File[];
   onChange: (files: File[]) => void;
-  isLoading?: boolean;
   isDisabled?: boolean;
   placeholder?: string;
   buttonLabel?: string;
@@ -54,17 +52,17 @@ interface FileTriggerDropzoneProps
 // component
 
 function FileTriggerDropzone(props: FileTriggerDropzoneProps) {
+  const globalProps = useGlobalProps("FileTriggerDropzone", props, { variant: "soft", color: "default", size: "md" });
+
   const {
-    variant = "soft",
-    variantButton = "solid",
-    color = "default",
-    size = "md",
+    variant,
+    color,
+    size,
     placeholder,
     buttonLabel,
     value,
     onChange,
     isDisabled,
-    isLoading,
     isInvalid,
     acceptedFileTypes,
     acceptDirectory,
@@ -74,17 +72,12 @@ function FileTriggerDropzone(props: FileTriggerDropzoneProps) {
     classNames,
     style,
     styles,
-  } = props;
+  } = globalProps;
 
-  const { displayValidation } = useFormValidationState({ ...props, value });
-  const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
+  const { displayValidation } = useFormValidationState({ ...globalProps, value });
+  const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...globalProps });
 
-  const styleSlots = fileTriggerBlockStyles({
-    variant,
-    color: isInvalid || displayValidation.isInvalid ? "error" : color,
-    size,
-    isDisabled: isDisabled || isLoading,
-  });
+  const styleSlots = fileTriggerBlockStyles({ variant, color: isInvalid || displayValidation.isInvalid ? "error" : color, size, isDisabled });
 
   return (
     <Provider
@@ -93,55 +86,55 @@ function FileTriggerDropzone(props: FileTriggerDropzoneProps) {
         [FieldErrorContext, displayValidation],
       ]}
     >
-      <div
-        {...fieldProps}
-        className={styleSlots.wrapper({ className: twMerge(classNames?.wrapper, className) })}
-        style={mergeProps(styles?.wrapper, style)}
-      >
-        <Field {...displayValidation} {...props}>
-          <DropZone
-            onDrop={async (e) => {
-              if (!e) return;
-              let files = await Promise.all(e.items.filter((item) => item.kind === "file").map((item: FileDropItem) => item.getFile()));
-              onChange?.(files);
-            }}
-            isDisabled={isDisabled || isLoading}
-            className={({ isDropTarget, isFocusVisible }) =>
-              styleSlots.base({ isHovered: isDropTarget, isFocusVisible, className: classNames?.base })
-            }
-            style={styles?.base}
-          >
-            <FileTrigger
-              onSelect={(e) => {
+      <div {...fieldProps} className={styleSlots.base({ className: twMerge(classNames?.base, className) })} style={mergeProps(styles?.base, style)}>
+        <FieldInput
+          {...displayValidation}
+          {...globalProps}
+          isAutoHeight
+          fieldInputClassNames={{ ...globalProps.fieldInputClassNames, base: twMerge("cursor-default", globalProps.fieldInputClassNames?.base) }}
+        >
+          <div>
+            <DropZone
+              onDrop={async (e) => {
                 if (!e) return;
-                let files = Array.from(e);
+                let files = await Promise.all(e.items.filter((item) => item.kind === "file").map((item: FileDropItem) => item.getFile()));
                 onChange?.(files);
               }}
-              acceptedFileTypes={acceptedFileTypes}
-              acceptDirectory={acceptDirectory}
-              allowsMultiple={allowsMultiple}
-              defaultCamera={defaultCamera}
+              isDisabled={isDisabled}
+              className={({ isDropTarget, isFocusVisible }) =>
+                styleSlots.zone({ isHovered: isDropTarget, isFocusVisible, className: classNames?.zone })
+              }
+              style={styles?.zone}
             >
-              <Button
-                variant={variantButton}
-                color={isInvalid || displayValidation.isInvalid ? "error" : color}
-                size={size}
-                isLoading={isLoading}
-                isDisabled={isDisabled}
-                className={styleSlots.button({ className: classNames?.button })}
-                style={styles?.button}
+              <FileTrigger
+                onSelect={(e) => {
+                  if (!e) return;
+                  let files = Array.from(e);
+                  onChange?.(files);
+                }}
+                acceptedFileTypes={acceptedFileTypes}
+                acceptDirectory={acceptDirectory}
+                allowsMultiple={allowsMultiple}
+                defaultCamera={defaultCamera}
               >
-                {buttonLabel ?? `Select file${allowsMultiple ? "s" : ""}`}
-              </Button>
-            </FileTrigger>
+                <Button
+                  aria-label="File trigger button"
+                  isDisabled={isDisabled}
+                  className={styleSlots.button({ className: classNames?.button })}
+                  style={styles?.button}
+                >
+                  {buttonLabel ?? `Select ${allowsMultiple ? "" : "a"} file${allowsMultiple ? "s" : ""}`}
+                </Button>
+              </FileTrigger>
 
-            <Text slot="label" className={styleSlots.text({ className: classNames?.text })} style={styles?.text}>
-              {value?.length > 0
-                ? value?.map((file) => file.name).join(", ")
-                : placeholder || `Drag and drop file${allowsMultiple ? "s" : ""} here or click to select`}
-            </Text>
-          </DropZone>
-        </Field>
+              <Text slot="label" className={styleSlots.text({ className: classNames?.text })} style={styles?.text}>
+                {value?.length > 0
+                  ? value?.map((file) => file.name).join(", ")
+                  : placeholder || `Drag and drop ${allowsMultiple ? "" : "a"} file${allowsMultiple ? "s" : ""} here or click to select`}
+              </Text>
+            </DropZone>
+          </div>
+        </FieldInput>
       </div>
     </Provider>
   );

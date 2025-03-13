@@ -1,6 +1,7 @@
 "use client";
 
 import { FieldInput, FieldInputBaseProps, fieldSegmentStyles } from "./field";
+import { useGlobalProps } from "./provider";
 import { ForwardRefType } from "./types";
 import { ClockIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -13,12 +14,12 @@ interface TimeFieldProps<T extends TimeValue> extends AriaTimeFieldProps<T>, Fie
 // component
 
 function _TimeField<T extends TimeValue>(props: TimeFieldProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { size, radius = size, color, variant } = props;
+  const globalProps = useGlobalProps("TimeField", props, {});
 
   return (
-    <AriaTimeField {...props}>
+    <AriaTimeField {...globalProps}>
       {(renderProps) => (
-        <FieldInput startContent={<ClockIcon />} {...renderProps} {...props}>
+        <FieldInput startContent={<ClockIcon />} {...renderProps} {...globalProps}>
           <DateInput ref={ref}>
             {(segment) => <DateSegment segment={segment} className={({ isPlaceholder }) => fieldSegmentStyles({ isPlaceholder })} />}
           </DateInput>

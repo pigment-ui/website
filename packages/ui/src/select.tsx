@@ -3,6 +3,7 @@
 import { FieldInput, FieldInputBaseProps } from "./field";
 import { filterInlineListBoxProps, ListBox, ListBoxItem, ListBoxSection, ListBoxSlotsType } from "./list-box";
 import { Popover } from "./popover";
+import { useGlobalProps } from "./provider";
 import { ForwardRefType } from "./types";
 import { useObserveElementWidth } from "./utils";
 import { ChevronDownIcon } from "lucide-react";
@@ -24,20 +25,22 @@ interface SelectProps<T extends object>
 // component
 
 function _Select<T extends object>(props: SelectProps<T>, ref: ForwardedRef<HTMLButtonElement>) {
-  const { renderValue, placeholder } = props;
+  const globalProps = useGlobalProps("Select", props, {});
+
+  const { renderValue, placeholder } = globalProps;
 
   const [width, selectRef] = useObserveElementWidth<HTMLDivElement>();
 
   return (
-    <AriaSelect ref={selectRef} placeholder="Select" {...props}>
+    <AriaSelect ref={selectRef} placeholder="Select" {...globalProps}>
       {(renderProps) => (
         <>
           <FieldInput
             isFocusWithin={renderProps.isOpen}
             endContent={<ChevronDownIcon />}
             {...renderProps}
-            {...props}
-            fieldInputClassNames={{ ...props.fieldInputClassNames, base: twMerge("cursor-pointer", props.fieldInputClassNames?.base) }}
+            {...globalProps}
+            fieldInputClassNames={{ ...globalProps.fieldInputClassNames, base: twMerge("cursor-pointer", globalProps.fieldInputClassNames?.base) }}
           >
             <Button ref={ref} className="flex items-center">
               <SelectValue className={({ isPlaceholder }) => (isPlaceholder ? "opacity-50" : "")}>
@@ -48,8 +51,8 @@ function _Select<T extends object>(props: SelectProps<T>, ref: ForwardedRef<HTML
             </Button>
           </FieldInput>
 
-          <Popover maxHeight={300} hideArrow triggerRef={selectRef} {...props} className="overflow-auto p-0" style={{ width }}>
-            <ListBox {...filterInlineListBoxProps(mergeProps(props, renderProps))} className="p-2" />
+          <Popover maxHeight={300} hideArrow triggerRef={selectRef} {...globalProps} className="overflow-auto p-0" style={{ width }}>
+            <ListBox {...filterInlineListBoxProps(mergeProps(globalProps, renderProps))} className="p-2" />
           </Popover>
         </>
       )}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useGlobalProps } from "./provider";
 import { StyleProps } from "./types";
 import React, { ForwardedRef, forwardRef } from "react";
 import { tv } from "tailwind-variants";
@@ -22,7 +23,9 @@ interface SkeletonProps extends StyleProps {
 // component
 
 function _Skeleton(props: SkeletonProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { animation = "pulse", className, style } = props;
+  const globalProps = useGlobalProps("Skeleton", props, { animation: "pulse" });
+
+  const { animation, className, style } = globalProps;
 
   return <div ref={ref} className={skeletonStyles({ animation, className })} style={style} />;
 }

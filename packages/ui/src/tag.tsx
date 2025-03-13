@@ -1,6 +1,7 @@
 "use client";
 
 import { Field, FieldBaseProps, fieldButtonStyles } from "./field";
+import { useGlobalProps } from "./provider";
 import { radiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, ContentProps, ForwardRefType, RadiusProps, StyleSlotsToStyleProps, VariantProps, Variants } from "./types";
 import { createSlots } from "./utils";
@@ -76,23 +77,20 @@ const [TagGroupSlotsProvider, useTagGroupSlots] = createSlots<TagGroupSlotsType>
 // component
 
 function _TagGroup<T extends object>(props: TagGroupProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const {
-    variant = "soft",
-    variantActive = "solid",
-    color = "default",
-    size = "md",
-    radius = size,
-    items,
-    renderEmptyState,
-    children,
-    itemClassNames,
-    itemStyles,
-  } = props;
+  const globalProps = useGlobalProps("TagGroup", props, {
+    variant: "soft",
+    variantActive: "solid",
+    color: "default",
+    size: "md",
+    radius: props.size || "md",
+  });
+
+  const { variant, variantActive, color, size, radius, items, renderEmptyState, children, itemClassNames, itemStyles } = globalProps;
 
   return (
     <TagGroupSlotsProvider value={{ variant, variantActive, color, size, radius, itemClassNames, itemStyles }}>
-      <AriaTagGroup ref={ref} {...props}>
-        <Field {...props}>
+      <AriaTagGroup ref={ref} {...globalProps}>
+        <Field {...globalProps}>
           <TagList items={items} renderEmptyState={renderEmptyState} className={tagGroupStyles({ size })}>
             {children}
           </TagList>

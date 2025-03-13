@@ -1,5 +1,6 @@
 "use client";
 
+import { useGlobalProps } from "./provider";
 import { radiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, RadiusProps, SizeProps, StyleProps, StyleSlotsToStyleProps, VariantProps, Variants } from "./types";
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon } from "lucide-react";
@@ -43,22 +44,18 @@ interface PaginationProps extends ColorProps, VariantProps, SizeProps, RadiusPro
 // component
 
 function _Pagination(props: PaginationProps, ref: ForwardedRef<HTMLUListElement>) {
-  const {
-    variant = "soft",
-    variantActive = "solid",
-    color = "default",
-    size = "md",
-    radius = size,
-    total,
-    page,
-    onChange,
-    siblingCount = 1,
-    dotsJump = 5,
-    className,
-    classNames,
-    style,
-    styles,
-  } = props;
+  const globalProps = useGlobalProps("Pagination", props, {
+    variant: "soft",
+    variantActive: "solid",
+    color: "default",
+    size: "md",
+    radius: props.size || "md",
+    siblingCount: 1,
+    dotsJump: 5,
+  });
+
+  const { variant, variantActive, color, size, radius, total, page, onChange, siblingCount, dotsJump, className, classNames, style, styles } =
+    globalProps;
 
   const styleSlots = paginationStyles({ variant, color, size, radius });
 

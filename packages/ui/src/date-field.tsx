@@ -1,6 +1,7 @@
 "use client";
 
 import { FieldInput, FieldInputBaseProps, fieldSegmentStyles } from "./field";
+import { useGlobalProps } from "./provider";
 import { ForwardRefType } from "./types";
 import { CalendarIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -13,12 +14,12 @@ interface DateFieldProps<T extends DateValue> extends AriaDateFieldProps<T>, Fie
 // component
 
 function _DateField<T extends DateValue>(props: DateFieldProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { size, radius = size, color, variant } = props;
+  const globalProps = useGlobalProps("DateField", props, {});
 
   return (
-    <AriaDateField {...props}>
+    <AriaDateField {...globalProps}>
       {(renderProps) => (
-        <FieldInput startContent={<CalendarIcon />} {...renderProps} {...props}>
+        <FieldInput startContent={<CalendarIcon />} {...renderProps} {...globalProps}>
           <DateInput>
             {(segment) => (
               <DateSegment

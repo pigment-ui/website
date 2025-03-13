@@ -2,6 +2,7 @@
 
 import { ListBox, ListBoxItem, listBoxItemStyles, ListBoxSection, listBoxSectionStyles, ListBoxSlotsType } from "./list-box";
 import { Popover } from "./popover";
+import { useGlobalProps } from "./provider";
 import { ForwardRefType, StyleProps } from "./types";
 import { createSlots } from "./utils";
 import { CheckIcon } from "lucide-react";
@@ -50,12 +51,19 @@ const [MenuSlotsProvider, useMenuSlots] = createSlots<ListBoxSlotsType<object>>(
 // component
 
 function _Menu<T extends object>(props: MenuProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const { variant = "light", color = "default", size = "md", itemClassNames, itemStyles, sectionClassNames, sectionStyles } = props;
+  const globalProps = useGlobalProps("Menu", props, { variant: "soft", color: "default", size: "md" });
+
+  const { variant, color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles } = globalProps;
 
   return (
     <MenuSlotsProvider value={{ variant, color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}>
-      <Popover maxHeight={300} hideArrow {...props} className={composeRenderProps(props.className, (className) => menuStyles({ className }))}>
-        <AriaMenu ref={ref} {...props} className="outline-none" style={{}} />
+      <Popover
+        maxHeight={300}
+        hideArrow
+        {...globalProps}
+        className={composeRenderProps(globalProps.className, (className) => menuStyles({ className }))}
+      >
+        <AriaMenu ref={ref} {...globalProps} className="outline-none" style={{}} />
       </Popover>
     </MenuSlotsProvider>
   );

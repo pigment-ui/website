@@ -1,6 +1,7 @@
 "use client";
 
 import { FieldInput, FieldInputBaseProps } from "./field";
+import { useGlobalProps } from "./provider";
 import { SearchIcon, XIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
 import { Button, Input, InputProps, SearchField as AriaSearchField, SearchFieldProps as AriaSearchFieldProps } from "react-aria-components";
@@ -14,10 +15,12 @@ interface SearchFieldProps extends AriaSearchFieldProps, Omit<InputProps, keyof 
 // component
 
 function _SearchField(props: SearchFieldProps, ref: ForwardedRef<HTMLInputElement>) {
-  const { hideClearButton = false } = props;
+  const globalProps = useGlobalProps("SearchField", props, {});
+
+  const { hideClearButton } = globalProps;
 
   return (
-    <AriaSearchField {...props}>
+    <AriaSearchField {...globalProps}>
       {(renderProps) => (
         <FieldInput
           startContent={<SearchIcon />}
@@ -29,7 +32,7 @@ function _SearchField(props: SearchFieldProps, ref: ForwardedRef<HTMLInputElemen
             ) : undefined
           }
           {...renderProps}
-          {...props}
+          {...globalProps}
         >
           <Input ref={ref} />
         </FieldInput>

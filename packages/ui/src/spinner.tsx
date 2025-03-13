@@ -1,5 +1,6 @@
 "use client";
 
+import { useGlobalProps } from "./provider";
 import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { tv } from "tailwind-variants";
 
@@ -12,8 +13,10 @@ const spinnerStyles = tv({
 // component
 
 function _Spinner(props: HTMLAttributes<HTMLDivElement>, ref: ForwardedRef<HTMLDivElement>) {
+  const globalProps = useGlobalProps("Spinner", props, {});
+
   return (
-    <div ref={ref} {...props} className={spinnerStyles({ className: props.className })}>
+    <div ref={ref} {...globalProps} className={spinnerStyles({ className: globalProps.className })}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

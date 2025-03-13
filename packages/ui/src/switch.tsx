@@ -1,5 +1,6 @@
 "use client";
 
+import { useGlobalProps } from "./provider";
 import { isDisabledVariants, isFocusVisibleVariants } from "./styles";
 import { ColorProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -62,20 +63,22 @@ interface SwitchProps extends AriaSwitchProps, ColorProps, SizeProps, StyleSlots
 // component
 
 function _Switch(props: SwitchProps, ref: ForwardedRef<HTMLLabelElement>) {
-  const { color = "default", size = "md", classNames, styles } = props;
+  const globalProps = useGlobalProps("Switch", props, { color: "default", size: "md" });
+
+  const { color, size, classNames, styles } = globalProps;
 
   const styleSlots = switchStyles({ color, size });
 
   return (
     <AriaSwitch
       ref={ref}
-      {...props}
-      className={composeRenderProps(props.className, (className, { isDisabled }) =>
+      {...globalProps}
+      className={composeRenderProps(globalProps.className, (className, { isDisabled }) =>
         styleSlots.base({ isDisabled, className: twMerge(classNames?.base, className) }),
       )}
-      style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
+      style={composeRenderProps(globalProps.style, (style) => mergeProps(styles?.base, style))}
     >
-      {composeRenderProps(props.children, (children, { isHovered, isPressed, isSelected, isFocusVisible }) => (
+      {composeRenderProps(globalProps.children, (children, { isHovered, isPressed, isSelected, isFocusVisible }) => (
         <>
           <div className={styleSlots.self({ isHovered, isPressed, isSelected, isFocusVisible, className: classNames?.self })} style={styles?.self}>
             <div className={styleSlots.thumb({ isSelected, isPressed, className: classNames?.thumb })} style={styles?.thumb} />

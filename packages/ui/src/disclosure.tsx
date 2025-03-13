@@ -1,3 +1,4 @@
+import { useGlobalProps } from "./provider";
 import { radiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, ContentProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
@@ -100,11 +101,17 @@ const [DisclosureGroupSlotsProvider, useDisclosureGroupSlots] = createSlots<Disc
 // component
 
 function _DisclosureGroup(props: DisclosureGroupProps, ref: ForwardedRef<HTMLDivElement>) {
-  const { variant = "soft", color = "default", size = "md", icon, itemClassNames, itemStyles } = props;
+  const globalProps = useGlobalProps("DisclosureGroup", props, { variant: "soft", color: "default", size: "md" });
+
+  const { variant, color, size, icon, itemClassNames, itemStyles } = props;
 
   return (
     <DisclosureGroupSlotsProvider value={{ variant, color, size, icon, itemClassNames, itemStyles }}>
-      <AriaDisclosureGroup ref={ref} {...props} className={({ defaultClassName }) => disclosureGroupStyles({ size, className: defaultClassName })} />
+      <AriaDisclosureGroup
+        ref={ref}
+        {...globalProps}
+        className={({ defaultClassName }) => disclosureGroupStyles({ size, className: defaultClassName })}
+      />
     </DisclosureGroupSlotsProvider>
   );
 }
@@ -112,18 +119,9 @@ function _DisclosureGroup(props: DisclosureGroupProps, ref: ForwardedRef<HTMLDiv
 const DisclosureGroup = forwardRef(_DisclosureGroup);
 
 function _Disclosure(props: DisclosureProps, ref: ForwardedRef<HTMLDivElement>) {
-  const {
-    variant = "soft",
-    color = "default",
-    size = "md",
-    title,
-    description,
-    startContent,
-    endContent,
-    classNames,
-    styles,
-    icon,
-  } = useDisclosureGroupSlots(props);
+  const globalProps = useGlobalProps("Disclosure", useDisclosureGroupSlots(props), { variant: "soft", color: "default", size: "md" });
+
+  const { variant, color, size, title, description, startContent, endContent, classNames, styles, icon } = globalProps;
 
   const styleSlots = disclosureStyles({ size, color });
 
@@ -132,8 +130,8 @@ function _Disclosure(props: DisclosureProps, ref: ForwardedRef<HTMLDivElement>) 
   return (
     <AriaDisclosure
       ref={ref}
-      {...props}
-      className={composeRenderProps(props.className, (className, { isExpanded, isDisabled, isFocusVisibleWithin }) =>
+      {...globalProps}
+      className={composeRenderProps(globalProps.className, (className, { isExpanded, isDisabled, isFocusVisibleWithin }) =>
         styleSlots.base({
           isDisabled,
           variant: isExpanded ? variant : "light",
@@ -143,9 +141,9 @@ function _Disclosure(props: DisclosureProps, ref: ForwardedRef<HTMLDivElement>) 
           className: twMerge(classNames?.base, className),
         }),
       )}
-      style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
+      style={composeRenderProps(globalProps.style, (style) => mergeProps(styles?.base, style))}
     >
-      {composeRenderProps(props.children, (children, { isExpanded }) => (
+      {({ isExpanded, defaultChildren }) => (
         <>
           <Heading className={styleSlots.heading({ className: classNames?.heading })} style={styles?.heading}>
             <Button
@@ -185,10 +183,10 @@ function _Disclosure(props: DisclosureProps, ref: ForwardedRef<HTMLDivElement>) 
             </Button>
           </Heading>
           <DisclosurePanel className={styleSlots.panel({ isExpanded, className: classNames?.panel })} style={styles?.panel}>
-            {children}
+            {defaultChildren}
           </DisclosurePanel>
         </>
-      ))}
+      )}
     </AriaDisclosure>
   );
 }

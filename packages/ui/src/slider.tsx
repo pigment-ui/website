@@ -1,6 +1,7 @@
 "use client";
 
 import { Field, FieldBaseProps } from "./field";
+import { useGlobalProps } from "./provider";
 import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants } from "./styles";
 import { ColorProps, ContentProps, RadiusProps, SizeProps, StyleSlotsToStyleProps } from "./types";
 import { FormValidationProps, useFormValidationState } from "@react-stately/form";
@@ -237,24 +238,13 @@ interface SliderProps
 // component
 
 function _Slider(props: SliderProps, ref: ForwardedRef<HTMLDivElement>) {
-  const {
-    value,
-    hideThumb = false,
-    thumbLabels,
-    showSteps = false,
-    marks,
-    orientation = "horizontal",
-    color = "default",
-    size = "md",
-    radius = "full",
-    startContent,
-    endContent,
-    classNames,
-    styles,
-  } = props;
+  const globalProps = useGlobalProps("Slider", props, { color: "default", size: "md", radius: "full", orientation: "horizontal" });
 
-  const { displayValidation } = useFormValidationState({ ...props, value });
-  const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
+  const { value, hideThumb, thumbLabels, showSteps, marks, orientation, color, size, radius, startContent, endContent, classNames, styles } =
+    globalProps;
+
+  const { displayValidation } = useFormValidationState({ ...globalProps, value });
+  const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...globalProps });
 
   const styleSlots = sliderStyles({ orientation, hideThumb, size, radius, hasMarks: !!marks });
 
@@ -267,13 +257,13 @@ function _Slider(props: SliderProps, ref: ForwardedRef<HTMLDivElement>) {
     >
       <AriaSlider
         ref={ref}
-        {...mergeProps(props, fieldProps)}
-        className={composeRenderProps(props.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
-        style={composeRenderProps(props.style, (style) => mergeProps(styles?.base, style))}
+        {...mergeProps(globalProps, fieldProps)}
+        className={composeRenderProps(globalProps.className, (className) => styleSlots.base({ className: twMerge(classNames?.base, className) }))}
+        style={composeRenderProps(globalProps.style, (style) => mergeProps(styles?.base, style))}
       >
         {({ state }) => (
-          <Field {...displayValidation} {...props}>
-            {props.label && (
+          <Field {...displayValidation} {...globalProps}>
+            {globalProps.label && (
               <SliderOutput className={styleSlots.output({ className: classNames?.output })} style={styles?.output}>
                 {({ state }) => state.values.map((_, i) => state.getThumbValueLabel(i)).join(" – ")}
               </SliderOutput>

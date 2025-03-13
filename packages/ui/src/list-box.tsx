@@ -2,6 +2,7 @@
 
 import { cardStyles } from "./card";
 import { Field, FieldBaseProps } from "./field";
+import { useGlobalProps } from "./provider";
 import { isFocusVisibleVariants, smallRadiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, ContentProps, ForwardRefType, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
@@ -116,20 +117,12 @@ const [ListBoxSlotsProvider, useListBoxSlots] = createSlots<ListBoxSlotsType<obj
 // component
 
 function _ListBox<T extends object>(props: ListBoxProps<T>, ref: ForwardedRef<HTMLDivElement>) {
-  const {
-    selectedKeys,
-    asCard = true,
-    variant = "light",
-    color = "default",
-    size = "md",
-    itemClassNames,
-    itemStyles,
-    sectionClassNames,
-    sectionStyles,
-  } = props;
+  const globalProps = useGlobalProps("ListBox", props, { asCard: true, variant: "soft", color: "default", size: "md" });
 
-  const { displayValidation } = useFormValidationState({ ...props, value: selectedKeys });
-  const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...props });
+  const { selectedKeys, asCard, variant, color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles } = globalProps;
+
+  const { displayValidation } = useFormValidationState({ ...globalProps, value: selectedKeys });
+  const { fieldProps, descriptionProps, errorMessageProps } = useField({ validationBehavior: "native", ...displayValidation, ...globalProps });
 
   return (
     <Provider
@@ -141,11 +134,13 @@ function _ListBox<T extends object>(props: ListBoxProps<T>, ref: ForwardedRef<HT
       <ListBoxSlotsProvider
         value={{ variant, color: displayValidation.isInvalid ? "error" : color, size, itemClassNames, itemStyles, sectionClassNames, sectionStyles }}
       >
-        <Field {...displayValidation} {...props}>
+        <Field {...displayValidation} {...globalProps}>
           <AriaListBox
             ref={ref}
-            {...mergeProps(props, fieldProps)}
-            className={composeRenderProps(props.className, (className, { isFocusVisible }) => listBoxStyles({ asCard, isFocusVisible, className }))}
+            {...mergeProps(globalProps, fieldProps)}
+            className={composeRenderProps(globalProps.className, (className, { isFocusVisible }) =>
+              listBoxStyles({ asCard, isFocusVisible, className }),
+            )}
           />
         </Field>
       </ListBoxSlotsProvider>

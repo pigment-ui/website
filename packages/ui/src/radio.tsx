@@ -1,9 +1,9 @@
 "use client";
 
-import { CheckboxGroupSlotsType, checkboxGroupStyles, checkboxStyles, CheckboxStylesReturnType } from "./checkbox";
+import { CheckboxGroupSlotsProvider, checkboxGroupStyles, checkboxStyles, CheckboxStylesReturnType, useCheckboxGroupSlots } from "./checkbox";
 import { Field, FieldBaseProps } from "./field";
+import { useGlobalProps } from "./provider";
 import { ColorProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
-import { createSlots } from "./utils";
 import React, { ForwardedRef, forwardRef } from "react";
 import { mergeProps, Orientation } from "react-aria";
 import {
@@ -31,32 +31,30 @@ interface RadioGroupProps extends AriaRadioGroupProps, VariantProps, ColorProps,
 
 interface RadioProps extends AriaRadioProps, SizeProps, StyleSlotsToStyleProps<CheckboxStylesReturnType> {}
 
-// slots
-
-const [RadioGroupSlotsProvider, useRadioGroupSlots] = createSlots<CheckboxGroupSlotsType>();
-
 // component
 
 function _RadioGroup(props: RadioGroupProps, ref: ForwardedRef<HTMLInputElement>) {
-  const { variant = "solid", color = "default", size = "md", orientation = "vertical", itemClassNames, itemStyles } = props;
+  const globalProps = useGlobalProps("RadioGroup", props, { variant: "solid", color: "default", size: "md", orientation: "vertical" });
+
+  const { variant, color, size, orientation, itemClassNames, itemStyles } = globalProps;
 
   return (
-    <RadioGroupSlotsProvider value={{ variant, color, size, itemClassNames, itemStyles }}>
-      <AriaRadioGroup ref={ref} {...props}>
-        {composeRenderProps(props.children, (children, renderProps) => (
-          <Field {...renderProps} {...props}>
+    <CheckboxGroupSlotsProvider value={{ variant, color, size, radius: "full", itemClassNames, itemStyles }}>
+      <AriaRadioGroup ref={ref} {...globalProps}>
+        {composeRenderProps(globalProps.children, (children, renderProps) => (
+          <Field {...renderProps} {...globalProps}>
             <div className={radioGroupStyles({ size, orientation })}>{children}</div>
           </Field>
         ))}
       </AriaRadioGroup>
-    </RadioGroupSlotsProvider>
+    </CheckboxGroupSlotsProvider>
   );
 }
 
 const RadioGroup = forwardRef(_RadioGroup);
 
 function _Radio(props: RadioProps, ref: ForwardedRef<HTMLLabelElement>) {
-  const { variant, color, size = "md", classNames, itemClassNames, styles, itemStyles } = useRadioGroupSlots(props);
+  const { variant = "solid", color = "default", size = "md", classNames, itemClassNames, styles, itemStyles } = useCheckboxGroupSlots(props);
 
   const styleSlots = radioStyles({ size, radius: "full" });
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { FieldInput, FieldInputBaseProps } from "./field";
+import { useGlobalProps } from "./provider";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import React, { ForwardedRef, forwardRef } from "react";
 import {
@@ -21,10 +22,12 @@ interface NumberFieldProps extends AriaNumberFieldProps, Omit<InputProps, keyof 
 // component
 
 function _NumberField(props: NumberFieldProps, ref: ForwardedRef<HTMLInputElement>) {
-  const { hideControls = false } = props;
+  const globalProps = useGlobalProps("NumberField", props, {});
+
+  const { hideControls } = globalProps;
 
   return (
-    <AriaNumberField {...props}>
+    <AriaNumberField {...globalProps}>
       {(renderProps) => (
         <FieldInput
           startButton={
@@ -42,7 +45,7 @@ function _NumberField(props: NumberFieldProps, ref: ForwardedRef<HTMLInputElemen
             ) : undefined
           }
           {...renderProps}
-          {...props}
+          {...globalProps}
         >
           <Input ref={ref} />
         </FieldInput>

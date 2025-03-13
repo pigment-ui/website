@@ -1,6 +1,7 @@
 "use client";
 
 import { Field, FieldBaseProps } from "./field";
+import { useGlobalProps } from "./provider";
 import { isDisabledVariants, isFocusVisibleVariants, smallRadiusVariants, variantColorStyles } from "./styles";
 import { ColorProps, RadiusProps, SizeProps, StyleSlotsToStyleProps, VariantProps } from "./types";
 import { createSlots } from "./utils";
@@ -81,13 +82,21 @@ const [CheckboxGroupSlotsProvider, useCheckboxGroupSlots] = createSlots<Checkbox
 // component
 
 function _CheckboxGroup(props: CheckboxGroupProps, ref: ForwardedRef<HTMLInputElement>) {
-  const { variant = "soft", color = "default", size = "md", radius = size, orientation = "vertical", itemClassNames, itemStyles } = props;
+  const globalProps = useGlobalProps("CheckboxGroup", props, {
+    variant: "solid",
+    color: "default",
+    size: "md",
+    radius: props.size || "md",
+    orientation: "vertical",
+  });
+
+  const { variant, color, size, radius, orientation, itemClassNames, itemStyles } = globalProps;
 
   return (
     <CheckboxGroupSlotsProvider value={{ variant, color, size, radius, itemClassNames, itemStyles }}>
-      <AriaCheckboxGroup ref={ref} {...props}>
-        {composeRenderProps(props.children, (children, renderProps) => (
-          <Field {...renderProps} {...props}>
+      <AriaCheckboxGroup ref={ref} {...globalProps}>
+        {composeRenderProps(globalProps.children, (children, renderProps) => (
+          <Field {...renderProps} {...globalProps}>
             <div className={checkboxGroupStyles({ size, orientation })}>{children}</div>
           </Field>
         ))}
@@ -99,29 +108,27 @@ function _CheckboxGroup(props: CheckboxGroupProps, ref: ForwardedRef<HTMLInputEl
 const CheckboxGroup = forwardRef(_CheckboxGroup);
 
 function _Checkbox(props: CheckboxProps, ref: ForwardedRef<HTMLLabelElement>) {
-  const {
-    variant = "solid",
-    color = "default",
-    size = "md",
-    radius = size,
-    classNames,
-    itemClassNames,
-    styles,
-    itemStyles,
-  } = useCheckboxGroupSlots(props);
+  const globalProps = useGlobalProps("Checkbox", useCheckboxGroupSlots(props), {
+    variant: "solid",
+    color: "default",
+    size: "md",
+    radius: props.size || "md",
+  });
+
+  const { variant, color, size, radius, classNames, itemClassNames, styles, itemStyles } = globalProps;
 
   const styleSlots = checkboxStyles({ size, radius });
 
   return (
     <AriaCheckbox
       ref={ref}
-      {...props}
-      className={composeRenderProps(props.className, (className, { isInvalid, isDisabled }) =>
+      {...globalProps}
+      className={composeRenderProps(globalProps.className, (className, { isInvalid, isDisabled }) =>
         styleSlots.wrapper({ isInvalid, isDisabled, className: twMerge(itemClassNames?.wrapper, classNames?.wrapper, className) }),
       )}
-      style={composeRenderProps(props.style, (style) => mergeProps(itemStyles?.wrapper, styles?.wrapper, style))}
+      style={composeRenderProps(globalProps.style, (style) => mergeProps(itemStyles?.wrapper, styles?.wrapper, style))}
     >
-      {composeRenderProps(props.children, (children, { isSelected, isIndeterminate, isInvalid, isHovered, isPressed, isFocusVisible }) => (
+      {composeRenderProps(globalProps.children, (children, { isSelected, isIndeterminate, isInvalid, isHovered, isPressed, isFocusVisible }) => (
         <>
           <div
             className={styleSlots.base({
@@ -163,5 +170,5 @@ const CheckboxLink = forwardRef(_CheckboxLink);
 
 // exports
 
-export { CheckboxGroup, Checkbox, CheckboxLink, checkboxGroupStyles, checkboxStyles };
+export { CheckboxGroup, Checkbox, CheckboxLink, checkboxGroupStyles, checkboxStyles, CheckboxGroupSlotsProvider, useCheckboxGroupSlots };
 export type { CheckboxStylesReturnType, CheckboxGroupSlotsType };

@@ -2,6 +2,7 @@
 
 import { FieldInput, FieldInputBaseProps, fieldSegmentStyles } from "./field";
 import { Popover } from "./popover";
+import { useGlobalProps } from "./provider";
 import { RangeCalendar } from "./range-calendar";
 import { ForwardRefType } from "./types";
 import { useObserveElementWidth } from "./utils";
@@ -30,12 +31,14 @@ interface DateRangePickerProps<T extends DateValue>
 // component
 
 function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, ref: ForwardedRef<HTMLInputElement>) {
-  const { size, radius = size, color, variant, visibleMonthCount } = props;
+  const globalProps = useGlobalProps("DateRangePicker", props, { radius: props.size });
+
+  const { size, radius, color, visibleMonthCount } = props;
 
   const [width, datePickerRef] = useObserveElementWidth<HTMLDivElement>();
 
   return (
-    <AriaDateRangePicker ref={datePickerRef} {...props}>
+    <AriaDateRangePicker ref={datePickerRef} {...globalProps}>
       {(renderProps) => (
         <>
           <FieldInput
@@ -45,7 +48,7 @@ function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, r
               </Button>
             }
             {...renderProps}
-            {...props}
+            {...globalProps}
           >
             <div className="gap-2">
               <DateInput ref={ref} slot="start" className="flex items-center">
@@ -60,10 +63,12 @@ function _DateRangePicker<T extends DateValue>(props: DateRangePickerProps<T>, r
             </div>
           </FieldInput>
 
-          <Popover hideArrow placement="bottom" {...props} className="overflow-auto p-0" style={{ maxWidth: width }}>
+          <Popover hideArrow placement="bottom" {...globalProps} className="overflow-auto p-0" style={{ maxWidth: width }}>
             <RangeCalendar
-              aria-label={props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined)}
-              aria-describedby={props["aria-describedby"] ?? (typeof props.description === "string" ? props.description : undefined)}
+              aria-label={globalProps["aria-label"] ?? (typeof globalProps.label === "string" ? globalProps.label : undefined)}
+              aria-describedby={
+                globalProps["aria-describedby"] ?? (typeof globalProps.description === "string" ? globalProps.description : undefined)
+              }
               asCard={false}
               color={color}
               size={size}
